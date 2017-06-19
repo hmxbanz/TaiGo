@@ -1,0 +1,52 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="match_parent" android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:orientation="vertical"
+    tools:context=".widget.toast.CustomToast">
+
+    <TextView android:text="@string/CustomToastHelloText" android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"/>
+
+    <Button
+        android:id="@+id/CustomToastStyle1"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:onClick="CustomToastStyle1"
+        android:text="@string/CustomToastStyle1"
+        />
+
+    <Button
+        android:id="@+id/CustomToastStyle2"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:onClick="CustomToastStyle2"
+        android:text="@string/CustomToastStyle2"
+        />
+    <Button
+        android:id="@+id/CustomToastStyle3"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:onClick="CustomToastStyle3"
+        android:text="@string/CustomToastStyle3"
+        />
+    <Button
+        android:id="@+id/CustomToastStyle4"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:onClick="CustomToastStyle4"
+        android:text="@string/CustomToastStyle4"
+        />
+    <Button
+        android:id="@+id/CustomToastStyle5"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:onClick="CustomToastStyle5"
+        android:text="@string/CustomToastStyle5"
+        />
+
+
+</LinearLayout>

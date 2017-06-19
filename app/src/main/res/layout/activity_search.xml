@@ -1,0 +1,207 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/appbg"
+    tools:context="com.xtdar.app.view.activity.SearchActivity">
+    <include layout="@layout/layout_title_top" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:orientation="vertical"
+        android:id="@+id/main_top">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="44dp"   >
+            <!-- 头部导航 -->
+            <RelativeLayout
+                android:id="@+id/backLayout"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="6">
+
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_centerInParent="true">
+
+                    <RelativeLayout
+                        android:id="@+id/ll"
+                        android:layout_marginBottom="2dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:paddingLeft="20dp"
+                        android:paddingRight="20dp"
+                        android:gravity="center">
+
+                        <TextView
+                            android:id="@+id/txt_search"
+                            android:layout_width="match_parent"
+                            android:layout_height="30dp"
+                            android:layout_centerHorizontal="true"
+                            android:text="找我感兴趣的"
+                            android:paddingLeft="10dp"
+                            android:gravity="center_vertical"
+                            android:background="@drawable/bg_edittext"
+                            android:textSize="14dp" />
+
+
+                    </RelativeLayout>
+
+
+                </FrameLayout>
+
+
+            </RelativeLayout>
+
+        </LinearLayout>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#dfdfdd" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_margin="10dp"
+        android:layout_width="match_parent"
+        android:orientation="horizontal"
+        android:layout_height="30dp">
+        <TextView
+            android:text="搜索记录"
+            android:textSize="18dp"
+            android:textColor="@color/black"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:gravity="center|left"
+            android:layout_height="match_parent" />
+        <TextView
+            android:textSize="18dp"
+            android:text="清除"
+            android:textColor="@color/deepskyblue"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:gravity="center|right"
+            android:layout_height="match_parent" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_margin="10dp"
+        android:layout_width="match_parent"
+        android:orientation="horizontal"
+        android:layout_height="wrap_content">
+        <TextView
+            style="@style/TabSearchTxt"
+            android:text="小屁孩"
+            android:layout_width="100dp"
+            android:layout_height="match_parent" />
+        <TextView
+            style="@style/TabSearchTxt"
+            android:text="酷哥酷发明"
+            android:layout_width="100dp"
+            android:layout_height="match_parent" />
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_margin="10dp"
+        android:layout_width="match_parent"
+        android:orientation="horizontal"
+        android:layout_height="30dp">
+        <TextView
+            android:text="热门搜索"
+            android:textSize="18dp"
+            android:textColor="@color/black"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:gravity="center|left"
+            android:layout_height="match_parent" />
+
+
+    </LinearLayout>
+    <LinearLayout
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+    <LinearLayout
+        android:layout_margin="10dp"
+        android:layout_width="match_parent"
+        android:orientation="horizontal"
+        android:layout_height="wrap_content">
+        <TextView
+            style="@style/TabSearchTxt"
+            android:text="妖怪"
+            android:layout_width="100dp"
+            android:layout_height="match_parent" />
+        <TextView
+            style="@style/TabSearchTxt"
+            android:text="神奇树屋"
+            android:layout_width="100dp"
+            android:layout_height="match_parent" />
+
+        <TextView
+            style="@style/TabSearchTxt"
+            android:text="疯狂动物学校"
+            android:layout_width="150dp"
+            android:layout_height="match_parent" />
+
+    </LinearLayout>
+</LinearLayout>
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <LinearLayout
+            android:layout_margin="10dp"
+            android:layout_width="match_parent"
+            android:orientation="horizontal"
+            android:layout_height="wrap_content">
+            <TextView
+                style="@style/TabSearchTxt"
+                android:text="托马斯"
+                android:layout_width="100dp"
+                android:layout_height="match_parent" />
+            <TextView
+                style="@style/TabSearchTxt"
+                android:text="可乐姐姐"
+                android:layout_width="100dp"
+                android:layout_height="match_parent" />
+
+            <TextView
+                style="@style/TabSearchTxt"
+                android:text="小糊涂"
+                android:layout_width="100dp"
+                android:layout_height="match_parent" />
+
+
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:gravity="center"
+        android:layout_marginTop="50dp"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:layout_width="match_parent"
+        android:orientation="horizontal"
+        android:layout_height="wrap_content">
+
+    <Button
+        android:drawableLeft="@drawable/icon_circle_arrow"
+        android:id="@+id/btn_change"
+        android:text="换一批"
+        android:textSize="18dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingLeft="30dp"
+        android:paddingRight="30dp"
+        android:layout_marginTop="10dp"
+        style="@style/SearchButton"
+        android:background="@drawable/bg_button2"
+        />
+        </LinearLayout>
+</LinearLayout>

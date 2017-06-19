@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="MissingTranslation">
+    <string name="xtdar_app_name">小泰斗</string>
+    <string name="home">首页</string>
+    <string name="contacts">男女友</string>
+    <string name="me">我的</string>
+
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+    <string name="menu">menu</string>
+
+    <string name="dialog">对话框</string>
+
+    <string name="CustomToastMenuItem">自宝义Toast</string>
+    <string name="title_activity_notification">通知测试</string>
+    <string name="Notification_Text">开始下载</string>
+    <string name="btn_Notification">通知开始</string>
+    <string name="title_activity_custom_toast">CustomToast</string>
+
+    <!--自定义Toast-->
+
+    <string name="CustomToastHelloText">五种自定义Toast</string>
+    <string name="CustomToastStyle1">默认</string>
+    <string name="CustomToastStyle2">自定义显示位置</string>
+    <string name="CustomToastStyle3">带图片</string>
+    <string name="CustomToastStyle4">完全自定义</string>
+    <string name="CustomToastStyle5">来自其它线程</string>
+
+    <string name="action_home">Home</string>
+    <string name="action_promotions">Promotions</string>
+    <string name="action_search">Search</string>
+    <string name="action_games">Games</string>
+    <string name="action_logout">Messages</string>
+    <string name="menu_title_example">实例</string>
+    <string name="recyclerview_footer_title">更多请使用搜索</string>
+    <string name="nav_text_new">今日推荐</string>
+    <string name="nav_text_hot">最热</string>
+    <string name="nav_text_share">动态</string>
+    <string name="btn_search_text">搜 索</string>
+    <string name="login_text">登录</string>
+    <string name="other_text">其它登录方式</string>
+    <string name="captcha_text">获取验证码</string>
+    <string name="text_report">提 交</string>
+    <string name="ModifyPass">修改密码</string>
+
+    <string name="dialog_bottom_picture">拍照</string>
+    <string name="dialog_bottom_import_from_local">从相册选择</string>
+    <string name="share_dialog_cancel">取消</string>
+    <string name="layout_dialog_loading">正在加载...</string>
+    <string name="string_upload_text">确认提交</string>
+    <string name="search">搜索</string>
+    <string name="new_friends">新的朋友</string>
+    <string name="shop">商城</string>
+    <string name="discovery">秀场</string>
+    <string name="find_password">找回密码</string>
+    <string name="register">注册</string>
+    <string name="network_not_available">网络不可用</string>
+    <string name="phone_number_be_null">手机号不能为空</string>
+    <string name="password_be_null">密码不能为空</string>
+    <string name="password_cannot_contain_spaces">密码不能包含空格</string>
+    <string name="captcha_cannot_be_null">验证码不能为空</string>
+    <string name="protocol_not_checked">请同意用户协议</string>
+    <string name="login_api_fail">登录请求接口失败</string>
+    <string name="password_not_equal">两次密码输入不相同</string>
+    <string name="download_success">下载完成</string>
+    <string name="download_progress">正在下载:%1$d%%</string>
+    <string name="no_record">暂无</string>
+</resources>

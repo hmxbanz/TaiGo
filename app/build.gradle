@@ -1,0 +1,134 @@
+apply plugin: 'com.android.application'
+apply plugin: 'com.neenbedankt.android-apt'//+视频播放模块加的
+android {
+    compileSdkVersion 25
+    buildToolsVersion "25.0.0"
+    defaultConfig {
+        applicationId 'com.xtdar.app'
+        minSdkVersion 16
+        targetSdkVersion 25
+        versionCode 20170227
+        versionName '1.0.0.5'
+        // dex突破65535的限制
+        multiDexEnabled true
+        // 默认是umeng的渠道
+        manifestPlaceholders = [UMENG_CHANNEL_VALUE: "umeng", qq_id: "123456789"]
+        //v2SigningEnabled false
+        //加视频模块时加的
+        ndk {
+            //设置支持的SO库架构
+            abiFilters 'armeabi', 'armeabi-v7a', 'x86'
+        }
+        //加视频模块时加的
+    }
+    sourceSets.main {
+        jniLibs.srcDirs = ['libs'] // <-- Set your folder here!
+    }
+    //签名设置
+    signingConfigs {
+        debug {
+            // No debug config
+        }
+        release {
+            storeFile file("../hmx.jks")
+            storePassword "11111"
+            keyAlias "hmx"
+            keyPassword "111111"
+        }
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.release
+        }
+    }
+    compileOptions {
+    }
+//    productFlavors {
+//        xiaomi {
+//            manifestPlaceholders = [UMENG_CHANNEL_VALUE: "xiaomi"]
+//        }
+//        _360 {
+//            manifestPlaceholders = [UMENG_CHANNEL_VALUE: "_360"]
+//        }
+//        baidu {
+//            manifestPlaceholders = [UMENG_CHANNEL_VALUE: "baidu"]
+//        }
+//        wandoujia {
+//            manifestPlaceholders = [UMENG_CHANNEL_VALUE: "wandoujia"]
+//        }
+//    }
+    productFlavors {
+//        xiaomi {}
+//        _360 {}
+        baidu {}
+//        wandoujia {}
+    }
+
+    productFlavors.all {
+        flavor -> flavor.manifestPlaceholders = [UMENG_CHANNEL_VALUE: name]
+    }
+    // 移除lint检查的error
+    lintOptions {
+        abortOnError false
+        disable 'MissingTranslation'
+    }
+    //编译时内在溢出要加这段或在项目gradle.properties 中加 org.gradle.jvmargs=-Xmx5120m
+//    dexOptions {
+//        incremental true
+//        javaMaxHeapSize "4g"
+//    }
+
+
+}
+
+dependencies {
+    compile fileTree(include: ['*.jar'], dir: 'libs')
+    compile files('libs/jpush-android-2.1.3.jar')
+    compile project(':xutils')
+    compile project(':pulltorefresh')
+    //compile 'com.youth.xframe:xframe:1.0.1'
+    //最新版本轮播图
+    //图片加载工具
+    //RecyclerView
+    compile project(':Common')
+    compile project(':WheelPicker')
+    //compile 'cn.hugeterry.coordinatortablayout:coordinatortablayout:1.0.6'//getUser页用的控件
+    compile project(':coordinatortablayout')
+    compile project(':ninegridview')
+    compile project(':ucrop')
+    compile project(':picture_library')
+    compile project(':IMKit')
+    compile project(':CallKit')
+    //compile ('me.shaohui.shareutil:shareutil:1.3.8'){force = true,exclude module: 'shared'}//第三方分享，登录
+    //视频播放
+    def viewDependencies = rootProject.ext.viewDependencies
+    def androidDependencies = rootProject.ext.androidDependencies
+    def dataDependencies = rootProject.ext.dataDependencies
+    apt viewDependencies.apt_butterKnife
+    compile viewDependencies.butterKnife
+    compile androidDependencies.recyclerView
+    compile viewDependencies.DanmakuFlameMaster
+    compile viewDependencies.ndkbitmap_armv7a
+    compile viewDependencies.ndkbitmap_armv5
+    compile viewDependencies.ndkbitmap_x86
+    compile androidDependencies.support_v4
+    //debugCompile dataDependencies.leakcanary
+    compile project(':gsyVideoPlayer')
+    //视频播放
+    compile project(':ShareRec')
+    compile files('libs/unity-classes.jar')
+    compile 'com.android.support:appcompat-v7:25.1.0'
+    compile 'org.immutables:gson:2.1.8'
+    compile 'com.kyleduo.switchbutton:library:1.4.5'
+    compile 'com.youth.banner:banner:1.4.9'
+    compile 'com.github.bumptech.glide:glide:3.7.0'
+    compile 'com.android.support:recyclerview-v7:25.1.0'
+    compile 'com.alibaba:fastjson:1.1.46.android'
+    compile 'com.github.florent37:viewanimator:1.0.3'
+    compile 'com.android.support:design:25.1.0'
+    compile 'com.android.support.constraint:constraint-layout:1.0.2'
+    compile project(':okhttputils')
+    compile 'com.github.mcxtzhang:SwipeDelMenuLayout:V1.2.5'//滑动listview 删除
+}

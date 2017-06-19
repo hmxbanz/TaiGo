@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--自定义的颜色-->
+    <color name="appTextColor">#abadbb</color>
+    <color name="mainColorPink">#ff7da8</color>
+    <color name="mainColorPinkDark">#ff6397</color>
+    <color name="mainColorBlue">#5bc0de</color>
+    <color name="appButtonColor">#5bc0de</color>
+    <color name="appButtonBorderColor">#46b8da</color>
+
+</resources>

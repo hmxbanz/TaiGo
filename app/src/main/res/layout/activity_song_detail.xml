@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:background="@color/appbg"
+    tools:context="com.xtdar.app.view.activity.LoginActivity">
+    <include layout="@layout/layout_title_top" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="1dp"
+        android:background="@color/white"
+        android:orientation="vertical">
+
+        <com.shuyu.gsyvideoplayer.MyVideoPlayer
+            android:id="@+id/video_player"
+            android:layout_width="match_parent"
+            android:layout_height="200dp">
+
+        </com.shuyu.gsyvideoplayer.MyVideoPlayer>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_marginBottom="5dp"
+        android:layout_marginTop="5dp"
+        android:background="@color/white"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:id="@+id/img_forward"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_marginRight="20dp"
+            android:src="@drawable/icon_forward" />
+
+        <ImageView
+            android:id="@+id/img_play"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:src="@drawable/icon_playing" />
+
+        <ImageView
+            android:id="@+id/img_next"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_marginLeft="20dp"
+            android:src="@drawable/icon_next" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:padding="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:id="@+id/list_item_layout"
+        android:layout_marginTop="2dp"
+        android:layout_marginBottom="2dp"
+        android:background="@color/white" >
+        <ImageView
+            android:id="@+id/img_cover"
+            android:scaleType="centerCrop"
+            android:layout_width="80dp"
+            android:layout_height="80dp" />
+        <LinearLayout
+            android:paddingTop="10dp"
+            android:orientation="vertical"
+            android:layout_width="0dp"
+            android:layout_weight="3"
+            android:layout_height="match_parent">
+            <TextView
+                android:id="@+id/txt_album_title"
+                style="@style/AppPlaintTextStyle"
+                android:paddingLeft="10dp"
+                android:gravity="center_vertical"
+                android:textSize="16dp"
+                android:text="标题"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+            <LinearLayout
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
+                android:paddingRight="50dp"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <ImageView
+                    android:src="@drawable/icon_play"
+                    android:layout_width="15dp"
+                    android:layout_height="15dp" />
+                <TextView
+                    android:id="@+id/txt_play"
+                    style="@style/AppPlaintTextStyle"
+                    android:paddingLeft="10dp"
+                    android:gravity="center_vertical"
+                    android:text="播放10万"
+                    android:textSize="10dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent" />
+                <TextView
+                    android:id="@+id/txt_episode_num"
+                    android:layout_marginLeft="10dp"
+                    style="@style/AppPlaintTextStyle"
+                    android:paddingLeft="10dp"
+                    android:text="集数"
+                    android:textSize="10dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+        <RelativeLayout
+
+            android:id="@+id/layout_register"
+            android:layout_width="0dp"
+            android:layout_height="28dp"
+            android:layout_weight="1"
+            android:background="@drawable/bg_border"
+            android:clickable="true"
+            android:gravity="center">
+
+            <ImageView
+                android:id="@+id/nav_img_new"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_centerVertical="true"
+                android:src="@drawable/icon_favor" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="10dp"
+                android:layout_toRightOf="@+id/nav_img_new"
+                android:gravity="center"
+                android:text="收藏"
+                android:textColor="@color/titleBlue" />
+        </RelativeLayout>
+
+    </LinearLayout>
+    <RelativeLayout
+        android:padding="10dp"
+        android:background="@color/white"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:textSize="16dp"
+            android:layout_alignParentLeft="true"
+            android:text="家长评论："
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent" />
+        <TextView
+            android:textSize="16dp"
+            android:textColor="@color/titleBlue"
+            android:layout_alignParentRight="true"
+            android:text="我要评论"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent" />
+    </RelativeLayout>
+
+
+</LinearLayout>

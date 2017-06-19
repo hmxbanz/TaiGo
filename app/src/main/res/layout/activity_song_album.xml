@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/appbg"
+    tools:context="com.xtdar.app.view.activity.LoginActivity">
+    <include layout="@layout/layout_title_top" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="3dp"
+        android:background="@color/white"
+        android:orientation="vertical"
+        android:paddingTop="20dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+            <RelativeLayout
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="match_parent"
+                android:gravity="right"
+                android:layout_marginRight="10dp">
+
+                <ImageView
+                    android:scaleType="centerCrop"
+                    android:id="@+id/img_cover"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1.5">
+
+                <TextView
+                    android:id="@+id/txt_title"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="专辑标题"
+                    android:textSize="16dp" />
+
+                <TextView
+                    android:id="@+id/txt_episode_num"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/txt_title"
+                    android:layout_marginTop="5dp"
+                    android:text="集数" />
+
+                <TextView
+                    android:id="@+id/txt_age"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/txt_episode_num"
+                    android:layout_marginTop="5dp"
+                    android:text="年龄" />
+
+                <TextView
+                    android:id="@+id/txt_class"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/txt_age"
+                    android:layout_marginTop="5dp"
+                    android:text="分类" />
+
+                <TextView
+                    android:id="@+id/txt_play_num"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/txt_class"
+                    android:layout_marginTop="5dp"
+                    android:text="播放" />
+            </RelativeLayout>
+        </LinearLayout>
+
+        <LinearLayout
+
+            android:id="@+id/layout_nav"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_alignParentBottom="true"
+            android:layout_gravity="center_vertical"
+            android:layout_marginBottom="10dp"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="30dp"
+            android:layout_marginTop="20dp"
+            android:orientation="horizontal"
+            android:paddingBottom="5dp"
+            android:paddingTop="5dp">
+
+            <RelativeLayout
+
+                android:id="@+id/layout_register"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@drawable/bg_border"
+                android:clickable="true"
+                android:gravity="center">
+
+                <ImageView
+                    android:id="@+id/nav_img_new"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_centerVertical="true"
+                    android:src="@drawable/icon_favor" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="10dp"
+                    android:layout_toRightOf="@+id/nav_img_new"
+                    android:gravity="center"
+                    android:text="收藏"
+                    android:textColor="@color/titleBlue" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_weight="1"
+                android:background="@drawable/bg_border"
+                android:gravity="center">
+
+                <ImageView
+                    android:id="@+id/nav_img_hot3"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_centerVertical="true"
+                    android:src="@drawable/icon_down" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="10dp"
+                    android:layout_toRightOf="@+id/nav_img_hot3"
+                    android:gravity="center"
+                    android:text="批量下载"
+                    android:textColor="@color/titleBlue" />
+            </RelativeLayout>
+        </LinearLayout>
+
+        </LinearLayout>
+    <LinearLayout
+
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="5dp"
+        android:background="@color/white"
+        android:orientation="vertical"
+        android:paddingTop="20dp">
+        <TextView
+            android:paddingLeft="50dp"
+            android:textSize="16dp"
+            android:textColor="@color/titleBlue"
+            android:text="选集（20）"
+            android:id="@+id/xianji"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+    </LinearLayout>
+    <ListView
+        android:id="@+id/listview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    </ListView>
+
+</LinearLayout>

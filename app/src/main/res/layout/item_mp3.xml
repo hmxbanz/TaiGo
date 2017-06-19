@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:padding="10dp"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:id="@+id/list_item_layout" >
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+    <com.shuyu.gsyvideoplayer.MyVideoPlayer
+        android:id="@+id/my_video_player"
+        android:layout_width="50dp"
+        android:layout_height="50dp"/>
+    <com.xtdar.app.view.widget.SelectableRoundedImageView
+        android:visibility="gone"
+        android:id="@+id/img_cover"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="14dp"
+        android:layout_marginRight="14sp"
+        android:scaleType="centerCrop"
+        app:sriv_left_bottom_corner_radius="50dip"
+        app:sriv_left_top_corner_radius="50dip"
+        app:sriv_right_bottom_corner_radius="50dip"
+        app:sriv_right_top_corner_radius="50dip"
+        app:sriv_border_width="2dip"
+        app:sriv_border_color="@color/white"
+        />
+    <LinearLayout
+    android:orientation="vertical"
+    android:layout_width="0dp"
+    android:layout_weight="3"
+    android:layout_height="match_parent">
+    <TextView
+    android:id="@+id/txt_title"
+    style="@style/AppPlaintTextStyle"
+    android:paddingLeft="10dp"
+    android:gravity="center_vertical"
+        android:textSize="16dp"
+    android:text="标题"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content" />
+    <LinearLayout
+        android:layout_marginTop="10dp"
+        android:paddingLeft="10dp"
+        android:paddingRight="50dp"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <ImageView
+            android:src="@drawable/icon_play"
+            android:layout_width="15dp"
+            android:layout_height="15dp" />
+
+        <TextView
+            android:id="@+id/txt_play"
+            android:layout_marginRight="20dp"
+            style="@style/AppPlaintTextStyle"
+            android:paddingLeft="10dp"
+            android:gravity="center_vertical"
+            android:text="播放10万"
+            android:textSize="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent" />
+        <ImageView
+            android:src="@drawable/icon_time"
+            android:layout_width="15dp"
+            android:layout_height="15dp" />
+        <TextView
+            android:id="@+id/txt_time"
+            android:layout_marginRight="20dp"
+            style="@style/AppPlaintTextStyle"
+            android:paddingLeft="10dp"
+            android:gravity="center_vertical"
+            android:text="时长3：30"
+            android:textSize="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent" />
+        <ImageView
+            android:src="@drawable/icon_folder"
+            android:layout_width="15dp"
+            android:layout_height="15dp" />
+        <TextView
+            android:layout_marginRight="20dp"
+            android:id="@+id/txt_file_size"
+            style="@style/AppPlaintTextStyle"
+            android:paddingLeft="10dp"
+            android:gravity="center_vertical"
+            android:text="文件大小"
+            android:textSize="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent" />
+        <ImageView
+            android:src="@drawable/icon_download"
+            android:layout_width="15dp"
+            android:layout_height="15dp" />
+
+    </LinearLayout>
+
+</LinearLayout>
+
+
+    </LinearLayout>
+
+
+</LinearLayout>
+

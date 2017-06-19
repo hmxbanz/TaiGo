@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:background="@color/appbg"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="50dp"
+    android:gravity="center"
+    android:layout_margin="15dp"
+    android:id="@+id/list_item_layout"    >
+    <ImageView
+        android:layout_marginTop="20dp"
+        android:src="@drawable/icon_add"
+        android:id="@+id/list_item_icon"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:scaleType="centerCrop"
+        android:tint="@color/appTextColor"
+        />
+    <TextView
+        android:layout_marginBottom="10dp"
+        android:id="@+id/list_item_text"
+        android:text="添加设备"
+        android:gravity="bottom|center"
+        android:textSize="14dp"
+        style="@style/textColorAppText"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+</LinearLayout>

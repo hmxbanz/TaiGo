@@ -1,0 +1,312 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto" >
+<LinearLayout
+
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="#f0f0f6"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:orientation="horizontal"
+        android:background="@drawable/bg_line"
+        android:gravity="center_vertical"
+        >
+        <ImageView
+            android:layout_alignParentRight="true"
+            android:src="@drawable/icon_birthday"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:tint="@color/mainColorPink"/>
+        <TextView
+            style="@style/AppTitleStyle"
+            android:paddingLeft="10dp"
+            android:gravity="center_vertical"
+            android:text="年龄范围"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="match_parent" />
+        <TextView
+            style="@style/AppPlaintTextStyle"
+            android:paddingLeft="10dp"
+            android:gravity="center_vertical"
+            android:text="20-28岁"
+            android:layout_width="0dp"
+            android:layout_weight="3"
+            android:layout_height="match_parent" />
+
+    </LinearLayout>
+    <LinearLayout
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:orientation="horizontal"
+        android:background="@drawable/bg_line"
+        android:gravity="center_vertical"
+        >
+        <ImageView
+            android:layout_alignParentLeft="true"
+            android:src="@drawable/icon_area"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:tint="@color/mainColorPink"/>
+        <TextView
+            style="@style/AppTitleStyle"
+            android:paddingLeft="10dp"
+            android:gravity="center_vertical"
+            android:text="地区范围"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="match_parent" />
+        <TextView
+            style="@style/AppPlaintTextStyle"
+            android:paddingLeft="10dp"
+            android:gravity="center_vertical"
+            android:text="广东省-汕头市-龙湖区"
+            android:layout_width="0dp"
+            android:layout_weight="3"
+            android:layout_height="match_parent" />
+
+    </LinearLayout>
+    <LinearLayout
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:orientation="horizontal"
+        android:background="@drawable/bg_line"
+        android:gravity="center_vertical"
+        >
+        <ImageView
+            android:layout_alignParentLeft="true"
+            android:src="@drawable/icon_album"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:tint="@color/mainColorPink"/>
+        <TextView
+            style="@style/AppTitleStyle"
+            android:paddingLeft="10dp"
+            android:gravity="center_vertical"
+            android:text="籍贯范围"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="match_parent" />
+        <TextView
+            style="@style/AppPlaintTextStyle"
+            android:paddingLeft="10dp"
+            android:gravity="center_vertical"
+            android:text="广东省-汕头市-澄海区"
+            android:layout_width="0dp"
+            android:layout_weight="3"
+            android:layout_height="match_parent" />
+
+    </LinearLayout>
+    <LinearLayout
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:orientation="horizontal"
+        android:background="@drawable/bg_line"
+        android:gravity="center_vertical"
+        >
+        <ImageView
+            android:layout_alignParentLeft="true"
+            android:src="@drawable/icon_bodyheight"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:tint="@color/mainColorPink"/>
+        <TextView
+            style="@style/AppTitleStyle"
+            android:paddingLeft="10dp"
+            android:gravity="center_vertical"
+            android:text="身高范围"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="match_parent" />
+        <TextView
+            style="@style/AppPlaintTextStyle"
+            android:paddingLeft="10dp"
+            android:gravity="center_vertical"
+            android:text="165CM-180CM"
+            android:layout_width="0dp"
+            android:layout_weight="3"
+            android:layout_height="match_parent" />
+
+    </LinearLayout>
+    <LinearLayout
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:orientation="horizontal"
+        android:background="@drawable/bg_line"
+        android:gravity="center_vertical"
+        >
+        <ImageView
+            android:layout_alignParentLeft="true"
+            android:src="@drawable/icon_body_weight"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:tint="@color/mainColorPink"/>
+        <TextView
+            style="@style/AppTitleStyle"
+            android:paddingLeft="10dp"
+            android:gravity="center_vertical"
+            android:text="体重范围"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="match_parent" />
+        <TextView
+            style="@style/AppPlaintTextStyle"
+            android:paddingLeft="10dp"
+            android:gravity="center_vertical"
+            android:text="60KG-80KG"
+            android:layout_width="0dp"
+            android:layout_weight="3"
+            android:layout_height="match_parent" />
+
+    </LinearLayout>
+    <LinearLayout
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:orientation="horizontal"
+        android:background="@drawable/bg_line"
+        android:gravity="center_vertical"
+        >
+        <ImageView
+            android:layout_alignParentLeft="true"
+            android:src="@drawable/icon_marry"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:tint="@color/mainColorPink"/>
+        <TextView
+            style="@style/AppTitleStyle"
+            android:paddingLeft="10dp"
+            android:gravity="center_vertical"
+            android:text="婚史条件"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="match_parent" />
+        <TextView
+            style="@style/AppPlaintTextStyle"
+            android:paddingLeft="10dp"
+            android:gravity="center_vertical"
+            android:text="未婚，离异"
+            android:layout_width="0dp"
+            android:layout_weight="3"
+            android:layout_height="match_parent" />
+
+    </LinearLayout>
+    <LinearLayout
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:orientation="horizontal"
+        android:background="@drawable/bg_line"
+        android:gravity="center_vertical"
+        >
+        <ImageView
+            android:layout_alignParentLeft="true"
+            android:src="@drawable/icon_education"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:tint="@color/mainColorPink"/>
+        <TextView
+            style="@style/AppTitleStyle"
+            android:paddingLeft="10dp"
+            android:gravity="center_vertical"
+            android:text="学历条件"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="match_parent" />
+        <TextView
+            style="@style/AppPlaintTextStyle"
+            android:paddingLeft="10dp"
+            android:gravity="center_vertical"
+            android:text="社会硕士"
+            android:layout_width="0dp"
+            android:layout_weight="3"
+            android:layout_height="match_parent" />
+
+    </LinearLayout>
+    <LinearLayout
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:orientation="horizontal"
+        android:background="@drawable/bg_line"
+        android:gravity="center_vertical"
+        >
+        <ImageView
+            android:layout_alignParentLeft="true"
+            android:src="@drawable/icon_hourse"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:tint="@color/mainColorPink"/>
+        <TextView
+            style="@style/AppTitleStyle"
+            android:paddingLeft="10dp"
+            android:gravity="center_vertical"
+            android:text="住房情况"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="match_parent" />
+        <TextView
+            style="@style/AppPlaintTextStyle"
+            android:paddingLeft="10dp"
+            android:gravity="center_vertical"
+            android:text="已购房"
+            android:layout_width="0dp"
+            android:layout_weight="3"
+            android:layout_height="match_parent" />
+
+    </LinearLayout>
+    <LinearLayout
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:orientation="horizontal"
+        android:background="@drawable/bg_line"
+        android:gravity="center_vertical"
+        >
+        <ImageView
+            android:layout_alignParentLeft="true"
+            android:src="@drawable/icon_car"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:tint="@color/mainColorPink"/>
+        <TextView
+            style="@style/AppTitleStyle"
+            android:paddingLeft="10dp"
+            android:gravity="center_vertical"
+            android:text="购车情况"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="match_parent" />
+        <TextView
+            style="@style/AppPlaintTextStyle"
+            android:paddingLeft="10dp"
+            android:gravity="center_vertical"
+            android:text="未购车，已贷款购车"
+            android:layout_width="0dp"
+            android:layout_weight="3"
+            android:layout_height="match_parent" />
+
+    </LinearLayout>
+
+</LinearLayout>
+</ScrollView>

@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:background="@color/appbg"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".view.activity.FeedbackActivity">
+    <include layout="@layout/layout_title_top" />
+
+    <TextView
+        style="@style/TextStyle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="@color/appTextColor"
+        android:text="反馈内容"/>
+            <EditText
+                android:id="@+id/report_content"
+                android:padding="10dp"
+                android:hint="感谢您提出宝贵建议，帮助我们不断完善产品"
+                android:gravity="top"
+                android:inputType="textMultiLine"
+                android:scrollbars="vertical"
+                android:background="@color/white"
+                android:layout_width="match_parent"
+                android:layout_height="180dp" />
+
+        <TextView
+            style="@style/TextStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/appTextColor"
+            android:text="联系方式"/>
+        <EditText
+            android:id="@+id/cellphone"
+            android:padding="10dp"
+            android:hint="请输入QQ、邮箱或手机号码"
+            android:gravity="top"
+            android:scrollbars="vertical"
+            android:background="@color/white"
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+             />
+
+
+    <Button
+        android:id="@+id/btn_report"
+        android:text="@string/text_report"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        style="@style/AppButtonStyle"
+        />
+
+</LinearLayout>

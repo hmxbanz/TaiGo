@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="appButtonBorderColor">#46b8da</color>
+    <color name="appButtonColor">#5bc0de</color>
+    <color name="appTextColor">#abadbb</color>
+    <color name="mainColorBlue">#5bc0de</color>
+    <color name="mainColorPink">#ff7da8</color>
+    <color name="mainColorPinkDark">#ff6397</color>
+    <declare-styleable name="CircleImageView"><attr format="dimension" name="civ_border_width"/><attr format="color" name="civ_border_color"/><attr format="boolean" name="civ_border_overlay"/><attr format="color" name="civ_fill_color"/></declare-styleable>
+    <declare-styleable name="CoordinatorTabLayout"><attr format="color" name="contentScrim"/><attr format="color" name="tabIndicatorColor"/><attr format="color" name="tabTextColor"/></declare-styleable>
+    <declare-styleable name="SelectableRoundedImageView"><attr format="dimension" name="sriv_left_top_corner_radius"/><attr format="dimension" name="sriv_right_top_corner_radius"/><attr format="dimension" name="sriv_left_bottom_corner_radius"/><attr format="dimension" name="sriv_right_bottom_corner_radius"/><attr format="dimension" name="sriv_border_width"/><attr format="color" name="sriv_border_color"/><attr format="boolean" name="sriv_oval"/><attr name="android:scaleType"/></declare-styleable>
+    <string name="app_name">CoordinatorTabLayout</string>
+    <style name="TabLayoutStyle" parent="Widget.Design.TabLayout">
+        <item name="tabTextAppearance">@style/TabTextAppearence</item>
+    </style>
+    <style name="TabTextAppearence" parent="TextAppearance.Design.Tab">
+        <item name="textAllCaps">false</item>
+    </style>
+</resources>

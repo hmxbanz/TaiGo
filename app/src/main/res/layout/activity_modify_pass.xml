@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:background="@color/white"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".view.activity.ModifyPassActivity">
+    <include layout="@layout/layout_title_top" />
+
+    <LinearLayout
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:orientation="horizontal"
+            android:background="@drawable/bg_line2"
+            android:gravity="center_vertical"
+            >
+            <ImageView
+                android:layout_alignParentLeft="true"
+                android:src="@drawable/icon_pass"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:tint="@color/mainColorPink"/>
+            <TextView
+                style="@style/AppTitleStyle"
+                android:paddingLeft="10dp"
+                android:gravity="center_vertical"
+                android:text="原 密 码："
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent" />
+
+            <EditText
+                android:layout_weight="1"
+                android:id="@+id/old_pass"
+                android:padding="5dp"
+                android:layout_marginLeft="20dp"
+                android:hint=""
+                android:inputType="number"
+                android:background="@drawable/transparent_drawable"
+                android:layout_width="match_parent"
+                android:layout_height="35dp" />
+
+        </LinearLayout>
+    <LinearLayout
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:orientation="horizontal"
+        android:background="@drawable/bg_line2"
+        android:gravity="center_vertical"
+        >
+        <ImageView
+            android:layout_alignParentLeft="true"
+            android:src="@drawable/icon_pass"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:tint="@color/mainColorPink"/>
+        <TextView
+            style="@style/AppTitleStyle"
+            android:paddingLeft="10dp"
+            android:gravity="center_vertical"
+            android:text="新 密 码："
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent" />
+
+        <EditText
+            android:layout_weight="1"
+            android:id="@+id/password"
+            android:padding="5dp"
+            android:layout_marginLeft="20dp"
+            android:hint=""
+            android:inputType="number"
+            android:background="@drawable/transparent_drawable"
+            android:layout_width="match_parent"
+            android:layout_height="35dp" />
+
+    </LinearLayout>
+    <LinearLayout
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:orientation="horizontal"
+        android:background="@drawable/bg_line2"
+        android:gravity="center_vertical"
+        >
+        <ImageView
+            android:layout_alignParentLeft="true"
+            android:src="@drawable/icon_pass"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:tint="@color/mainColorPink"/>
+        <TextView
+            style="@style/AppTitleStyle"
+            android:paddingLeft="10dp"
+            android:gravity="center_vertical"
+            android:text="确认密码："
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent" />
+
+        <EditText
+            android:layout_weight="1"
+            android:id="@+id/password_again"
+            android:padding="5dp"
+            android:layout_marginLeft="10dp"
+            android:hint=""
+            android:inputType="number"
+            android:background="@drawable/transparent_drawable"
+            android:layout_width="match_parent"
+            android:layout_height="35dp" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp"
+        android:layout_width="match_parent"
+        android:orientation="vertical"
+        android:layout_height="wrap_content">
+
+    <Button
+        android:id="@+id/btn_modify_pass"
+        android:text="@string/ModifyPass"
+        android:textSize="18dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="5dp"
+        android:layout_marginTop="10dp"
+        style="@style/AppButtonStyle"
+        android:background="@drawable/bg_button"
+        />
+
+    </LinearLayout>
+</LinearLayout>
