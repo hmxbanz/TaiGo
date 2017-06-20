@@ -1,2 +1,2 @@
 <?xml version="1.0" encoding="utf-8"?>
-<merger version="3"><dataSet config="main"><source path="D:\work\XiaoTaiDou\CallLib\src\main\assets"/><source path="D:\work\XiaoTaiDou\CallLib\build\generated\assets\shaders\release"/></dataSet><dataSet config="release"><source path="D:\work\XiaoTaiDou\CallLib\src\release\assets"/></dataSet></merger>
+<merger version="3"><dataSet config="main"><source path="D:\work\TaiGo\CallLib\src\main\assets"/><source path="D:\work\TaiGo\CallLib\build\generated\assets\shaders\release"/></dataSet><dataSet config="release"><source path="D:\work\TaiGo\CallLib\src\release\assets"/></dataSet></merger>

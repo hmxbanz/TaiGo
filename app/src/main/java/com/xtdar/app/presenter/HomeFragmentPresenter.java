@@ -19,8 +19,7 @@ import java.util.List;
 public class HomeFragmentPresenter extends BasePresenter implements OnDataListener {
     private static final int GETTAGS = 1;
     private TabLayout tabLayout;
-    private List<TagResponse.ResultEntity> tagList;
-
+    private List<TagResponse.DataBean> tagList;
     //private ContactsActivity mActivity;
     public HomeFragmentPresenter(Context context){
         super(context);
@@ -33,8 +32,8 @@ public class HomeFragmentPresenter extends BasePresenter implements OnDataListen
         String TagListCache = aCache.getAsString("TagList");
         if(TagListCache!=null && !("null").equals(TagListCache)) {
             try {
-                tagList = JsonMananger.jsonToList(TagListCache, TagResponse.ResultEntity.class);
-                for (int i = 0; i <= tagList.size(); i++) {
+                tagList = JsonMananger.jsonToList(TagListCache, TagResponse.DataBean.class);
+                for (int i = 0; i <= tagList.size()-1; i++) {
                     tabLayout.getTabAt(i).setText(tagList.get(i).getClass_name());
                 }
             } catch (HttpException e) {

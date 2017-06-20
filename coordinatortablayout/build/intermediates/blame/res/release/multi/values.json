@@ -1,6 +1,6 @@
 [
     {
-        "outputFile": "D:\\work\\XiaoTaiDou\\coordinatortablayout\\build\\intermediates\\incremental\\mergeReleaseResources\\merged.dir\\values\\values.xml",
+        "outputFile": "D:\\work\\TaiGo\\coordinatortablayout\\build\\intermediates\\incremental\\mergeReleaseResources\\merged.dir\\values\\values.xml",
         "map": [
             {
                 "to": {
@@ -296,7 +296,7 @@
                     "endOffset": 1109
                 },
                 "from": {
-                    "file": "D:\\work\\XiaoTaiDou\\coordinatortablayout\\src\\main\\res\\values\\color.xml",
+                    "file": "D:\\work\\TaiGo\\coordinatortablayout\\src\\main\\res\\values\\color.xml",
                     "position": {
                         "startLine": 8,
                         "startColumn": 4,
@@ -315,7 +315,7 @@
                     "endOffset": 1158
                 },
                 "from": {
-                    "file": "D:\\work\\XiaoTaiDou\\coordinatortablayout\\src\\main\\res\\values\\color.xml",
+                    "file": "D:\\work\\TaiGo\\coordinatortablayout\\src\\main\\res\\values\\color.xml",
                     "position": {
                         "startLine": 7,
                         "startColumn": 4,
@@ -334,7 +334,7 @@
                     "endOffset": 1205
                 },
                 "from": {
-                    "file": "D:\\work\\XiaoTaiDou\\coordinatortablayout\\src\\main\\res\\values\\color.xml",
+                    "file": "D:\\work\\TaiGo\\coordinatortablayout\\src\\main\\res\\values\\color.xml",
                     "position": {
                         "startLine": 3,
                         "startColumn": 4,
@@ -942,7 +942,7 @@
                     "endOffset": 3546
                 },
                 "from": {
-                    "file": "D:\\work\\XiaoTaiDou\\coordinatortablayout\\src\\main\\res\\values\\color.xml",
+                    "file": "D:\\work\\TaiGo\\coordinatortablayout\\src\\main\\res\\values\\color.xml",
                     "position": {
                         "startLine": 6,
                         "startColumn": 4,
@@ -961,7 +961,7 @@
                     "endOffset": 3594
                 },
                 "from": {
-                    "file": "D:\\work\\XiaoTaiDou\\coordinatortablayout\\src\\main\\res\\values\\color.xml",
+                    "file": "D:\\work\\TaiGo\\coordinatortablayout\\src\\main\\res\\values\\color.xml",
                     "position": {
                         "startLine": 4,
                         "startColumn": 4,
@@ -980,7 +980,7 @@
                     "endOffset": 3646
                 },
                 "from": {
-                    "file": "D:\\work\\XiaoTaiDou\\coordinatortablayout\\src\\main\\res\\values\\color.xml",
+                    "file": "D:\\work\\TaiGo\\coordinatortablayout\\src\\main\\res\\values\\color.xml",
                     "position": {
                         "startLine": 5,
                         "startColumn": 4,
@@ -5350,7 +5350,7 @@
                     "endOffset": 50609
                 },
                 "from": {
-                    "file": "D:\\work\\XiaoTaiDou\\coordinatortablayout\\src\\main\\res\\values\\strings.xml",
+                    "file": "D:\\work\\TaiGo\\coordinatortablayout\\src\\main\\res\\values\\strings.xml",
                     "position": {
                         "startLine": 1,
                         "startColumn": 4,
@@ -8937,7 +8937,7 @@
                     "endOffset": 128480
                 },
                 "from": {
-                    "file": "D:\\work\\XiaoTaiDou\\coordinatortablayout\\src\\main\\res\\values\\styles.xml",
+                    "file": "D:\\work\\TaiGo\\coordinatortablayout\\src\\main\\res\\values\\styles.xml",
                     "position": {
                         "startLine": 2,
                         "startColumn": 4,
@@ -8958,7 +8958,7 @@
                     "endOffset": 128611
                 },
                 "from": {
-                    "file": "D:\\work\\XiaoTaiDou\\coordinatortablayout\\src\\main\\res\\values\\styles.xml",
+                    "file": "D:\\work\\TaiGo\\coordinatortablayout\\src\\main\\res\\values\\styles.xml",
                     "position": {
                         "startLine": 6,
                         "startColumn": 4,
