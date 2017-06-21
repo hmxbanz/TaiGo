@@ -18,6 +18,7 @@ import android.widget.TextView;
 
 import com.xtdar.app.R;
 import com.xtdar.app.presenter.Main2Presenter;
+import com.xtdar.app.view.fragment.GameFragment;
 import com.xtdar.app.view.fragment.HomeFragment;
 import com.xtdar.app.view.fragment.MineFragment;
 import com.xtdar.app.view.fragment.ShopFragment;
@@ -56,15 +57,13 @@ public class Main2Activity extends BaseActivity implements View.OnClickListener{
         main2Presenter.init();
     }
     private void initViews() {
-        RelativeLayout homeLayout,shopLayout, arLayout, discoveryLayout,meLayout;
+        RelativeLayout homeLayout,shopLayout, discoveryLayout,meLayout;
         homeLayout = (RelativeLayout) findViewById(R.id.tab_layout_home);
         shopLayout = (RelativeLayout) findViewById(R.id.tab_layout_shop);
-        arLayout = (RelativeLayout) findViewById(R.id.tab_layout_logo);
         discoveryLayout = (RelativeLayout) findViewById(R.id.tab_layout_show);
         meLayout = (RelativeLayout) findViewById(R.id.tab_layout_me);
         mImageHome = (ImageView) findViewById(R.id.tab_img_home);
         mImageShop = (ImageView) findViewById(R.id.tab_img_shop);
-        mImageAr = (ImageView) findViewById(R.id.tab_img_logo);
         mImageDiscovery = (ImageView) findViewById(R.id.tab_img_discovery);
         mImageMe = (ImageView) findViewById(R.id.tab_img_me);
         mTextHome = (TextView) findViewById(R.id.tab_text_home);
@@ -73,7 +72,6 @@ public class Main2Activity extends BaseActivity implements View.OnClickListener{
         mTextMe = (TextView) findViewById(R.id.tab_text_me);
         homeLayout.setOnClickListener(this);
         shopLayout.setOnClickListener(this);
-        arLayout.setOnClickListener(this);
         discoveryLayout.setOnClickListener(this);
         meLayout.setOnClickListener(this);
         viewMainTop = findViewById(R.id.main_top);
@@ -89,7 +87,7 @@ public class Main2Activity extends BaseActivity implements View.OnClickListener{
         //mFragments.add(mConversationList);
         mFragments = new ArrayList<>();
         mFragments.add(HomeFragment.getInstance());
-        mFragments.add(ShopFragment.getInstance());
+        mFragments.add(GameFragment.getInstance());
         mFragments.add(ShowFragment.getInstance());
         mFragments.add(MineFragment.getInstance());
 
@@ -112,7 +110,6 @@ public class Main2Activity extends BaseActivity implements View.OnClickListener{
     private void changeTextViewColor() {
         mImageHome.setBackgroundDrawable(getResources().getDrawable(R.drawable.tab_home));
         mImageShop.setBackgroundDrawable(getResources().getDrawable(R.drawable.tab_shop));
-        mImageAr.setBackgroundDrawable(getResources().getDrawable(R.drawable.tab_ar));
         mImageDiscovery.setBackgroundDrawable(getResources().getDrawable(R.drawable.tab_discovery));
         mImageMe.setBackgroundDrawable(getResources().getDrawable(R.drawable.tab_me));
         mTextHome.setTextColor(Color.parseColor("#abadbb"));
@@ -166,9 +163,6 @@ public class Main2Activity extends BaseActivity implements View.OnClickListener{
                 break;
             case R.id.tab_layout_shop:
                 mViewPager.setCurrentItem(1, false);
-                break;
-            case R.id.tab_layout_logo:
-                startActivity(new Intent(this,UnityPlayerActivity.class));
                 break;
             case R.id.tab_layout_show:
                 mViewPager.setCurrentItem(2, false);

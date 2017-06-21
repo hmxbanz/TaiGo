@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!--自定义的颜色-->
-    <color name="titleBlue" >#07a5ff</color>
+    <color name="titleBlue" >#1bb4fb</color>
     <color name="grayLine" >#d9d9d9</color>
     <color name="appTextColor">#4c4c4c</color>
     <color name="mainColorPink">#ff7da8</color>

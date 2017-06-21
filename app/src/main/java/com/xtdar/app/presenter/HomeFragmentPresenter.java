@@ -28,19 +28,10 @@ public class HomeFragmentPresenter extends BasePresenter implements OnDataListen
 
     public void init(TabLayout tabLayout) {
         this.tabLayout=tabLayout;
-        //取缓存
-        String TagListCache = aCache.getAsString("TagList");
-        if(TagListCache!=null && !("null").equals(TagListCache)) {
-            try {
-                tagList = JsonMananger.jsonToList(TagListCache, TagResponse.DataBean.class);
-                for (int i = 0; i <= tagList.size()-1; i++) {
-                    tabLayout.getTabAt(i).setText(tagList.get(i).getClass_name());
-                }
-            } catch (HttpException e) {
-                e.printStackTrace();
-            }
-
-        }
+        tabLayout.getTabAt(0).setText("射击类");
+        tabLayout.getTabAt(1).setText("赛车类");
+        tabLayout.getTabAt(2).setText("益智类");
+        tabLayout.getTabAt(3).setText("全部");
         LoadDialog.show(mContext);
         atm.request(GETTAGS,this);
     }
@@ -68,9 +59,9 @@ public class HomeFragmentPresenter extends BasePresenter implements OnDataListen
                     } catch (HttpException e) {
                         e.printStackTrace();
                     }
-                    for (int i = 0; i<= tagList.size(); i++) {
-                        tabLayout.getTabAt(i).setText(tagList.get(i).getClass_name());
-                    }
+//                    for (int i = 0; i<= tagList.size(); i++) {
+//                        tabLayout.getTabAt(i).setText(tagList.get(i).getClass_name());
+//                    }
                 }
                 break;
         }

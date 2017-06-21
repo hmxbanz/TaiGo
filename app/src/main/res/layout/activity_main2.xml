@@ -14,23 +14,6 @@
         android:layout_weight="1"/>
 
     <include layout="@layout/layout_bottom"></include>
-    <FrameLayout
-        android:layout_width="70dp"
-        android:layout_height="70dp"
-        android:gravity="center"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="5dp"
-        >
 
-        <ImageView
-            android:id="@+id/tab_img_logo"
-            android:layout_width="70dp"
-            android:layout_height="70dp"
-            android:layout_centerHorizontal="true"
-            android:focusable="false"
-            android:scaleType="fitCenter" />
-
-    </FrameLayout>
 </RelativeLayout>
 

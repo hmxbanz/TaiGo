@@ -47,7 +47,7 @@ public class HomeAnimationPresenter extends BasePresenter implements OnDataListe
 
     public void init(RecyclerView recycleView) {
         this.recyclerView =recycleView;
-        gridLayoutManager=new GridLayoutManager(mContext,2);
+        gridLayoutManager=new GridLayoutManager(mContext,1);
         recycleView.setLayoutManager(gridLayoutManager);
         recyclerView.addOnScrollListener(new EndlessRecyclerOnScrollListener(gridLayoutManager) {
             @Override
@@ -104,7 +104,7 @@ public class HomeAnimationPresenter extends BasePresenter implements OnDataListe
                     lastItem=((ClassListResponse.DataBean) datas.get(datas.size()-1)).getItem_id();
                     list.addAll(classListResponse.getData());
                     //设置列表
-                    dataAdapter.setHeaderView(LayoutInflater.from(mContext).inflate(R.layout.recyclerview_header,null));
+                    //dataAdapter.setHeaderView(LayoutInflater.from(mContext).inflate(R.layout.recyclerview_header,null));
                     dataAdapter.setListItems(list);
                     dataAdapter.setOnItemClickListener(this);
                     //dataAdapter.setFooterView(LayoutInflater.from(mContext).inflate(R.layout.recyclerview_footer,null));

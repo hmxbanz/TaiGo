@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="MissingTranslation">
     <string name="xtdar_app_name">小泰斗</string>
-    <string name="home">首页</string>
+    <string name="home">设备</string>
     <string name="contacts">男女友</string>
     <string name="me">我的</string>
 
@@ -50,8 +50,8 @@
     <string name="string_upload_text">确认提交</string>
     <string name="search">搜索</string>
     <string name="new_friends">新的朋友</string>
-    <string name="shop">商城</string>
-    <string name="discovery">秀场</string>
+    <string name="shop">益智</string>
+    <string name="discovery">发现</string>
     <string name="find_password">找回密码</string>
     <string name="register">注册</string>
     <string name="network_not_available">网络不可用</string>

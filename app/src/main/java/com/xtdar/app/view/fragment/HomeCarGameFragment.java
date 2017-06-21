@@ -1,7 +1,6 @@
 package com.xtdar.app.view.fragment;
 
 import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
@@ -17,23 +16,18 @@ import android.widget.Toast;
 
 import com.xtdar.app.R;
 import com.xtdar.app.adapter.RecyclerViewAdapter;
-import com.xtdar.app.loader.GlideImageLoader;
-import com.xtdar.app.model.UserList;
 import com.xtdar.app.presenter.HomeAnimationPresenter;
-import com.xtdar.app.presenter.HomeRecommendPresenter;
 import com.xtdar.app.view.activity.DetailActivity;
-import com.youth.banner.Banner;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 /**
  * Created by AMing on 16/6/21.
  * Company RongCloud
  */
-public class HomeAnimationFragment extends Fragment implements RecyclerViewAdapter.ItemClickListener {
-    public static HomeAnimationFragment instance = null;
+public class HomeCarGameFragment extends Fragment implements RecyclerViewAdapter.ItemClickListener {
+    public static HomeCarGameFragment instance = null;
     public static List<?> images=new ArrayList<>();
     private RecyclerView recycleView;
     private RecyclerViewAdapter dataAdapter;
@@ -46,9 +40,9 @@ public class HomeAnimationFragment extends Fragment implements RecyclerViewAdapt
 
     private HomeAnimationPresenter homeAnimationPresenter;
 
-    public static HomeAnimationFragment getInstance() {
+    public static HomeCarGameFragment getInstance() {
         if (instance == null) {
-            instance = new HomeAnimationFragment();
+            instance = new HomeCarGameFragment();
         }
         return instance;
     }

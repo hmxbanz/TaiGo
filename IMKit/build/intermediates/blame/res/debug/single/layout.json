@@ -48,12 +48,12 @@
         "source": "D:\\work\\TaiGo\\IMKit\\src\\main\\res\\layout\\rc_base_activity_layout.xml"
     },
     {
-        "merged": "D:\\work\\TaiGo\\IMKit\\build\\intermediates\\res\\merged\\debug\\layout\\rc_fr_image.xml",
-        "source": "D:\\work\\TaiGo\\IMKit\\src\\main\\res\\layout\\rc_fr_image.xml"
-    },
-    {
         "merged": "D:\\work\\TaiGo\\IMKit\\build\\intermediates\\res\\merged\\debug\\layout\\rc_picsel_grid_item.xml",
         "source": "D:\\work\\TaiGo\\IMKit\\src\\main\\res\\layout\\rc_picsel_grid_item.xml"
+    },
+    {
+        "merged": "D:\\work\\TaiGo\\IMKit\\build\\intermediates\\res\\merged\\debug\\layout\\rc_fr_image.xml",
+        "source": "D:\\work\\TaiGo\\IMKit\\src\\main\\res\\layout\\rc_fr_image.xml"
     },
     {
         "merged": "D:\\work\\TaiGo\\IMKit\\build\\intermediates\\res\\merged\\debug\\layout\\rc_item_discussion_notification_message.xml",
@@ -68,12 +68,12 @@
         "source": "D:\\work\\TaiGo\\IMKit\\src\\main\\res\\layout\\rc_ext_emoji_item.xml"
     },
     {
-        "merged": "D:\\work\\TaiGo\\IMKit\\build\\intermediates\\res\\merged\\debug\\layout\\rc_fr_public_service_inf.xml",
-        "source": "D:\\work\\TaiGo\\IMKit\\src\\main\\res\\layout\\rc_fr_public_service_inf.xml"
-    },
-    {
         "merged": "D:\\work\\TaiGo\\IMKit\\build\\intermediates\\res\\merged\\debug\\layout\\rc_ext_input_edit_text.xml",
         "source": "D:\\work\\TaiGo\\IMKit\\src\\main\\res\\layout\\rc_ext_input_edit_text.xml"
+    },
+    {
+        "merged": "D:\\work\\TaiGo\\IMKit\\build\\intermediates\\res\\merged\\debug\\layout\\rc_fr_public_service_inf.xml",
+        "source": "D:\\work\\TaiGo\\IMKit\\src\\main\\res\\layout\\rc_fr_public_service_inf.xml"
     },
     {
         "merged": "D:\\work\\TaiGo\\IMKit\\build\\intermediates\\res\\merged\\debug\\layout\\rc_item_rich_content_message.xml",
@@ -136,12 +136,12 @@
         "source": "D:\\work\\TaiGo\\IMKit\\src\\main\\res\\layout\\rc_location_preview_activity.xml"
     },
     {
-        "merged": "D:\\work\\TaiGo\\IMKit\\build\\intermediates\\res\\merged\\debug\\layout\\rc_item_voice_message.xml",
-        "source": "D:\\work\\TaiGo\\IMKit\\src\\main\\res\\layout\\rc_item_voice_message.xml"
-    },
-    {
         "merged": "D:\\work\\TaiGo\\IMKit\\build\\intermediates\\res\\merged\\debug\\layout\\rc_item_public_service_input_menus.xml",
         "source": "D:\\work\\TaiGo\\IMKit\\src\\main\\res\\layout\\rc_item_public_service_input_menus.xml"
+    },
+    {
+        "merged": "D:\\work\\TaiGo\\IMKit\\build\\intermediates\\res\\merged\\debug\\layout\\rc_item_voice_message.xml",
+        "source": "D:\\work\\TaiGo\\IMKit\\src\\main\\res\\layout\\rc_item_voice_message.xml"
     },
     {
         "merged": "D:\\work\\TaiGo\\IMKit\\build\\intermediates\\res\\merged\\debug\\layout\\rc_item_public_service_multi_rich_content_message.xml",
