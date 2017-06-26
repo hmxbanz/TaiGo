@@ -7,7 +7,6 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.shuyu.gsyvideoplayer.GSYVideoManager;
 import com.shuyu.gsyvideoplayer.MyVideoPlayer;
 import com.xtdar.app.R;
 import com.xtdar.app.XtdConst;
@@ -61,7 +60,7 @@ public class SongDetailPresenter extends BasePresenter implements OnDataListener
         songId = intent.getStringExtra(XtdConst.SONGID);
         albumId = intent.getStringExtra(XtdConst.ALBUMID);
         //
-        LoadDialog.show(mContext);
+        LoadDialog.show(context);
         atm.request(GETSONGALBUM, this);
     }
     @Override
@@ -76,7 +75,7 @@ public class SongDetailPresenter extends BasePresenter implements OnDataListener
     }
     @Override
     public void onSuccess(int requestCode, Object result) {
-        LoadDialog.dismiss(mContext);
+        LoadDialog.dismiss(context);
         switch (requestCode) {
             case GETSONGALBUM:
                 SongDetailResponse response = (SongDetailResponse) result;
@@ -94,15 +93,15 @@ public class SongDetailPresenter extends BasePresenter implements OnDataListener
                     ((TextView)mActivity.findViewById(R.id.txt_album_title)).setText(albumInfo.getItem_title());
                     ((TextView)mActivity.findViewById(R.id.txt_play)).setText(albumInfo.getClick_count()+"万");
                     ((TextView)mActivity.findViewById(R.id.txt_episode_num)).setText("集数："+entity.getSong_num()+"集");
-                    glideImageLoader.displayImage(mContext,XtdConst.IMGURI+albumInfo.getItem_cover(),((ImageView)mActivity.findViewById(R.id.img_cover)));
+                    glideImageLoader.displayImage(context,XtdConst.IMGURI+albumInfo.getItem_cover(),((ImageView)mActivity.findViewById(R.id.img_cover)));
 //
 //                    List<SongDetailResponse.DataBean.SongListBean> songList = entity.getSong_list();
-//                    SongListAdapter songListAdapter = new SongListAdapter(mContext);
+//                    SongListAdapter songListAdapter = new SongListAdapter(context);
 //                    songListAdapter.setmList(songList);
 //                    listView.setAdapter(songListAdapter);
                     atm.request(GETCOMMENT, this);
                 }
-                NToast.shortToast(mContext, response.getMsg());
+                NToast.shortToast(context, response.getMsg());
                 break;
 
         case GETSONGLIST:
@@ -125,7 +124,7 @@ public class SongDetailPresenter extends BasePresenter implements OnDataListener
 
         songIndex=songIndex-1;
         if (songIndex <= -1) {
-            NToast.shortToast(mContext, "已经是第一首");
+            NToast.shortToast(context, "已经是第一首");
             songIndex=0;
             return;
         }
@@ -163,7 +162,7 @@ public class SongDetailPresenter extends BasePresenter implements OnDataListener
     public void next() {
         songIndex=songIndex+1;
         if(songIndex>=songList.size()){
-            NToast.shortToast(mContext, "已经是最后一首");
+            NToast.shortToast(context, "已经是最后一首");
             songIndex=songList.size()-1;
             return;
         }

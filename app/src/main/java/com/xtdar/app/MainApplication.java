@@ -2,6 +2,7 @@ package com.xtdar.app;
 
 import android.app.Application;
 
+import com.uuzuche.lib_zxing.activity.ZXingLibrary;
 import com.xtdar.app.common.CommonTools;
 
 import cn.jpush.android.api.JPushInterface;
@@ -39,7 +40,7 @@ public class MainApplication extends Application {
 //                .weiboRedirectUrl(REDIRECT_URL)
 //                .wxSecret(WX_ID);
 //        ShareManager.init(config);
-
+        ZXingLibrary.initDisplayOpinion(this);
     }
 
     /**

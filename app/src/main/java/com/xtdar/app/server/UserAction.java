@@ -9,11 +9,13 @@ import com.xtdar.app.XtdConst;
 import com.xtdar.app.common.NLog;
 import com.xtdar.app.common.json.JsonMananger;
 import com.xtdar.app.server.request.LoginRequest;
+import com.xtdar.app.server.request.UpdateRequest;
 import com.xtdar.app.server.response.AdResponse;
 import com.xtdar.app.server.response.CaptchaResponse;
 import com.xtdar.app.server.response.ClassListResponse;
 import com.xtdar.app.server.response.CommonResponse;
 import com.xtdar.app.server.response.DetailResponse;
+import com.xtdar.app.server.response.HelpResponse;
 import com.xtdar.app.server.response.LoginResponse;
 import com.xtdar.app.server.response.RecommendResponse;
 import com.xtdar.app.server.response.RelateRecommendResponse;
@@ -258,7 +260,8 @@ public CommonResponse register(String cellPhone, String password, String captcha
 
 //版本检查
     public VersionResponse checkVersion() throws HttpException {
-        String uri = getURL("version.txt");
+        //String uri = getURL("version.txt");
+        String uri ="http://120.24.231.219/kp_dyz/app_source/dl/version.txt";
         Response response=null;
         try {
             response=OkHttpUtils
@@ -541,5 +544,60 @@ public CommonResponse register(String cellPhone, String password, String captcha
             }
         }
         return showResponse;
+    }
+
+
+    public String getProtocol() {
+        String uri = "http://120.24.231.219/kp_dyz/app_source/dl/protocol.html";
+        Response response=null;
+        try {
+            response=OkHttpUtils
+                    .get()
+                    .url(uri)
+                    .build()
+                    .execute();
+            result =response.body().string();
+            Log.w(TAG, "接收的："+ result);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        if (!TextUtils.isEmpty(result)) {
+            return result;
+        }
+        return null;
+    }
+
+    public HelpResponse getHelps() throws HttpException {
+        return null;
+    }
+
+    public CommonResponse save(String nickName) throws HttpException {
+        String uri = getURL("kp_dyz/cli-api-setuserinfo.php");
+        String json = JsonMananger.beanToJson(new UpdateRequest(nickName,token));
+        Log.w(TAG, "请求的："+json);
+        Response response=null;
+        try {
+            response=OkHttpUtils
+                    //.postString()
+                    //.mediaType(MediaType.parse("application/json; charset=utf-8"))
+                    //.content(json)//.content(new Gson().toJson(new User("zhy", "123")))
+                    .get()
+                    .url(uri)
+                    .addParams("access_key",token)
+                    .addParams("nick_name",nickName)
+                    .build()
+                    .execute();
+            result =response.body().string();
+            Log.w(TAG, "接收的："+ result);
+        } catch (IOException e) {
+            e.printStackTrace();
+
+        }
+        CommonResponse commonResponse = null;
+        if (!TextUtils.isEmpty(result)) {
+            commonResponse = JsonMananger.jsonToBean(result, CommonResponse.class);
+        }
+        return commonResponse;
+
     }
 }

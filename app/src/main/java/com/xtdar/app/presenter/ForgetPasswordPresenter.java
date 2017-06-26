@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.CountDownTimer;
 import android.text.TextUtils;
-import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.TextView;
 
@@ -44,7 +43,7 @@ public class ForgetPasswordPresenter extends BasePresenter {
 
             if(TextUtils.isEmpty(this.userName))
             {
-                NToast.shortToast(mContext, R.string.phone_number_be_null);
+                NToast.shortToast(context, R.string.phone_number_be_null);
                 return;
             }
             timer.start();//开始倒计时60秒
@@ -58,19 +57,19 @@ public class ForgetPasswordPresenter extends BasePresenter {
 
             if(TextUtils.isEmpty(this.userName))
             {
-                NToast.shortToast(mContext, R.string.phone_number_be_null);
+                NToast.shortToast(context, R.string.phone_number_be_null);
                 return;
             }
             if (TextUtils.isEmpty(this.password)) {
-                NToast.shortToast(mContext, R.string.password_be_null);
+                NToast.shortToast(context, R.string.password_be_null);
                 return;
             }
             if (this.password.contains(" ")) {
-                NToast.shortToast(mContext, R.string.password_cannot_contain_spaces);
+                NToast.shortToast(context, R.string.password_cannot_contain_spaces);
                 return;
             }
             if (TextUtils.isEmpty(this.captcha)) {
-                NToast.shortToast(mContext, R.string.captcha_cannot_be_null);
+                NToast.shortToast(context, R.string.captcha_cannot_be_null);
                 return;
             }
 
@@ -91,24 +90,24 @@ public class ForgetPasswordPresenter extends BasePresenter {
 
         @Override
         public void onSuccess(int requestCode, Object result) {
-            LoadDialog.dismiss(mContext);
+            LoadDialog.dismiss(context);
             switch (requestCode) {
                 case GETCAPTCHA:
                     CommonResponse commonResponse = (CommonResponse) result;
-                    NToast.shortToast(mContext,commonResponse.getMsg());
+                    NToast.shortToast(context,commonResponse.getMsg());
                     break;
                 case RESETPWD:
                     CommonResponse commonResponse2 = (CommonResponse) result;
                     if (commonResponse2.getCode() == XtdConst.SUCCESS) {
-                        DialogWithYesOrNoUtils.getInstance().showDialog(mContext, "密码重置成功", null, new AlertDialogCallback() {
+                        DialogWithYesOrNoUtils.getInstance().showDialog(context, "密码重置成功", null, new AlertDialogCallback() {
                             @Override
                             public void executeEvent() {
-                                mContext.startActivity(new Intent(mContext, Main2Activity.class));
+                                context.startActivity(new Intent(context, Main2Activity.class));
                             }
 
                         });
                     }
-                    NToast.shortToast(mContext,commonResponse2.getMsg());
+                    NToast.shortToast(context,commonResponse2.getMsg());
                     break;
             }
         }

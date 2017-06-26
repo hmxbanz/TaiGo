@@ -15,13 +15,13 @@ import android.widget.TextView;
 
 import com.xtdar.app.common.PhotoUtils;
 import com.xtdar.app.view.activity.AlbumActivity;
-import com.xtdar.app.view.activity.DeviceActivity;
 import com.xtdar.app.view.activity.DownloadActivity;
 import com.xtdar.app.view.activity.DynamicActivity;
 import com.xtdar.app.view.activity.HistoryActivity;
 import com.xtdar.app.view.activity.MeActivity;
-import com.xtdar.app.view.activity.SettingActivity;
 import com.xtdar.app.view.activity.FavorActivity;
+import com.xtdar.app.view.activity.SettingActivity;
+import com.xtdar.app.view.activity.UnityPlayerActivity;
 import com.xtdar.app.view.widget.BottomMenuDialog;
 import com.xtdar.app.view.widget.SelectableRoundedImageView;
 import com.xtdar.app.widget.progressBar.MaterialProgressBar;
@@ -37,8 +37,8 @@ public class MineFragment extends Fragment implements View.OnClickListener {
     private static final int COMPAREVERSION = 54;
     public static final String SHOWRED = "SHOWRED";
     public static MineFragment mFragment = null;
-    private RelativeLayout mLayoutFavor,mLayoutDynamic,mLayoutHistory;
-    private LinearLayout mLayoutFriendCondition,mLayoutVisitRecord,mLayoutDevice,mLayoutAblum;
+    private RelativeLayout mLayoutAr,mLayoutDynamic, mLayoutMsg;
+    private LinearLayout mLayoutFriendCondition,mLayoutVisitRecord, mLayoutSetting,mLayoutAblum;
     private View mView;
 
     private SelectableRoundedImageView mImageView;
@@ -49,7 +49,8 @@ public class MineFragment extends Fragment implements View.OnClickListener {
     private Uri selectUri;
     private MaterialProgressBar progressBar;
     private TextView mTxtMe;
-
+    private RelativeLayout layout_back;
+    private TextView title;
 
 
     public static MineFragment getInstance() {
@@ -80,18 +81,22 @@ public class MineFragment extends Fragment implements View.OnClickListener {
     }
 
     private void initViews() {
-        mImageSetting = (ImageView) mView.findViewById(R.id.img_setting);
-        mImageSetting.setOnClickListener(this);
+        layout_back=(RelativeLayout)mView.findViewById(R.id.layout_back);
+        layout_back.setVisibility(View.INVISIBLE);
+        title=(TextView)mView.findViewById(R.id.text_title);
+        title.setText("我的");
+//        mImageSetting = (ImageView) mView.findViewById(R.id.img_setting);
+//        mImageSetting.setOnClickListener(this);
         mImageView = (SelectableRoundedImageView) mView.findViewById(R.id.img_avator);
         mImageView.setOnClickListener(this);
 
         mLayoutFriendCondition= (LinearLayout) mView.findViewById(R.id.layout_friend_condition);
         mLayoutFriendCondition.setOnClickListener(this);
 
-        mLayoutFavor= (RelativeLayout) mView.findViewById(R.id.layout_favor);
-        mLayoutFavor.setOnClickListener(this);
-        mLayoutHistory= (RelativeLayout) mView.findViewById(R.id.layout_history);
-        mLayoutHistory.setOnClickListener(this);
+        mLayoutAr = (RelativeLayout) mView.findViewById(R.id.layout_ar);
+        mLayoutAr.setOnClickListener(this);
+        mLayoutMsg = (RelativeLayout) mView.findViewById(R.id.layout_message);
+        mLayoutMsg.setOnClickListener(this);
         mLayoutDynamic= (RelativeLayout) mView.findViewById(R.id.layout_dynamic);
         mLayoutDynamic.setOnClickListener(this);
         mLayoutVisitRecord= (LinearLayout) mView.findViewById(R.id.layout_download);
@@ -99,8 +104,8 @@ public class MineFragment extends Fragment implements View.OnClickListener {
 
         mLayoutAblum= (LinearLayout) mView.findViewById(R.id.layout_album);
         mLayoutAblum.setOnClickListener(this);
-        mLayoutDevice= (LinearLayout) mView.findViewById(R.id.layout_device);
-        mLayoutDevice.setOnClickListener(this);
+        mLayoutSetting = (LinearLayout) mView.findViewById(R.id.layout_setting);
+        mLayoutSetting.setOnClickListener(this);
         mTxtMe = (TextView) mView.findViewById(R.id.txt_me);
         mTxtMe.setOnClickListener(this);
 
@@ -116,8 +121,8 @@ public class MineFragment extends Fragment implements View.OnClickListener {
     public void onClick(View v) {
         switch (v.getId())
         {
-            case R.id.img_setting:
-                startActivity(new Intent(getActivity(), SettingActivity.class));
+            case R.id.layout_ar:
+                startActivity(new Intent(getActivity(), UnityPlayerActivity.class));
                 break;
             case R.id.txt_me:
                 startActivity(new Intent(getActivity(), MeActivity.class));
@@ -125,8 +130,8 @@ public class MineFragment extends Fragment implements View.OnClickListener {
             case R.id.layout_favor:
                 startActivity(new Intent(getActivity(), FavorActivity.class));
                 break;
-            case R.id.layout_history:
-                startActivity(new Intent(getActivity(), HistoryActivity.class));
+            case R.id.layout_message:
+                //startActivity(new Intent(getActivity(), HistoryActivity.class));
                 break;
             case R.id.layout_dynamic:
                 startActivity(new Intent(getActivity(), DynamicActivity.class));
@@ -134,8 +139,8 @@ public class MineFragment extends Fragment implements View.OnClickListener {
             case R.id.layout_album:
                 startActivity(new Intent(getActivity(), AlbumActivity.class));
                 break;
-            case R.id.layout_device:
-                startActivity(new Intent(getActivity(), DeviceActivity.class));
+            case R.id.layout_setting:
+                startActivity(new Intent(getActivity(), SettingActivity.class));
                 break;
             case R.id.layout_download:
             startActivity(new Intent(getActivity(), DownloadActivity.class));

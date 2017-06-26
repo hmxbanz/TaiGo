@@ -109,7 +109,7 @@ public abstract class BaseAdapter<T> extends android.widget.BaseAdapter {
         if (convertView != null) {
             view = convertView;
         } else {
-            view = newView(mContext, position, parent);
+            view = newView(context, position, parent);
         }
         bindView(view, position, getItem(position));
         return view;

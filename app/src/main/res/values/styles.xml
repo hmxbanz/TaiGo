@@ -58,6 +58,14 @@
         <item name="android:textColor">@color/white</item>
         <item name="android:textSize">14dp</item>
     </style>
+    <style name="AppTitleStyle2">
+        <item name="android:textColor">@color/appTextColor</item>
+        <item name="android:textSize">14dp</item>
+    </style>
+
+    <style name="MenuTitleStyle">
+        <item name="android:textSize">14dp</item>
+    </style>
 
     <style name="AppPlaintTextStyle">
         <item name="android:textColor">@color/appTextColor</item>
@@ -108,6 +116,12 @@
     <item name="android:textSize">16dp</item>
     <item name="android:textColor">@android:color/white</item>
 </style>
+
+    <style name="DiscoveryTabLayoutAppearance" parent="TextAppearance.AppCompat.Widget.ActionBar.Title">  
+        <item name="android:textSize">16dp</item>
+        <item name="android:textColor">@android:color/white</item>
+        <item name="android:background">@color/titleBlue</item>
+    </style>
 
 <style name="MyTabLayoutTextAppearanceInverse" parent="TextAppearance.AppCompat.Widget.ActionBar.Title.Inverse">  
      <item name="android:textSize">15sp</item>

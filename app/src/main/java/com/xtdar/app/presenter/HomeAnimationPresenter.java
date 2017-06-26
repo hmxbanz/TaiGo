@@ -4,10 +4,8 @@ import android.content.Context;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.LayoutInflater;
 import android.view.View;
 
-import com.xtdar.app.R;
 import com.xtdar.app.XtdConst;
 import com.xtdar.app.adapter.ClassListAnimationAdapter;
 import com.xtdar.app.listener.EndlessRecyclerOnScrollListener;
@@ -42,17 +40,17 @@ public class HomeAnimationPresenter extends BasePresenter implements OnDataListe
     public HomeAnimationPresenter(Context context){
         super(context);
         //mActivity = (ContactsActivity) context;
-        dataAdapter = new ClassListAnimationAdapter(mContext);
+        dataAdapter = new ClassListAnimationAdapter(this.context);
     }
 
     public void init(RecyclerView recycleView) {
         this.recyclerView =recycleView;
-        gridLayoutManager=new GridLayoutManager(mContext,1);
+        gridLayoutManager=new GridLayoutManager(context,1);
         recycleView.setLayoutManager(gridLayoutManager);
         recyclerView.addOnScrollListener(new EndlessRecyclerOnScrollListener(gridLayoutManager) {
             @Override
             public void onLoadMore(int currentPage) {
-                LoadDialog.show(mContext);
+                LoadDialog.show(context);
                 atm.request(GETANIMATION,HomeAnimationPresenter.this);
             }
 
@@ -65,7 +63,7 @@ public class HomeAnimationPresenter extends BasePresenter implements OnDataListe
             }
         });
         recyclerView.setNestedScrollingEnabled(false);
-        LoadDialog.show(mContext);
+        LoadDialog.show(context);
         atm.request(GETADS,this);
 
     }
@@ -83,7 +81,7 @@ public class HomeAnimationPresenter extends BasePresenter implements OnDataListe
 
     @Override
     public void onSuccess(int requestCode, Object result) {
-        LoadDialog.dismiss(mContext);
+        LoadDialog.dismiss(context);
         switch (requestCode) {
             case GETADS:
                 AdResponse adResponse = (AdResponse) result;
@@ -104,10 +102,10 @@ public class HomeAnimationPresenter extends BasePresenter implements OnDataListe
                     lastItem=((ClassListResponse.DataBean) datas.get(datas.size()-1)).getItem_id();
                     list.addAll(classListResponse.getData());
                     //设置列表
-                    //dataAdapter.setHeaderView(LayoutInflater.from(mContext).inflate(R.layout.recyclerview_header,null));
+                    //dataAdapter.setHeaderView(LayoutInflater.from(context).inflate(R.layout.recyclerview_header,null));
                     dataAdapter.setListItems(list);
                     dataAdapter.setOnItemClickListener(this);
-                    //dataAdapter.setFooterView(LayoutInflater.from(mContext).inflate(R.layout.recyclerview_footer,null));
+                    //dataAdapter.setFooterView(LayoutInflater.from(context).inflate(R.layout.recyclerview_footer,null));
 
                     if(!isAdapterSetted)
                         recyclerView.setAdapter(dataAdapter);
@@ -123,7 +121,7 @@ public class HomeAnimationPresenter extends BasePresenter implements OnDataListe
 
     @Override
     public void onItemClick(int position, String item_id,String class_id) {
-        DetailActivity.StartActivity(mContext,item_id,class_id);
+        DetailActivity.StartActivity(context,item_id,class_id);
     }
 
     /**

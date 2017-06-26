@@ -4,11 +4,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.CountDownTimer;
 import android.text.TextUtils;
-import android.view.View;
-import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
-import android.widget.Switch;
 import android.widget.TextView;
 
 import com.xtdar.app.R;
@@ -46,7 +43,7 @@ public class RegisterPresenter extends BasePresenter {
 
         if(TextUtils.isEmpty(this.userName))
         {
-            NToast.shortToast(mContext, R.string.phone_number_be_null);
+            NToast.shortToast(context, R.string.phone_number_be_null);
             return;
         }
         timer.start();//开始倒计时60秒
@@ -60,24 +57,24 @@ public class RegisterPresenter extends BasePresenter {
         this.captcha = captcha.getText().toString();
         if(!check)
         {
-            NToast.shortToast(mContext, R.string.protocol_not_checked);
+            NToast.shortToast(context, R.string.protocol_not_checked);
             return;
         }
         if(TextUtils.isEmpty(this.userName))
         {
-            NToast.shortToast(mContext, R.string.phone_number_be_null);
+            NToast.shortToast(context, R.string.phone_number_be_null);
             return;
         }
         if (TextUtils.isEmpty(this.password)) {
-            NToast.shortToast(mContext, R.string.password_be_null);
+            NToast.shortToast(context, R.string.password_be_null);
             return;
         }
         if (this.password.contains(" ")) {
-            NToast.shortToast(mContext, R.string.password_cannot_contain_spaces);
+            NToast.shortToast(context, R.string.password_cannot_contain_spaces);
             return;
         }
         if (TextUtils.isEmpty(this.captcha)) {
-            NToast.shortToast(mContext, R.string.captcha_cannot_be_null);
+            NToast.shortToast(context, R.string.captcha_cannot_be_null);
             return;
         }
 
@@ -98,19 +95,19 @@ public class RegisterPresenter extends BasePresenter {
 
     @Override
     public void onSuccess(int requestCode, Object result) {
-        LoadDialog.dismiss(mContext);
+        LoadDialog.dismiss(context);
         switch (requestCode) {
             case GETCAPTCHA:
                 CommonResponse commonResponse = (CommonResponse) result;
-                NToast.shortToast(mContext,commonResponse.getMsg());
+                NToast.shortToast(context,commonResponse.getMsg());
                 break;
             case REGISTER:
                 CommonResponse commonResponse2 = (CommonResponse) result;
                 if (commonResponse2.getCode() == XtdConst.SUCCESS) {
-                    DialogWithYesOrNoUtils.getInstance().showDialog(mContext, "注册成功", null, new DialogWithYesOrNoUtils.DialogCallBack() {
+                    DialogWithYesOrNoUtils.getInstance().showDialog(context, "注册成功", null, new DialogWithYesOrNoUtils.DialogCallBack() {
                         @Override
                         public void executeEvent() {
-                            mContext.startActivity(new Intent(mContext, Main2Activity.class));
+                            context.startActivity(new Intent(context, Main2Activity.class));
                         }
 
                         @Override
@@ -119,7 +116,7 @@ public class RegisterPresenter extends BasePresenter {
                         }
                     });
                 }
-                NToast.shortToast(mContext,commonResponse2.getMsg());
+                NToast.shortToast(context,commonResponse2.getMsg());
                 break;
         }
     }

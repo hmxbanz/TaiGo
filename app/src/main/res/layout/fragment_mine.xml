@@ -7,38 +7,10 @@
     android:orientation="vertical"
     tools:context="com.xtdar.app.view.fragment.MineFragment">
 
-    <LinearLayout
-        android:paddingLeft="20dp"
-        android:paddingRight="20dp"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:orientation="horizontal"
-        android:background="@color/white"
-        android:gravity="center"
-        >
-
-        <TextView
-            style="@style/AppTitleStyle"
-            android:gravity="center"
-            android:text="我的"
-            android:textSize="20dp"
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="match_parent" />
-        <ImageView
-            android:id="@+id/img_setting"
-            android:src="@drawable/icon_setting"
-            android:layout_width="20dp"
-            android:layout_height="20dp"
-            />
-    </LinearLayout>
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="#dfdfdd" />
+    <include layout="@layout/layout_title_top2" />
 
     <LinearLayout
-        android:layout_marginTop="40dp"
+        android:layout_marginTop="10dp"
     android:id="@+id/layout_title"
     android:layout_width="match_parent"
     android:layout_height="100dp"
@@ -96,44 +68,44 @@
         android:background="@color/white"
         android:gravity="center">
         <RelativeLayout
-            android:id="@+id/layout_favor"
+            android:id="@+id/layout_ar"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
             >
             <ImageView
                 android:layout_centerHorizontal="true"
-                android:id="@+id/img_home"
-                android:src="@drawable/icon_favor"
+                android:id="@+id/icon_ar"
+                android:src="@drawable/icon_ar"
                 android:layout_width="25dp"
                 android:layout_height="25dp" />
             <TextView
-                android:layout_below="@+id/img_home"
+                android:layout_below="@+id/icon_ar"
                 android:gravity="center"
                 android:textSize="14dp"
                 android:layout_alignParentBottom="true"
-                android:text="收藏"
+                android:text="AR相机"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
         </RelativeLayout>
 
         <RelativeLayout
-            android:id="@+id/layout_history"
+            android:id="@+id/layout_message"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
             >
             <ImageView
                 android:layout_centerHorizontal="true"
-                android:id="@+id/img_history2"
-                android:src="@drawable/icon_history2"
+                android:id="@+id/icon_msg"
+                android:src="@drawable/icon_msg"
                 android:layout_width="25dp"
                 android:layout_height="25dp" />
             <TextView
                 android:gravity="center"
                 android:layout_alignParentBottom="true"
-                android:layout_below="@+id/img_history2"
-                android:text="记录"
+                android:layout_below="@+id/icon_msg"
+                android:text="消息"
                 android:textSize="14dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
@@ -147,15 +119,15 @@
             >
             <ImageView
                 android:layout_centerHorizontal="true"
-                android:id="@+id/img_friend"
-                android:src="@drawable/icon_favor"
+                android:id="@+id/icon_dynamic"
+                android:src="@drawable/icon_dynamic"
                 android:layout_width="25dp"
                 android:layout_height="25dp" />
             <TextView
                 android:layout_alignParentBottom="true"
                 android:textSize="14dp"
                 android:gravity="center"
-                android:layout_below="@+id/img_friend"
+                android:layout_below="@+id/icon_dynamic"
                 android:text="动态"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
@@ -165,8 +137,39 @@
 
 
     <LinearLayout
-        android:id="@+id/layout_album"
         android:layout_marginTop="40dp"
+        android:id="@+id/layout_download"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:orientation="horizontal"
+        android:background="@drawable/bg_line2"
+        android:gravity="center_vertical"
+        >
+        <ImageView
+            android:layout_alignParentLeft="true"
+            android:src="@drawable/icon_down"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:tint="@color/titleBlue"/>
+        <TextView
+            style="@style/MenuTitleStyle"
+            android:paddingLeft="10dp"
+            android:gravity="center_vertical"
+            android:text="游戏缓存"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="match_parent" />
+        <ImageView
+            android:src="@drawable/icon_arrow_right"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:tint="@color/grayLine"
+            />
+    </LinearLayout>
+    <LinearLayout
+        android:id="@+id/layout_album"
         android:paddingLeft="10dp"
         android:paddingRight="10dp"
         android:layout_width="match_parent"
@@ -182,7 +185,7 @@
             android:layout_height="20dp"
             android:tint="@color/titleBlue"/>
         <TextView
-            style="@style/AppTitleStyle"
+            style="@style/MenuTitleStyle"
             android:paddingLeft="10dp"
             android:gravity="center_vertical"
             android:text="我的相册"
@@ -213,7 +216,7 @@
             android:layout_height="20dp"
             android:tint="@color/titleBlue"/>
         <TextView
-            style="@style/AppTitleStyle"
+            style="@style/MenuTitleStyle"
             android:paddingLeft="10dp"
             android:gravity="center_vertical"
             android:text="我的订单"
@@ -228,38 +231,7 @@
             />
     </LinearLayout>
     <LinearLayout
-        android:id="@+id/layout_download"
-        android:paddingLeft="10dp"
-        android:paddingRight="10dp"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:orientation="horizontal"
-        android:background="@drawable/bg_line2"
-        android:gravity="center_vertical"
-        >
-        <ImageView
-            android:layout_alignParentLeft="true"
-            android:src="@drawable/icon_down"
-            android:layout_width="20dp"
-            android:layout_height="20dp"
-            android:tint="@color/titleBlue"/>
-        <TextView
-            style="@style/AppTitleStyle"
-            android:paddingLeft="10dp"
-            android:gravity="center_vertical"
-            android:text="我的下载"
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="match_parent" />
-        <ImageView
-            android:src="@drawable/icon_arrow_right"
-            android:layout_width="20dp"
-            android:layout_height="20dp"
-            android:tint="@color/grayLine"
-            />
-    </LinearLayout>
-    <LinearLayout
-        android:id="@+id/layout_device"
+        android:id="@+id/layout_setting"
         android:paddingLeft="10dp"
         android:paddingRight="10dp"
         android:layout_width="match_parent"
@@ -275,10 +247,10 @@
             android:layout_height="20dp"
             android:tint="@color/titleBlue"/>
         <TextView
-            style="@style/AppTitleStyle"
+            style="@style/MenuTitleStyle"
             android:paddingLeft="10dp"
             android:gravity="center_vertical"
-            android:text="我的设备"
+            android:text="设置与帮助"
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="match_parent" />

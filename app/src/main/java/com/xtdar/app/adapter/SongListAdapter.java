@@ -85,14 +85,14 @@ public class SongListAdapter extends BaseAdapter {
 //            @Override
 //            public void onClick(View v) {
 //                if (mOnItemButtonClick != null) {
-//                    mOnItemButtonClick.onButtonClick(position, v, bean.getStatus());
+//                    mOnItemButtonClick.onClick(position, v, bean.getStatus());
 //                }
 //            }
 //        });
         //增加封面
-//        ImageView imageView = new ImageView(mContext);
+//        ImageView imageView = new ImageView(context);
 //        imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
-//        glideImageLoader.displayImage(mContext, XtdConst.IMGURI+entity.getItem_cover(),imageView);
+//        glideImageLoader.displayImage(context, XtdConst.IMGURI+entity.getItem_cover(),imageView);
 //        holder.myVideoPlayer.setThumbImageView(imageView);
         final String url = XtdConst.IMGURI+entity.getResource();
         //final String url = "http://7xse1z.com1.z0.glb.clouddn.com/1491813192";

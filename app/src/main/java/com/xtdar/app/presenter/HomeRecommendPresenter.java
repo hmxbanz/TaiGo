@@ -1,27 +1,20 @@
 package com.xtdar.app.presenter;
 
 import android.content.Context;
-import android.support.design.widget.TabLayout;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.LayoutInflater;
 
-import com.xtdar.app.R;
 import com.xtdar.app.XtdConst;
 import com.xtdar.app.adapter.HomeRecommendAdapter;
-import com.xtdar.app.adapter.RecyclerViewAdapter;
 import com.xtdar.app.common.json.JsonMananger;
-import com.xtdar.app.model.UserList;
 import com.xtdar.app.server.HttpException;
 import com.xtdar.app.server.async.OnDataListener;
 import com.xtdar.app.server.response.AdResponse;
 import com.xtdar.app.server.response.RecommendResponse;
-import com.xtdar.app.server.response.TagResponse;
 import com.xtdar.app.view.widget.LoadDialog;
 import com.youth.banner.Banner;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -46,7 +39,7 @@ public class HomeRecommendPresenter extends BasePresenter implements OnDataListe
         this.Banner=banner;
         this.recycleView=recycleView;
 
-        gridLayoutManager=new GridLayoutManager(mContext,1);
+        gridLayoutManager=new GridLayoutManager(context,1);
         recycleView.setLayoutManager(gridLayoutManager);
         //取缓存
         String RecommendListCache = aCache.getAsString("RecommendList");
@@ -59,12 +52,12 @@ public class HomeRecommendPresenter extends BasePresenter implements OnDataListe
 
 
         //设置列表
-        dataAdapter = new HomeRecommendAdapter(list, mContext);
-        //dataAdapter.setFooterView(LayoutInflater.from(mContext).inflate(R.layout.recyclerview_footer,null));
+        dataAdapter = new HomeRecommendAdapter(list, context);
+        //dataAdapter.setFooterView(LayoutInflater.from(context).inflate(R.layout.recyclerview_footer,null));
         recycleView.setAdapter(dataAdapter);
         recycleView.setNestedScrollingEnabled(false);
 
-        LoadDialog.show(mContext);
+        LoadDialog.show(context);
         atm.request(GETADS,this);
     }
 
@@ -81,7 +74,7 @@ public class HomeRecommendPresenter extends BasePresenter implements OnDataListe
 
     @Override
     public void onSuccess(int requestCode, Object result) {
-        LoadDialog.dismiss(mContext);
+        LoadDialog.dismiss(context);
         switch (requestCode) {
             case GETADS:
                 AdResponse adResponse = (AdResponse) result;

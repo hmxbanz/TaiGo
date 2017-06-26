@@ -1,5 +1,6 @@
 package com.xtdar.app.view.activity;
 
+import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
@@ -11,6 +12,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.xtdar.app.R;
+import com.xtdar.app.presenter.ProtocolPresenter;
 import com.xtdar.app.presenter.RegisterPresenter;
 
 
@@ -21,6 +23,7 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
     private Button btnRegister;
     private CheckBox checkBox;
     private EditText captcha;
+    private TextView txtProtocol;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,6 +39,9 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
         layout_back.setOnClickListener(this);
         txtTitle = (TextView) findViewById(R.id.text_title);
         txtTitle.setText("用户注册");
+        txtProtocol = (TextView) findViewById(R.id.txt_protocol);
+        txtProtocol.setOnClickListener(this);
+
         checkBox = (CheckBox) findViewById(R.id.checkbox);
         Drawable drawable = this.getResources().getDrawable(R.drawable.selector_checkbox);
         drawable.setBounds(0,0,50,50);
@@ -67,6 +73,9 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
                 break;
             case R.id.btn_register:
                 mRegisterPresenter.register(checkBox, userName, password,captcha);
+                break;
+            case R.id.txt_protocol:
+                startActivity(new Intent(this, ProtocolActivity.class));
                 break;
         }
 

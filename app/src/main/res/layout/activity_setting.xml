@@ -19,7 +19,7 @@
         >
 
         <TextView
-            style="@style/AppTitleStyle"
+            style="@style/AppTitleStyle2"
             android:gravity="center_vertical"
             android:text="关于小泰斗"
             android:layout_width="0dp"
@@ -42,7 +42,7 @@
         >
 
         <TextView
-            style="@style/AppTitleStyle"
+            style="@style/AppTitleStyle2"
             android:gravity="center_vertical"
             android:text="分享小泰斗"
             android:layout_width="0dp"
@@ -66,7 +66,7 @@
         >
 
         <TextView
-            style="@style/AppTitleStyle"
+            style="@style/AppTitleStyle2"
             android:gravity="center_vertical"
             android:text="接收通知推送"
             android:layout_width="0dp"
@@ -96,7 +96,7 @@
         >
 
         <TextView
-            style="@style/AppTitleStyle"
+            style="@style/AppTitleStyle2"
             android:gravity="center_vertical"
             android:text="仅Wifi下载故事"
             android:layout_width="0dp"
@@ -129,7 +129,7 @@
         >
 
         <TextView
-            style="@style/AppTitleStyle"
+            style="@style/AppTitleStyle2"
             android:gravity="center_vertical"
             android:text="清除本地缓存"
             android:layout_width="0dp"
@@ -152,7 +152,7 @@
         >
 
         <TextView
-            style="@style/AppTitleStyle"
+            style="@style/AppTitleStyle2"
             android:gravity="center_vertical"
             android:text="用户反馈"
             android:layout_width="0dp"
@@ -166,6 +166,29 @@
             />
     </LinearLayout>
 
+    <LinearLayout
+        android:id="@+id/layout_help"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:orientation="horizontal"
+        android:background="@drawable/bg_line2"
+        android:gravity="center_vertical"
+        >
+
+        <TextView
+            style="@style/AppTitleStyle2"
+            android:gravity="center_vertical"
+            android:text="帮助"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="match_parent" />
+        <ImageView
+            android:src="@drawable/icon_setting"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:tint="@color/grayLine"
+            />
+    </LinearLayout>
 
     <LinearLayout
         android:id="@+id/layout_logoff"
@@ -176,7 +199,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
         <TextView
-            style="@style/AppTitleStyle"
+            style="@style/AppTitleStyle2"
             android:gravity="center"
             android:text="退出登录"
             android:textColor="@color/red"

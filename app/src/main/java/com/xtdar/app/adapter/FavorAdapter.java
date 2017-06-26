@@ -82,7 +82,7 @@ public class FavorAdapter extends BaseAdapter {
 //            @Override
 //            public void onClick(View v) {
 //                if (mOnItemButtonClick != null) {
-//                    mOnItemButtonClick.onButtonClick(position, v, bean.getStatus());
+//                    mOnItemButtonClick.onClick(position, v, bean.getStatus());
 //                }
 //            }
 //        });

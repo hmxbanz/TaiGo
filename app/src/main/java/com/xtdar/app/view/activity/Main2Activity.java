@@ -18,6 +18,7 @@ import android.widget.TextView;
 
 import com.xtdar.app.R;
 import com.xtdar.app.presenter.Main2Presenter;
+import com.xtdar.app.view.fragment.DiscoveryFragment;
 import com.xtdar.app.view.fragment.GameFragment;
 import com.xtdar.app.view.fragment.HomeFragment;
 import com.xtdar.app.view.fragment.MineFragment;
@@ -88,7 +89,7 @@ public class Main2Activity extends BaseActivity implements View.OnClickListener{
         mFragments = new ArrayList<>();
         mFragments.add(HomeFragment.getInstance());
         mFragments.add(GameFragment.getInstance());
-        mFragments.add(ShowFragment.getInstance());
+        mFragments.add(DiscoveryFragment.getInstance());
         mFragments.add(MineFragment.getInstance());
 
         mFragmentPagerAdapter = new FragmentPagerAdapter(getSupportFragmentManager()) {
@@ -108,10 +109,10 @@ public class Main2Activity extends BaseActivity implements View.OnClickListener{
         //initData();
     }
     private void changeTextViewColor() {
-        mImageHome.setBackgroundDrawable(getResources().getDrawable(R.drawable.tab_home));
-        mImageShop.setBackgroundDrawable(getResources().getDrawable(R.drawable.tab_shop));
-        mImageDiscovery.setBackgroundDrawable(getResources().getDrawable(R.drawable.tab_discovery));
-        mImageMe.setBackgroundDrawable(getResources().getDrawable(R.drawable.tab_me));
+        mImageHome.setImageDrawable(getResources().getDrawable(R.drawable.tab_home));
+        mImageShop.setImageDrawable(getResources().getDrawable(R.drawable.tab_shop));
+        mImageDiscovery.setImageDrawable(getResources().getDrawable(R.drawable.tab_discovery));
+        mImageMe.setImageDrawable(getResources().getDrawable(R.drawable.tab_me));
         mTextHome.setTextColor(Color.parseColor("#abadbb"));
         mTextShop.setTextColor(Color.parseColor("#abadbb"));
         mTextDiscovery.setTextColor(Color.parseColor("#abadbb"));
@@ -121,19 +122,19 @@ public class Main2Activity extends BaseActivity implements View.OnClickListener{
         switch (position) {
             case 0:
                 mTextHome.setTextColor(Color.parseColor("#07a5ff"));
-                mImageHome.setBackgroundDrawable(getResources().getDrawable(R.drawable.tab_home_on));
+                mImageHome.setImageDrawable(getResources().getDrawable(R.drawable.tab_home_on));
                 break;
             case 1:
                 mTextShop.setTextColor(Color.parseColor("#07a5ff"));
-                mImageShop.setBackgroundDrawable(getResources().getDrawable(R.drawable.tab_shop_on));
+                mImageShop.setImageDrawable(getResources().getDrawable(R.drawable.tab_shop_on));
                 break;
             case 2:
                 mTextDiscovery.setTextColor(Color.parseColor("#07a5ff"));
-                mImageDiscovery.setBackgroundDrawable(getResources().getDrawable(R.drawable.tab_discovery_on));
+                mImageDiscovery.setImageDrawable(getResources().getDrawable(R.drawable.tab_discovery_on));
                 break;
             case 3:
                 mTextMe.setTextColor(Color.parseColor("#07a5ff"));
-                mImageMe.setBackgroundDrawable(getResources().getDrawable(R.drawable.tab_me_on));
+                mImageMe.setImageDrawable(getResources().getDrawable(R.drawable.tab_me_on));
                 break;
         }
     }
@@ -186,7 +187,11 @@ public class Main2Activity extends BaseActivity implements View.OnClickListener{
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         FragmentManager fm = getSupportFragmentManager();
-        int index = 3;///requestCode >> 16;
+        int index = 1;///requestCode >> 16;
+        switch (requestCode) {
+            case 1:
+                index=1;
+        }
         if (index != 0) {
             index--;
             if (fm.getFragments() == null || index < 0

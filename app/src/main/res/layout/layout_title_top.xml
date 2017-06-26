@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="45dp"
-    android:background="@color/titleBlue"
+    android:background="@color/white"
     android:orientation="vertical"
     android:layout_marginBottom="2dp"
     android:id="@+id/layout_title_top">
@@ -60,7 +60,7 @@
 
             <TextView
                 android:id="@+id/text_title"
-                style="@style/AppTitleStyle"
+                style="@style/AppTitleStyle2"
                 android:gravity="center"
                 android:text="标题"
                 android:textSize="20dp"

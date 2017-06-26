@@ -36,18 +36,18 @@ public class LoginPresenter extends BasePresenter{
     public void login() {
         if(TextUtils.isEmpty(mUsername.getText().toString()))
         {
-            NToast.shortToast(mContext, R.string.phone_number_be_null);
+            NToast.shortToast(context, R.string.phone_number_be_null);
             return;
         }
         if (TextUtils.isEmpty(mPassword.getText().toString())) {
-            NToast.shortToast(mContext, R.string.password_be_null);
+            NToast.shortToast(context, R.string.password_be_null);
             return;
         }
         if (mPassword.getText().toString().contains(" ")) {
-            NToast.shortToast(mContext, R.string.password_cannot_contain_spaces);
+            NToast.shortToast(context, R.string.password_cannot_contain_spaces);
             return;
         }
-        LoadDialog.show(mContext);
+        LoadDialog.show(context);
         atm.request(LOGIN,this);
     }
 
@@ -64,7 +64,7 @@ public class LoginPresenter extends BasePresenter{
     }
     @Override
     public void onSuccess(int requestCode, Object result) {
-        LoadDialog.dismiss(mContext);
+        LoadDialog.dismiss(context);
         if (result != null) {
             switch (requestCode) {
                 case LOGIN:
@@ -82,11 +82,11 @@ public class LoginPresenter extends BasePresenter{
 //                        editor.putString("checkName", entity.getCheckName());
                         editor.apply();
 
-                        mContext.startActivity(new Intent(mContext,Main2Activity.class));
+                        context.startActivity(new Intent(context,Main2Activity.class));
                     } else if (loginResponse.getCode() == XtdConst.FAILURE) {
 
                     }
-                    NToast.shortToast(mContext, loginResponse.getMsg());
+                    NToast.shortToast(context, loginResponse.getMsg());
                     break;
 
             }

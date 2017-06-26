@@ -45,7 +45,7 @@ public class SongAlbumPresenter extends BasePresenter implements OnDataListener,
         this.listView=listView;
         Intent intent = mActivity.getIntent();
         itemId = intent.getStringExtra(XtdConst.ITEMID);
-        LoadDialog.show(mContext);
+        LoadDialog.show(context);
         atm.request(GETSONGALBUM, this);
     }
     @Override
@@ -60,7 +60,7 @@ public class SongAlbumPresenter extends BasePresenter implements OnDataListener,
     }
     @Override
     public void onSuccess(int requestCode, Object result) {
-        LoadDialog.dismiss(mContext);
+        LoadDialog.dismiss(context);
         switch (requestCode) {
             case GETSONGALBUM:
                 SongDetailResponse response = (SongDetailResponse) result;
@@ -73,16 +73,16 @@ public class SongAlbumPresenter extends BasePresenter implements OnDataListener,
                     ((TextView)mActivity.findViewById(R.id.txt_class)).setText("分类："+albumInfo.getClass_name());
                     ((TextView)mActivity.findViewById(R.id.txt_play_num)).setText("播放:"+albumInfo.getClick_count()+"万");
                     ((TextView)mActivity.findViewById(R.id.xianji)).setText("选集 ("+String.valueOf(entity.getSong_num())+")");
-                    glideImageLoader.displayImage(mContext,XtdConst.IMGURI+albumInfo.getItem_cover(),((ImageView)mActivity.findViewById(R.id.img_cover)));
+                    glideImageLoader.displayImage(context,XtdConst.IMGURI+albumInfo.getItem_cover(),((ImageView)mActivity.findViewById(R.id.img_cover)));
 
                     List<SongDetailResponse.DataBean.SongListBean> songList = entity.getSong_list();
-                    SongListAdapter songListAdapter = new SongListAdapter(mContext);
+                    SongListAdapter songListAdapter = new SongListAdapter(context);
                     songListAdapter.setmList(songList);
                     songListAdapter.setOnItemButtonClick(this);
                     listView.setAdapter(songListAdapter);
                     atm.request(GETSONGLIST, this);
                 }
-                NToast.shortToast(mContext, response.getMsg());
+                NToast.shortToast(context, response.getMsg());
                 break;
 
         case GETSONGLIST:
@@ -96,7 +96,7 @@ public class SongAlbumPresenter extends BasePresenter implements OnDataListener,
     public boolean onButtonClick(int position, View view, String songId,String albumId) {
         switch (view.getId()) {
             case R.id.list_item_layout:
-                SongDetailActivity.StartActivity(mContext,songId,albumId);
+                SongDetailActivity.StartActivity(context,songId,albumId);
                 break;
         }
         return true;

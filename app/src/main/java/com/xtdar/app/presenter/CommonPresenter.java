@@ -17,7 +17,7 @@ public class CommonPresenter extends BasePresenter implements OnDataListener {
     }
 
     public void init() {
-        LoadDialog.show(mContext);
+        LoadDialog.show(context);
     }
 
 

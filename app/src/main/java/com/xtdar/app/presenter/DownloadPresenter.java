@@ -43,7 +43,7 @@ public class DownloadPresenter extends BasePresenter implements OnDataListener {
 
     public void init(){
         //mView.initData();
-        //LoadDialog.show(mContext);
+        //LoadDialog.show(context);
 
         TabLayout tabLayout= (TabLayout) mActivity.findViewById(R.id.tabLayout);
 //        tabLayout.addTab(tabLayout.newTab().setText("视频"), true);//添加 Tab,默认选中

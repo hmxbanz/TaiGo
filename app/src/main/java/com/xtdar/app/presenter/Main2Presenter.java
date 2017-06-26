@@ -11,6 +11,7 @@ import android.widget.Toast;
 import com.xtdar.app.R;
 import com.xtdar.app.XtdConst;
 import com.xtdar.app.common.NToast;
+import com.xtdar.app.listener.AlertDialogCallback;
 import com.xtdar.app.server.HttpException;
 import com.xtdar.app.server.response.LoginResponse;
 import com.xtdar.app.server.response.VersionResponse;
@@ -100,16 +101,12 @@ public class Main2Presenter extends BasePresenter {
                         int versionCode = Integer.parseInt(versionInfo[0]);
                         if(entity.getVersionCode()>versionCode)
                         {
-                            DialogWithYesOrNoUtils.getInstance().showDialog(mActivity, "发现新版本:"+versionInfo[1], "立即更新",new DialogWithYesOrNoUtils.DialogCallBack() {
+                            DialogWithYesOrNoUtils.getInstance().showDialog(mActivity, "发现新版本:"+entity.getVersionName(), "立即更新",new AlertDialogCallback() {
                                 @Override
                                 public void executeEvent() {
                                     goToDownload(entity.getDownloadUrl());
                                 }
 
-                                @Override
-                                public void onCancle() {
-
-                                }
 
                             });
                         }
@@ -152,7 +149,7 @@ public class Main2Presenter extends BasePresenter {
 
                     @Override
                     public void onDenied(String permission) {
-                        Toast.makeText(mContext, "获取权限失败，请点击后允许获取", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(context, "获取权限失败，请点击后允许获取", Toast.LENGTH_SHORT).show();
                     }
                 }, true);
 

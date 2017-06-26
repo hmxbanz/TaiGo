@@ -199,6 +199,9 @@
         <activity android:name=".view.activity.DownloadActivity" />
         <activity android:name=".view.activity.SongAlbumActivity" />
         <activity android:name=".view.activity.SongDetailActivity" />
+        <activity android:name=".view.activity.ProtocolActivity" />
+        <activity android:name=".view.activity.QrCodeActivity" />
+        <activity android:name=".view.activity.HelpActivity" />
         <activity
             android:name=".view.activity.ConversationListActivity"
             android:screenOrientation="portrait"

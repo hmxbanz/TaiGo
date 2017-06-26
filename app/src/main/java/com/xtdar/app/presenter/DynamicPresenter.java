@@ -169,7 +169,7 @@ public class DynamicPresenter {
                     PictureConfig.getPictureConfig().openPhoto(mContext, resultCallback);
 
                     // 只拍照
-                    //PictureConfig.getPictureConfig().startOpenCamera(mContext, resultCallback);
+                    //PictureConfig.getPictureConfig().startOpenCamera(context, resultCallback);
                     break;
                 case 1:
                     // 删除图片

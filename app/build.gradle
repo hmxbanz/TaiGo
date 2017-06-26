@@ -132,4 +132,5 @@ dependencies {
     compile project(':okhttputils')
     compile 'com.github.mcxtzhang:SwipeDelMenuLayout:V1.2.5'//滑动listview 删除
     compile 'com.jaeger.statusbaruitl:library:1.1.1'//设置状态栏
+    compile 'cn.yipianfengye.android:zxing-library:2.1'//二维码扫描
 }

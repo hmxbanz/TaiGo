@@ -9,7 +9,6 @@ import com.shuyu.gsyvideoplayer.GSYVideoPlayer;
 import com.xtdar.app.server.HttpException;
 import com.xtdar.app.server.async.OnDataListener;
 import com.xtdar.app.server.response.ShowResponse;
-import com.xtdar.app.video.RecyclerBaseAdapter;
 import com.xtdar.app.video.RecyclerItemNormalHolder;
 import com.xtdar.app.video.RecyclerNormalAdapter;
 import com.xtdar.app.view.widget.LoadDialog;
@@ -35,7 +34,7 @@ public class HomeShowPresenter extends BasePresenter implements OnDataListener {
 
     public void init(RecyclerView videoList) {
         this.videoList=videoList;
-        LoadDialog.show(mContext);
+        LoadDialog.show(context);
 
     atm.request(GETSHOWLIST,this);
 
@@ -87,7 +86,7 @@ public class HomeShowPresenter extends BasePresenter implements OnDataListener {
                 ShowResponse showResponse=(ShowResponse)result;
                 if (showResponse != null && showResponse.getData() != null) {
                     entity=showResponse.getData();
-                    final RecyclerNormalAdapter recyclerNormalAdapter = new RecyclerNormalAdapter(mContext, entity);
+                    final RecyclerNormalAdapter recyclerNormalAdapter = new RecyclerNormalAdapter(context, entity);
                     this.videoList.setAdapter(recyclerNormalAdapter);
                 }
 //

@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:background="#f0f0f6"
     android:orientation="vertical">
-    <include layout="@layout/layout_title_top" />
+    <include layout="@layout/layout_title_top2" />
     <!-- 底部导航 -->
     <LinearLayout
     android:background="@color/white"
@@ -35,10 +35,10 @@
                 android:gravity="center">
 
                 <ImageView
-                    android:src="@drawable/icon_add_favor"
+                    android:src="@drawable/icon_ble"
                     android:id="@+id/tab_img_home"
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
+                    android:layout_width="45dp"
+                    android:layout_height="45dp"
                     android:layout_centerHorizontal="true"
                     android:background="#ffffff"
                     android:focusable="false"
@@ -63,7 +63,7 @@
 
     </RelativeLayout>
     <RelativeLayout
-        android:id="@+id/tab_layout_shop"
+        android:id="@+id/layout_ble"
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_weight="3">
@@ -81,10 +81,10 @@
                 android:gravity="center">
 
                 <ImageView
-                    android:src="@drawable/icon_add_favor"
+                    android:src="@drawable/icon_scan"
                     android:id="@+id/tab_img_shop"
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
+                    android:layout_width="45dp"
+                    android:layout_height="45dp"
                     android:layout_centerHorizontal="true"
                     android:background="#ffffff"
                     android:focusable="false"
@@ -129,10 +129,10 @@
                 android:gravity="center">
 
                 <ImageView
-                    android:src="@drawable/icon_add_favor"
+                    android:src="@drawable/icon_serial_no"
                     android:id="@+id/tab_img_discovery"
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
+                    android:layout_width="45dp"
+                    android:layout_height="45dp"
                     android:layout_centerHorizontal="true"
                     android:background="#ffffff"
                     android:focusable="false"
@@ -174,10 +174,10 @@
                 android:layout_centerHorizontal="true"
                 android:gravity="center">
                 <ImageView
-                    android:src="@drawable/icon_add_favor"
+                    android:src="@drawable/icon_more"
                     android:id="@+id/tab_img_me"
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
+                    android:layout_width="45dp"
+                    android:layout_height="45dp"
                     android:layout_centerHorizontal="true"
                     android:background="#ffffff"
                     android:focusable="false"
@@ -215,7 +215,7 @@
             >
 
             <ImageView
-                android:src="@drawable/icon_add_favor"
+                android:src="@drawable/icon_my_drivers"
                 android:layout_width="20dp"
                 android:layout_height="20dp"
                 android:layout_centerHorizontal="true"
@@ -245,10 +245,49 @@
 
     </LinearLayout>
     <android.support.v7.widget.RecyclerView
-        android:id="@id/recycler"
+        android:id="@id/recyclerView"
+        android:background="@color/white"
         android:layout_marginTop="1dp"
         android:layout_width="match_parent"
         android:layout_height="match_parent"  >
     </android.support.v7.widget.RecyclerView>
+
+    <RelativeLayout
+        android:layout_marginTop="1dp"
+        android:background="@color/white"
+        android:gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <TextView
+            android:id="@+id/no_driver"
+            android:gravity="center"
+            android:textSize="18dp"
+            android:text="你还没有任何设备"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+        <LinearLayout
+            android:gravity="center"
+            android:layout_below="@+id/no_driver"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <TextView
+                android:gravity="center"
+                android:textSize="18dp"
+                android:text="请先"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+            <TextView
+                android:id="@+id/txt_add_driver"
+                android:textColor="@color/mainColorBlue"
+                android:textSize="18dp"
+                android:text="添加设备"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+
+
+    </RelativeLayout>
+
 
 </LinearLayout>

@@ -57,14 +57,7 @@ public class ShowFragment extends Fragment  {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_show, null);
         videoList= (RecyclerView) view.findViewById(R.id.list_item_recycler);
-        layoutBack= (RelativeLayout) view.findViewById(R.id.layout_back);
-        layoutBack.setVisibility(View.INVISIBLE);
-        TextView txtTitle= (TextView) view.findViewById(R.id.text_title);
-        txtTitle.setText("秀场");
-        TextView txtRight= (TextView) view.findViewById(R.id.text_right);
-        txtRight.setVisibility(View.VISIBLE);
-        txtRight.setTextColor(getResources().getColor(R.color.titleBlue));
-        txtRight.setText("玩一把");
+
 
         resolveData();
 

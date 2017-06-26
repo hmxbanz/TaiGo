@@ -23,18 +23,18 @@ public class BasePresenter implements OnDataListener {
     protected final SharedPreferences sp;
     protected final SharedPreferences.Editor editor;
     public boolean isLogin;
-    protected Context mContext;
+    protected Context context;
     public UserAction mUserAction;
     public AsyncTaskManager atm ;
     protected String mUserInfoId;
     public ACache aCache;
     public BasePresenter(Context context)
     {
-        this.mContext=context;
+        this.context =context;
         atm= AsyncTaskManager.getInstance(context);
         mUserAction = UserAction.getInstance(context);
         aCache=ACache.get(context);
-        sp = ((BaseActivity)mContext).sp;
+        sp = ((BaseActivity) this.context).sp;
         editor=sp.edit();
         mUserInfoId= sp.getString(XtdConst.USERINFOID,"0");
         isLogin = sp.getBoolean(XtdConst.ISLOGIN, false);
@@ -56,9 +56,9 @@ public class BasePresenter implements OnDataListener {
 
     @Override
     public void onFailure(int requestCode, int state, Object result) {
-        LoadDialog.dismiss(mContext);
-        if (!CommonTools.isNetworkConnected(mContext)) {
-            NToast.shortToast(mContext, mContext.getString(R.string.network_not_available));
+        LoadDialog.dismiss(context);
+        if (!CommonTools.isNetworkConnected(context)) {
+            NToast.shortToast(context, context.getString(R.string.network_not_available));
             return;
         }
 

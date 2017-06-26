@@ -9,6 +9,7 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,10 +20,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.jaeger.library.StatusBarUtil;
+import com.uuzuche.lib_zxing.activity.CaptureActivity;
+import com.uuzuche.lib_zxing.activity.CodeUtils;
 import com.xtdar.app.R;
+import com.xtdar.app.common.NLog;
+import com.xtdar.app.common.NToast;
 import com.xtdar.app.presenter.HomeFragmentPresenter;
 import com.xtdar.app.view.activity.DownloadActivity;
 import com.xtdar.app.view.activity.HistoryActivity;
+import com.xtdar.app.view.activity.QrCodeActivity;
 import com.xtdar.app.view.activity.SearchActivity;
 
 /**
@@ -30,7 +36,8 @@ import com.xtdar.app.view.activity.SearchActivity;
  * Company RongCloud
  */
 public class HomeFragment extends Fragment implements View.OnClickListener  {
-private static final int Blue=0x0007a5ff;
+private static final int Blue=0x001bb4fb;
+    private static final int REQUEST_CODE = 1;
     private View view;
     public static HomeFragment instance = null;
 
@@ -38,6 +45,8 @@ private static final int Blue=0x0007a5ff;
     private HomeFragmentPresenter homeFragmentPresenter;
     private TextView title;
     private RelativeLayout layout_back;
+    private RecyclerView recycleView;
+    private TextView addDriver;
 
     public static HomeFragment getInstance() {
         if (instance == null) {
@@ -54,7 +63,7 @@ private static final int Blue=0x0007a5ff;
 
 //        initData();
         homeFragmentPresenter = new HomeFragmentPresenter(getContext());
-        //homeFragmentPresenter.init(tabLayout);
+        homeFragmentPresenter.init(recycleView);
         //StatusBarUtil.setTranslucent(getActivity(), StatusBarUtil.);
         StatusBarUtil.setColor(getActivity(), Blue,0);
         return view;
@@ -65,7 +74,11 @@ private static final int Blue=0x0007a5ff;
         layout_back.setVisibility(View.INVISIBLE);
         title=(TextView)view.findViewById(R.id.text_title);
         title.setText("设备");
-
+        addDriver=(TextView)view.findViewById(R.id.txt_add_driver);
+        addDriver.setOnClickListener(this);
+        recycleView= (RecyclerView) view.findViewById(R.id.recyclerView);
+        RelativeLayout layoutBle = (RelativeLayout) view.findViewById(R.id.layout_ble);
+        layoutBle.setOnClickListener(this);
 
     }
 
@@ -77,7 +90,35 @@ private static final int Blue=0x0007a5ff;
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
+            case R.id.layout_ble:
+            case R.id.txt_add_driver:
+                        Intent intent = new Intent(getActivity(), QrCodeActivity.class);
+                        startActivityForResult(intent, REQUEST_CODE);
+                break;
 
+        }
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        /**
+         * 处理二维码扫描结果
+         */
+        if (requestCode == REQUEST_CODE) {
+            //处理扫描结果（在界面上显示）
+            if (null != data) {
+                Bundle bundle = data.getExtras();
+                if (bundle == null) {
+                    return;
+                }
+                if (bundle.getInt(CodeUtils.RESULT_TYPE) == CodeUtils.RESULT_SUCCESS) {
+                    String result = bundle.getString(CodeUtils.RESULT_STRING);
+                    NToast.longToast(getActivity(), "解析结果:"+result);
+                } else if (bundle.getInt(CodeUtils.RESULT_TYPE) == CodeUtils.RESULT_FAILED) {
+                    NToast.longToast(getActivity(), "解析二维码失败");
+                }
+            }
         }
     }
 }

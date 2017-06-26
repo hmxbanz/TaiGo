@@ -14,6 +14,7 @@ import android.widget.TextView;
 
 import com.xtdar.app.R;
 import com.xtdar.app.presenter.HomeFragmentPresenter;
+import com.xtdar.app.presenter.HomeGamePresenter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -36,7 +37,7 @@ public class GameFragment extends Fragment implements View.OnClickListener  {
     private RelativeLayout layoutHistory,layoutDownload;
     private TabLayout tabLayout;
 
-    private HomeFragmentPresenter homeFragmentPresenter;
+    private HomeGamePresenter homeGamePresenter;
     private RelativeLayout layout_back;
     private TextView title;
 
@@ -54,8 +55,8 @@ public class GameFragment extends Fragment implements View.OnClickListener  {
         initViews();
         initMianViewPager();
 //        initData();
-        homeFragmentPresenter = new HomeFragmentPresenter(getContext());
-        homeFragmentPresenter.init(tabLayout);
+        homeGamePresenter = new HomeGamePresenter(getContext());
+        homeGamePresenter.init(tabLayout);
 
         return view;
     }
@@ -77,10 +78,10 @@ public class GameFragment extends Fragment implements View.OnClickListener  {
         mViewPager = (ViewPager) view.findViewById(R.id.home_viewpager);
 
         mFragments = new ArrayList<>();
-        mFragments.add(HomeRecommendFragment.getInstance());
+        mFragments.add(HomeShotGameFragment.getInstance());
         mFragments.add(HomeCarGameFragment.getInstance());
-        mFragments.add(HomeSongFragment.getInstance());
-        mFragments.add(HomeStoryFragment.getInstance());
+        mFragments.add(HomeLearnGameFragment.getInstance());
+        mFragments.add(HomeAllGameFragment.getInstance());
         //mFragments.add(HomeCountryFragment.getInstance());
         //mFragments.add(HomeScienceFragment.getInstance());
 

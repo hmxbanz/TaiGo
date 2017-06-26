@@ -13,7 +13,6 @@ import com.xtdar.app.server.HttpException;
 import com.xtdar.app.server.async.OnDataListener;
 import com.xtdar.app.server.response.AdResponse;
 import com.xtdar.app.server.response.ClassListResponse;
-import com.xtdar.app.view.activity.DetailActivity;
 import com.xtdar.app.view.activity.SongAlbumActivity;
 import com.xtdar.app.view.widget.LoadDialog;
 import com.youth.banner.Banner;
@@ -38,22 +37,22 @@ public class HomeSongPresenter extends BasePresenter implements OnDataListener,C
     public HomeSongPresenter(Context context){
         super(context);
         //mActivity = (ContactsActivity) context;
-        dataAdapter = new ClassListAnimationAdapter(mContext);
+        dataAdapter = new ClassListAnimationAdapter(this.context);
     }
 
     public void init(RecyclerView recycleView) {
         this.recyclerView =recycleView;
-        gridLayoutManager=new GridLayoutManager(mContext,2);
+        gridLayoutManager=new GridLayoutManager(context,2);
         recycleView.setLayoutManager(gridLayoutManager);
         recyclerView.addOnScrollListener(new EndlessRecyclerOnScrollListener(gridLayoutManager) {
             @Override
             public void onLoadMore(int currentPage) {
-                LoadDialog.show(mContext);
+                LoadDialog.show(context);
                 atm.request(GETANIMATION,HomeSongPresenter.this);
             }
         });
         recyclerView.setNestedScrollingEnabled(false);
-        LoadDialog.show(mContext);
+        LoadDialog.show(context);
         atm.request(GETADS,this);
 
     }
@@ -71,7 +70,7 @@ public class HomeSongPresenter extends BasePresenter implements OnDataListener,C
 
     @Override
     public void onSuccess(int requestCode, Object result) {
-        LoadDialog.dismiss(mContext);
+        LoadDialog.dismiss(context);
         switch (requestCode) {
             case GETADS:
                 AdResponse adResponse = (AdResponse) result;
@@ -92,10 +91,10 @@ public class HomeSongPresenter extends BasePresenter implements OnDataListener,C
                     lastItem=((ClassListResponse.DataBean) datas.get(datas.size()-1)).getItem_id();
                     list.addAll(classListResponse.getData());
                     //设置列表
-                    dataAdapter.setHeaderView(LayoutInflater.from(mContext).inflate(R.layout.recyclerview_header,null));
+                    dataAdapter.setHeaderView(LayoutInflater.from(context).inflate(R.layout.recyclerview_header,null));
                     dataAdapter.setListItems(list);
                     dataAdapter.setOnItemClickListener(this);
-                    //dataAdapter.setFooterView(LayoutInflater.from(mContext).inflate(R.layout.recyclerview_footer,null));
+                    //dataAdapter.setFooterView(LayoutInflater.from(context).inflate(R.layout.recyclerview_footer,null));
                     recyclerView.setAdapter(dataAdapter);
 
                 }
@@ -106,6 +105,6 @@ public class HomeSongPresenter extends BasePresenter implements OnDataListener,C
 
     @Override
     public void onItemClick(int position, String item_id,String class_id) {
-        SongAlbumActivity.StartActivity(mContext,item_id);
+        SongAlbumActivity.StartActivity(context,item_id);
     }
 }

@@ -20,7 +20,7 @@
 
         <TextView
             android:layout_marginLeft="10dp"
-            style="@style/AppTitleStyle"
+            style="@style/AppTitleStyle2"
             android:gravity="center_vertical"
             android:text="头像"
             android:layout_width="0dp"
@@ -57,7 +57,7 @@
         >
 
         <TextView
-            style="@style/AppTitleStyle"
+            style="@style/AppTitleStyle2"
             android:gravity="center_vertical"
             android:text="用户名"
             android:layout_width="0dp"
@@ -83,7 +83,7 @@
 
         <TextView
             android:id="@+id/txt_find_pwd"
-            style="@style/AppTitleStyle"
+            style="@style/AppTitleStyle2"
             android:gravity="center_vertical"
             android:text="修改密码"
             android:layout_width="0dp"
@@ -92,25 +92,26 @@
 
     </LinearLayout>
 
-    <LinearLayout
-        android:layout_marginTop="20dp"
-        android:id="@+id/layout_address"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:orientation="horizontal"
-        android:background="@drawable/bg_line2"
-        android:gravity="center_vertical"
-        >
+    <!--<LinearLayout-->
+        <!---->
+        <!--android:layout_marginTop="20dp"-->
+        <!--android:id="@+id/layout_address"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="50dp"-->
+        <!--android:orientation="horizontal"-->
+        <!--android:background="@drawable/bg_line2"-->
+        <!--android:gravity="center_vertical"-->
+        <!--&gt;-->
 
-        <TextView
-            style="@style/AppTitleStyle"
-            android:gravity="center_vertical"
-            android:text="收货地址"
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="match_parent" />
+        <!--<TextView-->
+            <!--style="@style/AppTitleStyle"-->
+            <!--android:gravity="center_vertical"-->
+            <!--android:text="收货地址"-->
+            <!--android:layout_width="0dp"-->
+            <!--android:layout_weight="1"-->
+            <!--android:layout_height="match_parent" />-->
 
-    </LinearLayout>
+    <!--</LinearLayout>-->
 
 
 

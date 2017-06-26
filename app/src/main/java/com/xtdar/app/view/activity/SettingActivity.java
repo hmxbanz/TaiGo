@@ -18,7 +18,7 @@ import java.io.File;
 
 
 public class SettingActivity extends BaseActivity implements View.OnClickListener {
-    private LinearLayout mLayoutAbout,mLayoutClear,mLayoutFeeback,mLayoutLogoff;
+    private LinearLayout mLayoutAbout,mLayoutClear,mLayoutFeeback,mLayoutLogoff,mLayoutHelp;
     private SettingPresenter mConfigPresenter;
 
     @Override
@@ -40,6 +40,8 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
         mLayoutFeeback.setOnClickListener(this);
         mLayoutLogoff= (LinearLayout) findViewById(R.id.layout_logoff);
         mLayoutLogoff.setOnClickListener(this);
+        mLayoutHelp= (LinearLayout) findViewById(R.id.layout_help);
+        mLayoutHelp.setOnClickListener(this);
 
         txtTitle =(TextView) findViewById(R.id.text_title);
         txtTitle.setText("设置");
@@ -85,6 +87,9 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
                 break;
             case R.id.layout_feedback:
                 startActivity(new Intent(this,FeedbackActivity.class));
+                break;
+            case R.id.layout_help:
+                startActivity(new Intent(this,HelpActivity.class));
                 break;
 
 

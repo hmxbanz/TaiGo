@@ -69,6 +69,9 @@ public class MeActivity extends BaseActivity implements View.OnClickListener {
             case R.id.img_avator:
                 mMePresenter.showPhotoDialog();
                 break;
+            case R.id.nick_name:
+                startActivity(new Intent(this,UpdateActivity.class));
+                break;
         }
     }
 
