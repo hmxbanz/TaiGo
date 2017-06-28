@@ -5,7 +5,7 @@ android {
     buildToolsVersion "25.0.0"
     defaultConfig {
         applicationId 'com.xtdar.app'
-        minSdkVersion 16
+        minSdkVersion 18
         targetSdkVersion 25
         versionCode 20170227
         versionName '1.0.0.5'
@@ -133,4 +133,5 @@ dependencies {
     compile 'com.github.mcxtzhang:SwipeDelMenuLayout:V1.2.5'//滑动listview 删除
     compile 'com.jaeger.statusbaruitl:library:1.1.1'//设置状态栏
     compile 'cn.yipianfengye.android:zxing-library:2.1'//二维码扫描
+    compile 'com.android.support:gridlayout-v7:25.1.0'
 }

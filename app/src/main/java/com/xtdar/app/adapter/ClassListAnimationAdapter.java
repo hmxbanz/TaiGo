@@ -96,7 +96,7 @@ public class ClassListAnimationAdapter extends RecyclerView.Adapter<RecyclerView
         if(holder instanceof HeaderHolder) {
             HeaderHolder headerHolder=(HeaderHolder)holder;
 //            String[] urls = context.getResources().getStringArray(R.array.url);
-//            //String[] tips = getResources().getStringArray(R.array.title);
+//            //String[] tips = getResources().getStringArray(R.array.deviceName);
 //            List list = Arrays.asList(urls);
 //            ArrayList images = new ArrayList(list);
             //简单使用

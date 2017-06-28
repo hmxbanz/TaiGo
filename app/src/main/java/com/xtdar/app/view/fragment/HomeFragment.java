@@ -26,6 +26,7 @@ import com.xtdar.app.R;
 import com.xtdar.app.common.NLog;
 import com.xtdar.app.common.NToast;
 import com.xtdar.app.presenter.HomeFragmentPresenter;
+import com.xtdar.app.view.activity.BleActivity;
 import com.xtdar.app.view.activity.DownloadActivity;
 import com.xtdar.app.view.activity.HistoryActivity;
 import com.xtdar.app.view.activity.QrCodeActivity;
@@ -77,8 +78,8 @@ private static final int Blue=0x001bb4fb;
         addDriver=(TextView)view.findViewById(R.id.txt_add_driver);
         addDriver.setOnClickListener(this);
         recycleView= (RecyclerView) view.findViewById(R.id.recyclerView);
-        RelativeLayout layoutBle = (RelativeLayout) view.findViewById(R.id.layout_ble);
-        layoutBle.setOnClickListener(this);
+        view.findViewById(R.id.layout_ble).setOnClickListener(this);
+        view.findViewById(R.id.layout_ble_scan).setOnClickListener(this);
 
     }
 
@@ -94,6 +95,9 @@ private static final int Blue=0x001bb4fb;
             case R.id.txt_add_driver:
                         Intent intent = new Intent(getActivity(), QrCodeActivity.class);
                         startActivityForResult(intent, REQUEST_CODE);
+                break;
+            case R.id.layout_ble_scan:
+                startActivity(new Intent(getActivity(), BleActivity.class));
                 break;
 
         }

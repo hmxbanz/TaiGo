@@ -10,6 +10,8 @@
         android:protectionLevel="signature" />
     <!-- Required 一些系统要求的权限，如访问网络等 -->
     <uses-permission android:name="${applicationId}.permission.JPUSH_MESSAGE" />
+    <uses-permission android:name="android.permission.BLUETOOTH" />
+    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.RECEIVE_USER_PRESENT" />
     <uses-permission android:name="android.permission.INTERNET" />
@@ -202,6 +204,8 @@
         <activity android:name=".view.activity.ProtocolActivity" />
         <activity android:name=".view.activity.QrCodeActivity" />
         <activity android:name=".view.activity.HelpActivity" />
+        <activity android:name=".view.activity.BleActivity" />
+        <activity android:name=".view.activity.ControllerActivity" />
         <activity
             android:name=".view.activity.ConversationListActivity"
             android:screenOrientation="portrait"
