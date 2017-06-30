@@ -805,12 +805,12 @@ containing a value of this type.
         public static final int selected=0x7f0a00f0;
         public static final int send=0x7f0a00e0;
         public static final int square=0x7f0a0038;
-        public static final int text=0x7f0a00e4;
         public static final int toolbar_bottom=0x7f0a00e1;
         public static final int toolbar_top=0x7f0a00dd;
         public static final int tv_line=0x7f0a00c9;
         public static final int tv_prompt=0x7f0a00cc;
         public static final int tv_title=0x7f0a006b;
+        public static final int txt_log=0x7f0a00e4;
         public static final int type_image=0x7f0a00eb;
         public static final int type_text=0x7f0a00ea;
         public static final int unfollow=0x7f0a00b5;

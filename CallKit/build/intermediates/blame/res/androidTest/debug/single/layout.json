@@ -36,12 +36,12 @@
         "source": "D:\\work\\TaiGo\\IMKit\\build\\intermediates\\bundles\\default\\res\\layout\\rc_ext_emoji_grid_view.xml"
     },
     {
-        "merged": "D:\\work\\TaiGo\\CallKit\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\rc_pic_popup_window.xml",
-        "source": "D:\\work\\TaiGo\\IMKit\\build\\intermediates\\bundles\\default\\res\\layout\\rc_pic_popup_window.xml"
-    },
-    {
         "merged": "D:\\work\\TaiGo\\CallKit\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\rc_refresh_list_view.xml",
         "source": "D:\\work\\TaiGo\\IMKit\\build\\intermediates\\bundles\\default\\res\\layout\\rc_refresh_list_view.xml"
+    },
+    {
+        "merged": "D:\\work\\TaiGo\\CallKit\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\rc_pic_popup_window.xml",
+        "source": "D:\\work\\TaiGo\\IMKit\\build\\intermediates\\bundles\\default\\res\\layout\\rc_pic_popup_window.xml"
     },
     {
         "merged": "D:\\work\\TaiGo\\CallKit\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\rc_item_voice_message.xml",
@@ -68,12 +68,12 @@
         "source": "D:\\work\\TaiGo\\IMKit\\build\\intermediates\\bundles\\default\\res\\layout\\rc_item_file_message.xml"
     },
     {
-        "merged": "D:\\work\\TaiGo\\CallKit\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\rc_voip_audio_call_user_info.xml",
-        "source": "D:\\work\\TaiGo\\CallKit\\build\\intermediates\\bundles\\debug\\res\\layout\\rc_voip_audio_call_user_info.xml"
-    },
-    {
         "merged": "D:\\work\\TaiGo\\CallKit\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\rc_location_real_time_activity.xml",
         "source": "D:\\work\\TaiGo\\IMKit\\build\\intermediates\\bundles\\default\\res\\layout\\rc_location_real_time_activity.xml"
+    },
+    {
+        "merged": "D:\\work\\TaiGo\\CallKit\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\rc_voip_audio_call_user_info.xml",
+        "source": "D:\\work\\TaiGo\\CallKit\\build\\intermediates\\bundles\\debug\\res\\layout\\rc_voip_audio_call_user_info.xml"
     },
     {
         "merged": "D:\\work\\TaiGo\\CallKit\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\rc_ext_voice_input.xml",
@@ -96,12 +96,12 @@
         "source": "D:\\work\\TaiGo\\IMKit\\build\\intermediates\\bundles\\default\\res\\layout\\rc_ext_emoji_item.xml"
     },
     {
-        "merged": "D:\\work\\TaiGo\\CallKit\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\rc_voip_activity_select_member.xml",
-        "source": "D:\\work\\TaiGo\\CallKit\\build\\intermediates\\bundles\\debug\\res\\layout\\rc_voip_activity_select_member.xml"
-    },
-    {
         "merged": "D:\\work\\TaiGo\\CallKit\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\rc_voip_video_call_user_info.xml",
         "source": "D:\\work\\TaiGo\\CallKit\\build\\intermediates\\bundles\\debug\\res\\layout\\rc_voip_video_call_user_info.xml"
+    },
+    {
+        "merged": "D:\\work\\TaiGo\\CallKit\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\rc_voip_activity_select_member.xml",
+        "source": "D:\\work\\TaiGo\\CallKit\\build\\intermediates\\bundles\\debug\\res\\layout\\rc_voip_activity_select_member.xml"
     },
     {
         "merged": "D:\\work\\TaiGo\\CallKit\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\rc_fr_messagelist.xml",
@@ -116,12 +116,12 @@
         "source": "D:\\work\\TaiGo\\IMKit\\build\\intermediates\\bundles\\default\\res\\layout\\rc_picsel_preview.xml"
     },
     {
-        "merged": "D:\\work\\TaiGo\\CallKit\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\rc_fr_public_service_inf.xml",
-        "source": "D:\\work\\TaiGo\\IMKit\\build\\intermediates\\bundles\\default\\res\\layout\\rc_fr_public_service_inf.xml"
-    },
-    {
         "merged": "D:\\work\\TaiGo\\CallKit\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\rc_item_image_message.xml",
         "source": "D:\\work\\TaiGo\\IMKit\\build\\intermediates\\bundles\\default\\res\\layout\\rc_item_image_message.xml"
+    },
+    {
+        "merged": "D:\\work\\TaiGo\\CallKit\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\rc_fr_public_service_inf.xml",
+        "source": "D:\\work\\TaiGo\\IMKit\\build\\intermediates\\bundles\\default\\res\\layout\\rc_fr_public_service_inf.xml"
     },
     {
         "merged": "D:\\work\\TaiGo\\CallKit\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\rc_ext_indicator.xml",

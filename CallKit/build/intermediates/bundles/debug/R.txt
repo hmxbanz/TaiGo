@@ -822,12 +822,12 @@ int id select_check 0x7f0b00e5
 int id selected 0x7f0b00f0
 int id send 0x7f0b00e0
 int id square 0x7f0b003a
-int id text 0x7f0b00e4
 int id toolbar_bottom 0x7f0b00e1
 int id toolbar_top 0x7f0b00dd
 int id tv_line 0x7f0b00cb
 int id tv_prompt 0x7f0b00ce
 int id tv_title 0x7f0b006d
+int id txt_log 0x7f0b00e4
 int id type_image 0x7f0b00eb
 int id type_text 0x7f0b00ea
 int id unfollow 0x7f0b00b7

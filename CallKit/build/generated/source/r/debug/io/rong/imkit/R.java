@@ -753,12 +753,12 @@ public final class R {
         public static int selected = 0x7f0b00f0;
         public static int send = 0x7f0b00e0;
         public static int square = 0x7f0b003a;
-        public static int text = 0x7f0b00e4;
         public static int toolbar_bottom = 0x7f0b00e1;
         public static int toolbar_top = 0x7f0b00dd;
         public static int tv_line = 0x7f0b00cb;
         public static int tv_prompt = 0x7f0b00ce;
         public static int tv_title = 0x7f0b006d;
+        public static int txt_log = 0x7f0b00e4;
         public static int type_image = 0x7f0b00eb;
         public static int type_text = 0x7f0b00ea;
         public static int unfollow = 0x7f0b00b7;

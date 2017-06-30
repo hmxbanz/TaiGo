@@ -731,12 +731,12 @@ int id select_check 0x7f0a00e5
 int id selected 0x7f0a00f0
 int id send 0x7f0a00e0
 int id square 0x7f0a0038
-int id text 0x7f0a00e4
 int id toolbar_bottom 0x7f0a00e1
 int id toolbar_top 0x7f0a00dd
 int id tv_line 0x7f0a00c9
 int id tv_prompt 0x7f0a00cc
 int id tv_title 0x7f0a006b
+int id txt_log 0x7f0a00e4
 int id type_image 0x7f0a00eb
 int id type_text 0x7f0a00ea
 int id unfollow 0x7f0a00b5

@@ -105,6 +105,13 @@ public class BlePresenter extends BasePresenter implements OnDataListener, BleSc
 
     @Override
     public void onBleScan(BluetoothDevice device) {
+
+        list.add(device);
+        adapter.setmList(list);
+        adapter.setOnItemClick(this);
+        listView.setAdapter(adapter);
+        NToast.shortToast(context,device.getAddress());
+
         if (list.size() > 0) {
             for(BluetoothDevice b:list){
                 if (!b.getAddress().equals(device.getAddress())) {
@@ -112,13 +119,8 @@ public class BlePresenter extends BasePresenter implements OnDataListener, BleSc
                 }
             }
         }
-        else
-            list.add(device);
 
-        adapter.setmList(list);
-        adapter.setOnItemClick(this);
-        listView.setAdapter(adapter);
-        NToast.shortToast(context,device.getAddress());
+
     }
 
     @Override
