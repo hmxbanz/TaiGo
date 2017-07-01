@@ -22,6 +22,7 @@ import com.xtdar.app.common.NToast;
 import com.xtdar.app.common.NumberUtils;
 import com.xtdar.app.server.HttpException;
 import com.xtdar.app.server.async.OnDataListener;
+import com.xtdar.app.server.response.CommonResponse;
 import com.xtdar.app.server.response.HelpResponse;
 import com.xtdar.app.view.activity.BleActivity;
 import com.xtdar.app.view.activity.ControllerActivity;
@@ -39,6 +40,7 @@ public class BlePresenter extends BasePresenter implements OnDataListener, BleSc
     private static final String DEVICE_UUID_PREFIX = "dferewre";
     private static final String TAG = BlePresenter.class.getSimpleName();
     private static final long SCAN_PERIOD = 10000;
+    private static final int BINDDEVICE = 1;
     private final Handler handler;
     private ListView listView;
     private List<BluetoothDevice> list=new ArrayList<>();
@@ -48,6 +50,7 @@ public class BlePresenter extends BasePresenter implements OnDataListener, BleSc
     private BleActivity activity;
     private boolean isScanning=true;
     private Button btnScan;
+    private BluetoothDevice selectedDevice;
 
     public BlePresenter(Context context) {
         super(context);
@@ -91,45 +94,41 @@ public class BlePresenter extends BasePresenter implements OnDataListener, BleSc
 
     @Override
     public Object doInBackground(int requestCode, String parameter) throws HttpException {
-        return mUserAction.getHelps();
+        return mUserAction.bindDevice(selectedDevice.getName());
     }
 
     @Override
     public void onSuccess(int requestCode, Object result) {
         LoadDialog.dismiss(context);
-        HelpResponse response = (HelpResponse) result;
+        CommonResponse response = (CommonResponse) result;
         if (response != null && response.getCode() == XtdConst.SUCCESS) {
-            NToast.shortToast(context,response.getMsg());
+
         }
+        NToast.shortToast(context,response.getMsg());
     }
 
     @Override
     public void onBleScan(BluetoothDevice device) {
-
-        list.add(device);
         adapter.setmList(list);
         adapter.setOnItemClick(this);
         listView.setAdapter(adapter);
         NToast.shortToast(context,device.getAddress());
-
-        if (list.size() > 0) {
-            for(BluetoothDevice b:list){
-                if (!b.getAddress().equals(device.getAddress())) {
-                    list.add(device);
-                }
-            }
+        atm.request(BINDDEVICE,this);
+        if (list.indexOf(device) == -1 && device.getName() !=null){// 防止重复添加
+            list.add(device);
         }
-
 
     }
 
     @Override
     public boolean onItemClick(int position, View view, int status) {
         bleScanner.stopScan();
-        BluetoothDevice device = (BluetoothDevice) adapter.getItem(position);
-        Intent intent = new Intent(context, ControllerActivity.class);
-        intent.putExtra("device", device);
-        context.startActivity(intent);
+        selectedDevice = (BluetoothDevice) adapter.getItem(position);
+        //查询服务器并将枪添加到用户
+atm.request(BINDDEVICE,this);
+//        Intent intent = new Intent(context, ControllerActivity.class);
+//        intent.putExtra("device", selectedDevice);
+//        context.startActivity(intent);
         return false;
     }
 }

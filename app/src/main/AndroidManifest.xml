@@ -195,7 +195,7 @@
         <activity android:name=".view.activity.CategoryActivity" />
         <activity android:name=".view.activity.ContactsActivity" />
         <activity android:name=".view.activity.SearchActivity" />
-        <activity android:name=".view.activity.UnityPlayerActivity" />
+        <activity android:name=".view.activity.UnityPlayerActivity" android:screenOrientation="landscape" />
         <activity android:name=".view.activity.DeviceActivity" />
         <activity android:name=".view.activity.HistoryActivity" />
         <activity android:name=".view.activity.DownloadActivity" />
@@ -238,6 +238,8 @@
                     android:scheme="rong" />
             </intent-filter>
         </activity>
+
+        <service android:name=".widget.downloadService.DownloadService" />
     </application>
 
 </manifest>

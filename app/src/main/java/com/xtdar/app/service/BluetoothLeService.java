@@ -129,10 +129,8 @@ public class BluetoothLeService extends Service {
         sendBroadcast(intent);
     }
 
-    private void broadcastUpdate(final String action,
-                                 final BluetoothGattCharacteristic characteristic) {
+    private void broadcastUpdate(final String action,final BluetoothGattCharacteristic characteristic) {
         final Intent intent = new Intent(action);
-
         byte[] heartRate = characteristic.getValue();
         String s = NumberUtils.bytes2HexString(heartRate);
         String data = NumberUtils.print10(s);
@@ -223,8 +221,7 @@ public class BluetoothLeService extends Service {
             }
         }
 
-        final BluetoothDevice device = mBluetoothAdapter
-                .getRemoteDevice(address);
+        final BluetoothDevice device = mBluetoothAdapter.getRemoteDevice(address);
         if (device == null) {
             NLog.d(TAG, "没有设备");
             return false;

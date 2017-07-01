@@ -21,12 +21,14 @@ import com.xtdar.app.view.widget.LoadDialog;
 public class LoginPresenter extends BasePresenter{
     private static final int LOGIN = 1;
     private static final int GET_TOKEN = 2;
+    private final BasePresenter basePresenter;
     private LoginActivity mActivity;
     private EditText mUsername;
     private EditText mPassword;
     public LoginPresenter(Context context){
         super(context);
         mActivity = (LoginActivity) context;
+        basePresenter = BasePresenter.getInstance(context);
     }
 
     public void init(EditText username, EditText password) {
@@ -76,12 +78,8 @@ public class LoginPresenter extends BasePresenter{
                         editor.putString(XtdConst.LOGING_PASSWORD, mPassword.getText().toString());
 
                         editor.putBoolean(XtdConst.ISLOGIN, true);
-//                        editor.putString(XtdConst.USERID, entity.getUserID());
-//                        editor.putString(XtdConst.USERINFOID, entity.getUserInfoID());
-//                        editor.putString("iconSmall", entity.getIconSmall());
-//                        editor.putString("checkName", entity.getCheckName());
                         editor.apply();
-
+                        basePresenter.initData();
                         context.startActivity(new Intent(context,Main2Activity.class));
                     } else if (loginResponse.getCode() == XtdConst.FAILURE) {
 

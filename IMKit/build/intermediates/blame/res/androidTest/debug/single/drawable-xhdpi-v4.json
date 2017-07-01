@@ -616,12 +616,12 @@
         "source": "D:\\work\\TaiGo\\IMKit\\build\\intermediates\\bundles\\debug\\res\\drawable-xhdpi-v4\\u1f634.png"
     },
     {
-        "merged": "D:\\work\\TaiGo\\IMKit\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-xhdpi-v4\\rc_cs_follow.png",
-        "source": "D:\\work\\TaiGo\\IMKit\\build\\intermediates\\bundles\\debug\\res\\drawable-xhdpi-v4\\rc_cs_follow.png"
-    },
-    {
         "merged": "D:\\work\\TaiGo\\IMKit\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-xhdpi-v4\\u1f649.png",
         "source": "D:\\work\\TaiGo\\IMKit\\build\\intermediates\\bundles\\debug\\res\\drawable-xhdpi-v4\\u1f649.png"
+    },
+    {
+        "merged": "D:\\work\\TaiGo\\IMKit\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-xhdpi-v4\\rc_cs_follow.png",
+        "source": "D:\\work\\TaiGo\\IMKit\\build\\intermediates\\bundles\\debug\\res\\drawable-xhdpi-v4\\rc_cs_follow.png"
     },
     {
         "merged": "D:\\work\\TaiGo\\IMKit\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-xhdpi-v4\\rc_ic_message_block.png",
@@ -1364,12 +1364,12 @@
         "source": "D:\\work\\TaiGo\\IMKit\\build\\intermediates\\bundles\\debug\\res\\drawable-xhdpi-v4\\rc_cs_evaluate_plugin_hover.png"
     },
     {
-        "merged": "D:\\work\\TaiGo\\IMKit\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-xhdpi-v4\\u1f608.png",
-        "source": "D:\\work\\TaiGo\\IMKit\\build\\intermediates\\bundles\\debug\\res\\drawable-xhdpi-v4\\u1f608.png"
-    },
-    {
         "merged": "D:\\work\\TaiGo\\IMKit\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-xhdpi-v4\\u1f62b.png",
         "source": "D:\\work\\TaiGo\\IMKit\\build\\intermediates\\bundles\\debug\\res\\drawable-xhdpi-v4\\u1f62b.png"
+    },
+    {
+        "merged": "D:\\work\\TaiGo\\IMKit\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-xhdpi-v4\\u1f608.png",
+        "source": "D:\\work\\TaiGo\\IMKit\\build\\intermediates\\bundles\\debug\\res\\drawable-xhdpi-v4\\u1f608.png"
     },
     {
         "merged": "D:\\work\\TaiGo\\IMKit\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-xhdpi-v4\\rc_cs_star.png",

@@ -38,7 +38,6 @@ import com.xtdar.app.view.activity.SearchActivity;
  */
 public class HomeFragment extends Fragment implements View.OnClickListener  {
 private static final int Blue=0x001bb4fb;
-    private static final int REQUEST_CODE = 1;
     private View view;
     public static HomeFragment instance = null;
 
@@ -93,11 +92,11 @@ private static final int Blue=0x001bb4fb;
         switch (v.getId()) {
             case R.id.layout_ble:
             case R.id.txt_add_driver:
-                        Intent intent = new Intent(getActivity(), QrCodeActivity.class);
-                        startActivityForResult(intent, REQUEST_CODE);
+                homeFragmentPresenter.onQrClick();
+
                 break;
             case R.id.layout_ble_scan:
-                startActivity(new Intent(getActivity(), BleActivity.class));
+                homeFragmentPresenter.onScanClick();
                 break;
 
         }
@@ -109,7 +108,7 @@ private static final int Blue=0x001bb4fb;
         /**
          * 处理二维码扫描结果
          */
-        if (requestCode == REQUEST_CODE) {
+        if (requestCode == HomeFragmentPresenter.REQUEST_CODE) {
             //处理扫描结果（在界面上显示）
             if (null != data) {
                 Bundle bundle = data.getExtras();

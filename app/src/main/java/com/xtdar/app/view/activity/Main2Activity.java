@@ -22,7 +22,6 @@ import com.xtdar.app.view.fragment.DiscoveryFragment;
 import com.xtdar.app.view.fragment.GameFragment;
 import com.xtdar.app.view.fragment.HomeFragment;
 import com.xtdar.app.view.fragment.MineFragment;
-import com.xtdar.app.view.fragment.ShopFragment;
 import com.xtdar.app.view.fragment.ShowFragment;
 import com.xtdar.app.view.widget.DragPointView;
 
@@ -32,7 +31,7 @@ import java.util.List;
 public class Main2Activity extends BaseActivity implements View.OnClickListener{
     private final int CURRENTVIEWPAGEINDEX =0;
     private final int MAXCACHEVIEWPAGES =3;
-    private ViewPager mViewPager;
+    private ViewPager viewPager;
     private List<Fragment> mFragments;
     private ImageView mImageHome,mImageShop, mImageAr,mImageDiscovery, mImageMe, mMineRed;
     private TextView mTextHome,mTextShop, mTextDiscovery,mTextMe;
@@ -80,7 +79,7 @@ public class Main2Activity extends BaseActivity implements View.OnClickListener{
     private void initMianViewPager() {
         Fragment mConversationList;
         FragmentPagerAdapter mFragmentPagerAdapter; //将 tab  页面持久在内存中
-        mViewPager = (ViewPager) findViewById(R.id.main_viewpager);
+        viewPager = (ViewPager) findViewById(R.id.main_viewpager);
         mUnreadNumView = (DragPointView) findViewById(R.id.seal_num);
 //        mUnreadNumView.setOnClickListener(this);
 //        mUnreadNumView.setDragListencer(new DragListencer());
@@ -102,10 +101,10 @@ public class Main2Activity extends BaseActivity implements View.OnClickListener{
                 return mFragments.size();
             }
         };
-        mViewPager.setAdapter(mFragmentPagerAdapter);
-        mViewPager.setCurrentItem(CURRENTVIEWPAGEINDEX);
-        mViewPager.setOffscreenPageLimit(MAXCACHEVIEWPAGES);
-        mViewPager.setOnPageChangeListener(new PageChangerListener());
+        viewPager.setAdapter(mFragmentPagerAdapter);
+        viewPager.setCurrentItem(CURRENTVIEWPAGEINDEX);
+        viewPager.setOffscreenPageLimit(MAXCACHEVIEWPAGES);
+        viewPager.setOnPageChangeListener(new PageChangerListener());
         //initData();
     }
     private void changeTextViewColor() {
@@ -144,12 +143,14 @@ public class Main2Activity extends BaseActivity implements View.OnClickListener{
         }
         @Override
         public void onPageSelected(int position) {
+
+            int index= viewPager.getCurrentItem();
+            if(index==3){
+                main2Presenter.onMeClick(viewPager);
+            }
             changeTextViewColor();
             changeSelectedTabState(position);
-            int index= mViewPager.getCurrentItem();
-            if(index==2){
-            }
-                HomeFragment homeFragment= HomeFragment.getInstance();
+                //HomeFragment homeFragment= HomeFragment.getInstance();
                 //homeFragment.scrollView.smoothScrollTo(0, 0);
         }
         @Override
@@ -160,19 +161,18 @@ public class Main2Activity extends BaseActivity implements View.OnClickListener{
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.tab_layout_home:
-                mViewPager.setCurrentItem(0, false);
+                viewPager.setCurrentItem(0, false);
                 break;
             case R.id.tab_layout_shop:
-                mViewPager.setCurrentItem(1, false);
+                viewPager.setCurrentItem(1, false);
                 break;
             case R.id.tab_layout_show:
-                mViewPager.setCurrentItem(2, false);
+                viewPager.setCurrentItem(2, false);
                 //startActivity(new Intent(this,LoginActivity.class));
                 //mMineRed.setVisibility(View.GONE);
                 break;
             case R.id.tab_layout_me:
-                mViewPager.setCurrentItem(3, false);
-                startActivity(new Intent(this,LoginActivity.class));
+                main2Presenter.onMeClick(viewPager);
                 //mMineRed.setVisibility(View.GONE);
                 break;
         }
@@ -238,5 +238,10 @@ public class Main2Activity extends BaseActivity implements View.OnClickListener{
             return;
         }
         finish();
+    }
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        main2Presenter.onDestroy();
     }
 }

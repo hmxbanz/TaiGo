@@ -152,12 +152,12 @@
         "source": "C:\\Users\\PVer\\.android\\build-cache\\6a048fc6ef5985267fca8ecaaa7c30171f00ae93\\output\\res\\drawable\\abc_ic_search_api_material.xml"
     },
     {
-        "merged": "D:\\work\\TaiGo\\coordinatortablayout\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable\\icon_thumbsup.png",
-        "source": "D:\\work\\TaiGo\\coordinatortablayout\\build\\intermediates\\bundles\\debug\\res\\drawable\\icon_thumbsup.png"
-    },
-    {
         "merged": "D:\\work\\TaiGo\\coordinatortablayout\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable\\abc_seekbar_tick_mark_material.xml",
         "source": "C:\\Users\\PVer\\.android\\build-cache\\6a048fc6ef5985267fca8ecaaa7c30171f00ae93\\output\\res\\drawable\\abc_seekbar_tick_mark_material.xml"
+    },
+    {
+        "merged": "D:\\work\\TaiGo\\coordinatortablayout\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable\\icon_thumbsup.png",
+        "source": "D:\\work\\TaiGo\\coordinatortablayout\\build\\intermediates\\bundles\\debug\\res\\drawable\\icon_thumbsup.png"
     },
     {
         "merged": "D:\\work\\TaiGo\\coordinatortablayout\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable\\abc_ratingbar_small_material.xml",

@@ -70,7 +70,6 @@ public class BleConnector extends BluetoothGattCallback {
     @Override
     // New services discovered
     public void onServicesDiscovered(BluetoothGatt gatt, int status) {
-
         Log.w(TAG, "onServicesDiscovered received ================== " + status);
 
         if (status == BluetoothGatt.GATT_SUCCESS) {
@@ -112,7 +111,7 @@ public class BleConnector extends BluetoothGattCallback {
     public void onCharacteristicChanged(BluetoothGatt gatt, BluetoothGattCharacteristic characteristic) {
         int sign = byte2int(characteristic.getValue());
         if (sign == 0x02403003) {//heart beat
-            byte[] ECHO = {0x02, 0x40, 0x31, 0x03};
+             byte[]ECHO = {0x02, 0x40, 0x31, 0x03};
             characteristic.setValue(ECHO);
             gatt.writeCharacteristic(characteristic);
             return;

@@ -15,35 +15,56 @@ import com.xtdar.app.view.activity.BaseActivity;
 import com.xtdar.app.view.widget.LoadDialog;
 import com.xtdar.app.widget.ACache;
 
+import static android.content.Context.MODE_PRIVATE;
+
 /**
  * Created by PVer on 2017/5/23.
  */
 
 public class BasePresenter implements OnDataListener {
-    protected final SharedPreferences sp;
-    protected final SharedPreferences.Editor editor;
+    private static BasePresenter instance;
+    protected SharedPreferences sp;
+    protected SharedPreferences.Editor editor;
     public boolean isLogin;
     protected Context context;
     public UserAction mUserAction;
     public AsyncTaskManager atm ;
     protected String mUserInfoId;
     public ACache aCache;
+    protected String userName;
+    protected String password;
     public BasePresenter(Context context)
     {
         this.context =context;
         atm= AsyncTaskManager.getInstance(context);
         mUserAction = UserAction.getInstance(context);
-        aCache=ACache.get(context);
-        sp = ((BaseActivity) this.context).sp;
-        editor=sp.edit();
-        mUserInfoId= sp.getString(XtdConst.USERINFOID,"0");
-        isLogin = sp.getBoolean(XtdConst.ISLOGIN, false);
-        mUserAction.token=GetToken();
+        if(context != null){
+            aCache = ACache.get(context);
+            sp = this.context.getSharedPreferences("UserConfig", MODE_PRIVATE);
+            editor = sp.edit();
+            initData();
+        }
+    }
+    public static BasePresenter getInstance(Context context) {
+        if (instance == null) {
+            synchronized (BasePresenter.class) {
+                if (instance == null) {
+                    instance = new BasePresenter(context);
+                }
+            }
+        }
+        return instance;
     }
     protected String GetToken(){
         return sp.getString(XtdConst.ACCESS_TOKEN,"");
     }
-
+    protected void initData()
+    {
+        mUserAction.token = GetToken();
+        isLogin = sp.getBoolean(XtdConst.ISLOGIN, false);
+        userName=sp.getString(XtdConst.LOGIN_USERNAME,"");
+        password=sp.getString(XtdConst.LOGING_PASSWORD,"");
+    }
     @Override
     public Object doInBackground(int requestCode, String parameter) throws HttpException {
         return null;

@@ -64,12 +64,12 @@
         "source": "D:\\work\\TaiGo\\IMKit\\build\\intermediates\\bundles\\default\\res\\layout\\rc_item_discussion_conversation.xml"
     },
     {
-        "merged": "D:\\work\\TaiGo\\CallKit\\build\\intermediates\\res\\merged\\debug\\layout\\rc_voip_item_outgoing_maudio.xml",
-        "source": "D:\\work\\TaiGo\\CallKit\\src\\main\\res\\layout\\rc_voip_item_outgoing_maudio.xml"
-    },
-    {
         "merged": "D:\\work\\TaiGo\\CallKit\\build\\intermediates\\res\\merged\\debug\\layout\\rc_picsel_preview.xml",
         "source": "D:\\work\\TaiGo\\IMKit\\build\\intermediates\\bundles\\default\\res\\layout\\rc_picsel_preview.xml"
+    },
+    {
+        "merged": "D:\\work\\TaiGo\\CallKit\\build\\intermediates\\res\\merged\\debug\\layout\\rc_voip_item_outgoing_maudio.xml",
+        "source": "D:\\work\\TaiGo\\CallKit\\src\\main\\res\\layout\\rc_voip_item_outgoing_maudio.xml"
     },
     {
         "merged": "D:\\work\\TaiGo\\CallKit\\build\\intermediates\\res\\merged\\debug\\layout\\rc_cs_alert_robot_evaluation.xml",
@@ -136,12 +136,12 @@
         "source": "D:\\work\\TaiGo\\IMKit\\build\\intermediates\\bundles\\default\\res\\layout\\rc_item_public_service_message.xml"
     },
     {
-        "merged": "D:\\work\\TaiGo\\CallKit\\build\\intermediates\\res\\merged\\debug\\layout\\rc_camera.xml",
-        "source": "D:\\work\\TaiGo\\IMKit\\build\\intermediates\\bundles\\default\\res\\layout\\rc_camera.xml"
-    },
-    {
         "merged": "D:\\work\\TaiGo\\CallKit\\build\\intermediates\\res\\merged\\debug\\layout\\rc_ext_plugin_grid_view.xml",
         "source": "D:\\work\\TaiGo\\IMKit\\build\\intermediates\\bundles\\default\\res\\layout\\rc_ext_plugin_grid_view.xml"
+    },
+    {
+        "merged": "D:\\work\\TaiGo\\CallKit\\build\\intermediates\\res\\merged\\debug\\layout\\rc_camera.xml",
+        "source": "D:\\work\\TaiGo\\IMKit\\build\\intermediates\\bundles\\default\\res\\layout\\rc_camera.xml"
     },
     {
         "merged": "D:\\work\\TaiGo\\CallKit\\build\\intermediates\\res\\merged\\debug\\layout\\rc_item_conversation_member.xml",

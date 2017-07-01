@@ -17,6 +17,7 @@ import com.xtdar.app.server.response.CommonResponse;
 import com.xtdar.app.server.response.DetailResponse;
 import com.xtdar.app.server.response.HelpResponse;
 import com.xtdar.app.server.response.LoginResponse;
+import com.xtdar.app.server.response.MyDevicesResponse;
 import com.xtdar.app.server.response.RecommendResponse;
 import com.xtdar.app.server.response.RelateRecommendResponse;
 import com.xtdar.app.server.response.ShowResponse;
@@ -89,7 +90,7 @@ public class UserAction extends BaseAction {
         }
         LoginResponse loginResponse = null;
         if (!TextUtils.isEmpty(result)) {
-            NLog.e("login", result);
+            NLog.e("接收的", result);
 
             try {
                 loginResponse = JsonMananger.jsonToBean(result, LoginResponse.class);
@@ -599,5 +600,52 @@ public CommonResponse register(String cellPhone, String password, String captcha
         }
         return commonResponse;
 
+    }
+
+    public CommonResponse bindDevice(String bleName) throws HttpException{
+        String uri = getURL("kp_dyz/cli-dg-binddevicebyname.php");
+        Response response=null;
+        try {
+            response=OkHttpUtils
+                    .get()
+                    .url(uri)
+                    .addParams("access_key",token)
+                    .addParams("device_item_name",bleName)
+                    .build()
+                    .execute();
+            result =response.body().string();
+            Log.w(TAG, "接收的："+ result);
+        } catch (IOException e) {
+            e.printStackTrace();
+
+        }
+        CommonResponse commonResponse = null;
+        if (!TextUtils.isEmpty(result)) {
+            commonResponse = JsonMananger.jsonToBean(result, CommonResponse.class);
+        }
+        return commonResponse;
+    }
+
+    public MyDevicesResponse getDevices() throws HttpException {
+        String uri = getURL("kp_dyz/cli-dg-mydevicelist.php");
+        Response response=null;
+        try {
+            response=OkHttpUtils
+                    .get()
+                    .url(uri)
+                    .addParams("access_key",token)
+                    .build()
+                    .execute();
+            result =response.body().string();
+            Log.w(TAG, "接收的："+ result);
+        } catch (IOException e) {
+            e.printStackTrace();
+
+        }
+        MyDevicesResponse commonResponse = null;
+        if (!TextUtils.isEmpty(result)) {
+            commonResponse = JsonMananger.jsonToBean(result, MyDevicesResponse.class);
+        }
+        return commonResponse;
     }
 }

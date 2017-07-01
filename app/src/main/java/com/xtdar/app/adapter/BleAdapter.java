@@ -55,7 +55,7 @@ public class BleAdapter extends BaseAdapter {
             }
         });
         BluetoothDevice device = (BluetoothDevice) mList.get(position);
-        holder.deviceName.setText(device.getAddress());
+        holder.deviceName.setText(device.getName());
 
         //holder.deviceName.setText(((User)mList.get(position)).getNickName());
 

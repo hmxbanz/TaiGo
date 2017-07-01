@@ -150,6 +150,6 @@
     </style>
 
     <style name="textColorAppText"><item name="android:textColor">@color/appTextColor</item></style>
-
-
+<!--伟加-->
+    <style name="UnityThemeSelector" parent="android:Theme.Light.NoTitleBar.Fullscreen" />
 </resources>

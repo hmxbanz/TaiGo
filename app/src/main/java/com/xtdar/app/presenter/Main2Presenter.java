@@ -31,41 +31,41 @@ import static com.xtdar.app.common.CommonTools.getVersionInfo;
 public class Main2Presenter extends BasePresenter {
     private static final int AUTOLOGIN = 1;
     private static final int CHECKVERSION = 2;
-    private Main2Activity mActivity;
+    private final BasePresenter basePresenter;
+    private Main2Activity activity;
     private String userName;
     private String password;
 
     public Main2Presenter(Context context){
         super(context);
-        mActivity = (Main2Activity) context;
+        activity = (Main2Activity) context;
+        basePresenter = BasePresenter.getInstance(context);
     }
 
     public void init() {
-        userName = mActivity.sp.getString(XtdConst.LOGIN_USERNAME, "");
-        password = mActivity.sp.getString(XtdConst.LOGING_PASSWORD, "");
+        userName = activity.sp.getString(XtdConst.LOGIN_USERNAME, "");
+        password = activity.sp.getString(XtdConst.LOGING_PASSWORD, "");
         if(!TextUtils.isEmpty(userName) && !isLogin){
-            LoadDialog.show(mActivity);
+            LoadDialog.show(activity);
             atm.request(AUTOLOGIN,this);
         }
         atm.request(CHECKVERSION,this);
     }
 
     public void onMeClick(final ViewPager viewPager) {
-        isLogin = sp.getBoolean(XtdConst.ISLOGIN, false);
-        if(!isLogin){
-            DialogWithYesOrNoUtils.getInstance().showDialog(mActivity, "请先登录", "前住登录", new DialogWithYesOrNoUtils.DialogCallBack() {
+        if(!basePresenter.isLogin){
+            DialogWithYesOrNoUtils.getInstance().showDialog(context, "请先登录", "前住登录", new AlertDialogCallback() {
                 @Override
                 public void executeEvent() {
-                    viewPager.setCurrentItem(1, false);
-                    mActivity.startActivity(new Intent(mActivity, LoginActivity.class));
+                    activity.startActivity(new Intent(activity, LoginActivity.class));
                 }
 
-                @Override
-                public void onCancle() {
-                    viewPager.setCurrentItem(1, false);
-                }
             });
         }
+        else {
+            viewPager.setCurrentItem(3);
+        }
+
     }
     @Override
     public Object doInBackground(int requestCode, String id) throws HttpException {
@@ -85,10 +85,11 @@ public class Main2Presenter extends BasePresenter {
                     LoginResponse loginResponse = (LoginResponse) result;
                     if (loginResponse.getCode() == XtdConst.SUCCESS) {
                         LoginResponse.ResultEntity entity=loginResponse.getData();
-                        mActivity.editor.putBoolean(XtdConst.ISLOGIN, true);
-                        mActivity.editor.apply();
-                        LoadDialog.dismiss(mActivity);
-                        NToast.shortToast(mActivity, "登录成功");
+                        editor.putBoolean(XtdConst.ISLOGIN, true);
+                        editor.putString(XtdConst.ACCESS_TOKEN, entity.getAccess_key());
+                        editor.apply();
+                        LoadDialog.dismiss(activity);
+                        NToast.shortToast(activity, "登录成功");
                     } else if (loginResponse.getCode() == XtdConst.FAILURE) {
 
                     }
@@ -97,11 +98,11 @@ public class Main2Presenter extends BasePresenter {
                     VersionResponse versionResponse = (VersionResponse) result;
                     if (versionResponse.getState() == XtdConst.SUCCESS) {
                         final VersionResponse.ResultEntity entity=versionResponse.getAndroid();
-                        String[] versionInfo = getVersionInfo(mActivity);
+                        String[] versionInfo = getVersionInfo(activity);
                         int versionCode = Integer.parseInt(versionInfo[0]);
                         if(entity.getVersionCode()>versionCode)
                         {
-                            DialogWithYesOrNoUtils.getInstance().showDialog(mActivity, "发现新版本:"+entity.getVersionName(), "立即更新",new AlertDialogCallback() {
+                            DialogWithYesOrNoUtils.getInstance().showDialog(activity, "发现新版本:"+entity.getVersionName(), "立即更新",new AlertDialogCallback() {
                                 @Override
                                 public void executeEvent() {
                                     goToDownload(entity.getDownloadUrl());
@@ -110,8 +111,8 @@ public class Main2Presenter extends BasePresenter {
 
                             });
                         }
-                        LoadDialog.dismiss(mActivity);
-                        NToast.shortToast(mActivity, "版本检测成功");
+                        LoadDialog.dismiss(activity);
+                        NToast.shortToast(activity, "版本检测成功");
                     } else if (versionResponse.getState() == XtdConst.FAILURE) {
 
                     }
@@ -124,27 +125,26 @@ public class Main2Presenter extends BasePresenter {
         super.onFailure(requestCode, state, result);
         switch (requestCode) {
             case AUTOLOGIN:
-                LoadDialog.dismiss(mActivity);
-                NToast.shortToast(mActivity, mActivity.getString(R.string.login_api_fail));
+                LoadDialog.dismiss(activity);
+                NToast.shortToast(activity, activity.getString(R.string.login_api_fail));
                 break;
         }
     }
 
     public void onDestroy() {
-        mActivity.editor.putBoolean(XtdConst.ISLOGIN, false);//退出改登录标记
-        mActivity.editor.commit();
+        activity.editor.putBoolean(XtdConst.ISLOGIN, false);//退出改登录标记
+        activity.editor.commit();
     }
 
     private void goToDownload(final String apkUrl) {
         //权限申请
-        PermissionsManager.getInstance().requestPermissionsIfNecessaryForResult(mActivity,
+        PermissionsManager.getInstance().requestPermissionsIfNecessaryForResult(activity,
                 new String[]{Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE}, new PermissionsResultAction() {
                     @Override
                     public void onGranted() {
-                        Intent intent=new Intent(mActivity,DownloadService.class);
+                        Intent intent=new Intent(activity,DownloadService.class);
                         intent.putExtra("url", apkUrl);
-                        mActivity.startService(intent);
-
+                        activity.startService(intent);
                     }
 
                     @Override
