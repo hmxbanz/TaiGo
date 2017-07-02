@@ -1,5 +1,6 @@
 package com.xtdar.app.common;
 
+import java.io.UnsupportedEncodingException;
 import java.util.Locale;
 
 /**
@@ -60,4 +61,24 @@ public class NumberUtils {
         }
         return buff.toString();
     }
+
+    /**
+     * 将字符串转byte[]
+     *
+     * @param str
+     * @return
+     */
+    public static byte[] Str2byte(String str) {
+
+        byte[] srtbyte = null;
+        try {
+            srtbyte = str.getBytes("UTF-8");
+            String res = new String(srtbyte,"UTF-8");
+            System.out.println(res);
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+        return srtbyte;
+    }
+
 }

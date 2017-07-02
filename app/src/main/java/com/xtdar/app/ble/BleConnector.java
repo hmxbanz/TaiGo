@@ -11,6 +11,9 @@ import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
 
+import com.xtdar.app.common.NLog;
+import com.xtdar.app.common.NumberUtils;
+
 import java.util.List;
 
 public class BleConnector extends BluetoothGattCallback {
@@ -77,7 +80,8 @@ public class BleConnector extends BluetoothGattCallback {
 
             for (BluetoothGattService service : gatt.getServices()) {
                 Log.w(TAG, "================== find service: " + service.getUuid().toString());
-                if (service.getUuid().toString().startsWith("0000fff0-")) {
+                //if (service.getUuid().toString().startsWith("0000ffe5-")) {//手机发给枪
+                    if (service.getUuid().toString().startsWith("0000ffe0-")) {//枪发给手机
                     List<BluetoothGattCharacteristic> characteristics = service.getCharacteristics();
                     for (BluetoothGattCharacteristic characteristic : characteristics) {
                         Log.w(TAG, "================== find characteristics count: " + characteristics.size());
@@ -86,7 +90,7 @@ public class BleConnector extends BluetoothGattCallback {
                         Log.w(TAG, "================== characteristic value: " + byte2HexStr(characteristic.getValue()));
                         gatt.setCharacteristicNotification(characteristic, true);
                         Log.w(TAG, "================== Thread : " + Thread.currentThread().getId());
-                        if (characteristic.getUuid().toString().startsWith("0000fff6-")) {
+                        if (characteristic.getUuid().toString().startsWith("0000ffe4-")) {
                             this.characteristic = characteristic;
 
                             Message msg = Message.obtain();
@@ -110,27 +114,33 @@ public class BleConnector extends BluetoothGattCallback {
     // notification
     public void onCharacteristicChanged(BluetoothGatt gatt, BluetoothGattCharacteristic characteristic) {
         int sign = byte2int(characteristic.getValue());
-        if (sign == 0x02403003) {//heart beat
-             byte[]ECHO = {0x02, 0x40, 0x31, 0x03};
-            characteristic.setValue(ECHO);
-            gatt.writeCharacteristic(characteristic);
-            return;
-        } else if (sign == 0x02431503 && lastSignCount <= 3) {//NAK
-            lastSignCount++;
-            if (lastSign != 0) sendMsg(lastSign);
-            return;
-        } else {
-            byte[] ACK = {0x02, 0x43, 0x06, 0x03};
-            characteristic.setValue(ACK);
-            gatt.writeCharacteristic(characteristic);
-            Log.w(TAG, "write ACK ");
-            lastSign = 0;
-        }
+        String strSign=new String(characteristic.getValue());
+        NLog.e("888888",strSign);
+
+//        if (sign == 0x02403003) {//heart beat
+//             byte[]ECHO = {0x02, 0x40, 0x31, 0x03};
+//            characteristic.setValue(ECHO);
+//            gatt.writeCharacteristic(characteristic);
+//            return;
+//        } else if (sign == 0x02431503 && lastSignCount <= 3) {//NAK
+//            lastSignCount++;
+//            if (lastSign != 0) sendMsg(lastSign);
+//            return;
+//        } else {
+//            byte[] ACK = {0x02, 0x43, 0x06, 0x03};
+//            characteristic.setValue(ACK);
+//            gatt.writeCharacteristic(characteristic);
+//            Log.w(TAG, "write ACK ");
+//            lastSign = 0;
+//        }
+
+
 
         Message msg = Message.obtain();
         msg.what = NOTIFY;
-        msg.obj = characteristic.getValue();
+        msg.obj = "a";
         msg.arg1 = sign;
+
         if (handler != null) handler.sendMessage(msg);
 
         Log.w(TAG, "notification from : " + Integer.toHexString(this.hashCode()) + "    " + characteristic.getUuid());
@@ -155,8 +165,8 @@ public class BleConnector extends BluetoothGattCallback {
         int result = 0;
         result |= (bytes[0] << 24);
         result |= (bytes[1] << 16);
-        result |= (bytes[2] << 8);
-        result |= (bytes[3]);
+        //result |= (bytes[2] << 8);
+        //result |= (bytes[3]);
         return result;
     }
 
@@ -178,5 +188,15 @@ public class BleConnector extends BluetoothGattCallback {
         }
         return false;
     }
+
+    public boolean sendMsg(String command) {
+        if (bluetoothGatt != null && characteristic != null) {
+            lastSignCount = 1;
+            characteristic.setValue(NumberUtils.Str2byte(command));
+            return bluetoothGatt.writeCharacteristic(characteristic);
+        }
+        return false;
+    }
+
 
 }

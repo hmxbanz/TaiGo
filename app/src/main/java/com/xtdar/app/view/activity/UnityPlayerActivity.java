@@ -1,11 +1,18 @@
 package com.xtdar.app.view.activity;
 
 import com.unity3d.player.*;
+import com.xtdar.app.ble.BleConnector;
+
 import android.app.Activity;
+import android.bluetooth.BluetoothDevice;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.graphics.PixelFormat;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
+import android.os.Message;
+import android.os.Parcelable;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
@@ -15,6 +22,23 @@ import android.view.WindowManager;
 public class UnityPlayerActivity extends Activity
 {
     protected UnityPlayer mUnityPlayer; // don't change the name of this variable; referenced from native code
+    private BluetoothDevice device;
+    private BleConnector connector;
+
+    private Handler handle = new Handler(Looper.getMainLooper()) {
+        @Override
+        public void handleMessage(Message msg) {
+            switch (msg.what) {
+                case BleConnector.CONNECTED:
+                    break;
+                case BleConnector.NOTIFY:
+                    UnityPlayer.UnitySendMessage("Main Camera","eee",String.valueOf(msg.obj));
+                    break;
+                case BleConnector.DISCONNECTED:
+                    break;
+            }
+        }
+    };
 
     // Setup activity layout
     @Override protected void onCreate (Bundle savedInstanceState)
@@ -27,7 +51,12 @@ public class UnityPlayerActivity extends Activity
         mUnityPlayer = new UnityPlayer(this);
         setContentView(mUnityPlayer);
         mUnityPlayer.requestFocus();
+        device = getIntent().getParcelableExtra("device");
+        connector = new BleConnector(handle);
+        connector.connect(this, device);
+
     }
+
 
     @Override protected void onNewIntent(Intent intent)
     {
@@ -104,6 +133,10 @@ public class UnityPlayerActivity extends Activity
     @Override public boolean onKeyDown(int keyCode, KeyEvent event)   { return mUnityPlayer.injectEvent(event); }
     @Override public boolean onTouchEvent(MotionEvent event)          { return mUnityPlayer.injectEvent(event); }
     /*API12*/ public boolean onGenericMotionEvent(MotionEvent event)  { return mUnityPlayer.injectEvent(event); }
-    public void Move(String s){}
-    public void eee(String s){}
+    public void Move(String s){
+        connector.sendMsg(s);
+    }//接收Unity发来
+//    public void eee(String s){
+//        connector.sendMsg(s);
+//    }//发送给Unity
 }

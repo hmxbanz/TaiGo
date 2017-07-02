@@ -1,10 +1,14 @@
 package com.xtdar.app.presenter;
 
 import android.app.Activity;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import android.content.ServiceConnection;
+import android.os.IBinder;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 
 import com.xtdar.app.XtdConst;
@@ -16,6 +20,7 @@ import com.xtdar.app.server.HttpException;
 import com.xtdar.app.server.async.OnDataListener;
 import com.xtdar.app.server.response.ClassListResponse;
 import com.xtdar.app.server.response.MyDevicesResponse;
+import com.xtdar.app.service.DeviceConectService;
 import com.xtdar.app.view.activity.BleActivity;
 import com.xtdar.app.view.activity.LoginActivity;
 import com.xtdar.app.view.activity.QrCodeActivity;
@@ -37,6 +42,8 @@ public class HomeFragmentPresenter extends BasePresenter implements OnDataListen
     private MyDevicesAdapter dataAdapter;
     private GridLayoutManager gridLayoutManager;
     private boolean isAdapterSetted=false;
+    private DeviceConectService service;
+    private DeviceConectService.ConectBinder mbinder;
 
     //private ContactsActivity mActivity;
     public HomeFragmentPresenter(Context context){
@@ -79,7 +86,7 @@ public class HomeFragmentPresenter extends BasePresenter implements OnDataListen
                         //设置列表
                         //dataAdapter.setHeaderView(LayoutInflater.from(context).inflate(R.layout.recyclerview_header,null));
                         dataAdapter.setListItems(list);
-                        //dataAdapter.setOnItemClickListener(this);
+                        dataAdapter.setOnItemClickListener(this);
                         //dataAdapter.setFooterView(LayoutInflater.from(context).inflate(R.layout.recyclerview_footer,null));
 
                         if(!isAdapterSetted)
@@ -128,6 +135,30 @@ public class HomeFragmentPresenter extends BasePresenter implements OnDataListen
 
     @Override
     public void onItemClick(int position, String itemId, String deviceName) {
-
+        Intent startConectServiceIntent = new Intent(context, DeviceConectService.class);
+        startConectServiceIntent.putExtra("deviceName", deviceName);
+        context.startService(startConectServiceIntent);
     }
+
+
+    // Code to manage Service lifecycle.
+    private final ServiceConnection mServiceConnection = new ServiceConnection() {
+
+        @Override
+        public void onServiceConnected(ComponentName componentName, IBinder binder) {
+            service = ((DeviceConectService.ConectBinder) binder).getService();
+            mbinder=(DeviceConectService.ConectBinder) binder;
+//            if (!service.initialize()) {
+//                //Log.e(TAG, "Unable to initialize Bluetooth");
+//            }
+//            // Automatically connects to the device upon successful start-up
+//            // initialization.
+//            service.connect(mDeviceAddress);
+        }
+
+        @Override
+        public void onServiceDisconnected(ComponentName componentName) {
+            service = null;
+        }
+    };
 }
