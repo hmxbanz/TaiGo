@@ -15,7 +15,7 @@
     <TextView
         android:layout_marginTop="4dp"
         android:id="@+id/list_item_text"
-        android:text="大标题"
+        android:text="标题"
         android:gravity="left"
         android:textSize="16dp"
         android:textColor="@color/viewfinder_mask"
@@ -24,7 +24,7 @@
     <TextView
         android:layout_marginTop="2dp"
         android:id="@+id/list_item_text2"
-        android:text="野生动物"
+        android:text=""
         android:gravity="left"
         android:textColor="@color/appTextColor"
         android:layout_width="match_parent"

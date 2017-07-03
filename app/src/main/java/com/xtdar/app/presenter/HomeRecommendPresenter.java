@@ -11,6 +11,7 @@ import com.xtdar.app.server.HttpException;
 import com.xtdar.app.server.async.OnDataListener;
 import com.xtdar.app.server.response.AdResponse;
 import com.xtdar.app.server.response.RecommendResponse;
+import com.xtdar.app.server.response.TaobaoResponse;
 import com.xtdar.app.view.widget.LoadDialog;
 import com.youth.banner.Banner;
 
@@ -28,7 +29,7 @@ public class HomeRecommendPresenter extends BasePresenter implements OnDataListe
     private RecyclerView recycleView;
     private GridLayoutManager gridLayoutManager;
     private HomeRecommendAdapter dataAdapter;
-    private List<RecommendResponse.DataBean.RecommendListBean> list;
+    private List<TaobaoResponse.DataBean.DeviceTypeListBean> list;
 
     public HomeRecommendPresenter(Context context){
         super(context);
@@ -45,7 +46,7 @@ public class HomeRecommendPresenter extends BasePresenter implements OnDataListe
         String RecommendListCache = aCache.getAsString("RecommendList");
         if(RecommendListCache!=null && !("null").equals(RecommendListCache))
             try {
-                list = JsonMananger.jsonToList(RecommendListCache, RecommendResponse.DataBean.RecommendListBean.class);
+                list = JsonMananger.jsonToList(RecommendListCache, TaobaoResponse.DataBean.DeviceTypeListBean.class);
             } catch (HttpException e) {
                 e.printStackTrace();
             }
@@ -67,7 +68,7 @@ public class HomeRecommendPresenter extends BasePresenter implements OnDataListe
             case GETADS:
                 return mUserAction.getAds();
             case GETRECOMMEND:
-                return mUserAction.getRecommends();
+                return mUserAction.getTaobao();
         }
         return null;
     }
@@ -79,20 +80,14 @@ public class HomeRecommendPresenter extends BasePresenter implements OnDataListe
             case GETADS:
                 AdResponse adResponse = (AdResponse) result;
                 if (adResponse.getCode() == XtdConst.SUCCESS) {
-                    List<String> images = new ArrayList<>();
-                    for (String s : adResponse.getData()) {
-                        s=XtdConst.IMGURI+s;
-                        images.add(s);
-                    }
-                    Banner.setImages(images);//设置图片集合
-                    Banner.start();
+
                     atm.request(GETRECOMMEND,this);
                 }
                 break;
             case GETRECOMMEND:
-                RecommendResponse recommendResponse = (RecommendResponse) result;
-                if (recommendResponse.getCode() == XtdConst.SUCCESS) {
-                    list=recommendResponse.getData().getRecommend_list();
+                TaobaoResponse taobaoResponse = (TaobaoResponse) result;
+                if (taobaoResponse.getCode() == XtdConst.SUCCESS) {
+                    list=taobaoResponse.getData().getDevice_type_list();
                     try {
                         String cache=JsonMananger.beanToJson(list);
                         aCache.put("RecommendList",cache);
@@ -100,6 +95,14 @@ public class HomeRecommendPresenter extends BasePresenter implements OnDataListe
                         e.printStackTrace();
                     }
                     dataAdapter.notifyDataSetChanged();
+
+                    List<String> images = new ArrayList<>();
+                    for (String s : taobaoResponse.getData().getImg_list()) {
+                        s=XtdConst.IMGURI+s;
+                        images.add(s);
+                    }
+                    Banner.setImages(images);//设置图片集合
+                    Banner.start();
                 }
                 break;
         }

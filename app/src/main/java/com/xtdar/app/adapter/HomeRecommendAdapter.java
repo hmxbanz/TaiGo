@@ -16,6 +16,7 @@ import com.xtdar.app.common.NToast;
 import com.xtdar.app.loader.GlideImageLoader;
 import com.xtdar.app.model.UserList;
 import com.xtdar.app.server.response.RecommendResponse;
+import com.xtdar.app.server.response.TaobaoResponse;
 import com.xtdar.app.view.activity.DetailActivity;
 
 import java.util.List;
@@ -28,7 +29,7 @@ import static com.mob.MobSDK.getContext;
  */
 
 public class HomeRecommendAdapter extends RecyclerView.Adapter<HomeRecommendAdapter.DataHolder> {
-    private List<RecommendResponse.DataBean.RecommendListBean> listItems;
+    private List<TaobaoResponse.DataBean.DeviceTypeListBean> listItems;
     private LayoutInflater layoutInflater;
     private  final int TYPE_HEADER = 0;
     private  final int TYPE_NORMAL = 1;
@@ -60,7 +61,7 @@ public class HomeRecommendAdapter extends RecyclerView.Adapter<HomeRecommendAdap
         return mHeaderView;
     }
 
-    public HomeRecommendAdapter(List<RecommendResponse.DataBean.RecommendListBean> l, Context c){
+    public HomeRecommendAdapter(List<TaobaoResponse.DataBean.DeviceTypeListBean> l, Context c){
         this.listItems=l;
         this.context=c;
         this.layoutInflater=LayoutInflater.from(c);
@@ -88,19 +89,19 @@ public class HomeRecommendAdapter extends RecyclerView.Adapter<HomeRecommendAdap
         if(getItemViewType(position) == TYPE_FOOTER) return;
 
         final int pos = getRealPosition(holder);
-        final RecommendResponse.DataBean.RecommendListBean listItem = listItems.get(position);
+        final TaobaoResponse.DataBean.DeviceTypeListBean listItem = listItems.get(position);
         if(holder instanceof DataHolder) {
-            holder.txtTitle.setText(listItem.getClass_name());
+            holder.txtTitle.setText(listItem.getDevice_type_name());
             //装入item
-            List<RecommendResponse.DataBean.RecommendListBean.DataListBean> items = listItem.getData_list();
+            List<TaobaoResponse.DataBean.DeviceTypeListBean.DeviceListBean> items = listItem.getDevice_list();
             GridLayoutManager gridLayoutManager=new GridLayoutManager(context,2);
             holder.recyclerView.setLayoutManager(gridLayoutManager);
             HomeRecommendItemAdapter dataAdapter = new HomeRecommendItemAdapter(items, context);
             dataAdapter.setOnItemClickListener(new HomeRecommendItemAdapter.ItemClickListener() {
                 @Override
                 public void onItemClick(int position, String itemId,String classId) {
-                    DetailActivity.StartActivity(context,itemId,classId);
-                    //NToast.shortToast(context,data);
+                    //DetailActivity.StartActivity(context,itemId,classId);
+                    NToast.shortToast(context,"暂无库存，敬请关注！");
                 }
             });
             holder.recyclerView.setAdapter(dataAdapter);
@@ -110,7 +111,7 @@ public class HomeRecommendAdapter extends RecyclerView.Adapter<HomeRecommendAdap
             holder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    mListener.onItemClick(position,listItem.getClass_id());
+                    mListener.onItemClick(position,listItem.getDevice_type_id());
                 }
             });
         }

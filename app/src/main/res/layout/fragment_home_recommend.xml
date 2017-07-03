@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#f0f0f6"
+    android:background="@color/white"
     android:orientation="vertical">
 
     <ScrollView
@@ -56,7 +56,7 @@
                 <android.support.v7.widget.RecyclerView
                         android:id="@+id/recyclerView"
                         android:layout_width="match_parent"
-                        android:layout_height="1050dp"
+                        android:layout_height="500dp"
                     >
                     </android.support.v7.widget.RecyclerView>
             </LinearLayout>

@@ -14,6 +14,7 @@ import com.xtdar.app.XtdConst;
 import com.xtdar.app.loader.GlideImageLoader;
 import com.xtdar.app.model.User;
 import com.xtdar.app.server.response.RecommendResponse;
+import com.xtdar.app.server.response.TaobaoResponse;
 
 import java.util.List;
 
@@ -22,7 +23,7 @@ import java.util.List;
  */
 
 public class HomeRecommendItemAdapter extends RecyclerView.Adapter<HomeRecommendItemAdapter.DataHolder>  {
-    private List<RecommendResponse.DataBean.RecommendListBean.DataListBean> listItems;
+    private List<TaobaoResponse.DataBean.DeviceTypeListBean.DeviceListBean> listItems;
     private LayoutInflater layoutInflater;
     private  final int TYPE_HEADER = 0;
     private  final int TYPE_NORMAL = 1;
@@ -54,7 +55,7 @@ public class HomeRecommendItemAdapter extends RecyclerView.Adapter<HomeRecommend
         return mHeaderView;
     }
 
-    public HomeRecommendItemAdapter(List<RecommendResponse.DataBean.RecommendListBean.DataListBean> l, Context c){
+    public HomeRecommendItemAdapter(List<TaobaoResponse.DataBean.DeviceTypeListBean.DeviceListBean> l, Context c){
         this.listItems=l;
         this.context=c;
         this.layoutInflater=LayoutInflater.from(c);
@@ -82,18 +83,18 @@ public class HomeRecommendItemAdapter extends RecyclerView.Adapter<HomeRecommend
         if(getItemViewType(position) == TYPE_FOOTER) return;
 
         final int pos = getRealPosition(holder);
-        final RecommendResponse.DataBean.RecommendListBean.DataListBean listItem = listItems.get(position);
+        final TaobaoResponse.DataBean.DeviceTypeListBean.DeviceListBean listItem = listItems.get(position);
         if(holder instanceof DataHolder) {
-            holder.nickName.setText(listItem.getItem_title());
-            holder.className.setText(listItem.getChapter_name());
-            glideImageLoader.displayImage(context, XtdConst.IMGURI+listItem.getItem_cover(),holder.imageView);
+            holder.nickName.setText(listItem.getDevice_name());
+            //holder.className.setText(listItem.getChapter_name());
+            glideImageLoader.displayImage(context, XtdConst.IMGURI+listItem.getDevice_img(),holder.imageView);
             //Glide.with(context).load(listItem.getAvator()).asBitmap().into(holder.imageView);
             //holder.imageView.setImageResource(listItem.getImgResource());
             if(mListener == null) return;
             holder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    mListener.onItemClick(position,listItem.getItem_id(),listItem.getClass_id());
+                    mListener.onItemClick(position,listItem.getDevice_id(),listItem.getPartner_id());
                 }
             });
         }

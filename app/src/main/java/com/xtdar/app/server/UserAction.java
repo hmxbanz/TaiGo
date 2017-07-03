@@ -24,6 +24,7 @@ import com.xtdar.app.server.response.RelateRecommendResponse;
 import com.xtdar.app.server.response.ShowResponse;
 import com.xtdar.app.server.response.SongDetailResponse;
 import com.xtdar.app.server.response.TagResponse;
+import com.xtdar.app.server.response.TaobaoResponse;
 import com.xtdar.app.server.response.UserInfoResponse;
 import com.xtdar.app.server.response.VersionResponse;
 import com.zhy.http.okhttp.OkHttpUtils;
@@ -349,7 +350,6 @@ public CommonResponse register(String cellPhone, String password, String captcha
 //获取推荐
     public RecommendResponse getRecommends()throws HttpException {
         String uri = getURL("kp_dyz/cli-comm-recommend.php");
-        //String uri = "http://test.nannvyou.cn/a.txt";
         Response response=null;
         try {
             response=OkHttpUtils
@@ -373,6 +373,33 @@ public CommonResponse register(String cellPhone, String password, String captcha
             }
         }
         return recommendResponse;
+    }
+    //获取淘设备
+    public TaobaoResponse getTaobao()throws HttpException {
+        String uri = getURL("kp_dyz/cli-dgc-devicemain.php");
+        Response response=null;
+        try {
+            response=OkHttpUtils
+                    .get()
+                    .url(uri)
+                    .build()
+                    .execute();
+            result =response.body().string();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        TaobaoResponse taobaoResponse = null;
+        if (!TextUtils.isEmpty(result)) {
+            NLog.e("getTaobao", result);
+
+            try {
+                taobaoResponse = JsonMananger.jsonToBean(result, TaobaoResponse.class);
+            } catch (JSONException e) {
+                NLog.d(TAG, "TaobaoResponse occurs JSONException e=" + e.toString());
+                return null;
+            }
+        }
+        return taobaoResponse;
     }
 //项详情(图文、视频、音频)
     public DetailResponse getDetail(String itemId) throws HttpException{
