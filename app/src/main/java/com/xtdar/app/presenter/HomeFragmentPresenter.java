@@ -27,6 +27,7 @@ import com.xtdar.app.view.activity.QrCodeActivity;
 import com.xtdar.app.view.widget.LoadDialog;
 import com.xtdar.app.widget.DialogWithYesOrNoUtils;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -37,7 +38,7 @@ public class HomeFragmentPresenter extends BasePresenter implements OnDataListen
     private static final int GETDRIVERS = 1;
     public static final int REQUEST_CODE = 1;
     private final BasePresenter basePresenter;
-    private List<MyDevicesResponse.DataBean> list;
+    private List<MyDevicesResponse.DataBean> list=new ArrayList<>();
     private RecyclerView recyclerView;
     private MyDevicesAdapter dataAdapter;
     private GridLayoutManager gridLayoutManager;
@@ -77,8 +78,7 @@ public class HomeFragmentPresenter extends BasePresenter implements OnDataListen
             case GETDRIVERS:
                 MyDevicesResponse response = (MyDevicesResponse) result;
                 if (response.getCode() == XtdConst.SUCCESS) {
-                     list = response.getData();
-                    if (list.size() == 0) {
+                    if (response.getData().size() == 0) {
                         this.recyclerView.setVisibility(View.GONE);
                     }
                     else {

@@ -29,10 +29,10 @@ public class HomeGamePresenter extends BasePresenter implements OnDataListener {
     public void init(TabLayout tabLayout) {
         this.tabLayout=tabLayout;
         tabLayout.getTabAt(0).setText("射击类");
-        tabLayout.getTabAt(1).setText("赛车类");
-        tabLayout.getTabAt(2).setText("益智类");
-        tabLayout.getTabAt(3).setText("全部");
-        LoadDialog.show(context);
+        //tabLayout.getTabAt(1).setText("赛车类");
+        //tabLayout.getTabAt(2).setText("益智类");
+        //tabLayout.getTabAt(3).setText("全部");
+        //LoadDialog.show(context);
         atm.request(GETTAGS,this);
     }
 

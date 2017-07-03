@@ -45,7 +45,7 @@ public class MyWebViewClient extends WebViewClient {
     }
     @Override
     public boolean shouldOverrideUrlLoading(WebView view, String url) {
-        if (Uri.parse(url).getHost().contains("xtdar.com"))
+        if (Uri.parse(url).getHost().contains("baidu.com"))
         {
             view.loadUrl(url);
         }

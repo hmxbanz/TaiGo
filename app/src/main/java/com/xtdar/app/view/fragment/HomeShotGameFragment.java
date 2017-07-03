@@ -38,7 +38,7 @@ public class HomeShotGameFragment extends Fragment implements RecyclerViewAdapte
     private TextView mTextSearch;
     private TabLayout mTabLayout;
 
-    private HomeAnimationPresenter homeAnimationPresenter;
+    private HomeAnimationPresenter presenter;
 
     public static HomeShotGameFragment getInstance() {
         if (instance == null) {
@@ -53,8 +53,8 @@ public class HomeShotGameFragment extends Fragment implements RecyclerViewAdapte
         view = inflater.inflate(R.layout.fragment_home_animation, null);
         initViews();
 //        initData();
-        homeAnimationPresenter = new HomeAnimationPresenter(getContext());
-        homeAnimationPresenter.init(recycleView);
+        presenter = new HomeAnimationPresenter(getContext());
+        presenter.init(recycleView);
         return view;
     }
 

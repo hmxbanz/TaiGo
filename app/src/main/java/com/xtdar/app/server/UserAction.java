@@ -15,6 +15,7 @@ import com.xtdar.app.server.response.CaptchaResponse;
 import com.xtdar.app.server.response.ClassListResponse;
 import com.xtdar.app.server.response.CommonResponse;
 import com.xtdar.app.server.response.DetailResponse;
+import com.xtdar.app.server.response.GameListResponse;
 import com.xtdar.app.server.response.HelpResponse;
 import com.xtdar.app.server.response.LoginResponse;
 import com.xtdar.app.server.response.MyDevicesResponse;
@@ -547,7 +548,6 @@ public CommonResponse register(String cellPhone, String password, String captcha
         return showResponse;
     }
 
-
     public String getProtocol() {
         String uri = "http://120.24.231.219/kp_dyz/app_source/dl/protocol.html";
         Response response=null;
@@ -569,7 +569,25 @@ public CommonResponse register(String cellPhone, String password, String captcha
     }
 
     public HelpResponse getHelps() throws HttpException {
-        return null;
+        String uri = getURL("kp_dyz/cli-dgc-helplist.php");
+        Response response=null;
+        try {
+            response=OkHttpUtils
+                    .get()
+                    .url(uri)
+                    .build()
+                    .execute();
+            result =response.body().string();
+            Log.w(TAG, "接收的："+ result);
+        } catch (IOException e) {
+            e.printStackTrace();
+
+        }
+        HelpResponse helpResponse = null;
+        if (!TextUtils.isEmpty(result)) {
+            helpResponse = JsonMananger.jsonToBean(result, HelpResponse.class);
+        }
+        return helpResponse;
     }
 
     public CommonResponse save(String nickName) throws HttpException {
@@ -648,4 +666,36 @@ public CommonResponse register(String cellPhone, String password, String captcha
         }
         return commonResponse;
     }
+
+    //获取游戏列表（射击）
+    public GameListResponse getShot(String game_type_id, String last_item_id, String item_count) throws HttpException{
+        String uri = getURL("kp_dyz/cli-dgc-gamelist.php");
+        Response response=null;
+        try {
+            response=OkHttpUtils
+                    .get()
+                    .addParams("game_type_id",game_type_id)
+                    .addParams("last_item_id",last_item_id)
+                    .addParams("item_count",item_count)
+                    .url(uri)
+                    .build()
+                    .execute();
+            result =response.body().string();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        GameListResponse  gameListResponse= null;
+        if (!TextUtils.isEmpty(result)) {
+            NLog.e("接收的", result);
+
+            try {
+                gameListResponse = JsonMananger.jsonToBean(result, GameListResponse.class);
+            } catch (JSONException e) {
+                NLog.d(TAG, "ClassListResponse occurs JSONException e=" + e.toString());
+                return null;
+            }
+        }
+        return gameListResponse;
+    }
+
 }

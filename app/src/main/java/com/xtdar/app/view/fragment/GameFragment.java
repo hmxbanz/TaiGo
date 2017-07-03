@@ -79,9 +79,9 @@ public class GameFragment extends Fragment implements View.OnClickListener  {
 
         mFragments = new ArrayList<>();
         mFragments.add(HomeShotGameFragment.getInstance());
-        mFragments.add(HomeCarGameFragment.getInstance());
-        mFragments.add(HomeLearnGameFragment.getInstance());
-        mFragments.add(HomeAllGameFragment.getInstance());
+        //mFragments.add(HomeCarGameFragment.getInstance());
+        //mFragments.add(HomeLearnGameFragment.getInstance());
+        //mFragments.add(HomeAllGameFragment.getInstance());
         //mFragments.add(HomeCountryFragment.getInstance());
         //mFragments.add(HomeScienceFragment.getInstance());
 

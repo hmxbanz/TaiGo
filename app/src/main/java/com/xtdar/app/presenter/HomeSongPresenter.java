@@ -13,6 +13,7 @@ import com.xtdar.app.server.HttpException;
 import com.xtdar.app.server.async.OnDataListener;
 import com.xtdar.app.server.response.AdResponse;
 import com.xtdar.app.server.response.ClassListResponse;
+import com.xtdar.app.server.response.GameListResponse;
 import com.xtdar.app.view.activity.SongAlbumActivity;
 import com.xtdar.app.view.widget.LoadDialog;
 import com.youth.banner.Banner;
@@ -31,7 +32,8 @@ public class HomeSongPresenter extends BasePresenter implements OnDataListener,C
     private RecyclerView recyclerView;
     private GridLayoutManager gridLayoutManager;
     private ClassListAnimationAdapter dataAdapter;
-    private List<ClassListResponse.DataBean> list=new ArrayList<>();
+    private List<GameListResponse.DataBean> list=new ArrayList<>();
+    private boolean isAdapterSetted=false;
     private String lastItem ="0";
 
     public HomeSongPresenter(Context context){
@@ -85,17 +87,22 @@ public class HomeSongPresenter extends BasePresenter implements OnDataListener,C
                 }
                 break;
             case GETANIMATION:
-                ClassListResponse classListResponse = (ClassListResponse) result;
-                if (classListResponse.getCode() == XtdConst.SUCCESS) {
-                    final List<ClassListResponse.DataBean> datas = classListResponse.getData();
-                    lastItem=((ClassListResponse.DataBean) datas.get(datas.size()-1)).getItem_id();
-                    list.addAll(classListResponse.getData());
+                GameListResponse response = (GameListResponse) result;
+                if (response.getCode() == XtdConst.SUCCESS) {
+                    final List<GameListResponse.DataBean> datas = response.getData();
+                    lastItem=((GameListResponse.DataBean) datas.get(datas.size()-1)).getGame_id();
+                    list.addAll(response.getData());
                     //设置列表
-                    dataAdapter.setHeaderView(LayoutInflater.from(context).inflate(R.layout.recyclerview_header,null));
+                    //dataAdapter.setHeaderView(LayoutInflater.from(context).inflate(R.layout.recyclerview_header,null));
                     dataAdapter.setListItems(list);
                     dataAdapter.setOnItemClickListener(this);
                     //dataAdapter.setFooterView(LayoutInflater.from(context).inflate(R.layout.recyclerview_footer,null));
-                    recyclerView.setAdapter(dataAdapter);
+
+                    if(!isAdapterSetted)
+                        recyclerView.setAdapter(dataAdapter);
+                    isAdapterSetted=true;
+                    dataAdapter.notifyDataSetChanged();
+
 
                 }
                 break;

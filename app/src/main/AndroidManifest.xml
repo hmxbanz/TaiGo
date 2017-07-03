@@ -206,6 +206,7 @@
         <activity android:name=".view.activity.HelpActivity" />
         <activity android:name=".view.activity.BleActivity" />
         <activity android:name=".view.activity.ControllerActivity" />
+        <activity android:name=".view.activity.HelpDetailActivity" />
         <activity
             android:name=".view.activity.ConversationListActivity"
             android:screenOrientation="portrait"

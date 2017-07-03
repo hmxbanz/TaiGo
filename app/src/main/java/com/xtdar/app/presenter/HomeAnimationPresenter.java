@@ -13,6 +13,7 @@ import com.xtdar.app.server.HttpException;
 import com.xtdar.app.server.async.OnDataListener;
 import com.xtdar.app.server.response.AdResponse;
 import com.xtdar.app.server.response.ClassListResponse;
+import com.xtdar.app.server.response.GameListResponse;
 import com.xtdar.app.view.activity.DetailActivity;
 import com.xtdar.app.view.widget.LoadDialog;
 import com.youth.banner.Banner;
@@ -31,7 +32,7 @@ public class HomeAnimationPresenter extends BasePresenter implements OnDataListe
     private RecyclerView recyclerView;
     private GridLayoutManager gridLayoutManager;
     private ClassListAnimationAdapter dataAdapter;
-    private List<ClassListResponse.DataBean> list=new ArrayList<>();
+    private List<GameListResponse.DataBean> list=new ArrayList<>();
     private String lastItem ="0";
     private int lastOffset;
     private int lastPosition;
@@ -51,7 +52,7 @@ public class HomeAnimationPresenter extends BasePresenter implements OnDataListe
             @Override
             public void onLoadMore(int currentPage) {
                 LoadDialog.show(context);
-                atm.request(GETANIMATION,HomeAnimationPresenter.this);
+                //atm.request(GETANIMATION,HomeAnimationPresenter.this);
             }
 
             @Override
@@ -64,7 +65,8 @@ public class HomeAnimationPresenter extends BasePresenter implements OnDataListe
         });
         recyclerView.setNestedScrollingEnabled(false);
         LoadDialog.show(context);
-        atm.request(GETADS,this);
+        //atm.request(GETADS,this);
+        atm.request(GETANIMATION,this);
 
     }
 
@@ -74,7 +76,7 @@ public class HomeAnimationPresenter extends BasePresenter implements OnDataListe
             case GETADS:
                 return mUserAction.getAds();
             case GETANIMATION:
-                return mUserAction.getAnimations("1",lastItem,"4");
+                return mUserAction.getShot("0",lastItem,"2");
         }
         return null;
     }
@@ -96,11 +98,11 @@ public class HomeAnimationPresenter extends BasePresenter implements OnDataListe
                 }
                 break;
             case GETANIMATION:
-                ClassListResponse classListResponse = (ClassListResponse) result;
-                if (classListResponse.getCode() == XtdConst.SUCCESS) {
-                    final List<ClassListResponse.DataBean> datas = classListResponse.getData();
-                    lastItem=((ClassListResponse.DataBean) datas.get(datas.size()-1)).getItem_id();
-                    list.addAll(classListResponse.getData());
+                GameListResponse response = (GameListResponse) result;
+                if (response.getCode() == XtdConst.SUCCESS) {
+                    final List<GameListResponse.DataBean> datas = response.getData();
+                    lastItem=((GameListResponse.DataBean) datas.get(datas.size()-1)).getGame_id();
+                    list.addAll(response.getData());
                     //设置列表
                     //dataAdapter.setHeaderView(LayoutInflater.from(context).inflate(R.layout.recyclerview_header,null));
                     dataAdapter.setListItems(list);

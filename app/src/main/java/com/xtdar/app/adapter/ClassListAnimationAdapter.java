@@ -13,6 +13,7 @@ import com.xtdar.app.R;
 import com.xtdar.app.XtdConst;
 import com.xtdar.app.loader.GlideImageLoader;
 import com.xtdar.app.server.response.ClassListResponse;
+import com.xtdar.app.server.response.GameListResponse;
 import com.youth.banner.Banner;
 
 import java.util.ArrayList;
@@ -24,7 +25,7 @@ import java.util.List;
  */
 
 public class ClassListAnimationAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>  {
-    private List<ClassListResponse.DataBean> listItems;
+    private List<GameListResponse.DataBean> listItems;
     private LayoutInflater layoutInflater;
     private  final int TYPE_HEADER = 0;
     private  final int TYPE_NORMAL = 1;
@@ -64,7 +65,7 @@ public class ClassListAnimationAdapter extends RecyclerView.Adapter<RecyclerView
         glideImageLoader=new GlideImageLoader();
     }
 
-    public void setListItems(List<ClassListResponse.DataBean> l)
+    public void setListItems(List<GameListResponse.DataBean> l)
     {
         this.listItems=l;
     }
@@ -106,19 +107,19 @@ public class ClassListAnimationAdapter extends RecyclerView.Adapter<RecyclerView
             headerHolder.banner.start();
         }
         if(getItemViewType(position) == TYPE_HEADER) return;
-        final ClassListResponse.DataBean listItem = listItems.get(position);
+        final GameListResponse.DataBean listItem = listItems.get(position);
         if(holder instanceof DataHolder) {
             DataHolder dataDolder=(DataHolder)holder;
-            dataDolder.title.setText(listItem.getItem_title());
-            dataDolder.className.setText(listItem.getChapter_name());
-            glideImageLoader.displayImage(context, XtdConst.IMGURI+listItem.getItem_cover(),dataDolder.imageView);
+            dataDolder.title.setText(listItem.getGame_name());
+            dataDolder.className.setText(listItem.getGame_title());
+            glideImageLoader.displayImage(context, XtdConst.IMGURI+listItem.getGame_img(),dataDolder.imageView);
             //Glide.with(context).load(listItem.getAvator()).asBitmap().into(holder.imageView);
             //holder.imageView.setImageResource(listItem.getImgResource());
             if(mListener == null) return;
             dataDolder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    mListener.onItemClick(position,listItem.getItem_id(),listItem.getClass_id());
+                    mListener.onItemClick(position,listItem.getGame_id(),listItem.getGame_type_id());
                 }
             });
         }

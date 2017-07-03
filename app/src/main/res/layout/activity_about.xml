@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/appbg"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -9,94 +8,29 @@
     tools:context=".view.activity.AboutActivity">
     <include layout="@layout/layout_title_top" />
     <LinearLayout
-        android:layout_marginTop="10dp"
+        android:background="@color/white"
+        android:layout_marginTop="1dp"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:orientation="vertical"
         android:gravity="center"
         >
         <ImageView
-            android:src="@drawable/logo_white"
+            android:layout_marginTop="10dp"
+            android:src="@drawable/logo"
             android:layout_width="100dp"
             android:layout_height="100dp"
             />
+
         <TextView
-            style="@style/AppTitleStyle"
-            android:gravity="center"
-            android:text="小泰斗智能科教"
-            android:textColor="@color/titleBlue"
+            style="@style/AppTitleStyle2"
+            android:gravity="center_vertical|right"
+            android:text="TaiGo APP是一款集合智能玩具硬件设备和内容云服务于一体的应用软件，内容包括益智游戏，智能科教、AR应用体验、智能遥控、语音互动等互联功能。"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:padding="15dp"
+            android:layout_height="120dp" />
 
     </LinearLayout>
 
-    <LinearLayout
-        android:layout_marginTop="10dp"
-        android:layout_width="match_parent"
-        android:layout_height="30dp"
-        android:orientation="horizontal"
-        >
-
-        <TextView
-            style="@style/AppTitleStyle"
-            android:gravity="center_vertical|right"
-            android:text="官方网站："
-            android:layout_width="0dp"
-            android:layout_weight="2"
-            android:layout_height="match_parent" />
-        <TextView
-            style="@style/AppTitleStyle"
-            android:gravity="center_vertical"
-            android:text="www.stxdr.com"
-            android:layout_width="0dp"
-            android:layout_weight="3"
-            android:layout_height="match_parent" />
-
-    </LinearLayout>
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="30dp"
-        android:orientation="horizontal"
-        >
-
-        <TextView
-            style="@style/AppTitleStyle"
-            android:gravity="center_vertical|right"
-            android:text="微信公众号："
-            android:layout_width="0dp"
-            android:layout_weight="2"
-            android:layout_height="match_parent" />
-        <TextView
-            style="@style/AppTitleStyle"
-            android:gravity="center_vertical"
-            android:text="xtdar"
-            android:layout_width="0dp"
-            android:layout_weight="3"
-            android:layout_height="match_parent" />
-
-    </LinearLayout>
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="30dp"
-        android:orientation="horizontal"
-        android:gravity="center_vertical"
-        >
-
-        <TextView
-            style="@style/AppTitleStyle"
-            android:gravity="center_vertical|right"
-            android:text="QQ交流群号："
-            android:layout_width="0dp"
-            android:layout_weight="2"
-            android:layout_height="match_parent" />
-        <TextView
-            style="@style/AppTitleStyle"
-            android:gravity="center_vertical"
-            android:text="88888888"
-            android:layout_width="0dp"
-            android:layout_weight="3"
-            android:layout_height="match_parent" />
-
-    </LinearLayout>
 
 </LinearLayout>

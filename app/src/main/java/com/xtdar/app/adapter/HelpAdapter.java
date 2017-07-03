@@ -7,6 +7,7 @@ import android.widget.TextView;
 
 import com.xtdar.app.R;
 import com.xtdar.app.loader.GlideImageLoader;
+import com.xtdar.app.server.response.HelpResponse;
 
 /**
  * Created by Bob on 2015/3/26.
@@ -26,7 +27,7 @@ public class HelpAdapter extends BaseAdapter {
 
 
     public interface OnItemClick {
-        boolean onClick(int position, View view, int status);
+        boolean onClick(int position, View view, String status);
 
     }
 
@@ -45,15 +46,17 @@ public class HelpAdapter extends BaseAdapter {
         } else {
             holder = (HelpAdapter.ViewHoler) convertView.getTag();
         }
+        final HelpResponse.DataBean entity = (HelpResponse.DataBean) mList.get(position);
         convertView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                onItemClick.onClick(position, v, 1);
+                onItemClick.onClick(position, v, entity.getArticle_id());
 
             }
         });
 
-        //holder.deviceName.setText(((User)mList.get(position)).getNickName());
+
+        holder.title.setText(entity.getTitle());
 
 
         return convertView;

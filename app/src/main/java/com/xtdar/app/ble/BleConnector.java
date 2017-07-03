@@ -12,6 +12,7 @@ import android.os.Message;
 import android.util.Log;
 
 import com.xtdar.app.common.NLog;
+import com.xtdar.app.common.NToast;
 import com.xtdar.app.common.NumberUtils;
 
 import java.util.List;
@@ -30,6 +31,7 @@ public class BleConnector extends BluetoothGattCallback {
     private Handler handler;
 
     private boolean heatBeat = true;
+    private Context mContext;
 
     public BleConnector(Handler handler) {
         this.handler = handler;
@@ -40,6 +42,7 @@ public class BleConnector extends BluetoothGattCallback {
     }
 
     public void connect(Context context, BluetoothDevice device) {
+        this.mContext=context;
         bluetoothGatt = device.connectGatt(context, false, this);
         boolean b = bluetoothGatt.connect();
         Log.w(TAG, "Connector connect ================== " + b);
@@ -138,7 +141,7 @@ public class BleConnector extends BluetoothGattCallback {
 
         Message msg = Message.obtain();
         msg.what = NOTIFY;
-        msg.obj = "a";
+        msg.obj = strSign;
         msg.arg1 = sign;
 
         if (handler != null) handler.sendMessage(msg);
@@ -168,6 +171,12 @@ public class BleConnector extends BluetoothGattCallback {
         //result |= (bytes[2] << 8);
         //result |= (bytes[3]);
         return result;
+    }
+
+    @Override
+    public void onCharacteristicRead(BluetoothGatt gatt, BluetoothGattCharacteristic characteristic, int status) {
+        String strSign=new String(characteristic.getValue());
+        NLog.e("9999999",strSign);
     }
 
     public static byte[] int2byte(int sign) {
