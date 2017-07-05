@@ -11,6 +11,7 @@ import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 
+import com.clj.fastble.data.ScanResult;
 import com.xtdar.app.XtdConst;
 import com.xtdar.app.adapter.ClassListAnimationAdapter;
 import com.xtdar.app.adapter.MyDevicesAdapter;
@@ -20,10 +21,12 @@ import com.xtdar.app.server.HttpException;
 import com.xtdar.app.server.async.OnDataListener;
 import com.xtdar.app.server.response.ClassListResponse;
 import com.xtdar.app.server.response.MyDevicesResponse;
+import com.xtdar.app.service.BluetoothService;
 import com.xtdar.app.service.DeviceConectService;
 import com.xtdar.app.view.activity.BleActivity;
 import com.xtdar.app.view.activity.LoginActivity;
 import com.xtdar.app.view.activity.QrCodeActivity;
+import com.xtdar.app.view.activity.UnityPlayerActivity;
 import com.xtdar.app.view.widget.LoadDialog;
 import com.xtdar.app.widget.DialogWithYesOrNoUtils;
 
@@ -43,8 +46,9 @@ public class HomeFragmentPresenter extends BasePresenter implements OnDataListen
     private MyDevicesAdapter dataAdapter;
     private GridLayoutManager gridLayoutManager;
     private boolean isAdapterSetted=false;
-    private DeviceConectService service;
-    private DeviceConectService.ConectBinder mbinder;
+
+    private BluetoothService mBluetoothService;
+    private String deviceName;
 
     //private ContactsActivity mActivity;
     public HomeFragmentPresenter(Context context){
@@ -101,19 +105,7 @@ public class HomeFragmentPresenter extends BasePresenter implements OnDataListen
     }
 
     public void onScanClick() {
-        if(basePresenter.isLogin)
             context.startActivity(new Intent(context, BleActivity.class));
-        else
-        {
-            DialogWithYesOrNoUtils.getInstance().showDialog(context, "请先登录", "前住登录", new AlertDialogCallback() {
-                @Override
-                public void executeEvent() {
-                    context.startActivity(new Intent(context, LoginActivity.class));
-                }
-
-            });
-        }
-
     }
 
     public void onQrClick() {
@@ -135,30 +127,84 @@ public class HomeFragmentPresenter extends BasePresenter implements OnDataListen
 
     @Override
     public void onItemClick(int position, String itemId, String deviceName) {
-        Intent startConectServiceIntent = new Intent(context, DeviceConectService.class);
-        startConectServiceIntent.putExtra("deviceName", deviceName);
-        context.startService(startConectServiceIntent);
+        //Intent startConectServiceIntent = new Intent(context, DeviceConectService.class);
+        //startConectServiceIntent.putExtra("deviceName", deviceName);
+        //context.startService(startConectServiceIntent);
+        this.deviceName=deviceName;
+        if (mBluetoothService == null) {
+            bindService();
+        } else {
+            mBluetoothService.scanDevice();
+        }
     }
 
 
-    // Code to manage Service lifecycle.
-    private final ServiceConnection mServiceConnection = new ServiceConnection() {
+    public void bindService() {
+        Intent bindIntent = new Intent(context, BluetoothService.class);
+        context.bindService(bindIntent, mFhrSCon, Context.BIND_AUTO_CREATE);
+    }
 
+    private void unbindService() {
+        context.unbindService(mFhrSCon);
+    }
+
+    private ServiceConnection mFhrSCon = new ServiceConnection() {
         @Override
-        public void onServiceConnected(ComponentName componentName, IBinder binder) {
-            service = ((DeviceConectService.ConectBinder) binder).getService();
-            mbinder=(DeviceConectService.ConectBinder) binder;
-//            if (!service.initialize()) {
-//                //Log.e(TAG, "Unable to initialize Bluetooth");
-//            }
-//            // Automatically connects to the device upon successful start-up
-//            // initialization.
-//            service.connect(mDeviceAddress);
+        public void onServiceConnected(ComponentName name, IBinder service) {
+            mBluetoothService = ((BluetoothService.BluetoothBinder) service).getService();
+            mBluetoothService.setScanCallback(callback);
+            mBluetoothService.scanDevice();
         }
 
         @Override
-        public void onServiceDisconnected(ComponentName componentName) {
-            service = null;
+        public void onServiceDisconnected(ComponentName name) {
+            mBluetoothService = null;
         }
     };
+
+    private BluetoothService.Callback callback = new BluetoothService.Callback() {
+        @Override
+        public void onStartScan() {
+        }
+
+        @Override
+        public void onScanning(ScanResult result) {
+            LoadDialog.show(context);
+            if(HomeFragmentPresenter.this.deviceName.equals(result.getDevice().getName()))
+            {
+                LoadDialog.dismiss(context);
+                mBluetoothService.connectDevice(result);
+            }
+            NToast.shortToast(context,result.getDevice().getName());
+        }
+
+        @Override
+        public void onScanComplete() {
+        }
+
+        @Override
+        public void onConnecting() {
+            LoadDialog.show(context);
+        }
+
+        @Override
+        public void onConnectFail() {
+            LoadDialog.dismiss(context);
+            NToast.shortToast(context, "连接失败");
+        }
+
+        @Override
+        public void onDisConnected() {
+            NToast.longToast(context, "连接断开");
+        }
+
+        @Override
+        public void onServicesDiscovered() {
+            LoadDialog.dismiss(context);
+            Intent intent = new Intent(context, UnityPlayerActivity.class);
+            context.startActivity(intent);
+
+        }
+    };
+
 }

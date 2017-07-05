@@ -49,7 +49,7 @@ private BlePresenter presenter;
                 finish();
                 break;
             case R.id.btn_scan:
-                presenter.startBleScanner();
+                presenter.startService();
                 break;
         }
     }
@@ -59,7 +59,6 @@ private BlePresenter presenter;
         super.onActivityResult(requestCode, resultCode, data);
         switch (requestCode) {
             case BleScanner.REQUEST_ENABLE_BT:
-                presenter.startBleScanner();
         }
     }
 }

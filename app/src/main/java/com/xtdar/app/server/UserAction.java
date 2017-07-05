@@ -171,7 +171,7 @@ public class UserAction extends BaseAction {
 //注册
 public CommonResponse register(String cellPhone, String password, String captcha) throws HttpException
 {
-    String uri = getURL("kp_dyz/cli-comm-resetPassword.php");
+    String uri = getURL("kp_dyz/cli-comm-register.php");
     Response response=null;
     try {
         response=OkHttpUtils

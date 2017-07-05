@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.clj.fastble.data.ScanResult;
 import com.xtdar.app.R;
 import com.xtdar.app.loader.GlideImageLoader;
 
@@ -37,6 +38,13 @@ public class BleAdapter extends BaseAdapter {
         glideImageLoader = new GlideImageLoader();
     }
 
+    public void clear() {
+        mList.clear();
+    }
+    public void addResult(ScanResult result) {
+        mList.add(result);
+    }
+
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
         if (convertView == null) {
@@ -54,8 +62,8 @@ public class BleAdapter extends BaseAdapter {
 
             }
         });
-        BluetoothDevice device = (BluetoothDevice) mList.get(position);
-        holder.deviceName.setText(device.getName());
+        ScanResult device = (ScanResult) mList.get(position);
+        holder.deviceName.setText(device.getDevice().getAddress()+"-"+device.getDevice().getName());
 
         //holder.deviceName.setText(((User)mList.get(position)).getNickName());
 

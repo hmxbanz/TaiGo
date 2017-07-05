@@ -89,7 +89,7 @@ public class HomeRecommendFragment extends Fragment implements RecyclerViewAdapt
 
         recycleView= (RecyclerView) view.findViewById(R.id.recyclerView);
 
-        if(Build.VERSION.SDK_INT>=23)
+        //if(Build.VERSION.SDK_INT>=23)
 //        recycleView.setOnScrollChangeListener(new View.OnScrollChangeListener() {
 //            @Override
 //            public void onScrollChange(View v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
@@ -99,8 +99,8 @@ public class HomeRecommendFragment extends Fragment implements RecyclerViewAdapt
 //        });
         //recycleView.addItemDecoration(new DividerItemDecoration(getContext(),DividerItemDecoration.HORIZONTAL));
         //dataAdapter.setOnItemClickListener(this);
-        scrollView=(ScrollView) view.findViewById(R.id.scrollview);
-        scrollView.smoothScrollTo(0, 0);
+        //scrollView=(ScrollView) view.findViewById(R.id.scrollview);
+        //scrollView.smoothScrollTo(0, 0);
     }
 
     @Override

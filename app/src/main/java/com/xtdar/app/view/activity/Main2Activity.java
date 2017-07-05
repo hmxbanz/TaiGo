@@ -234,9 +234,9 @@ public class Main2Activity extends BaseActivity implements View.OnClickListener{
 
     @Override
     public void onBackPressed() {
-        if (ShowFragment.getInstance().onBackPressed()) {
-            return;
-        }
+//        if (ShowFragment.getInstance().onBackPressed()) {
+//            return;
+//        }
         finish();
     }
     @Override

@@ -134,4 +134,5 @@ dependencies {
     compile 'com.jaeger.statusbaruitl:library:1.1.1'//设置状态栏
     compile 'cn.yipianfengye.android:zxing-library:2.1'//二维码扫描
     compile 'com.android.support:gridlayout-v7:25.1.0'
+    compile 'com.clj.fastble:FastBleLib:1.2.1'//蓝牙
 }

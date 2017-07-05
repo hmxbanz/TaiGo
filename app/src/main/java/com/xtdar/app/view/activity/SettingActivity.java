@@ -19,15 +19,15 @@ import java.io.File;
 
 public class SettingActivity extends BaseActivity implements View.OnClickListener {
     private LinearLayout mLayoutAbout,mLayoutClear,mLayoutFeeback,mLayoutLogoff,mLayoutHelp;
-    private SettingPresenter mConfigPresenter;
+    private SettingPresenter presenter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_setting);
         initViews();
-        mConfigPresenter=new SettingPresenter(this);
-        mConfigPresenter.init();
+        presenter =new SettingPresenter(this);
+        presenter.init();
     }
     public void initViews(){
         layout_back= (RelativeLayout) findViewById(R.id.layout_back);
@@ -71,19 +71,7 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
                 });
                 break;
             case R.id.layout_logoff:
-                DialogWithYesOrNoUtils.getInstance().showDialog(this, "确定要退出小泰斗吗?",null, new DialogWithYesOrNoUtils.DialogCallBack() {
-                    @Override
-                    public void executeEvent() {
-                        File file = new File(Environment.getExternalStorageDirectory().getPath() + getPackageName());
-                        //deleteFile(file);
-                        NToast.shortToast(SettingActivity.this, "退出成功");
-                    }
-
-                    @Override
-                    public void onCancle() {
-
-                    }
-                });
+                presenter.logOff();
                 break;
             case R.id.layout_feedback:
                 startActivity(new Intent(this,FeedbackActivity.class));
