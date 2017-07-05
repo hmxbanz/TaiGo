@@ -61,4 +61,10 @@ private BlePresenter presenter;
             case BleScanner.REQUEST_ENABLE_BT:
         }
     }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+presenter.onDestroy();
+    }
 }

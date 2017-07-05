@@ -51,6 +51,7 @@ public class BleAdapter extends BaseAdapter {
             holder = new BleAdapter.ViewHoler();
             convertView = mInflater.inflate(R.layout.item_ble, null);
             holder.deviceName = (TextView) convertView.findViewById(R.id.txt_device_name);
+            holder.deviceAddr = (TextView) convertView.findViewById(R.id.txt_device_addr);
             convertView.setTag(holder);
         } else {
             holder = (BleAdapter.ViewHoler) convertView.getTag();
@@ -63,7 +64,8 @@ public class BleAdapter extends BaseAdapter {
             }
         });
         ScanResult device = (ScanResult) mList.get(position);
-        holder.deviceName.setText(device.getDevice().getAddress()+"-"+device.getDevice().getName());
+        holder.deviceName.setText(""+device.getDevice().getName());
+        holder.deviceAddr.setText(device.getDevice().getAddress());
 
         //holder.deviceName.setText(((User)mList.get(position)).getNickName());
 
@@ -76,6 +78,7 @@ public class BleAdapter extends BaseAdapter {
 
     class ViewHoler {
         TextView deviceName;
+        TextView deviceAddr;
     }
 
 }

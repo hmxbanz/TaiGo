@@ -231,4 +231,9 @@ public class BlePresenter extends BasePresenter implements OnDataListener, BleSc
 
         return false;
     }
+
+    public void onDestroy() {
+        if (mBluetoothService != null)
+            unbindService();
+    }
 }

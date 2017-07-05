@@ -189,12 +189,6 @@ public class UnityPlayerActivity extends Activity
                         runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
-//                                txt.append(String.valueOf(HexUtil.encodeHex(characteristic.getValue())));
-//                                txt.append("\n");
-//                                int offset = txt.getLineCount() * txt.getLineHeight();
-//                                if (offset > txt.getHeight()) {
-//                                    txt.scrollTo(0, offset - txt.getHeight());
-//                                }
                                 String s=String.valueOf(HexUtil.encodeHex(characteristic.getValue()));
                                 String s10=NumberUtils.print10(s);
                                 UnityPlayer.UnitySendMessage("Main Camera","eee",s10);
@@ -208,12 +202,6 @@ public class UnityPlayerActivity extends Activity
                         runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
-//                                txt.append(exception.toString());
-//                                txt.append("\n");
-//                                int offset = txt.getLineCount() * txt.getLineHeight();
-//                                if (offset > txt.getHeight()) {
-//                                    txt.scrollTo(0, offset - txt.getHeight());
-//                                }
                             }
                         });
                     }
@@ -241,6 +229,8 @@ public class UnityPlayerActivity extends Activity
     @Override protected void onDestroy ()
     {
         mUnityPlayer.quit();
+        if (mBluetoothService != null)
+            unbindService();
         super.onDestroy();
     }
 
