@@ -7,6 +7,8 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.xtdar.app.R;
+import com.xtdar.app.adapter.ClassListAnimationAdapter;
+import com.xtdar.app.server.response.GameListResponse;
 import com.xtdar.app.server.response.ShowResponse;
 
 import java.util.List;
@@ -17,6 +19,10 @@ import java.util.List;
 
 public class RecyclerNormalAdapter extends RecyclerView.Adapter {
     private final static String TAG = "RecyclerBaseAdapter";
+    private ItemClickListener mListener;
+    public void setOnItemClickListener(ItemClickListener listener) {
+        mListener = listener;
+    }
 
     private List<ShowResponse.DataBean> itemDataList = null;
     private Context context = null;
@@ -27,8 +33,7 @@ public class RecyclerNormalAdapter extends RecyclerView.Adapter {
     }
 
     @Override
-    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent,
-                                                      int viewType) {
+    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent,int viewType) {
         View v = LayoutInflater.from(context).inflate(R.layout.list_video_item_normal, parent, false);
         final RecyclerView.ViewHolder holder = new RecyclerItemNormalHolder(context, v);
         return holder;
@@ -36,10 +41,18 @@ public class RecyclerNormalAdapter extends RecyclerView.Adapter {
     }
 
     @Override
-    public void onBindViewHolder(final RecyclerView.ViewHolder holder, int position) {
+    public void onBindViewHolder(final RecyclerView.ViewHolder holder,  final int position) {
         RecyclerItemNormalHolder recyclerItemViewHolder = (RecyclerItemNormalHolder) holder;
         recyclerItemViewHolder.setRecyclerBaseAdapter(this);
         recyclerItemViewHolder.onBind(position, itemDataList.get(position));
+        final ShowResponse.DataBean listItem = itemDataList.get(position);
+        if(mListener == null) return;
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mListener.onItemClick(position,listItem.getShow_id(),listItem.getShow_class_id());
+            }
+        });
     }
 
     @Override
@@ -56,5 +69,8 @@ public class RecyclerNormalAdapter extends RecyclerView.Adapter {
     public void setListData(List<ShowResponse.DataBean> data) {
         itemDataList = data;
         notifyDataSetChanged();
+    }
+    public interface ItemClickListener {
+        void onItemClick(int position, String itemId,String classId);
     }
 }

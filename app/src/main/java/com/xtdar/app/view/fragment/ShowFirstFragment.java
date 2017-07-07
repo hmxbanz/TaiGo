@@ -8,10 +8,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
-import android.widget.TextView;
 
 import com.shuyu.gsyvideoplayer.video.StandardGSYVideoPlayer;
 import com.xtdar.app.R;
+import com.xtdar.app.presenter.HomeNuPresenter;
 import com.xtdar.app.presenter.HomeShowPresenter;
 import com.xtdar.app.server.response.ShowResponse;
 
@@ -28,11 +28,10 @@ public class ShowFirstFragment extends Fragment  {
     //@BindView(R.id.list_item_recycler)
     RecyclerView videoList;
 
-
     List<ShowResponse.DataBean> dataList = new ArrayList<>();
 
     private View view;
-    HomeShowPresenter homeShowPresenter;
+    HomeNuPresenter presenter;
     public static ShowFirstFragment instance = null;
 
 
@@ -51,8 +50,8 @@ public class ShowFirstFragment extends Fragment  {
 
         resolveData();
 
-        homeShowPresenter = new HomeShowPresenter(getContext());
-        homeShowPresenter.init(videoList);
+        presenter = new HomeNuPresenter(getContext());
+        presenter.init(videoList);
         return view;
 
 

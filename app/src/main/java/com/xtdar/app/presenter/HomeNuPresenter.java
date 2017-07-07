@@ -6,11 +6,17 @@ import android.support.v7.widget.RecyclerView;
 
 import com.shuyu.gsyvideoplayer.GSYVideoManager;
 import com.shuyu.gsyvideoplayer.GSYVideoPlayer;
+import com.xtdar.app.XtdConst;
+import com.xtdar.app.adapter.ClassListAnimationAdapter;
+import com.xtdar.app.adapter.ClassListNuAdapter;
 import com.xtdar.app.server.HttpException;
 import com.xtdar.app.server.async.OnDataListener;
+import com.xtdar.app.server.response.ClassListResponse;
+import com.xtdar.app.server.response.GameListResponse;
 import com.xtdar.app.server.response.ShowResponse;
 import com.xtdar.app.video.RecyclerItemNormalHolder;
 import com.xtdar.app.video.RecyclerNormalAdapter;
+import com.xtdar.app.view.activity.DetailActivity;
 import com.xtdar.app.view.widget.LoadDialog;
 
 import java.util.List;
@@ -19,14 +25,16 @@ import java.util.List;
  * Created by hmxbanz on 2017/4/5.
  */
 
-public class HomeShowPresenter extends BasePresenter implements OnDataListener {
+public class HomeNuPresenter extends BasePresenter implements OnDataListener,ClassListNuAdapter.ItemClickListener {
     private static final int GETSHOWLIST = 1;
     private final LinearLayoutManager linearLayoutManager;
     private List<ShowResponse.DataBean> entity;
     private RecyclerView videoList;
+    private String lastItem ="0";
+    private ClassListNuAdapter dataAdapter;
 
     //private ContactsActivity mActivity;
-    public HomeShowPresenter(Context context){
+    public HomeNuPresenter(Context context){
         super(context);
         //mActivity = (ContactsActivity) context;
         linearLayoutManager = new LinearLayoutManager(context);
@@ -74,7 +82,7 @@ public class HomeShowPresenter extends BasePresenter implements OnDataListener {
     public Object doInBackground(int requestCode, String parameter) throws HttpException {
         switch (requestCode) {
             case GETSHOWLIST:
-                return mUserAction.getShowList();
+                return mUserAction.getAnimations("1",lastItem,"4");
         }
         return null;
     }
@@ -83,14 +91,23 @@ public class HomeShowPresenter extends BasePresenter implements OnDataListener {
     public void onSuccess(int requestCode, Object result) {
         switch (requestCode) {
             case GETSHOWLIST:
-                ShowResponse showResponse=(ShowResponse)result;
-                if (showResponse != null && showResponse.getData() != null) {
-                    entity=showResponse.getData();
-                    final RecyclerNormalAdapter recyclerNormalAdapter = new RecyclerNormalAdapter(context, entity);
-                    this.videoList.setAdapter(recyclerNormalAdapter);
+                ClassListResponse response = (ClassListResponse) result;
+                if (response.getCode() == XtdConst.SUCCESS) {
+                    final List<ClassListResponse.DataBean> datas = response.getData();
+                    lastItem=((ClassListResponse.DataBean) datas.get(datas.size()-1)).getItem_id();
+                    dataAdapter = new ClassListNuAdapter(context);
+                    dataAdapter.setListItems(datas);
+                    this.videoList.setAdapter(dataAdapter);
+                    dataAdapter.notifyDataSetChanged();
+
                 }
-//
+
                 break;
         }
+    }
+
+    @Override
+    public void onItemClick(int position, String itemId, String classId) {
+        DetailActivity.StartActivity(context,itemId,classId);
     }
 }

@@ -13,10 +13,10 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        android:gravity="center"
+        android:gravity="center_horizontal"
         >
         <ImageView
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="30dp"
             android:src="@drawable/logo"
             android:layout_width="100dp"
             android:layout_height="100dp"

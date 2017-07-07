@@ -66,7 +66,8 @@ public class HelpDetailActivity extends BaseActivity implements View.OnClickList
         //mWebView.getSettings().setUserAgentString("Android Chrome/37.0.0.0 Mobile Safari/537.36");
         mWebView.getSettings().setAppCacheEnabled(true);
         //设置缓存模式
-        mWebView.loadUrl("http://www.baidu.com");
+        String articleId = getIntent().getStringExtra("articleId");
+        mWebView.loadUrl("http://120.24.231.219/kp_dyz/cli-dgc-helpdetail.php?article_id="+articleId);
     }
 
     @Override

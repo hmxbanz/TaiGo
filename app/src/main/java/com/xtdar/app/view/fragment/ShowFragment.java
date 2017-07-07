@@ -3,29 +3,19 @@ package com.xtdar.app.view.fragment;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
-import android.widget.TextView;
 
-import com.shuyu.gsyvideoplayer.GSYVideoManager;
-import com.shuyu.gsyvideoplayer.GSYVideoPlayer;
 import com.shuyu.gsyvideoplayer.video.StandardGSYVideoPlayer;
 import com.xtdar.app.R;
 import com.xtdar.app.presenter.HomeShowPresenter;
 import com.xtdar.app.server.response.ShowResponse;
-import com.xtdar.app.video.RecyclerBaseAdapter;
-import com.xtdar.app.video.RecyclerItemNormalHolder;
-import com.xtdar.app.video.RecyclerNormalAdapter;
-import com.xtdar.app.video.VideoModel;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import butterknife.BindView;
 
 
 /**
@@ -37,11 +27,10 @@ public class ShowFragment extends Fragment  {
     //@BindView(R.id.list_item_recycler)
     RecyclerView videoList;
 
-
     List<ShowResponse.DataBean> dataList = new ArrayList<>();
 
     private View view;
-    HomeShowPresenter homeShowPresenter;
+    HomeShowPresenter presenter;
     public static ShowFragment instance = null;
 
 
@@ -61,8 +50,8 @@ public class ShowFragment extends Fragment  {
 
         resolveData();
 
-        homeShowPresenter = new HomeShowPresenter(getContext());
-        homeShowPresenter.init(videoList);
+        presenter = new HomeShowPresenter(getContext());
+        presenter.init(videoList);
         return view;
 
 

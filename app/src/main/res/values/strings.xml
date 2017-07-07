@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="MissingTranslation">
-    <string name="xtdar_app_name">小泰斗</string>
+    <string name="xtdar_app_name">TaiGo</string>
     <string name="home">设备</string>
-    <string name="contacts">男女友</string>
     <string name="me">我的</string>
 
     <string name="hello_world">Hello world!</string>

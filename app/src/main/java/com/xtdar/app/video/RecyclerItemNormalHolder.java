@@ -13,6 +13,7 @@ import com.shuyu.gsyvideoplayer.video.StandardGSYVideoPlayer;
 import com.xtdar.app.XtdConst;
 import com.xtdar.app.loader.GlideImageLoader;
 import com.xtdar.app.server.response.ShowResponse;
+import com.xtdar.app.view.widget.SelectableRoundedImageView;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -31,6 +32,8 @@ public class RecyclerItemNormalHolder extends RecyclerItemBaseHolder {
     StandardGSYVideoPlayer gsyVideoPlayer;
 
     ImageView imageView;
+    @BindView(R.id.avatar)
+    SelectableRoundedImageView roundedImageView;
     @BindView(R.id.title)
     TextView title;
     @BindView(R.id.nickname)
@@ -57,6 +60,8 @@ public class RecyclerItemNormalHolder extends RecyclerItemBaseHolder {
         //增加封面
         imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
         glideImageLoader.displayImage(context, XtdConst.IMGURI+videoModel.getHead_img(),imageView);
+        glideImageLoader.displayImage(context, XtdConst.IMGURI+videoModel.getImg_path(),roundedImageView);
+
         title.setText(videoModel.getTitle());
         nickName.setText(videoModel.getNick_name());
         createDate.setText(videoModel.getPost_date());
