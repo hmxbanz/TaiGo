@@ -6,7 +6,6 @@
     android:gravity="top|center"
     android:id="@+id/list_item_layout"    >
 <LinearLayout
-    android:layout_marginBottom="5dp"
     android:background="@color/white"
     android:orientation="horizontal"
     android:layout_width="match_parent"

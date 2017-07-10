@@ -76,7 +76,7 @@ public class HomeAnimationPresenter extends BasePresenter implements OnDataListe
             case GETADS:
                 return mUserAction.getAds();
             case GETANIMATION:
-                return mUserAction.getShot("0",lastItem,"2");
+                return mUserAction.getShot("0",lastItem,"12");
         }
         return null;
     }

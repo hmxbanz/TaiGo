@@ -77,7 +77,7 @@ public class PhotoUtils {
             Uri uri=buildUri(activity);
 
             //每次选择图片吧之前的图片删除
-            clearCropFile(outputUri);
+            //clearCropFile(outputUri);
 
             Intent intent = new Intent();
             intent.setAction(MediaStore.ACTION_IMAGE_CAPTURE);
@@ -85,7 +85,7 @@ public class PhotoUtils {
 
 
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                Uri imageUri = FileProvider.getUriForFile(activity, "cn.nannvyou.app.provider", mCurrentPhotoFile);
+                Uri imageUri = FileProvider.getUriForFile(activity, "com.xtdar.app.provider", mCurrentPhotoFile);
                 intent.setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
                 intent.setFlags(Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
                 intent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri);
@@ -116,7 +116,7 @@ public class PhotoUtils {
     public void selectPicture(Activity activity) {
         try {
             //每次选择图片吧之前的图片删除
-            clearCropFile(buildUri(activity));
+            //clearCropFile(buildUri(activity));
 
             Intent intent = new Intent(Intent.ACTION_PICK, null);
             intent.setDataAndType(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, "image/*");
@@ -143,7 +143,7 @@ public class PhotoUtils {
     private Uri buildUri(Activity activity) {
         if (CommonTools.checkSDCard()) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                return FileProvider.getUriForFile(activity, "cn.nannvyou.app.provider", mCurrentPhotoFile);
+                return FileProvider.getUriForFile(activity, "com.xtdar.app.provider", mCurrentPhotoFile);
             } else {
                 return Uri.fromFile(Environment.getExternalStorageDirectory()).buildUpon().appendPath(CROP_FILE_NAME).build();
             }
@@ -168,15 +168,15 @@ public class PhotoUtils {
         Intent cropIntent = new Intent("com.android.camera.action.CROP");
 
         //sdk>=24
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+        if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
 
-            Uri imageUri = FileProvider.getUriForFile(activity, "cn.nannvyou.app.provider", new File(url));//通过FileProvider创建一个content类型的Uri
+            Uri imageUri = FileProvider.getUriForFile(activity, "com.xtdar.app.provider", new File(url));//通过FileProvider创建一个content类型的Uri
             cropIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
             cropIntent.putExtra("noFaceDetection", true);//去除默认的人脸识别，否则和剪裁匡重叠
             cropIntent.setDataAndType(imageUri, "image/*");
 
             //19=<sdk<24
-        } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT && Build.VERSION.SDK_INT < Build.VERSION_CODES.N) {
+        } else if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.KITKAT && android.os.Build.VERSION.SDK_INT < Build.VERSION_CODES.N) {
             cropIntent.setDataAndType(Uri.fromFile(new File(url)), "image/*");
 
             //sdk<19
@@ -187,8 +187,8 @@ public class PhotoUtils {
         cropIntent.putExtra("crop", "true");
         cropIntent.putExtra("aspectX", 1);
         cropIntent.putExtra("aspectY", 1);
-        cropIntent.putExtra("outputX", 200);
-        cropIntent.putExtra("outputY", 200);
+        cropIntent.putExtra("outputX", 400);
+        cropIntent.putExtra("outputY", 400);
         cropIntent.putExtra("return-data", false);
         cropIntent.putExtra("outputFormat", Bitmap.CompressFormat.JPEG.toString());
 
@@ -223,10 +223,10 @@ public class PhotoUtils {
         switch (requestCode) {
             //拍照
             case INTENT_TAKE:
-                    if (mCurrentPhotoFile.exists()) {
-                        if (corp(activity, Uri.fromFile(mCurrentPhotoFile))) {
+                if (mCurrentPhotoFile.exists()) {
+                    if (corp(activity, Uri.fromFile(mCurrentPhotoFile))) {
                         return;
-                        }
+                    }
                     onPhotoResultListener.onPhotoCancel();
                 }
                 break;
@@ -245,7 +245,8 @@ public class PhotoUtils {
             //截图
             case INTENT_CROP:
                 if (resultCode == Activity.RESULT_OK && mCurrentPhotoFile.exists()) {
-                    onPhotoResultListener.onPhotoResult(buildUri(activity));
+
+                    onPhotoResultListener.onPhotoResult(buildUri(activity),mCurrentPhotoFile);
                 }
                 break;
         }
@@ -286,7 +287,7 @@ public class PhotoUtils {
      * @date 2015-1-7
      **/
     public interface OnPhotoResultListener {
-        void onPhotoResult(Uri uri);
+        void onPhotoResult(Uri uri,File file);
 
         void onPhotoCancel();
     }

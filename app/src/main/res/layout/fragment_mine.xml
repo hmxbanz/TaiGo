@@ -17,7 +17,7 @@
     android:orientation="horizontal"
     android:background="@color/white"
     android:gravity="center|left">
-<com.xtdar.app.view.widget.SelectableRoundedImageView
+        <com.xtdar.app.view.widget.SelectableRoundedImageView
     android:id="@+id/img_avator"
     android:src="@drawable/logo"
     android:layout_width="70dp"
@@ -41,20 +41,13 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
             <TextView
-                android:id="@+id/txt_log"
+                android:id="@+id/nick_name"
                 android:text="小泰斗"
                 android:textSize="18dp"
                 android:textColor="@color/appTextColor"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
-            <TextView
-                android:layout_marginTop="10dp"
-                android:id="@+id/txt_me"
-                android:text="查看编辑个人信息"
-                android:textSize="14dp"
-                android:textColor="@color/appTextColor"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+
         </LinearLayout>
 
 </LinearLayout>
@@ -68,7 +61,7 @@
         android:background="@color/white"
         android:gravity="center">
         <RelativeLayout
-            android:id="@+id/layout_ar"
+            android:id="@+id/layout_dynamic"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
@@ -84,7 +77,7 @@
                 android:gravity="center"
                 android:textSize="14dp"
                 android:layout_alignParentBottom="true"
-                android:text="AR相机"
+                android:text="发布视频"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
         </RelativeLayout>
@@ -112,7 +105,7 @@
         </RelativeLayout>
 
         <RelativeLayout
-            android:id="@+id/layout_dynamic"
+            android:id="@+id/layout_my_video"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
@@ -128,7 +121,7 @@
                 android:textSize="14dp"
                 android:gravity="center"
                 android:layout_below="@+id/icon_dynamic"
-                android:text="动态"
+                android:text="我的视频"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
         </RelativeLayout>
@@ -200,7 +193,7 @@
             />
     </LinearLayout>
     <LinearLayout
-        android:id="@+id/layout_friend_condition"
+        android:id="@+id/layout_update"
         android:paddingLeft="10dp"
         android:paddingRight="10dp"
         android:layout_width="match_parent"
@@ -211,7 +204,7 @@
         >
         <ImageView
             android:layout_alignParentLeft="true"
-            android:src="@drawable/icon_order"
+            android:src="@drawable/icon_me"
             android:layout_width="20dp"
             android:layout_height="20dp"
             android:tint="@color/titleBlue"/>
@@ -219,7 +212,7 @@
             style="@style/MenuTitleStyle"
             android:paddingLeft="10dp"
             android:gravity="center_vertical"
-            android:text="我的订单"
+            android:text="编辑个人信息"
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="match_parent" />

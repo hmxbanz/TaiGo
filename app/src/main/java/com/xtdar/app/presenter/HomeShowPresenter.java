@@ -1,6 +1,7 @@
 package com.xtdar.app.presenter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
@@ -8,9 +9,11 @@ import com.shuyu.gsyvideoplayer.GSYVideoManager;
 import com.shuyu.gsyvideoplayer.GSYVideoPlayer;
 import com.xtdar.app.server.HttpException;
 import com.xtdar.app.server.async.OnDataListener;
+import com.xtdar.app.server.response.ShowDetailResponse;
 import com.xtdar.app.server.response.ShowResponse;
 import com.xtdar.app.video.RecyclerItemNormalHolder;
 import com.xtdar.app.video.RecyclerNormalAdapter;
+import com.xtdar.app.view.activity.ShowDetailActivity;
 import com.xtdar.app.view.widget.LoadDialog;
 
 import java.util.List;
@@ -19,7 +22,7 @@ import java.util.List;
  * Created by hmxbanz on 2017/4/5.
  */
 
-public class HomeShowPresenter extends BasePresenter implements OnDataListener {
+public class HomeShowPresenter extends BasePresenter implements OnDataListener,RecyclerNormalAdapter.ItemClickListener {
     private static final int GETSHOWLIST = 1;
     private final LinearLayoutManager linearLayoutManager;
     private List<ShowResponse.DataBean> entity;
@@ -87,10 +90,19 @@ public class HomeShowPresenter extends BasePresenter implements OnDataListener {
                 if (showResponse != null && showResponse.getData() != null) {
                     entity=showResponse.getData();
                     final RecyclerNormalAdapter recyclerNormalAdapter = new RecyclerNormalAdapter(context, entity);
+                    recyclerNormalAdapter.setOnItemClickListener(this);
                     this.videoList.setAdapter(recyclerNormalAdapter);
                 }
 //
                 break;
         }
+    }
+
+    @Override
+    public void onItemClick(int position, String itemId, String classId) {
+        Intent intent = new Intent(context, ShowDetailActivity.class);
+        intent.putExtra("show_id", itemId);
+        context.startActivity(intent);
+
     }
 }

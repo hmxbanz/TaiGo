@@ -1,15 +1,12 @@
 package com.xtdar.app.view.activity;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
-import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
@@ -17,7 +14,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
-import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
@@ -26,36 +23,29 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
-import com.lzy.ninegrid.ImageInfo;
 import com.lzy.ninegrid.NineGridView;
-import com.lzy.ninegrid.preview.ImagePreviewActivity;
-import com.shuyu.gsyvideoplayer.listener.LockClickListener;
-import com.shuyu.gsyvideoplayer.utils.OrientationUtils;
 import com.shuyu.gsyvideoplayer.video.StandardGSYVideoPlayer;
+import com.xtdar.app.R;
 import com.xtdar.app.XtdConst;
 import com.xtdar.app.adapter.RecyclerViewAdapter;
-import com.xtdar.app.model.UserList;
 import com.xtdar.app.presenter.DetailPresenter;
-
-import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
-
-import cn.hugeterry.coordinatortablayout.CoordinatorTabLayout;
-import com.xtdar.app.R;
-import com.xtdar.app.video.SampleListener;
+import com.xtdar.app.presenter.ShowDetailPresenter;
 import com.xtdar.app.view.fragment.AlubmFragment;
 import com.xtdar.app.view.fragment.FriendConditionFragment;
 import com.xtdar.app.view.fragment.InfoFragment;
 import com.xtdar.app.view.fragment.LiftShareFragment;
 
+import java.util.ArrayList;
+import java.util.List;
 
-public class DetailActivity extends BaseActivity implements RecyclerViewAdapter.ItemClickListener,View.OnClickListener {
+import cn.hugeterry.coordinatortablayout.CoordinatorTabLayout;
+
+
+public class ShowDetailActivity extends BaseActivity implements RecyclerViewAdapter.ItemClickListener,View.OnClickListener {
     public static List<?> images=new ArrayList<>();
     private RecyclerView recycleView;
     public ScrollView scrollView;
     private View view;
-
 
     ///////////////////////////
     private CoordinatorTabLayout mCoordinatorTabLayout;
@@ -63,24 +53,25 @@ public class DetailActivity extends BaseActivity implements RecyclerViewAdapter.
     private ArrayList<Fragment> mFragments;
     private final String[] mTabTitles = {"个人资料", "条件", "动态", "相册"};
     private ViewPager mViewPager;
-    private DetailPresenter mDetailPresenter;
+    private ShowDetailPresenter presenter;
     private StandardGSYVideoPlayer videoPlayer;
 
     private TextView title;
     private LinearLayout layoutFavor;
+    private EditText comment;
+    private TextView btnSend;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        requestWindowFeature(Window.FEATURE_NO_TITLE);
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
-                WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        setContentView(R.layout.activity_detail);
+        //requestWindowFeature(Window.FEATURE_NO_TITLE);
+        //getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        setContentView(R.layout.activity_show_detail);
 
         initViews();
         //initDatas();
-        mDetailPresenter = new DetailPresenter(this);
-        mDetailPresenter.init(videoPlayer,title,recycleView);
+        presenter = new ShowDetailPresenter(this);
+        presenter.init(videoPlayer,title,recycleView);
 
     }
 
@@ -90,69 +81,30 @@ public class DetailActivity extends BaseActivity implements RecyclerViewAdapter.
         recycleView= (RecyclerView) findViewById(R.id.recyclerView);
 
         AppBarLayout app_bar_layout = (AppBarLayout) findViewById(R.id.app_bar_layout);
-        Toolbar mToolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(mToolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onBackPressed();
-            }
-        });
+//        Toolbar mToolbar = (Toolbar) findViewById(R.id.toolbar);
+//        setSupportActionBar(mToolbar);
+//        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+//        mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                onBackPressed();
+//            }
+//        });
 
-        //String url = "http://baobab.wdjcdn.com/14564977406580.mp4";
         videoPlayer= (StandardGSYVideoPlayer) findViewById(R.id.detail_player);
-
-        title = (TextView) findViewById(R.id.txt_title);
-        layoutFavor = (LinearLayout) findViewById(R.id.layout_favor);
-        layoutFavor.setOnClickListener(this);
-
-        //initFragments();
-        //initViewPager();
-    }
-    private void initFragments() {
-        mFragments = new ArrayList<>();
-        mFragments.add(InfoFragment.getInstance());
-        mFragments.add(FriendConditionFragment.getInstance());
-        for (String title : mTabTitles) {
-            // mFragments.add(LiftShareFragment.getInstance(title));
-            // break;
-        }
-        mFragments.add(LiftShareFragment.getInstance("个人资料"));
-
-        mFragments.add(AlubmFragment.getInstance());
+        title = (TextView) findViewById(R.id.title);
+        comment = (EditText) findViewById(R.id.comment);
+        btnSend = (TextView) findViewById(R.id.btn_send);
+        btnSend.setOnClickListener(this);
 
     }
-    private void initViewPager() {
-//        mViewPager = (ViewPager) findViewById(R.id.viewpage);
-//        mViewPager.setOffscreenPageLimit(4);
-//        mViewPager.setAdapter(new ViewPageAdapter(getSupportFragmentManager(), mFragments, mTabTitles));
-    }
-    private void initDatas() {
-        mImageArray = new int[]{
-                R.drawable.bg_getuser1,
-                R.drawable.bg_getuser1,
-                R.drawable.bg_getuser1,
-                R.drawable.bg_getuser1
-        };
-        mColorArray = new int[]{
-                android.R.color.holo_blue_light,
-                android.R.color.holo_red_light,
-                android.R.color.holo_orange_light,
-                android.R.color.holo_orange_light
-        };
 
-        mCoordinatorTabLayout.setTitle("")
-                .setBackEnable(true)
-                .setImageArray(mImageArray, mColorArray)
-                .setupWithViewPager(mViewPager);
-    }
 
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.layout_favor:
-                mDetailPresenter.addFavor();
+                presenter.addComment(comment,btnSend);
                 break;
 
         }
@@ -205,7 +157,7 @@ public class DetailActivity extends BaseActivity implements RecyclerViewAdapter.
     }
 
     public static void StartActivity(Context context,String itemId,String classId) {
-        Intent intent = new Intent(context, DetailActivity.class);
+        Intent intent = new Intent(context, ShowDetailActivity.class);
         intent.putExtra(XtdConst.ITEMID,itemId);
         intent.putExtra(XtdConst.CLASSID,classId);
         context.startActivity(intent);

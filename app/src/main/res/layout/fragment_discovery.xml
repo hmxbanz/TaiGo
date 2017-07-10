@@ -22,6 +22,7 @@
 
 </android.support.design.widget.TabLayout>
     <android.support.v4.view.ViewPager
+        android:paddingBottom="50dp"
         android:background="@color/titleBlue"
         android:id="@+id/discovery_viewpager"
         android:layout_width="match_parent"

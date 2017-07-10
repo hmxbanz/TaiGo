@@ -34,6 +34,7 @@ public class UpdatePresenter extends BasePresenter{
         this.nickName = nickName;
         LoadDialog.show(context);
         atm.request(SAVE,this);
+
     }
 
     @Override
@@ -47,7 +48,7 @@ public class UpdatePresenter extends BasePresenter{
 
         CommonResponse response = (CommonResponse) result;
         if (response != null && response.getCode() == XtdConst.SUCCESS) {
-            BroadcastManager.getInstance(context).sendBroadcast(MePresenter.UPDATENICKNAME,this.nickName);
+            BroadcastManager.getInstance(context).sendBroadcast(MePresenter.UPDATENICKNAME,this.nickName.getText().toString());
             //activity.finish();
         }
         NToast.shortToast(context,response.getMsg());

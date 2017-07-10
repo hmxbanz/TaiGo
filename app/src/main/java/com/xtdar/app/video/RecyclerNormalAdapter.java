@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 
 import com.xtdar.app.R;
 import com.xtdar.app.adapter.ClassListAnimationAdapter;
+import com.xtdar.app.server.response.ClassListResponse;
 import com.xtdar.app.server.response.GameListResponse;
 import com.xtdar.app.server.response.ShowResponse;
 

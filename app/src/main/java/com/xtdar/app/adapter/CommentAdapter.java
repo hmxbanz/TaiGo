@@ -12,9 +12,8 @@ import android.widget.TextView;
 import com.xtdar.app.R;
 import com.xtdar.app.XtdConst;
 import com.xtdar.app.loader.GlideImageLoader;
-import com.xtdar.app.server.response.ClassListResponse;
-import com.xtdar.app.server.response.MyDevicesResponse;
-import com.youth.banner.Banner;
+import com.xtdar.app.server.response.CommentResponse;
+import com.xtdar.app.view.widget.SelectableRoundedImageView;
 
 import java.util.List;
 
@@ -22,8 +21,8 @@ import java.util.List;
  * Created by hmxbanz on 2017/3/8.
  */
 
-public class MyDevicesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>  {
-    private List<MyDevicesResponse.DataBean> listItems;
+public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.DataHolder>  {
+    private List<CommentResponse.DataBean> listItems;
     private LayoutInflater layoutInflater;
     private  final int TYPE_HEADER = 0;
     private  final int TYPE_NORMAL = 1;
@@ -34,7 +33,7 @@ public class MyDevicesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
     private RecyclerView mRecyclerView;
     private GlideImageLoader glideImageLoader;
     private Context context;
-    private List<String> adImages;
+
 
     public void setOnItemClickListener(ItemClickListener listener) {
         mListener = listener;
@@ -56,73 +55,52 @@ public class MyDevicesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
         return mHeaderView;
     }
 
-    public MyDevicesAdapter(Context c){
-
+    public CommentAdapter(List<CommentResponse.DataBean> l, Context c){
+        this.listItems=l;
         this.context=c;
         this.layoutInflater=LayoutInflater.from(c);
         glideImageLoader=new GlideImageLoader();
     }
 
-    public void setListItems(List<MyDevicesResponse.DataBean> l)
-    {
-        this.listItems=l;
-    }
-
     @Override
-    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public DataHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         if(mHeaderView != null && viewType == TYPE_HEADER)
         {
-            return new HeaderHolder(mHeaderView);
+            return new DataHolder(mHeaderView);
         }
         else if(mFooterView != null &&viewType == TYPE_FOOTER)
         {
             return new DataHolder(mFooterView);
         }
         else {
-            View v = layoutInflater.inflate(R.layout.listitem_device_item, parent, false);
+            View v = layoutInflater.inflate(R.layout.listitem_comment, parent, false);
             return new DataHolder(v);
         }
     }
-
     @Override
-    public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
+    public void onBindViewHolder(DataHolder holder, final int position) {
 
-        //if(getItemViewType(position) == TYPE_FOOTER) return;
+        if(getItemViewType(position) == TYPE_FOOTER) return;
 
         final int pos = getRealPosition(holder);
-        //if(position==listItems.size())return;
-
-        if(holder instanceof HeaderHolder) {
-            HeaderHolder headerHolder=(HeaderHolder)holder;
-//            String[] urls = context.getResources().getStringArray(R.array.url);
-//            //String[] tips = getResources().getStringArray(R.array.deviceName);
-//            List list = Arrays.asList(urls);
-//            ArrayList images = new ArrayList(list);
-            //简单使用
-            //banner.setOnBannerListener(this);
-            headerHolder.banner.setImages(adImages);//设置图片集合
-            headerHolder.banner.setImageLoader(new GlideImageLoader());//设置图片加载器
-            headerHolder.banner.start();
-        }
-        if(getItemViewType(position) == TYPE_HEADER) return;
-        final MyDevicesResponse.DataBean listItem = listItems.get(position);
+        final CommentResponse.DataBean listItem = listItems.get(position);
         if(holder instanceof DataHolder) {
-            DataHolder dataDolder=(DataHolder)holder;
-            //dataDolder.className.setText(listItem.getChapter_name());
-            glideImageLoader.displayImage(context, XtdConst.IMGURI+listItem.getDevice_img(),dataDolder.imageView);
-            //Glide.with(context).load(listItem.getAvator()).asBitmap().into(holder.imageView);
-            //holder.imageView.setImageResource(listItem.getImgResource());
+            holder.nickName.setText(listItem.getNick_name());
+            holder.content.setText(listItem.getComment());
+            holder.createdate.setText(listItem.getCom_date());
+            glideImageLoader.displayImage(context, XtdConst.IMGURI+listItem.getImg_path(),holder.avatar);
+            //Glide.with(context).load(listItem.getAvator()).asBitmap().into(holder.avatar);
+            //holder.avatar.setImageResource(listItem.getImgResource());
             if(mListener == null) return;
-            dataDolder.itemView.setOnClickListener(new View.OnClickListener() {
+            holder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    mListener.onItemClick(position,listItem.getDevice_id(),listItem.getDevice_item_name());
+                    mListener.onItemClick(position,listItem.getItem_id(),listItem.getItem_id());
                 }
             });
         }
+
     }
-
-
     @Override
     public int getItemCount() {
         int count = (listItems == null ? 0 : listItems.size());
@@ -179,36 +157,23 @@ public class MyDevicesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
         int position = holder.getLayoutPosition();
         return mHeaderView == null ? position : position - 1;
     }
-
-    public void setAdImages(List<String> images) {
-        this.adImages=images;
-    }
-
     public interface ItemClickListener {
         void onItemClick(int position, String itemId, String classId);
     }
-    class HeaderHolder extends RecyclerView.ViewHolder  {
-        private Banner banner;
-
-        public HeaderHolder(View itemView) {
-            super(itemView);
-            banner = (Banner) itemView.findViewById(R.id.banner);
-        }
-
-    }
-
     class DataHolder extends RecyclerView.ViewHolder implements View.OnClickListener
     {
-        private TextView title;
-        private TextView className;
-        private ImageView imageView;
+        private TextView nickName;
+        private TextView content;
+        private TextView createdate;
+        private SelectableRoundedImageView avatar;
         private View listLayoutView;
 
         public DataHolder(View itemView) {
             super(itemView);
-//            title = (TextView) itemView.findViewById(R.id.txt_title);
-//            className = (TextView) itemView.findViewById(R.id.txt_class_name);
-            imageView = (ImageView) itemView.findViewById(R.id.list_item_icon);
+            nickName = (TextView) itemView.findViewById(R.id.nickname);
+            content = (TextView) itemView.findViewById(R.id.content);
+            createdate = (TextView) itemView.findViewById(R.id.createdate);
+            avatar = (SelectableRoundedImageView) itemView.findViewById(R.id.avatar);
             listLayoutView = itemView.findViewById(R.id.list_item_layout);
         }
 
@@ -218,17 +183,17 @@ public class MyDevicesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
         public void setListLayoutView(View listLayoutView) {
             this.listLayoutView = listLayoutView;
         }
-        public ImageView getImageView() {
-            return imageView;
+        public ImageView getAvatar() {
+            return avatar;
         }
-        public void setImageView(ImageView imageView) {
-            this.imageView = imageView;
+        public void setAvatar(SelectableRoundedImageView avatar) {
+            this.avatar = avatar;
         }
-        public TextView getTitle() {
-            return title;
+        public TextView getNickName() {
+            return nickName;
         }
-        public void setTitle(TextView title) {
-            this.title = title;
+        public void setNickName(TextView nickName) {
+            this.nickName = nickName;
         }
 
         @Override
@@ -237,8 +202,6 @@ public class MyDevicesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
             switch (v.getId())
             {
                 case R.id.list_item_layout:
-
-
             }
         }
     }

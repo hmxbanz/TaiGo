@@ -4,6 +4,7 @@ import android.content.Context;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
+import com.xtdar.app.R;
 import com.youth.banner.loader.ImageLoader;
 
 
@@ -14,7 +15,7 @@ public class GlideImageLoader extends ImageLoader {
         Glide.with(context.getApplicationContext())
                 .load(path)
                 //.placeholder(R.drawable.ic_default_color)//
-                //.error(R.drawable.ic_default_color)//
+                .error(R.drawable.logo)//
                 //.diskCacheStrategy(DiskCacheStrategy.ALL)//
                 .crossFade()
                 .into(imageView);

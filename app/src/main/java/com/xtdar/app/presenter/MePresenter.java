@@ -11,13 +11,19 @@ import android.os.Build;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.xtdar.app.XtdConst;
 import com.xtdar.app.common.FileUtils;
+import com.xtdar.app.common.NToast;
 import com.xtdar.app.common.PhotoUtils;
 import com.xtdar.app.loader.GlideImageLoader;
 import com.xtdar.app.server.HttpException;
+import com.xtdar.app.server.async.OnDataListener;
 import com.xtdar.app.server.broadcast.BroadcastManager;
+import com.xtdar.app.server.response.CommonResponse;
 import com.xtdar.app.server.response.UserInfoResponse;
 import com.xtdar.app.view.activity.MeActivity;
 import com.xtdar.app.view.widget.BottomMenuDialog;
@@ -26,13 +32,15 @@ import com.xtdar.app.view.widget.SelectableRoundedImageView;
 import com.xtdar.app.widget.DialogWithYesOrNoUtils;
 
 import java.io.File;
+import java.util.Random;
 
 
 /**
  * Created by hmxbanz on 2017/4/5.
  */
-public class MePresenter extends BasePresenter {
-    private static final int GETINFO = 1;
+public class MePresenter extends BasePresenter implements OnDataListener{
+    private static final int UPLOADAVATOR = 1;
+    private static final int GETINFO = 2;
     public static final String UPDATENICKNAME = "updateNickName";
     MeActivity mActivity;
     private TextView nickName;
@@ -42,6 +50,7 @@ public class MePresenter extends BasePresenter {
     private PhotoUtils photoUtils;
     private Uri selectUri;
     public static final int REQUEST_CODE_ASK_PERMISSIONS = 101;
+    private File selectedFile;
 
     public MePresenter(Context context) {
         super(context);
@@ -72,18 +81,47 @@ public class MePresenter extends BasePresenter {
 
     @Override
     public Object doInBackground(int requestCode, String parameter) throws HttpException {
-        return mUserAction.getInfo();
+        switch (requestCode) {
+            case UPLOADAVATOR:
+                return mUserAction.uploadAvatar(selectedFile);
+            case GETINFO:
+                return mUserAction.getInfo();
+        }
+        return null;
     }
 
     @Override
     public void onSuccess(int requestCode, Object result) {
         LoadDialog.dismiss(context);
-        UserInfoResponse userInfoResponse = (UserInfoResponse) result;
-        if (userInfoResponse.getCode() == XtdConst.SUCCESS) {
-            UserInfoResponse.ResultEntity entity = userInfoResponse.getData();
-            glideImageLoader.displayImage(context, XtdConst.SERVERURI + entity.getImg_path(), this.avator);
-            this.nickName.setText(entity.getNick_name());
+        switch (requestCode) {
+            case UPLOADAVATOR:
+                if(result != null){
+                    CommonResponse commonResponse= (CommonResponse) result;
+                    if (commonResponse.getCode() == XtdConst.SUCCESS) {
+                        atm.request(GETINFO,this);
+                    }
+                    NToast.showToast(context,commonResponse.getMsg(), Toast.LENGTH_LONG);
+                }
+                break;
+            case GETINFO:
+                UserInfoResponse userInfoResponse = (UserInfoResponse) result;
+                if (userInfoResponse.getCode() == XtdConst.SUCCESS) {
+                    UserInfoResponse.ResultEntity entity = userInfoResponse.getData();
+                    //glideImageLoader.displayImage(context, XtdConst.IMGURI+entity.getImg_path(), this.avator);
+//                    Random random = new Random();
+//                    int max=20;
+//                    int min=10;
+//                    int s = random.nextInt(max)%(max-min+1) + min;
+                    Glide.with(context).load(XtdConst.IMGURI+entity.getImg_path()).skipMemoryCache(true).diskCacheStrategy( DiskCacheStrategy.NONE ).into(this.avator);
+
+                    this.nickName.setText(entity.getNick_name());
+                }
+                NToast.shortToast(context, userInfoResponse.getMsg());
+                break;
+
+
         }
+
     }
 
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -99,14 +137,21 @@ public class MePresenter extends BasePresenter {
     private void setPortraitChangeListener() {
         photoUtils = new PhotoUtils(new PhotoUtils.OnPhotoResultListener() {
             @Override
-            public void onPhotoResult(Uri uri) {
+            public void onPhotoResult(Uri uri,File file) {
                 if (uri != null && !TextUtils.isEmpty(uri.getPath())) {
                     selectUri = uri;
-                    String path= FileUtils.getFilePathFromContentUri(uri,mActivity.getContentResolver());
-                    File f = new File(path);
-                    
+                    selectedFile = file;
+                    //String path= FileUtils.getFilePathFromContentUri(uri,mActivity.getContentResolver());
+                    //File f = new File(path);
+
+                    //待3秒上传，确保刚才裁剪的照片保存完毕
+                    try {
+                        Thread.sleep(3000);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
                     LoadDialog.show(context);
-                    //request(GET_QI_NIU_TOKEN);
+                    atm.request(UPLOADAVATOR,MePresenter.this);
                 }
             }
 
@@ -155,13 +200,13 @@ public class MePresenter extends BasePresenter {
 
             if (checkPermission != PackageManager.PERMISSION_GRANTED
                     ||
-                    checkReadPermission != PackageManager.PERMISSION_GRANTED) {
+                    checkReadPermission != PackageManager.PERMISSION_GRANTED ) {
                 if (mActivity.shouldShowRequestPermissionRationale(Manifest.permission.CAMERA)
                         ||
                         mActivity.shouldShowRequestPermissionRationale(Manifest.permission.READ_EXTERNAL_STORAGE)) {
-                    mActivity.requestPermissions(new String[]{Manifest.permission.CAMERA, Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE}, REQUEST_CODE_ASK_PERMISSIONS);
+                    mActivity.requestPermissions(new String[] {Manifest.permission.CAMERA, Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE}, REQUEST_CODE_ASK_PERMISSIONS);
                 } else {
-                    DialogWithYesOrNoUtils.getInstance().showDialog(context, "您需要打开相机权限", "授权", new DialogWithYesOrNoUtils.DialogCallBack() {
+                    DialogWithYesOrNoUtils.getInstance().showDialog(context, "您需要打开相机权限", "授权",new DialogWithYesOrNoUtils.DialogCallBack() {
                         @Override
                         public void executeEvent() {
                             mActivity.requestPermissions(new String[]{Manifest.permission.CAMERA, Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE}, REQUEST_CODE_ASK_PERMISSIONS);
@@ -176,11 +221,19 @@ public class MePresenter extends BasePresenter {
 
                 }
                 return;
-            } else {
+            }
+            else {
                 dialog.show();
             }
-        } else {
+        }
+        else
+        {
             dialog.show();
         }
+    }
+
+
+    public void onRequestPermissionsResult() {
+        dialog.show();
     }
 }

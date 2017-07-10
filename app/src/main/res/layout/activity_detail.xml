@@ -44,7 +44,7 @@
                     android:layout_height="50dp">
 
                     <TextView
-                        android:id="@+id/title"
+                        android:id="@+id/txt_title"
                         android:layout_marginLeft="10dp"
                         android:text="标题"
                         android:layout_width="0dp"

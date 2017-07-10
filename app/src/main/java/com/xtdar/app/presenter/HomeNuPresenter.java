@@ -95,8 +95,8 @@ public class HomeNuPresenter extends BasePresenter implements OnDataListener,Cla
                 if (response.getCode() == XtdConst.SUCCESS) {
                     final List<ClassListResponse.DataBean> datas = response.getData();
                     lastItem=((ClassListResponse.DataBean) datas.get(datas.size()-1)).getItem_id();
-                    dataAdapter = new ClassListNuAdapter(context);
-                    dataAdapter.setListItems(datas);
+                    dataAdapter = new ClassListNuAdapter(context,datas);
+                    dataAdapter.setOnItemClickListener(this);
                     this.videoList.setAdapter(dataAdapter);
                     dataAdapter.notifyDataSetChanged();
 

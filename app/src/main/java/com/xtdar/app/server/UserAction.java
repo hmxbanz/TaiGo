@@ -13,6 +13,7 @@ import com.xtdar.app.server.request.UpdateRequest;
 import com.xtdar.app.server.response.AdResponse;
 import com.xtdar.app.server.response.CaptchaResponse;
 import com.xtdar.app.server.response.ClassListResponse;
+import com.xtdar.app.server.response.CommentResponse;
 import com.xtdar.app.server.response.CommonResponse;
 import com.xtdar.app.server.response.DetailResponse;
 import com.xtdar.app.server.response.GameListResponse;
@@ -21,6 +22,7 @@ import com.xtdar.app.server.response.LoginResponse;
 import com.xtdar.app.server.response.MyDevicesResponse;
 import com.xtdar.app.server.response.RecommendResponse;
 import com.xtdar.app.server.response.RelateRecommendResponse;
+import com.xtdar.app.server.response.ShowDetailResponse;
 import com.xtdar.app.server.response.ShowResponse;
 import com.xtdar.app.server.response.SongDetailResponse;
 import com.xtdar.app.server.response.TagResponse;
@@ -429,6 +431,33 @@ public CommonResponse register(String cellPhone, String password, String captcha
         }
         return detailResponse;
     }
+//秀场项详情
+    public ShowDetailResponse getShowDetail(String itemId) throws HttpException{
+        String uri = getURL("kp_dyz/cli-comm-showdetail.php");
+        Response response=null;
+        try {
+            response=OkHttpUtils
+                    .get()
+                    .addParams("show_id",itemId)
+                    .url(uri)
+                    .build()
+                    .execute();
+            result =response.body().string();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        ShowDetailResponse showDetailResponse = null;
+        if (!TextUtils.isEmpty(result)) {
+
+            try {
+                showDetailResponse = JsonMananger.jsonToBean(result, ShowDetailResponse.class);
+            } catch (JSONException e) {
+                NLog.d(TAG, "ShowDetailResponse occurs JSONException e=" + e.toString());
+                return null;
+            }
+        }
+        return showDetailResponse;
+    }
 //收藏
         public CommonResponse addFavor(String itemId) throws HttpException{
             String uri = getURL("kp_dyz/cli-api-setcollect.php");
@@ -457,6 +486,37 @@ public CommonResponse register(String cellPhone, String password, String captcha
                 }
             }
             return commonResponse;
+    }
+//评论
+    public CommonResponse addComment(String itemId,String comment_tag,String comment) throws HttpException{
+        String uri = getURL("kp_dyz/cli-api-postcomment.php");
+        Response response=null;
+        try {
+            response=OkHttpUtils
+                    .get()
+                    .addParams(XtdConst.ITEMID,itemId)
+                    .addParams("comment_tag",comment_tag)
+                    .addParams("comment",comment)
+                    .addParams(XtdConst.ACCESS_TOKEN,token)
+                    .url(uri)
+                    .build()
+                    .execute();
+            result =response.body().string();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        CommonResponse commonResponse = null;
+        if (!TextUtils.isEmpty(result)) {
+            NLog.e("getDetail", result);
+
+            try {
+                commonResponse = JsonMananger.jsonToBean(result, CommonResponse.class);
+            } catch (JSONException e) {
+                NLog.d(TAG, "DetailResponse occurs JSONException e=" + e.toString());
+                return null;
+            }
+        }
+        return commonResponse;
     }
 
     public RelateRecommendResponse getRelateRecommend(String classId) throws HttpException{
@@ -725,4 +785,72 @@ public CommonResponse register(String cellPhone, String password, String captcha
         return gameListResponse;
     }
 
+    public CommentResponse getComment(String itemId, String last_item_id, String item_count) throws HttpException {
+        String uri = getURL("kp_dyz/cli-comm-commentlist.php");
+        Response response=null;
+        try {
+            response=OkHttpUtils
+                    .get()
+                    .addParams("comment_tag","t_show")
+                    .addParams("item_id",itemId)
+                    .addParams("last_com_id",last_item_id)
+                    .addParams("list_count",item_count)
+                    .url(uri)
+                    .build()
+                    .execute();
+            result =response.body().string();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        CommentResponse  gameListResponse= null;
+        if (!TextUtils.isEmpty(result)) {
+            NLog.e("接收的", result);
+
+            try {
+                gameListResponse = JsonMananger.jsonToBean(result, CommentResponse.class);
+            } catch (JSONException e) {
+                NLog.d(TAG, "ClassListResponse occurs JSONException e=" + e.toString());
+                return null;
+            }
+        }
+        return gameListResponse;
+
+    }
+
+    //上传头像
+    public CommonResponse uploadAvatar(File imgFile) throws HttpException {
+        String uri = getURL("kp_dyz/cli-api-setimg.php");
+//        final MediaType MEDIA_TYPE_PNG = MediaType.parse("image/png");
+//
+//        RequestBody requestBody = new MultipartBody.Builder()
+//                .setType(MultipartBody.FORM)
+//                .addFormDataPart("content", "Square Logo")
+//                .addFormDataPart("image", "logo-square.png",RequestBody.create(MEDIA_TYPE_PNG, new File("website/static/logo-square.png")))
+//                .build();
+        Response response=null;
+        try {
+            response=OkHttpUtils
+                    .post()
+                    .addParams(XtdConst.ACCESS_TOKEN,token)
+                    .addFile("file", "imgFile.jpg",imgFile)
+                    .url(uri)
+                    .build()
+                    .execute();
+            result =response.body().string();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        CommonResponse commonResponse = null;
+        if (!TextUtils.isEmpty(result)) {
+            NLog.e(TAG, "接收的："+ result);
+
+            try {
+                commonResponse = JsonMananger.jsonToBean(result, CommonResponse.class);
+            } catch (JSONException e) {
+                NLog.d(TAG, "uploadAvatar occurs JSONException e=" + e.toString());
+                return null;
+            }
+        }
+        return commonResponse;
+    }
 }

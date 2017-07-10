@@ -7,13 +7,13 @@
     android:orientation="vertical"
     android:layout_marginTop="10dp">
 
-  <TextView
-      android:id="@+id/title"
-      android:text="默认标题"
-      android:textSize="16dp"
-      android:padding="5dp"
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content" />
+  <!--<TextView-->
+      <!--android:id="@+id/title"-->
+      <!--android:text="默认标题"-->
+      <!--android:textSize="16dp"-->
+      <!--android:padding="5dp"-->
+      <!--android:layout_width="match_parent"-->
+      <!--android:layout_height="wrap_content" />-->
   <com.shuyu.gsyvideoplayer.video.StandardGSYVideoPlayer
       android:id="@+id/video_item_player"
       android:layout_width="match_parent"
