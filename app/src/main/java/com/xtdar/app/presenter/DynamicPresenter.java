@@ -1,6 +1,7 @@
 package com.xtdar.app.presenter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -12,11 +13,19 @@ import android.widget.LinearLayout;
 import com.luck.picture.lib.model.FunctionConfig;
 import com.luck.picture.lib.model.LocalMediaLoader;
 import com.luck.picture.lib.model.PictureConfig;
+import com.xtdar.app.XtdConst;
 import com.xtdar.app.common.CommonTools;
+import com.xtdar.app.common.NToast;
+import com.xtdar.app.listener.AlertDialogCallback;
+import com.xtdar.app.server.HttpException;
+import com.xtdar.app.server.response.CommonResponse;
 import com.xtdar.app.view.activity.DynamicActivity;
+import com.xtdar.app.view.widget.LoadDialog;
+import com.xtdar.app.widget.DialogWithYesOrNoUtils;
 import com.xtdar.app.widget.FullyGridLayoutManager;
 import com.yalantis.ucrop.entity.LocalMedia;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -27,18 +36,18 @@ import com.xtdar.app.adapter.GridImageAdapter;
  * Created by hmxbanz on 2017/4/5.
  */
 
-public class DynamicPresenter {
-    private Context mContext;
+public class DynamicPresenter extends BasePresenter {
+    private static final int ADDDYNAMIC = 1;
     private DynamicActivity mActivity;
     private RecyclerView recyclerView;
     private GridImageAdapter adapter;
 //选择图片配置
     private int selectMode = FunctionConfig.MODE_MULTIPLE;
-    private int maxSelectNum = 3;// 图片最大可选数量
+    private int maxSelectNum = 1;// 图片最大可选数量
     private EditText et_w, et_h, et_compress_width, et_compress_height;
     private LinearLayout ll_luban_wh;
     private boolean isShow = true;
-    private int selectType = LocalMediaLoader.TYPE_IMAGE;
+    private int selectType = LocalMediaLoader.TYPE_VIDEO;
     private int copyMode = FunctionConfig.COPY_MODEL_DEFAULT;//CROP_MODEL_DEFAULT
     private boolean enablePreview = true;
     private boolean isPreviewVideo = true;
@@ -54,22 +63,25 @@ public class DynamicPresenter {
     private int compressFlag = 1;// 1 系统自带压缩 2 luban压缩
     private List<LocalMedia> selectMedia = new ArrayList<>();
 
+    private File selectedFile;
+    private String content;
+
     public DynamicPresenter(Context context){
-        this.mContext=context;
+        super(context);
         this.mActivity= (DynamicActivity) context;
     }
     public void init(){
         recyclerView = (RecyclerView) mActivity.findViewById(R.id.recycler);
-        FullyGridLayoutManager manager = new FullyGridLayoutManager(mContext, 4, GridLayoutManager.VERTICAL, false);
+        FullyGridLayoutManager manager = new FullyGridLayoutManager(context, 4, GridLayoutManager.VERTICAL, false);
         recyclerView.setLayoutManager(manager);
 
-        adapter = new GridImageAdapter(mContext, onAddPicClickListener);
-        adapter.setSelectMax(3);
+        adapter = new GridImageAdapter(context, onAddPicClickListener);
+        adapter.setSelectMax(1);
         adapter.setOnItemClickListener(new GridImageAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(int position, View v) {
                 // 这里可预览图片
-                PictureConfig.getPictureConfig().externalPicturePreview(mContext, position, selectMedia);
+                PictureConfig.getPictureConfig().externalPicturePreview(context, position, selectMedia);
             }
         });
         recyclerView.setAdapter(adapter);
@@ -138,7 +150,7 @@ public class DynamicPresenter {
                     config.setEnableCrop(enableCrop);
                     config.setPreviewVideo(isPreviewVideo);
                     config.setRecordVideoDefinition(FunctionConfig.HIGH);// 视频清晰度
-                    config.setRecordVideoSecond(60);// 视频秒数
+                    config.setRecordVideoSecond(10);// 视频秒数
                     config.setCropW(cropW);
                     config.setCropH(cropH);
                     config.setCheckNumMode(isCheckNumMode);
@@ -150,14 +162,14 @@ public class DynamicPresenter {
                     config.setCompressH(compressH);
 
                     if (theme) {
-                        config.setThemeStyle(ContextCompat.getColor(mContext, R.color.blue));
+                        config.setThemeStyle(ContextCompat.getColor(context, R.color.blue));
                         // 可以自定义底部 预览 完成 文字的颜色和背景色
                         if (!isCheckNumMode) {
                             // QQ 风格模式下 这里自己搭配颜色，使用蓝色可能会不好看
-                            config.setPreviewColor(ContextCompat.getColor(mContext, R.color.white));
-                            config.setCompleteColor(ContextCompat.getColor(mContext, R.color.white));
-                            config.setPreviewBottomBgColor(ContextCompat.getColor(mContext, R.color.blue));
-                            config.setBottomBgColor(ContextCompat.getColor(mContext, R.color.blue));
+                            config.setPreviewColor(ContextCompat.getColor(context, R.color.white));
+                            config.setCompleteColor(ContextCompat.getColor(context, R.color.white));
+                            config.setPreviewBottomBgColor(ContextCompat.getColor(context, R.color.blue));
+                            config.setBottomBgColor(ContextCompat.getColor(context, R.color.blue));
                         }
                     }
                     if (selectImageType) {
@@ -166,7 +178,7 @@ public class DynamicPresenter {
 
                     // 先初始化参数配置，在启动相册
                     PictureConfig.init(config);
-                    PictureConfig.getPictureConfig().openPhoto(mContext, resultCallback);
+                    PictureConfig.getPictureConfig().openPhoto(context, resultCallback);
 
                     // 只拍照
                     //PictureConfig.getPictureConfig().startOpenCamera(context, resultCallback);
@@ -180,8 +192,6 @@ public class DynamicPresenter {
         }
     };
 
-
-
     /**
      * 图片回调方法
      */
@@ -189,6 +199,7 @@ public class DynamicPresenter {
         @Override
         public void onSelectSuccess(List<LocalMedia> resultList) {
             selectMedia = resultList;
+            selectedFile=new File(resultList.get(0).getPath());
             Log.i("callBack_result", selectMedia.size() + "");
             if (selectMedia != null) {
                 adapter.setList(selectMedia);
@@ -196,5 +207,41 @@ public class DynamicPresenter {
             }
         }
     };
+
+    public void addDynamic(EditText mContent) {
+        content=mContent.getText().toString().trim();
+
+        if("".equals(content)) {
+            NToast.shortToast(context, "请填写内容");return;
+        }
+        else if (selectedFile==null) {
+            NToast.shortToast(context, "请选择视频");return;
+        }
+
+        LoadDialog.show(context);
+        atm.request(ADDDYNAMIC,this);
+    }
+
+    @Override
+    public Object doInBackground(int requestCode, String parameter) throws HttpException {
+        switch (requestCode) {
+            case ADDDYNAMIC:
+                return mUserAction.addDynamic(content, selectedFile);
+        }
+        return null;
+    }
+
+
+    @Override
+    public void onSuccess(int requestCode, Object result) {
+        LoadDialog.dismiss(context);
+        CommonResponse commonResponse = (CommonResponse) result;
+
+        if(commonResponse.getCode() == XtdConst.SUCCESS){
+            DialogWithYesOrNoUtils.getInstance().showDialog(context, "发布成功", null,new AlertDialogCallback());
+        }
+
+        NToast.shortToast(context, commonResponse.getMsg());
+    }
 
 }

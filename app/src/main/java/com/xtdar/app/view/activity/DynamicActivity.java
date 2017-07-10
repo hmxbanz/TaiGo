@@ -40,6 +40,9 @@ public class DynamicActivity extends BaseActivity implements View.OnClickListene
             case R.id.layout_back:
                 finish();
                 break;
+            case R.id.btn_submit:
+                mDynamicPresenter.addDynamic(mContent);
+                break;
         }
 
     }

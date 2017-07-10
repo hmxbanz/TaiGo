@@ -853,4 +853,44 @@ public CommonResponse register(String cellPhone, String password, String captcha
         }
         return commonResponse;
     }
+
+    //发新动态
+    public CommonResponse addDynamic(String content, File mp4File)throws HttpException{
+        String uri = getURL("kp_dyz/cli-api-upshow.php");
+//        final MediaType MEDIA_TYPE_PNG = MediaType.parse("image/png");
+//
+//        RequestBody requestBody = new MultipartBody.Builder()
+//                .setType(MultipartBody.FORM)
+//                .addFormDataPart("content", "Square Logo")
+//                .addFormDataPart("image", "logo-square.png",RequestBody.create(MEDIA_TYPE_PNG, new File("website/static/logo-square.png")))
+//                .build();
+
+        Response response=null;
+        try {
+            response=OkHttpUtils
+                    .post()
+                    .addParams("access_key",token)
+                    .addParams("title", content)
+                    .addFile("file", "file.mp4",mp4File)
+                    .url(uri)
+                    .build()
+                    .execute();
+            result =response.body().string();
+            Log.w(TAG, "接收的："+ result);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        CommonResponse commonResponse = null;
+        if (!TextUtils.isEmpty(result)) {
+            NLog.e("CommonResponse", result);
+
+            try {
+                commonResponse = JsonMananger.jsonToBean(result, CommonResponse.class);
+            } catch (JSONException e) {
+                NLog.d(TAG, "addDynamic occurs JSONException e=" + e.toString());
+                return null;
+            }
+        }
+        return commonResponse;
+    }
 }
