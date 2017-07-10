@@ -234,7 +234,12 @@ public class ShowDetailPresenter extends BasePresenter{
     }
 
     public void addComment(EditText comment) {
-        this.comment=comment;
+        this.comment = comment;
+        if ("".equals(this.comment.getText().toString().trim()))
+        {
+            NToast.shortToast(context,"请输入评论内容");
+            return;
+        }
         LoadDialog.show(context);
         atm.request(ADDCOMMENT,this);
     }

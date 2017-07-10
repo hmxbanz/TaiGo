@@ -47,9 +47,6 @@ public class ShowFragment extends Fragment  {
         view = inflater.inflate(R.layout.fragment_show, null);
         videoList= (RecyclerView) view.findViewById(R.id.list_item_recycler);
 
-
-        resolveData();
-
         presenter = new HomeShowPresenter(getContext());
         presenter.init(videoList);
         return view;

@@ -20,6 +20,7 @@ import com.xtdar.app.view.activity.DownloadActivity;
 import com.xtdar.app.view.activity.DynamicActivity;
 import com.xtdar.app.view.activity.MeActivity;
 import com.xtdar.app.view.activity.FavorActivity;
+import com.xtdar.app.view.activity.MyVideoActivity;
 import com.xtdar.app.view.activity.SettingActivity;
 import com.xtdar.app.view.activity.UnityPlayerActivity;
 import com.xtdar.app.view.widget.BottomMenuDialog;
@@ -135,7 +136,7 @@ public class MineFragment extends Fragment implements View.OnClickListener {
                 //startActivity(new Intent(getActivity(), HistoryActivity.class));
                 break;
             case R.id.layout_my_video:
-                startActivity(new Intent(getActivity(), DynamicActivity.class));
+                startActivity(new Intent(getActivity(), MyVideoActivity.class));
                 break;
             case R.id.layout_album:
                 startActivity(new Intent(getActivity(), AlbumActivity.class));

@@ -634,6 +634,34 @@ public CommonResponse register(String cellPhone, String password, String captcha
         }
         return showResponse;
     }
+//我的视频
+    public ShowResponse getMyVideo() throws HttpException {
+        String uri = getURL("kp_dyz/cli-api-myshowlist.php");
+        Response response=null;
+        try {
+            response=OkHttpUtils
+                    .get()
+                    .addParams("access_key",token)
+                    .url(uri)
+                    .build()
+                    .execute();
+            result =response.body().string();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        ShowResponse showResponse = null;
+        if (!TextUtils.isEmpty(result)) {
+            NLog.e("getShowList", result);
+
+            try {
+                showResponse = JsonMananger.jsonToBean(result, ShowResponse.class);
+            } catch (JSONException e) {
+                NLog.d(TAG, "ShowResponse occurs JSONException e=" + e.toString());
+                return null;
+            }
+        }
+        return showResponse;
+    }
 
     public String getProtocol() {
         String uri = "http://120.24.231.219/kp_dyz/app_source/dl/protocol.html";
