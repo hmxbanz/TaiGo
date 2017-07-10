@@ -21,11 +21,13 @@ import java.io.File;
 public class SettingPresenter extends BasePresenter {
     Context mContext;
     SettingActivity mActivity;
+    BasePresenter basePresenter;
 
     public SettingPresenter(Context context) {
         //this.mActivity =(SettingActivity)context;
         super(context);
         this.mContext=context;
+        basePresenter = BasePresenter.getInstance(context);
     }
     public void init(){
     //mView.initData();
@@ -39,6 +41,7 @@ public void logOff()
             //deleteFile(file);
             editor.putBoolean(XtdConst.ISLOGIN, false);//退出改登录标记
             editor.commit();
+            basePresenter.initData();
             NToast.shortToast(context, "退出成功");
             context.startActivity(new Intent(context, LoginActivity.class));
         }

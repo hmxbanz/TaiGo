@@ -157,7 +157,7 @@
 
     </RelativeLayout>
     <RelativeLayout
-        android:id="@+id/tab_layout_me"
+        android:id="@+id/layout_more"
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_weight="3"
@@ -249,7 +249,9 @@
         android:background="@color/white"
         android:layout_marginTop="1dp"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"  >
+        android:layout_height="match_parent"
+        android:visibility="gone"
+        >
     </android.support.v7.widget.RecyclerView>
 
     <RelativeLayout

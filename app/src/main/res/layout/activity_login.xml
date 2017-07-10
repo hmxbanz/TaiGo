@@ -42,7 +42,7 @@
                 android:id="@+id/password"
                 android:padding="5dp"
                 android:hint="请输入密码"
-                android:inputType="number"
+                android:inputType="textPassword"
                 android:background="@drawable/transparent_drawable"
                 android:layout_width="match_parent"
                 android:layout_height="35dp" />

@@ -18,10 +18,12 @@ import com.xtdar.app.XtdConst;
 import com.xtdar.app.adapter.CommentAdapter;
 import com.xtdar.app.adapter.RelateRecommendItemAdapter;
 import com.xtdar.app.common.NToast;
+import com.xtdar.app.listener.AlertDialogCallback;
 import com.xtdar.app.loader.GlideImageLoader;
 import com.xtdar.app.model.UserList;
 import com.xtdar.app.server.HttpException;
 import com.xtdar.app.server.response.CommentResponse;
+import com.xtdar.app.server.response.CommonResponse;
 import com.xtdar.app.server.response.RelateRecommendResponse;
 import com.xtdar.app.server.response.ShowDetailResponse;
 import com.xtdar.app.video.SampleListener;
@@ -29,6 +31,7 @@ import com.xtdar.app.view.activity.DetailActivity;
 import com.xtdar.app.view.activity.ShowDetailActivity;
 import com.xtdar.app.view.widget.LoadDialog;
 import com.xtdar.app.view.widget.SelectableRoundedImageView;
+import com.xtdar.app.widget.DialogWithYesOrNoUtils;
 
 import java.util.List;
 
@@ -52,6 +55,7 @@ public class ShowDetailPresenter extends BasePresenter{
     private RecyclerView recycleView;
     private String classId;
     private GridLayoutManager gridLayoutManager;
+    private EditText comment;
 
     public ShowDetailPresenter(Context context){
         super(context);
@@ -146,7 +150,7 @@ public class ShowDetailPresenter extends BasePresenter{
             case ADDFAVOR:
                 return mUserAction.addFavor(itemId);
             case ADDCOMMENT:
-                return mUserAction.addComment(itemId,"","55555");
+                return mUserAction.addComment(itemId,"t_show",comment.getText().toString());
         }
         return null;
     }
@@ -214,10 +218,11 @@ public class ShowDetailPresenter extends BasePresenter{
                 NToast.shortToast(context,commentResponse.getMsg());
                 break;
             case ADDCOMMENT:
-                CommentResponse commentResponse2 = (CommentResponse) result;
-                if (commentResponse2.getCode() == XtdConst.SUCCESS) {
+                CommonResponse CommonResponse = (CommonResponse) result;
+                if (CommonResponse.getCode() == XtdConst.SUCCESS) {
+                    DialogWithYesOrNoUtils.getInstance().showDialog(context,"评论成功",null,new AlertDialogCallback());
                 }
-                NToast.shortToast(context,commentResponse2.getMsg());
+                NToast.shortToast(context,CommonResponse.getMsg());
                 break;
 
         }
@@ -228,7 +233,8 @@ public class ShowDetailPresenter extends BasePresenter{
         atm.request(ADDFAVOR,this);
     }
 
-    public void addComment(EditText comment, TextView btnSend) {
+    public void addComment(EditText comment) {
+        this.comment=comment;
         LoadDialog.show(context);
         atm.request(ADDCOMMENT,this);
     }

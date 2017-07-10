@@ -29,6 +29,7 @@ import com.xtdar.app.presenter.HomeFragmentPresenter;
 import com.xtdar.app.view.activity.BleActivity;
 import com.xtdar.app.view.activity.DownloadActivity;
 import com.xtdar.app.view.activity.HistoryActivity;
+import com.xtdar.app.view.activity.Main2Activity;
 import com.xtdar.app.view.activity.QrCodeActivity;
 import com.xtdar.app.view.activity.SearchActivity;
 
@@ -69,6 +70,17 @@ private static final int Blue=0x001bb4fb;
         return view;
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        homeFragmentPresenter.loadData();
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+    }
+
     private void initViews() {
         layout_back=(RelativeLayout)view.findViewById(R.id.layout_back);
         layout_back.setVisibility(View.INVISIBLE);
@@ -79,6 +91,7 @@ private static final int Blue=0x001bb4fb;
         recycleView= (RecyclerView) view.findViewById(R.id.recyclerView);
         view.findViewById(R.id.layout_ble).setOnClickListener(this);
         view.findViewById(R.id.layout_ble_scan).setOnClickListener(this);
+        view.findViewById(R.id.layout_more).setOnClickListener(this);
 
     }
 
@@ -93,11 +106,12 @@ private static final int Blue=0x001bb4fb;
             case R.id.layout_ble:
             case R.id.txt_add_driver:
                 homeFragmentPresenter.onQrClick();
-
                 break;
             case R.id.layout_ble_scan:
                 homeFragmentPresenter.onScanClick();
                 break;
+            case R.id.layout_more:
+                ((Main2Activity)getActivity()).getViewPager().setCurrentItem(2, false);
 
         }
     }

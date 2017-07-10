@@ -11,6 +11,8 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.clj.fastble.data.ScanResult;
 import com.xtdar.app.XtdConst;
 import com.xtdar.app.adapter.MyDevicesAdapter;
@@ -74,7 +76,8 @@ public class MinePresenter extends BasePresenter implements OnDataListener {
                 UserInfoResponse userInfoResponse = (UserInfoResponse) result;
                 if (userInfoResponse.getCode() == XtdConst.SUCCESS) {
                     UserInfoResponse.ResultEntity entity = userInfoResponse.getData();
-                    glideImageLoader.displayImage(context, XtdConst.IMGURI+entity.getImg_path(), this.avator);
+                    //glideImageLoader.displayImage(context, XtdConst.IMGURI+entity.getImg_path(), this.avator);
+                    Glide.with(context).load(XtdConst.IMGURI+entity.getImg_path()).skipMemoryCache(true).diskCacheStrategy( DiskCacheStrategy.NONE ).into(this.avator);
                     this.nickName.setText(entity.getNick_name());
                 }
                 NToast.shortToast(context, userInfoResponse.getMsg());

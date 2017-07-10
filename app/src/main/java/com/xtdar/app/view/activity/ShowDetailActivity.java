@@ -96,6 +96,7 @@ public class ShowDetailActivity extends BaseActivity implements RecyclerViewAdap
         comment = (EditText) findViewById(R.id.comment);
         btnSend = (TextView) findViewById(R.id.btn_send);
         btnSend.setOnClickListener(this);
+        findViewById(R.id.layout_back).setOnClickListener(this);
 
     }
 
@@ -103,8 +104,11 @@ public class ShowDetailActivity extends BaseActivity implements RecyclerViewAdap
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.layout_favor:
-                presenter.addComment(comment,btnSend);
+            case R.id.layout_back:
+                finish();
+                break;
+            case R.id.btn_send:
+                presenter.addComment(comment);
                 break;
 
         }

@@ -62,10 +62,14 @@ public class HomeFragmentPresenter extends BasePresenter implements OnDataListen
         this.recyclerView=recyclerView;
         gridLayoutManager=new GridLayoutManager(context,1);
         recyclerView.setLayoutManager(gridLayoutManager);
+
+    }
+public void loadData(){
+    if(basePresenter.isLogin){
         LoadDialog.show(context);
         atm.request(GETDRIVERS,this);
     }
-
+}
     @Override
     public Object doInBackground(int requestCode, String parameter) throws HttpException {
         switch (requestCode) {
@@ -83,9 +87,10 @@ public class HomeFragmentPresenter extends BasePresenter implements OnDataListen
                 MyDevicesResponse response = (MyDevicesResponse) result;
                 if (response.getCode() == XtdConst.SUCCESS) {
                     if (response.getData().size() == 0) {
-                        this.recyclerView.setVisibility(View.GONE);
+
                     }
                     else {
+                        list.clear();
                         list.addAll(response.getData());
                         //设置列表
                         //dataAdapter.setHeaderView(LayoutInflater.from(context).inflate(R.layout.recyclerview_header,null));
@@ -97,6 +102,7 @@ public class HomeFragmentPresenter extends BasePresenter implements OnDataListen
                             recyclerView.setAdapter(dataAdapter);
                         isAdapterSetted=true;
                         dataAdapter.notifyDataSetChanged();
+                        this.recyclerView.setVisibility(View.VISIBLE);
                     }
                 }
                 NToast.longToast(context,response.getMsg());
@@ -109,20 +115,8 @@ public class HomeFragmentPresenter extends BasePresenter implements OnDataListen
     }
 
     public void onQrClick() {
-        if(basePresenter.isLogin) {
             Intent intent = new Intent(context, QrCodeActivity.class);
             ((Activity)context).startActivityForResult(intent, REQUEST_CODE);
-        }
-        else
-        {
-            DialogWithYesOrNoUtils.getInstance().showDialog(context, "请先登录", "前住登录", new AlertDialogCallback() {
-                @Override
-                public void executeEvent() {
-                    context.startActivity(new Intent(context, LoginActivity.class));
-                }
-
-            });
-        }
     }
 
     @Override

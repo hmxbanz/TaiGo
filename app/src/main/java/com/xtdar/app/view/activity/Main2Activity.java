@@ -31,6 +31,11 @@ import java.util.List;
 public class Main2Activity extends BaseActivity implements View.OnClickListener{
     private final int CURRENTVIEWPAGEINDEX =0;
     private final int MAXCACHEVIEWPAGES =3;
+
+    public ViewPager getViewPager() {
+        return viewPager;
+    }
+
     private ViewPager viewPager;
     private List<Fragment> mFragments;
     private ImageView mImageHome,mImageShop, mImageAr,mImageDiscovery, mImageMe, mMineRed;
