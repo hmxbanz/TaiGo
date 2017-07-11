@@ -56,7 +56,7 @@ public class FavorPresenter extends BasePresenter implements OnDataListener {
 
         mFragments = new ArrayList<>();
         mFragments.add(FavorVideoFragment.getInstance());
-        mFragments.add(FavorMusicFragment.getInstance());
+        //mFragments.add(FavorMusicFragment.getInstance());
 
         mFragmentPagerAdapter = new FragmentPagerAdapter(mActivity.getSupportFragmentManager()) {
             @Override
@@ -69,11 +69,10 @@ public class FavorPresenter extends BasePresenter implements OnDataListener {
             }
         };
         viewpager.setAdapter(mFragmentPagerAdapter);
-        viewpager.setCurrentItem(0);
-        viewpager.setOffscreenPageLimit(2);
+        viewpager.setOffscreenPageLimit(1);
         tabLayout.setupWithViewPager(viewpager);
         tabLayout.getTabAt(0).setText("视频");
-        tabLayout.getTabAt(1).setText("音频");
+        //tabLayout.getTabAt(1).setText("音频");
     };
 
 }

@@ -34,7 +34,7 @@ public class DownloadVideoFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        view = inflater.inflate(R.layout.fragment_history_video, null);
+        view = inflater.inflate(R.layout.fragment_favor_video, null);
         initViews();
 
         return view;
@@ -50,7 +50,7 @@ public class DownloadVideoFragment extends Fragment {
                 return false;
             }
         });
-        mListView= (ListView) view.findViewById(R.id.listview_history_video);
+        mListView= (ListView) view.findViewById(R.id.listview_favor_video);
        mListView.setAdapter(mHistoryAdapter);
     }
 

@@ -9,6 +9,7 @@
     tools:context=".view.activity.FavorActivity">
     <include layout="@layout/layout_title_top" />
     <android.support.design.widget.TabLayout
+        android:visibility="gone"
         android:background="@color/white"
         android:id="@+id/tabLayout"
         android:layout_width="match_parent"

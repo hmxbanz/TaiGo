@@ -15,14 +15,18 @@ import com.shuyu.gsyvideoplayer.video.StandardGSYVideoPlayer;
 import com.xtdar.app.XtdConst;
 import com.xtdar.app.adapter.RelateRecommendItemAdapter;
 import com.xtdar.app.common.NToast;
+import com.xtdar.app.listener.AlertDialogCallback;
 import com.xtdar.app.loader.GlideImageLoader;
 import com.xtdar.app.model.UserList;
 import com.xtdar.app.server.HttpException;
+import com.xtdar.app.server.response.CommentResponse;
+import com.xtdar.app.server.response.CommonResponse;
 import com.xtdar.app.server.response.DetailResponse;
 import com.xtdar.app.server.response.RelateRecommendResponse;
 import com.xtdar.app.video.SampleListener;
 import com.xtdar.app.view.activity.DetailActivity;
 import com.xtdar.app.view.widget.LoadDialog;
+import com.xtdar.app.widget.DialogWithYesOrNoUtils;
 
 import java.util.List;
 
@@ -197,6 +201,13 @@ public class DetailPresenter extends BasePresenter{
 
                 }
                 NToast.shortToast(context,relateRecommendResponse.getMsg());
+                break;
+            case ADDFAVOR:
+                CommonResponse commonResponse=(CommonResponse) result;
+                if (commonResponse.getCode() == XtdConst.SUCCESS) {
+                    DialogWithYesOrNoUtils.getInstance().showDialog(context,"收藏成功",null ,new AlertDialogCallback());
+                }
+                NToast.shortToast(context,commonResponse.getMsg());
                 break;
 
         }

@@ -16,13 +16,11 @@ import android.widget.TextView;
 import com.xtdar.app.common.PhotoUtils;
 import com.xtdar.app.presenter.MinePresenter;
 import com.xtdar.app.view.activity.AlbumActivity;
-import com.xtdar.app.view.activity.DownloadActivity;
 import com.xtdar.app.view.activity.DynamicActivity;
 import com.xtdar.app.view.activity.MeActivity;
 import com.xtdar.app.view.activity.FavorActivity;
 import com.xtdar.app.view.activity.MyVideoActivity;
 import com.xtdar.app.view.activity.SettingActivity;
-import com.xtdar.app.view.activity.UnityPlayerActivity;
 import com.xtdar.app.view.widget.BottomMenuDialog;
 import com.xtdar.app.view.widget.SelectableRoundedImageView;
 import com.xtdar.app.widget.progressBar.MaterialProgressBar;
@@ -39,7 +37,7 @@ public class MineFragment extends Fragment implements View.OnClickListener {
     public static final String SHOWRED = "SHOWRED";
     public static MineFragment mFragment = null;
     private RelativeLayout mLayoutAr, mLayoutMyVideo, mLayoutMsg;
-    private LinearLayout mLayoutFriendCondition,mLayoutVisitRecord, mLayoutSetting,mLayoutAblum;
+    private LinearLayout mLayoutFriendCondition, mLayoutFavor, mLayoutSetting,mLayoutAblum;
     private View mView;
 
     private SelectableRoundedImageView mImageView;
@@ -101,8 +99,8 @@ public class MineFragment extends Fragment implements View.OnClickListener {
         mLayoutMsg.setOnClickListener(this);
         mLayoutMyVideo = (RelativeLayout) mView.findViewById(R.id.layout_my_video);
         mLayoutMyVideo.setOnClickListener(this);
-        mLayoutVisitRecord= (LinearLayout) mView.findViewById(R.id.layout_download);
-        mLayoutVisitRecord.setOnClickListener(this);
+        mLayoutFavor = (LinearLayout) mView.findViewById(R.id.layout_favor);
+        mLayoutFavor.setOnClickListener(this);
 
         mLayoutAblum= (LinearLayout) mView.findViewById(R.id.layout_album);
         mLayoutAblum.setOnClickListener(this);
@@ -129,9 +127,6 @@ public class MineFragment extends Fragment implements View.OnClickListener {
             case R.id.layout_update:
                 startActivity(new Intent(getActivity(), MeActivity.class));
                 break;
-            case R.id.layout_favor:
-                startActivity(new Intent(getActivity(), FavorActivity.class));
-                break;
             case R.id.layout_message:
                 //startActivity(new Intent(getActivity(), HistoryActivity.class));
                 break;
@@ -144,8 +139,8 @@ public class MineFragment extends Fragment implements View.OnClickListener {
             case R.id.layout_setting:
                 startActivity(new Intent(getActivity(), SettingActivity.class));
                 break;
-            case R.id.layout_download:
-            startActivity(new Intent(getActivity(), DownloadActivity.class));
+            case R.id.layout_favor:
+            startActivity(new Intent(getActivity(), FavorActivity.class));
             break;
         }
     }

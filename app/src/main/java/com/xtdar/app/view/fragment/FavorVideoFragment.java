@@ -7,21 +7,19 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import com.xtdar.app.R;
-import com.xtdar.app.adapter.HistoryAdapter;
-import com.xtdar.app.model.UserList;
+import com.xtdar.app.presenter.FavorVideoPresenter;
 
 /**
  * Created by AMing on 16/6/21.
  * Company RongCloud
  */
-public class FavorVideoFragment extends Fragment {
+public class FavorVideoFragment extends Fragment{
     public static FavorVideoFragment instance = null;
     private View view;
-    private HistoryAdapter mHistoryAdapter;
     private ListView mListView;
+    private FavorVideoPresenter favorVideoPresenter;
 
 
     public static FavorVideoFragment getInstance() {
@@ -34,24 +32,15 @@ public class FavorVideoFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        view = inflater.inflate(R.layout.fragment_history_video, null);
+        view = inflater.inflate(R.layout.fragment_favor_video, null);
         initViews();
-
+        favorVideoPresenter = new FavorVideoPresenter(getContext());
+        favorVideoPresenter.init(mListView);
         return view;
     }
 
     private void initViews() {
-        mHistoryAdapter = new HistoryAdapter(getActivity());
-        mHistoryAdapter.setmList(UserList.getData());
-        mHistoryAdapter.setOnItemButtonClick(new HistoryAdapter.OnItemButtonClick() {
-            @Override
-            public boolean onButtonClick(int position, View view, int status) {
-                Toast.makeText(getActivity(),"删除视频"+String.valueOf(position),Toast.LENGTH_LONG).show();
-                return false;
-            }
-        });
-        mListView= (ListView) view.findViewById(R.id.listview_history_video);
-       mListView.setAdapter(mHistoryAdapter);
+        mListView= (ListView) view.findViewById(R.id.listview_favor_video);
     }
 
     @Override
@@ -59,5 +48,6 @@ public class FavorVideoFragment extends Fragment {
         super.onDestroy();
         //BroadcastManager.getInstance(getActivity()).destroy(SealConst.CHANGEINFO);
     }
+
 
 }

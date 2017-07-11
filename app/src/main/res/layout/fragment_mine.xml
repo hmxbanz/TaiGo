@@ -131,7 +131,7 @@
 
     <LinearLayout
         android:layout_marginTop="40dp"
-        android:id="@+id/layout_download"
+        android:id="@+id/layout_favor"
         android:paddingLeft="10dp"
         android:paddingRight="10dp"
         android:layout_width="match_parent"

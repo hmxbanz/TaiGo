@@ -39,6 +39,7 @@
 
                 <LinearLayout
                     android:background="@color/white"
+                    android:layout_marginBottom="10dp"
                     android:orientation="horizontal"
                     android:layout_width="match_parent"
                     android:layout_height="50dp">
@@ -91,27 +92,6 @@
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent" />
                     </LinearLayout>
-                    <View
-                        android:background="@color/appbg"
-                        android:layout_width="1dp"
-                        android:layout_height="match_parent" />
-                    <LinearLayout
-                        android:paddingTop="10dp"
-                        android:orientation="vertical"
-                        android:layout_width="0dp"
-                        android:layout_weight="1"
-                        android:gravity="center_horizontal"
-                        android:layout_height="match_parent">
-                        <ImageView
-                            android:src="@drawable/icon_download"
-                            android:layout_width="20dp"
-                            android:layout_height="20dp" />
-                        <TextView
-                            android:textSize="10dp"
-                            android:text="下载"
-                            android:layout_width="wrap_content"
-                            android:layout_height="match_parent" />
-                    </LinearLayout>
                 </LinearLayout>
             </LinearLayout>
 
@@ -127,6 +107,7 @@
 
 
         <LinearLayout
+            android:layout_marginTop="10dp"
             android:background="@color/white"
             android:orientation="horizontal"
             android:layout_width="match_parent"
@@ -158,10 +139,11 @@
         <!--app:layout_behavior="@string/appbar_scrolling_view_behavior"/>-->
 
         <android.support.v7.widget.RecyclerView
+            
             android:id="@+id/recyclerView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="5dp" >
+             >
         </android.support.v7.widget.RecyclerView>
 
     </android.support.v4.widget.NestedScrollView>

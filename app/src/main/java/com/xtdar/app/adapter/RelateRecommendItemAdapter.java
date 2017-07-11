@@ -12,8 +12,6 @@ import android.widget.TextView;
 import com.xtdar.app.R;
 import com.xtdar.app.XtdConst;
 import com.xtdar.app.loader.GlideImageLoader;
-import com.xtdar.app.presenter.DetailPresenter;
-import com.xtdar.app.server.response.RecommendResponse;
 import com.xtdar.app.server.response.RelateRecommendResponse;
 
 import java.util.List;
@@ -86,7 +84,7 @@ public class RelateRecommendItemAdapter extends RecyclerView.Adapter<RelateRecom
         final int pos = getRealPosition(holder);
         final RelateRecommendResponse.DataBean listItem = listItems.get(position);
         if(holder instanceof DataHolder) {
-            holder.nickName.setText(listItem.getChapter_name());
+            holder.title.setText(listItem.getItem_title());
             glideImageLoader.displayImage(context, XtdConst.IMGURI+listItem.getItem_cover(),holder.imageView);
             //Glide.with(context).load(listItem.getAvator()).asBitmap().into(holder.imageView);
             //holder.imageView.setImageResource(listItem.getImgResource());
@@ -161,13 +159,13 @@ public class RelateRecommendItemAdapter extends RecyclerView.Adapter<RelateRecom
     }
     class DataHolder extends RecyclerView.ViewHolder implements View.OnClickListener
     {
-        private TextView nickName;
+        private TextView title;
         private ImageView imageView;
         private View listLayoutView;
 
         public DataHolder(View itemView) {
             super(itemView);
-            nickName = (TextView) itemView.findViewById(R.id.list_item_text);
+            title = (TextView) itemView.findViewById(R.id.list_item_text);
             imageView = (ImageView) itemView.findViewById(R.id.list_item_icon);
             listLayoutView = itemView.findViewById(R.id.list_item_layout);
         }
@@ -184,11 +182,11 @@ public class RelateRecommendItemAdapter extends RecyclerView.Adapter<RelateRecom
         public void setImageView(ImageView imageView) {
             this.imageView = imageView;
         }
-        public TextView getNickName() {
-            return nickName;
+        public TextView getTitle() {
+            return title;
         }
-        public void setNickName(TextView nickName) {
-            this.nickName = nickName;
+        public void setTitle(TextView title) {
+            this.title = title;
         }
 
         @Override

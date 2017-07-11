@@ -6,84 +6,92 @@ import java.util.List;
 public class FavorResponse {
 
     /**
-     *
-     *{"TotalPages":1,"state":1,"msg":"成功","Favors":[{"CreateDate":"\/Date(1495326878173)\/","FavorID":25,"ObjectUserInfoID":19,"ObjectUserID":19,"ObjectIcon":"/Images/User/2016/04/03/2016040319522837_s.jpeg","ObjectNickName":"知足常乐","OwnerUserID":2,"OwnerUserInfoID":2,"OwnerNickName":"管理员","OwnerIcon":"/Images/User/2016/11/18/2016111823255252_s.jpg"}]}
+     * data : [{"collect_id":"59","item_id":"48","item_title":"今天给你介绍一款玩碳纤维无人机。它通过蓝牙与智能手机连接","postfix_name":"mp4","item_cover":"a_class_item_cover/6673c4752278a38417ea1ca45ccfa277.jpg"}]
+     * code : 1
+     * msg : 返回数据
      */
 
-    private int state;
+    private int code;
     private String msg;
-    private String totalPages;
-    private List<ResultEntity> result;
+    private List<DataBean> data;
 
-    public int getState() {
-        return state;
+    public int getCode() {
+        return code;
     }
-    public void setState(int state) {
-        this.state = state;
+
+    public void setCode(int code) {
+        this.code = code;
     }
+
     public String getMsg() {
         return msg;
     }
+
     public void setMsg(String msg) {
         this.msg = msg;
     }
-    public String getTotalPages() {
-        return totalPages;
+
+    public List<DataBean> getData() {
+        return data;
     }
-    public void setTotalPages(String totalPages) {
-        this.totalPages = totalPages;
+
+    public void setData(List<DataBean> data) {
+        this.data = data;
     }
-    public List<ResultEntity> getFavors() {
-        return result;
-    }
-    public void setFavors(List<ResultEntity> result) {
-        this.result = result;
-    }
-    public static class ResultEntity {
-        private String FavorID;
-        private String ObjectUserInfoID;
-        private String ObjectIcon;
-        private String ObjectNickName;
-        private String CreateDate;
 
-        public String getFavorID() {
-            return FavorID;
+    public static class DataBean {
+        /**
+         * collect_id : 59
+         * item_id : 48
+         * item_title : 今天给你介绍一款玩碳纤维无人机。它通过蓝牙与智能手机连接
+         * postfix_name : mp4
+         * item_cover : a_class_item_cover/6673c4752278a38417ea1ca45ccfa277.jpg
+         */
+
+        private String collect_id;
+        private String item_id;
+        private String item_title;
+        private String postfix_name;
+        private String item_cover;
+
+        public String getCollect_id() {
+            return collect_id;
         }
 
-        public void setFavorID(String favorID) {
-            FavorID = favorID;
+        public void setCollect_id(String collect_id) {
+            this.collect_id = collect_id;
         }
 
-        public String getObjectUserInfoID() {
-            return ObjectUserInfoID;
+        public String getItem_id() {
+            return item_id;
         }
 
-        public void setObjectUserInfoID(String objectUserInfoID) {
-            ObjectUserInfoID = objectUserInfoID;
+        public void setItem_id(String item_id) {
+            this.item_id = item_id;
         }
 
-        public String getObjectIcon() {
-            return ObjectIcon;
+        public String getItem_title() {
+            return item_title;
         }
 
-        public void setObjectIcon(String objectIcon) {
-            ObjectIcon = objectIcon;
+        public void setItem_title(String item_title) {
+            this.item_title = item_title;
         }
 
-        public String getObjectNickName() {
-            return ObjectNickName;
+        public String getPostfix_name() {
+            return postfix_name;
         }
 
-        public void setObjectNickName(String objectNickName) {
-            ObjectNickName = objectNickName;
+        public void setPostfix_name(String postfix_name) {
+            this.postfix_name = postfix_name;
         }
 
-        public String getCreateDate() {
-            return CreateDate;
+        public String getItem_cover() {
+            return item_cover;
         }
 
-        public void setCreateDate(String createDate) {
-            CreateDate = createDate;
+        public void setItem_cover(String item_cover) {
+            this.item_cover = item_cover;
         }
     }
 }

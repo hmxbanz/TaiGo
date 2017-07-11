@@ -16,6 +16,7 @@ import com.xtdar.app.server.response.ClassListResponse;
 import com.xtdar.app.server.response.CommentResponse;
 import com.xtdar.app.server.response.CommonResponse;
 import com.xtdar.app.server.response.DetailResponse;
+import com.xtdar.app.server.response.FavorResponse;
 import com.xtdar.app.server.response.GameListResponse;
 import com.xtdar.app.server.response.HelpResponse;
 import com.xtdar.app.server.response.LoginResponse;
@@ -916,6 +917,64 @@ public CommonResponse register(String cellPhone, String password, String captcha
                 commonResponse = JsonMananger.jsonToBean(result, CommonResponse.class);
             } catch (JSONException e) {
                 NLog.d(TAG, "addDynamic occurs JSONException e=" + e.toString());
+                return null;
+            }
+        }
+        return commonResponse;
+    }
+//获取收藏
+    public FavorResponse getFavorList(String list_count,String last_collect_id) throws HttpException {
+        String uri = getURL("kp_dyz/cli-api-collectmp4list.php");
+        Response response=null;
+        try {
+            response=OkHttpUtils
+                    .get()
+                    .addParams(XtdConst.ACCESS_TOKEN,token)
+                    .addParams("last_collect_id",last_collect_id)
+                    .addParams("list_count",list_count)
+                    .url(uri)
+                    .build()
+                    .execute();
+            result =response.body().string();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        FavorResponse  favorResponse= null;
+        if (!TextUtils.isEmpty(result)) {
+            try {
+                favorResponse = JsonMananger.jsonToBean(result, FavorResponse.class);
+            } catch (JSONException e) {
+                NLog.d(TAG, "FavorResponse occurs JSONException e=" + e.toString());
+                return null;
+            }
+        }
+        return favorResponse;
+    }
+//删除收藏
+    public Object delFavor(String delFavorId) throws HttpException {
+        String uri = getURL("kp_dyz/cli-api-cancelcollect.php");
+        Response response=null;
+        try {
+            response=OkHttpUtils
+                    .post()
+                    .addParams(XtdConst.ACCESS_TOKEN,token)
+                    .addParams("item_id", delFavorId)
+                    .url(uri)
+                    .build()
+                    .execute();
+            result =response.body().string();
+            Log.w(TAG, "接收的："+ result);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        CommonResponse commonResponse = null;
+        if (!TextUtils.isEmpty(result)) {
+            NLog.e("CommonResponse", result);
+
+            try {
+                commonResponse = JsonMananger.jsonToBean(result, CommonResponse.class);
+            } catch (JSONException e) {
+                NLog.d(TAG, "delFavor occurs JSONException e=" + e.toString());
                 return null;
             }
         }

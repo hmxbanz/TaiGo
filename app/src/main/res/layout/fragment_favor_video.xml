@@ -6,8 +6,15 @@
     android:orientation="vertical">
 
     <ListView
-        android:id="@+id/listview_history_video"
+        android:visibility="gone"
+        android:id="@+id/listview_favor_video"
         android:layout_width="match_parent"
         android:layout_height="match_parent"></ListView>
+    <TextView
+        style="@style/AppTitleStyle2"
+        android:gravity="center"
+        android:text="暂时没有数据！"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
 
 </LinearLayout>
