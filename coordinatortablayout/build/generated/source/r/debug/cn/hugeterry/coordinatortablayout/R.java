@@ -2926,6 +2926,7 @@ containing a value of this type.
         public static int submit_area=0x7f0c006f;
         public static int tabLayout=0x7f0c0099;
         public static int tabMode=0x7f0c0011;
+        public static int text=0x7f0c0094;
         public static int text2=0x7f0c0092;
         public static int textSpacerNoButtons=0x7f0c0052;
         public static int textSpacerNoTitle=0x7f0c0051;
@@ -2942,7 +2943,6 @@ containing a value of this type.
         public static int touch_outside=0x7f0c0075;
         public static int transition_current_scene=0x7f0c000b;
         public static int transition_scene_layoutid_cache=0x7f0c000c;
-        public static int txt_log=0x7f0c0094;
         public static int up=0x7f0c000d;
         public static int useLogo=0x7f0c0018;
         public static int view_offset_helper=0x7f0c000e;

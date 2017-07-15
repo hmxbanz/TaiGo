@@ -41,13 +41,6 @@
       <sourceFolder url="file://$MODULE_DIR$/src/baiduDebug/java" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/src/baiduDebug/rs" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/src/baiduDebug/shaders" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/src/testBaiduDebug/res" type="java-test-resource" />
-      <sourceFolder url="file://$MODULE_DIR$/src/testBaiduDebug/resources" type="java-test-resource" />
-      <sourceFolder url="file://$MODULE_DIR$/src/testBaiduDebug/assets" type="java-test-resource" />
-      <sourceFolder url="file://$MODULE_DIR$/src/testBaiduDebug/aidl" isTestSource="true" />
-      <sourceFolder url="file://$MODULE_DIR$/src/testBaiduDebug/java" isTestSource="true" />
-      <sourceFolder url="file://$MODULE_DIR$/src/testBaiduDebug/rs" isTestSource="true" />
-      <sourceFolder url="file://$MODULE_DIR$/src/testBaiduDebug/shaders" isTestSource="true" />
       <sourceFolder url="file://$MODULE_DIR$/build/generated/source/r/androidTest/baidu/debug" isTestSource="true" generated="true" />
       <sourceFolder url="file://$MODULE_DIR$/build/generated/source/aidl/androidTest/baidu/debug" isTestSource="true" generated="true" />
       <sourceFolder url="file://$MODULE_DIR$/build/generated/source/buildConfig/androidTest/baidu/debug" isTestSource="true" generated="true" />
@@ -55,6 +48,13 @@
       <sourceFolder url="file://$MODULE_DIR$/build/generated/source/apt/androidTest/baidu/debug" isTestSource="true" generated="true" />
       <sourceFolder url="file://$MODULE_DIR$/build/generated/res/rs/androidTest/baidu/debug" type="java-test-resource" />
       <sourceFolder url="file://$MODULE_DIR$/build/generated/res/resValues/androidTest/baidu/debug" type="java-test-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/src/testBaiduDebug/res" type="java-test-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/src/testBaiduDebug/resources" type="java-test-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/src/testBaiduDebug/assets" type="java-test-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/src/testBaiduDebug/aidl" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/src/testBaiduDebug/java" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/src/testBaiduDebug/rs" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/src/testBaiduDebug/shaders" isTestSource="true" />
       <sourceFolder url="file://$MODULE_DIR$/src/baidu/res" type="java-resource" />
       <sourceFolder url="file://$MODULE_DIR$/src/baidu/resources" type="java-resource" />
       <sourceFolder url="file://$MODULE_DIR$/src/baidu/assets" type="java-resource" />
@@ -62,13 +62,6 @@
       <sourceFolder url="file://$MODULE_DIR$/src/baidu/java" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/src/baidu/rs" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/src/baidu/shaders" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/src/androidTestBaidu/res" type="java-test-resource" />
-      <sourceFolder url="file://$MODULE_DIR$/src/androidTestBaidu/resources" type="java-test-resource" />
-      <sourceFolder url="file://$MODULE_DIR$/src/androidTestBaidu/assets" type="java-test-resource" />
-      <sourceFolder url="file://$MODULE_DIR$/src/androidTestBaidu/aidl" isTestSource="true" />
-      <sourceFolder url="file://$MODULE_DIR$/src/androidTestBaidu/java" isTestSource="true" />
-      <sourceFolder url="file://$MODULE_DIR$/src/androidTestBaidu/rs" isTestSource="true" />
-      <sourceFolder url="file://$MODULE_DIR$/src/androidTestBaidu/shaders" isTestSource="true" />
       <sourceFolder url="file://$MODULE_DIR$/src/testBaidu/res" type="java-test-resource" />
       <sourceFolder url="file://$MODULE_DIR$/src/testBaidu/resources" type="java-test-resource" />
       <sourceFolder url="file://$MODULE_DIR$/src/testBaidu/assets" type="java-test-resource" />
@@ -76,6 +69,13 @@
       <sourceFolder url="file://$MODULE_DIR$/src/testBaidu/java" isTestSource="true" />
       <sourceFolder url="file://$MODULE_DIR$/src/testBaidu/rs" isTestSource="true" />
       <sourceFolder url="file://$MODULE_DIR$/src/testBaidu/shaders" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/src/androidTestBaidu/res" type="java-test-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/src/androidTestBaidu/resources" type="java-test-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/src/androidTestBaidu/assets" type="java-test-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/src/androidTestBaidu/aidl" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/src/androidTestBaidu/java" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/src/androidTestBaidu/rs" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/src/androidTestBaidu/shaders" isTestSource="true" />
       <sourceFolder url="file://$MODULE_DIR$/src/debug/res" type="java-resource" />
       <sourceFolder url="file://$MODULE_DIR$/src/debug/resources" type="java-resource" />
       <sourceFolder url="file://$MODULE_DIR$/src/debug/assets" type="java-resource" />

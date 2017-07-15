@@ -835,6 +835,7 @@ int id submenuarrow 0x7f0c005e
 int id submit_area 0x7f0c006f
 int id tabLayout 0x7f0c0099
 int id tabMode 0x7f0c0011
+int id text 0x7f0c0094
 int id text2 0x7f0c0092
 int id textSpacerNoButtons 0x7f0c0052
 int id textSpacerNoTitle 0x7f0c0051
@@ -851,7 +852,6 @@ int id topPanel 0x7f0c0056
 int id touch_outside 0x7f0c0075
 int id transition_current_scene 0x7f0c000b
 int id transition_scene_layoutid_cache 0x7f0c000c
-int id txt_log 0x7f0c0094
 int id up 0x7f0c000d
 int id useLogo 0x7f0c0018
 int id view_offset_helper 0x7f0c000e

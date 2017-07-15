@@ -1,14 +1,14 @@
 [
     {
-        "merged": "D:\\work\\TaiGo\\coordinatortablayout\\build\\intermediates\\res\\merged\\release\\drawable-anydpi-v21\\ic_arrow_white_24dp.xml",
-        "source": "D:\\work\\TaiGo\\coordinatortablayout\\build\\generated\\res\\pngs\\release\\drawable-anydpi-v21\\ic_arrow_white_24dp.xml"
+        "merged": "C:\\Users\\Administrator\\Desktop\\work\\TaiGo\\coordinatortablayout\\build\\intermediates\\res\\merged\\release\\drawable-anydpi-v21\\design_ic_visibility.xml",
+        "source": "C:\\Users\\Administrator\\.android\\build-cache\\c1bc389984f99bbbe8f00d4342e03d17c9b492b3\\output\\res\\drawable-anydpi-v21\\design_ic_visibility.xml"
     },
     {
-        "merged": "D:\\work\\TaiGo\\coordinatortablayout\\build\\intermediates\\res\\merged\\release\\drawable-anydpi-v21\\design_ic_visibility.xml",
-        "source": "C:\\Users\\PVer\\.android\\build-cache\\42f09f80b6143b679addaae842b8d981b0a915d3\\output\\res\\drawable-anydpi-v21\\design_ic_visibility.xml"
+        "merged": "C:\\Users\\Administrator\\Desktop\\work\\TaiGo\\coordinatortablayout\\build\\intermediates\\res\\merged\\release\\drawable-anydpi-v21\\ic_arrow_white_24dp.xml",
+        "source": "C:\\Users\\Administrator\\Desktop\\work\\TaiGo\\coordinatortablayout\\build\\generated\\res\\pngs\\release\\drawable-anydpi-v21\\ic_arrow_white_24dp.xml"
     },
     {
-        "merged": "D:\\work\\TaiGo\\coordinatortablayout\\build\\intermediates\\res\\merged\\release\\drawable-anydpi-v21\\design_ic_visibility_off.xml",
-        "source": "C:\\Users\\PVer\\.android\\build-cache\\42f09f80b6143b679addaae842b8d981b0a915d3\\output\\res\\drawable-anydpi-v21\\design_ic_visibility_off.xml"
+        "merged": "C:\\Users\\Administrator\\Desktop\\work\\TaiGo\\coordinatortablayout\\build\\intermediates\\res\\merged\\release\\drawable-anydpi-v21\\design_ic_visibility_off.xml",
+        "source": "C:\\Users\\Administrator\\.android\\build-cache\\c1bc389984f99bbbe8f00d4342e03d17c9b492b3\\output\\res\\drawable-anydpi-v21\\design_ic_visibility_off.xml"
     }
 ]

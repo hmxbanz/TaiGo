@@ -859,6 +859,7 @@ public final class R {
         public static final int submit_area = 0x7f0c006f;
         public static final int tabLayout = 0x7f0c0099;
         public static final int tabMode = 0x7f0c0011;
+        public static final int text = 0x7f0c0094;
         public static final int text2 = 0x7f0c0092;
         public static final int textSpacerNoButtons = 0x7f0c0052;
         public static final int textSpacerNoTitle = 0x7f0c0051;
@@ -875,7 +876,6 @@ public final class R {
         public static final int touch_outside = 0x7f0c0075;
         public static final int transition_current_scene = 0x7f0c000b;
         public static final int transition_scene_layoutid_cache = 0x7f0c000c;
-        public static final int txt_log = 0x7f0c0094;
         public static final int up = 0x7f0c000d;
         public static final int useLogo = 0x7f0c0018;
         public static final int view_offset_helper = 0x7f0c000e;
