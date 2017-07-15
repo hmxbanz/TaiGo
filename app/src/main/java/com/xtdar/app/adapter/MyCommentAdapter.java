@@ -7,8 +7,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.xtdar.app.R;
+import com.xtdar.app.XtdConst;
 import com.xtdar.app.loader.GlideImageLoader;
-import com.xtdar.app.server.response.HelpResponse;
 import com.xtdar.app.server.response.MyCommentResponse;
 import com.xtdar.app.view.widget.SelectableRoundedImageView;
 
@@ -20,17 +20,17 @@ public class MyCommentAdapter extends BaseAdapter {
     private MyCommentAdapter.ViewHoler holder;
     private GlideImageLoader glideImageLoader;
 
-    private OnItemClick onItemClick;
-    public OnItemClick getOnItemClick() {
+    private ItemClickHandler onItemClick;
+    public ItemClickHandler getOnItemClick() {
         return onItemClick;
     }
-    public void setOnItemClick(OnItemClick onItemClick) {
+    public void setOnItemClick(ItemClickHandler onItemClick) {
         this.onItemClick = onItemClick;
     }
 
 
-    public interface OnItemClick {
-        boolean onClick(int position, View view, String status);
+    public interface ItemClickHandler {
+        boolean onItemClick(int position, View view, String status);
 
     }
 
@@ -54,16 +54,21 @@ public class MyCommentAdapter extends BaseAdapter {
             holder = (MyCommentAdapter.ViewHoler) convertView.getTag();
         }
         final MyCommentResponse.DataBean entity = (MyCommentResponse.DataBean) mList.get(position);
+        holder.nickname.setText(entity.getNick_name());
+        holder.content.setText(entity.getComment());
+        holder.article_title.setText(entity.getTitle());
+        glideImageLoader.displayImage(mContext, XtdConst.IMGURI+entity.getImg_path(),holder.avatar);
+        glideImageLoader.displayImage(mContext, XtdConst.IMGURI+entity.getHead_img(),holder.article_img);
         convertView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                onItemClick.onClick(position, v, entity.getItem_id());
+                onItemClick.onItemClick(position, v, entity.getItem_id());
 
             }
         });
 
 
-        holder.nickname.setText(entity.getNick_name());
+
 
 
         return convertView;

@@ -15,7 +15,7 @@ import android.widget.TextView;
 
 import com.xtdar.app.common.PhotoUtils;
 import com.xtdar.app.presenter.MinePresenter;
-import com.xtdar.app.view.activity.AlbumActivity;
+import com.xtdar.app.view.activity.MyCommentActivity;
 import com.xtdar.app.view.activity.DynamicActivity;
 import com.xtdar.app.view.activity.MeActivity;
 import com.xtdar.app.view.activity.FavorActivity;
@@ -37,7 +37,7 @@ public class MineFragment extends Fragment implements View.OnClickListener {
     public static final String SHOWRED = "SHOWRED";
     public static MineFragment mFragment = null;
     private RelativeLayout mLayoutAr, mLayoutMyVideo, mLayoutMsg;
-    private LinearLayout mLayoutFriendCondition, mLayoutFavor, mLayoutSetting,mLayoutAblum;
+    private LinearLayout mLayoutFriendCondition, mLayoutFavor, mLayoutSetting, mLayoutComment;
     private View mView;
 
     private SelectableRoundedImageView mImageView;
@@ -102,8 +102,8 @@ public class MineFragment extends Fragment implements View.OnClickListener {
         mLayoutFavor = (LinearLayout) mView.findViewById(R.id.layout_favor);
         mLayoutFavor.setOnClickListener(this);
 
-        mLayoutAblum= (LinearLayout) mView.findViewById(R.id.layout_album);
-        mLayoutAblum.setOnClickListener(this);
+        mLayoutComment = (LinearLayout) mView.findViewById(R.id.layout_comment);
+        mLayoutComment.setOnClickListener(this);
         mLayoutSetting = (LinearLayout) mView.findViewById(R.id.layout_setting);
         mLayoutSetting.setOnClickListener(this);
         mTxtMe = (LinearLayout) mView.findViewById(R.id.layout_update);
@@ -133,8 +133,8 @@ public class MineFragment extends Fragment implements View.OnClickListener {
             case R.id.layout_my_video:
                 startActivity(new Intent(getActivity(), MyVideoActivity.class));
                 break;
-            case R.id.layout_album:
-                startActivity(new Intent(getActivity(), AlbumActivity.class));
+            case R.id.layout_comment:
+                startActivity(new Intent(getActivity(), MyCommentActivity.class));
                 break;
             case R.id.layout_setting:
                 startActivity(new Intent(getActivity(), SettingActivity.class));

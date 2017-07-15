@@ -20,6 +20,7 @@ import com.xtdar.app.server.response.FavorResponse;
 import com.xtdar.app.server.response.GameListResponse;
 import com.xtdar.app.server.response.HelpResponse;
 import com.xtdar.app.server.response.LoginResponse;
+import com.xtdar.app.server.response.MyCommentResponse;
 import com.xtdar.app.server.response.MyDevicesResponse;
 import com.xtdar.app.server.response.RecommendResponse;
 import com.xtdar.app.server.response.RelateRecommendResponse;
@@ -32,6 +33,8 @@ import com.xtdar.app.server.response.UserInfoResponse;
 import com.xtdar.app.server.response.VersionResponse;
 import com.zhy.http.okhttp.OkHttpUtils;
 import com.zhy.http.okhttp.callback.StringCallback;
+
+import org.w3c.dom.Comment;
 
 import java.io.File;
 import java.io.IOException;
@@ -980,4 +983,33 @@ public CommonResponse register(String cellPhone, String password, String captcha
         }
         return commonResponse;
     }
+//获取我的评论
+    public MyCommentResponse getCommentList(String list_count, String last_com_id) throws HttpException {
+        String uri = getURL("kp_dyz/cli-api-mycommentlist.php");
+        Response response=null;
+        try {
+            response=OkHttpUtils
+                    .get()
+                    .addParams(XtdConst.ACCESS_TOKEN,token)
+                    .addParams("last_com_id",last_com_id)
+                    .addParams("list_count",list_count)
+                    .url(uri)
+                    .build()
+                    .execute();
+            result =response.body().string();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        MyCommentResponse  myCommentResponse= null;
+        if (!TextUtils.isEmpty(result)) {
+            try {
+                myCommentResponse = JsonMananger.jsonToBean(result, MyCommentResponse.class);
+            } catch (JSONException e) {
+                NLog.d(TAG, "CommentResponse occurs JSONException e=" + e.toString());
+                return null;
+            }
+        }
+        return myCommentResponse;
+    }
+
 }

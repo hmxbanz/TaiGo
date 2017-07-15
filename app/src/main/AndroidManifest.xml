@@ -209,6 +209,7 @@
         <activity android:name=".view.activity.HelpDetailActivity" />
         <activity android:name=".view.activity.ShowDetailActivity" />
         <activity android:name=".view.activity.MyVideoActivity" />
+        <activity android:name=".view.activity.MyCommentActivity" />
         <activity
             android:name=".view.activity.ConversationListActivity"
             android:screenOrientation="portrait"

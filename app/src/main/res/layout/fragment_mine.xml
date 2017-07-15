@@ -147,13 +147,17 @@
             android:layout_height="20dp"
             android:tint="@color/titleBlue"/>
         <TextView
+            android:id="@+id/textView"
             style="@style/MenuTitleStyle"
-            android:paddingLeft="10dp"
-            android:gravity="center_vertical"
-            android:text="我的收藏"
             android:layout_width="0dp"
+            android:layout_height="match_parent"
             android:layout_weight="1"
-            android:layout_height="match_parent" />
+            android:gravity="center_vertical"
+            android:paddingLeft="10dp"
+            android:text="我的收藏" />
+
+
+
         <ImageView
             android:src="@drawable/icon_arrow_right"
             android:layout_width="20dp"
@@ -162,7 +166,7 @@
             />
     </LinearLayout>
     <LinearLayout
-        android:id="@+id/layout_album"
+        android:id="@+id/layout_comment"
         android:paddingLeft="10dp"
         android:paddingRight="10dp"
         android:layout_width="match_parent"

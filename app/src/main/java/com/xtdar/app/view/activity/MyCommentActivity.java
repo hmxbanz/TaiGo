@@ -8,17 +8,16 @@ import android.widget.TextView;
 
 import com.xtdar.app.R;
 import com.xtdar.app.presenter.CommentPresenter;
-import com.xtdar.app.presenter.HelpPresenter;
 
 
-public class CommentActivity extends BaseActivity implements View.OnClickListener {
+public class MyCommentActivity extends BaseActivity implements View.OnClickListener {
     private CommentPresenter presenter;
     private ListView listView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_comment);
+        setContentView(R.layout.activity_my_comment);
 
         initViews();
         presenter = new CommentPresenter(this);
