@@ -1,5 +1,6 @@
 package com.xtdar.app.presenter;
 
+import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.bluetooth.BluetoothAdapter;
@@ -12,8 +13,11 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
+import android.content.pm.PackageManager;
 import android.os.Handler;
 import android.os.IBinder;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ListView;
@@ -47,7 +51,7 @@ import java.util.List;
  * Created by hmxbanz on 2017/4/5.
  */
 
-public class BlePresenter extends BasePresenter implements OnDataListener, BleScanner.ScanCallback,BleAdapter.OnItemClick {
+public class BlePresenter extends BasePresenter implements OnDataListener, BleAdapter.OnItemClick {
     private static final String DEVICE_UUID_PREFIX = "dferewre";
     private static final String TAG = BlePresenter.class.getSimpleName();
     private static final long SCAN_PERIOD = 10000;
@@ -78,11 +82,13 @@ public class BlePresenter extends BasePresenter implements OnDataListener, BleSc
         this.listView = listView;
         listView.setAdapter(adapter);
         this.btnScan=btnScan;
+
+
         // 为了确保设备上蓝牙能使用, 如果当前蓝牙设备没启用,弹出对话框向用户要求授予权限来启用
         Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
         ((Activity)context).startActivityForResult(enableBtIntent, 100);
 
-        bindService();
+        checkPermissions();
 
     }
 
@@ -123,14 +129,15 @@ public class BlePresenter extends BasePresenter implements OnDataListener, BleSc
         public void onStartScan() {
             adapter.clear();
             adapter.notifyDataSetChanged();
+            btnScan.setText("正在扫描...");
+            btnScan.setEnabled(false);
         }
 
         @Override
         public void onScanning(ScanResult result) {
             adapter.addResult(result);
             adapter.notifyDataSetChanged();
-        btnScan.setText("正在扫描...");
-        btnScan.setEnabled(false);
+
         }
 
         @Override
@@ -179,6 +186,18 @@ public class BlePresenter extends BasePresenter implements OnDataListener, BleSc
 //        }, SCAN_PERIOD);
 //    }
 
+    //    @Override
+//    public void onBleScan(BluetoothDevice device) {
+//        adapter.setmList(list);
+//        adapter.setOnItemClick(this);
+//        listView.setAdapter(adapter);
+//        NToast.shortToast(context,device.getAddress());
+//        atm.request(BINDDEVICE,this);
+//                if (list.indexOf(device) == -1 && device.getName() !=null){// 防止重复添加list.add(device);
+//            }
+//
+//    }
+
     @Override
     public Object doInBackground(int requestCode, String parameter) throws HttpException {
         return mUserAction.bindDevice(selectedDevice.getDevice().getName());
@@ -194,18 +213,7 @@ public class BlePresenter extends BasePresenter implements OnDataListener, BleSc
         NToast.shortToast(context,response.getMsg());
     }
 
-    @Override
-    public void onBleScan(BluetoothDevice device) {
-//        adapter.setmList(list);
-//        adapter.setOnItemClick(this);
-//        listView.setAdapter(adapter);
-//        NToast.shortToast(context,device.getAddress());
-//        atm.request(BINDDEVICE,this);
-//        if (list.indexOf(device) == -1 && device.getName() !=null){// 防止重复添加
-//            list.add(device);
-//        }
 
-    }
 
     @Override
     public boolean onItemClick(int position, View view, int status) {
@@ -235,5 +243,33 @@ public class BlePresenter extends BasePresenter implements OnDataListener, BleSc
     public void onDestroy() {
         if (mBluetoothService != null)
             unbindService();
+    }
+
+    private void checkPermissions() {
+        String[] permissions = {Manifest.permission.ACCESS_FINE_LOCATION};
+        List<String> permissionDeniedList = new ArrayList<>();
+        for (String permission : permissions) {
+            int permissionCheck = ContextCompat.checkSelfPermission(context, permission);
+            if (permissionCheck == PackageManager.PERMISSION_GRANTED) {
+                onPermissionGranted(permission);
+            } else {
+                permissionDeniedList.add(permission);
+            }
+        }
+        if (!permissionDeniedList.isEmpty()) {
+            String[] deniedPermissions = permissionDeniedList.toArray(new String[permissionDeniedList.size()]);
+            ActivityCompat.requestPermissions((BleActivity)context, deniedPermissions, 12);
+        }
+    }
+    public void onPermissionGranted(String permission) {
+        switch (permission) {
+            case Manifest.permission.ACCESS_FINE_LOCATION:
+                if (mBluetoothService == null) {
+                    bindService();
+                } else {
+                    mBluetoothService.scanDevice();
+                }
+                break;
+        }
     }
 }

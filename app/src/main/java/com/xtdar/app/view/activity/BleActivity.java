@@ -1,7 +1,9 @@
 package com.xtdar.app.view.activity;
 
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ListView;
@@ -59,6 +61,22 @@ private BlePresenter presenter;
         super.onActivityResult(requestCode, resultCode, data);
         switch (requestCode) {
             case BleScanner.REQUEST_ENABLE_BT:
+        }
+    }
+
+    @Override
+    public final void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        switch (requestCode) {
+            case 12:
+                if (grantResults.length > 0) {
+                    for (int i = 0; i < grantResults.length; i++) {
+                        if (grantResults[i] == PackageManager.PERMISSION_GRANTED) {
+                            presenter.onPermissionGranted(permissions[i]);
+                        }
+                    }
+                }
+                break;
         }
     }
 
