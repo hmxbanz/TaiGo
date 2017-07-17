@@ -64,12 +64,12 @@
         "source": "C:\\Users\\Administrator\\.android\\build-cache\\e86af44071a3b010621ba1d7f9efb7a18c70eac4\\output\\res\\drawable-xxhdpi-v4\\abc_btn_check_to_on_mtrl_000.png"
     },
     {
-        "merged": "C:\\Users\\Administrator\\Desktop\\work\\TaiGo\\coordinatortablayout\\build\\intermediates\\res\\merged\\release\\drawable-xxhdpi-v4\\abc_ic_menu_copy_mtrl_am_alpha.png",
-        "source": "C:\\Users\\Administrator\\.android\\build-cache\\e86af44071a3b010621ba1d7f9efb7a18c70eac4\\output\\res\\drawable-xxhdpi-v4\\abc_ic_menu_copy_mtrl_am_alpha.png"
-    },
-    {
         "merged": "C:\\Users\\Administrator\\Desktop\\work\\TaiGo\\coordinatortablayout\\build\\intermediates\\res\\merged\\release\\drawable-xxhdpi-v4\\ic_arrow_white_24dp.png",
         "source": "C:\\Users\\Administrator\\Desktop\\work\\TaiGo\\coordinatortablayout\\build\\generated\\res\\pngs\\release\\drawable-xxhdpi\\ic_arrow_white_24dp.png"
+    },
+    {
+        "merged": "C:\\Users\\Administrator\\Desktop\\work\\TaiGo\\coordinatortablayout\\build\\intermediates\\res\\merged\\release\\drawable-xxhdpi-v4\\abc_ic_menu_copy_mtrl_am_alpha.png",
+        "source": "C:\\Users\\Administrator\\.android\\build-cache\\e86af44071a3b010621ba1d7f9efb7a18c70eac4\\output\\res\\drawable-xxhdpi-v4\\abc_ic_menu_copy_mtrl_am_alpha.png"
     },
     {
         "merged": "C:\\Users\\Administrator\\Desktop\\work\\TaiGo\\coordinatortablayout\\build\\intermediates\\res\\merged\\release\\drawable-xxhdpi-v4\\abc_list_divider_mtrl_alpha.9.png",

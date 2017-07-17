@@ -6,6 +6,7 @@ import com.uuzuche.lib_zxing.activity.ZXingLibrary;
 import com.xtdar.app.common.CommonTools;
 
 import cn.jpush.android.api.JPushInterface;
+import cn.sharesdk.framework.ShareSDK;
 import io.rong.imkit.RongIM;
 import io.rong.imlib.RongIMClient;
 import com.unity3d.player.UnityPlayer;
@@ -22,6 +23,7 @@ public class MainApplication extends Application {
         //极光推送
         JPushInterface.setDebugMode(true);
         JPushInterface.init(this);
+        ShareSDK.initSDK(this);
         //xutils3
         //x.Ext.init(this);
         //x.Ext.setDebug(BuildConfig.DEBUG);
