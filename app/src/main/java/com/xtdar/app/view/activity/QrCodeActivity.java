@@ -1,16 +1,22 @@
 package com.xtdar.app.view.activity;
 
+import android.Manifest;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 
 import com.uuzuche.lib_zxing.activity.CaptureFragment;
 import com.uuzuche.lib_zxing.activity.CodeUtils;
 import com.xtdar.app.R;
+import com.xtdar.app.common.NToast;
+import com.xtdar.app.widget.permissionLibrary.PermissionsManager;
+import com.xtdar.app.widget.permissionLibrary.PermissionsResultAction;
 
 
 public class QrCodeActivity extends BaseActivity implements View.OnClickListener {
@@ -25,8 +31,6 @@ public class QrCodeActivity extends BaseActivity implements View.OnClickListener
         CodeUtils.setFragmentArgs(captureFragment, R.layout.my_camera);
         captureFragment.setAnalyzeCallback(analyzeCallback);
         getSupportFragmentManager().beginTransaction().replace(R.id.fl_my_container, captureFragment).commit();
-
-
     }
 
     private void initViews() {
@@ -34,6 +38,20 @@ public class QrCodeActivity extends BaseActivity implements View.OnClickListener
         layout_back.setOnClickListener(this);
         txtTitle =(TextView) findViewById(R.id.text_title);
         txtTitle.setText("条形码扫描");
+
+        //权限申请
+        PermissionsManager.getInstance().requestPermissionsIfNecessaryForResult(this,new String[]{Manifest.permission.CAMERA}, new PermissionsResultAction() {
+                    @Override
+                    public void onGranted() {
+                        NToast.longToast(QrCodeActivity.this, "授权成功");
+                    }
+
+                    @Override
+                    public void onDenied(String permission) {
+                        NToast.longToast(QrCodeActivity.this, "获取权限失败，请点击后允许扫描");
+                    }
+                }, true);
+
 
     }
 
