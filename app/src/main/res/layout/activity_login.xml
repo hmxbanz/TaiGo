@@ -120,7 +120,7 @@
                 android:layout_height="wrap_content"
                 >
                 <RelativeLayout
-                    android:id="@+id/layout_register"
+                    android:id="@+id/layout_qq_login"
                     android:clickable="true"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
@@ -143,6 +143,7 @@
                         android:layout_height="wrap_content" />
                 </RelativeLayout>
                 <RelativeLayout
+                    android:id="@+id/layout_wx_login"
                     android:gravity="center"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
@@ -163,6 +164,7 @@
                         android:layout_height="wrap_content" />
                 </RelativeLayout>
                 <RelativeLayout
+                    android:id="@+id/layout_weibo_login"
                     android:gravity="center"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"

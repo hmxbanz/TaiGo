@@ -23,6 +23,7 @@ android {
     }
     sourceSets.main {
         jniLibs.srcDirs = ['libs'] // <-- Set your folder here!
+        //java.srcDirs = ['src/main/java', 'src/main/自建文件夹名']
     }
     //签名设置
     signingConfigs {
@@ -30,10 +31,10 @@ android {
             // No debug config
         }
         release {
-            storeFile file("../hmx.jks")
-            storePassword "11111"
-            keyAlias "hmx"
-            keyPassword "111111"
+            storeFile file("../xtd.jks")
+            storePassword "xtdxtd"
+            keyAlias "xtd"
+            keyPassword "xtdxtd"
         }
     }
     buildTypes {
@@ -89,8 +90,11 @@ dependencies {
     compile project(':xutils')
     compile project(':pulltorefresh')
     //compile 'com.youth.xframe:xframe:1.0.1'
+
     //最新版本轮播图
+
     //图片加载工具
+
     //RecyclerView
     compile project(':Common')
     compile project(':WheelPicker')
@@ -117,7 +121,6 @@ dependencies {
     //debugCompile dataDependencies.leakcanary
     compile project(':gsyVideoPlayer')
     //视频播放
-    compile project(':ShareRec')
     compile files('libs/unity-classes.jar')
     compile 'com.android.support:appcompat-v7:25.1.0'
     compile 'org.immutables:gson:2.1.8'
@@ -130,9 +133,13 @@ dependencies {
     compile 'com.android.support:design:25.1.0'
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
     compile project(':okhttputils')
-    compile 'com.github.mcxtzhang:SwipeDelMenuLayout:V1.2.5'//滑动listview 删除
-    compile 'com.jaeger.statusbaruitl:library:1.1.1'//设置状态栏
-    compile 'cn.yipianfengye.android:zxing-library:2.1'//二维码扫描
+    compile 'com.github.mcxtzhang:SwipeDelMenuLayout:V1.2.5'
+    //滑动listview 删除
+    compile 'com.jaeger.statusbaruitl:library:1.1.1'
+    //设置状态栏
+    compile 'cn.yipianfengye.android:zxing-library:2.1'
+    //二维码扫描
     compile 'com.android.support:gridlayout-v7:25.1.0'
-    compile 'com.clj.fastble:FastBleLib:1.2.1'//蓝牙
+    compile 'com.clj.fastble:FastBleLib:1.2.1'
+    //蓝牙
 }

@@ -760,16 +760,16 @@
         "source": "C:\\Users\\Administrator\\Desktop\\work\\TaiGo\\IMKit\\build\\intermediates\\bundles\\debug\\res\\drawable-xhdpi-v4\\rc_icon_rt_message_left.png"
     },
     {
+        "merged": "C:\\Users\\Administrator\\Desktop\\work\\TaiGo\\IMKit\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-xhdpi-v4\\rc_cs_back_icon.png",
+        "source": "C:\\Users\\Administrator\\Desktop\\work\\TaiGo\\IMKit\\build\\intermediates\\bundles\\debug\\res\\drawable-xhdpi-v4\\rc_cs_back_icon.png"
+    },
+    {
         "merged": "C:\\Users\\Administrator\\Desktop\\work\\TaiGo\\IMKit\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-xhdpi-v4\\rc_rt_location_arrow.png",
         "source": "C:\\Users\\Administrator\\Desktop\\work\\TaiGo\\IMKit\\build\\intermediates\\bundles\\debug\\res\\drawable-xhdpi-v4\\rc_rt_location_arrow.png"
     },
     {
         "merged": "C:\\Users\\Administrator\\Desktop\\work\\TaiGo\\IMKit\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-xhdpi-v4\\rc_ext_location_tip.png",
         "source": "C:\\Users\\Administrator\\Desktop\\work\\TaiGo\\IMKit\\build\\intermediates\\bundles\\debug\\res\\drawable-xhdpi-v4\\rc_ext_location_tip.png"
-    },
-    {
-        "merged": "C:\\Users\\Administrator\\Desktop\\work\\TaiGo\\IMKit\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-xhdpi-v4\\rc_cs_back_icon.png",
-        "source": "C:\\Users\\Administrator\\Desktop\\work\\TaiGo\\IMKit\\build\\intermediates\\bundles\\debug\\res\\drawable-xhdpi-v4\\rc_cs_back_icon.png"
     },
     {
         "merged": "C:\\Users\\Administrator\\Desktop\\work\\TaiGo\\IMKit\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-xhdpi-v4\\u1f60c.png",

@@ -16,7 +16,7 @@ import com.xtdar.app.R;
 public class LoginActivity extends BaseActivity implements View.OnClickListener {
     private EditText mUsername,mPassword;
     private Button mBtnLogin;
-    private RelativeLayout mLayoutRegister;
+    private RelativeLayout mLayoutQqLogin,mLayoutWxLogin;
     private TextView mTextForgetPassword;
     private LoginPresenter mLoginPresenter;
     private TextView mTextRight;
@@ -42,8 +42,10 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
 
 
         mTextForgetPassword = (TextView) findViewById(R.id.text_forget_password);
-        mLayoutRegister = (RelativeLayout) findViewById(R.id.layout_register);
-        mLayoutRegister.setOnClickListener(this);
+        mLayoutQqLogin = (RelativeLayout) findViewById(R.id.layout_qq_login);
+        mLayoutQqLogin.setOnClickListener(this);
+        mLayoutWxLogin = (RelativeLayout) findViewById(R.id.layout_wx_login);
+        mLayoutWxLogin.setOnClickListener(this);
         mTextForgetPassword.setOnClickListener(this);
         mUsername = (EditText) findViewById(R.id.username);
         mPassword = (EditText) findViewById(R.id.password);
@@ -65,6 +67,9 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                 break;
             case R.id.text_forget_password:
                 startActivity(new Intent(this,ForgetPasswordActivity.class));
+                break;
+            case R.id.layout_wx_login:
+                mLoginPresenter.wxLogin();
         }
     }
 }

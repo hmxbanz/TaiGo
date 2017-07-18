@@ -7,7 +7,6 @@
       <module fileurl="file://$PROJECT_DIR$/Common/Common.iml" filepath="$PROJECT_DIR$/Common/Common.iml" />
       <module fileurl="file://$PROJECT_DIR$/IMKit/IMKit.iml" filepath="$PROJECT_DIR$/IMKit/IMKit.iml" />
       <module fileurl="file://$PROJECT_DIR$/IMLib/IMLib.iml" filepath="$PROJECT_DIR$/IMLib/IMLib.iml" />
-      <module fileurl="file://$PROJECT_DIR$/ShareRec/ShareRec.iml" filepath="$PROJECT_DIR$/ShareRec/ShareRec.iml" />
       <module fileurl="file://$PROJECT_DIR$/TaiGo.iml" filepath="$PROJECT_DIR$/TaiGo.iml" />
       <module fileurl="file://$PROJECT_DIR$/WheelPicker/WheelPicker.iml" filepath="$PROJECT_DIR$/WheelPicker/WheelPicker.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />

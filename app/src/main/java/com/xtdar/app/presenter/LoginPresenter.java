@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.text.TextUtils;
 import android.widget.EditText;
 
+import com.mob.tools.utils.UIHandler;
 import com.xtdar.app.R;
 import com.xtdar.app.XtdConst;
 import com.xtdar.app.common.NToast;
@@ -14,11 +15,17 @@ import com.xtdar.app.view.activity.LoginActivity;
 import com.xtdar.app.view.activity.Main2Activity;
 import com.xtdar.app.view.widget.LoadDialog;
 
+import cn.sharesdk.framework.Platform;
+import cn.sharesdk.framework.PlatformActionListener;
+import cn.sharesdk.framework.ShareSDK;
+import cn.sharesdk.wechat.friends.Wechat;
+
+
 /**
  * Created by hmxbanz on 2017/4/5.
  */
 
-public class LoginPresenter extends BasePresenter{
+public class LoginPresenter extends BasePresenter  {
     private static final int LOGIN = 1;
     private static final int GET_TOKEN = 2;
     private final BasePresenter basePresenter;
@@ -90,4 +97,17 @@ public class LoginPresenter extends BasePresenter{
             }
         }
     }
+
+    public void wxLogin() {
+        Platform wechat = ShareSDK.getPlatform(Wechat.NAME);;
+        String name = wechat.getName();
+        wechat.authorize();
+        if(!wechat.isAuthValid()){
+            NToast.shortToast(context,"aaaaaaaaaaaaa");
+        } else {
+            NToast.shortToast(context,"bbbbbbbbbbbbb");
+        }
+
+    }
+
 }
