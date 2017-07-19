@@ -271,6 +271,13 @@
             </intent-filter>
 
         </activity>
+        <activity
+            android:name="com.xtdar.app.wxapi.WXEntryActivity"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:exported="true"
+            android:screenOrientation="portrait" />
+        <!-- 微信分享回调 -->
 
         <service android:name=".widget.downloadService.DownloadService" />
         <service android:name=".service.DeviceConectService" />

@@ -3,8 +3,11 @@ package com.xtdar.app.presenter;
 import android.content.Context;
 import android.content.Intent;
 import android.text.TextUtils;
+import android.util.Log;
 import android.widget.EditText;
+import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.mob.tools.utils.UIHandler;
 import com.xtdar.app.R;
 import com.xtdar.app.XtdConst;
@@ -30,6 +33,7 @@ import cn.sharesdk.wechat.friends.Wechat;
 public class LoginPresenter extends BasePresenter  {
     private static final int LOGIN = 1;
     private static final int GET_TOKEN = 2;
+    private static final String TAG = "WWWWWWWW";
     private final BasePresenter basePresenter;
     private LoginActivity mActivity;
     private EditText mUsername;
@@ -101,50 +105,63 @@ public class LoginPresenter extends BasePresenter  {
     }
 
     public void wxLogin() {
-        final Platform wechat = ShareSDK.getPlatform(Wechat.NAME);
-        String name = wechat.getName();
+        final Platform weixin = ShareSDK.getPlatform(Wechat.NAME);
+        String name = weixin.getName();
 
-        wechat.setPlatformActionListener(new PlatformActionListener() {
-
+        //设置监听回调
+        weixin.setPlatformActionListener(new PlatformActionListener() {
             @Override
-            public void onComplete(Platform platform, int i, HashMap<String, Object> hashMap) {
-                // TODO Auto-generated method stub
-                //输出所有授权信息
-                wechat.getDb().exportData();
+            public void onComplete(Platform platform, int i, final HashMap<String, Object> hashMap) {
+                Log.d(TAG, " _Weixin: -->> onComplete: Platform:" + platform.toString());
+                Log.d(TAG, " _Weixin: -->> onComplete: hashMap:" + hashMap);
 
-
+                //当前线程不能执行UI操作，需要放到主线程中去
+                mActivity.runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        showUser_WeiXin(hashMap);
+                    }
+                });
             }
 
             @Override
-            public void onError(Platform arg0, int arg1, Throwable arg2) {
-                // TODO Auto-generated method stub
-                arg2.printStackTrace();
+            public void onError(Platform platform, int i, Throwable throwable) {
+                Log.d(TAG, " _Weixin: -->> onError:  " + throwable.toString());
+                throwable.printStackTrace();
+                weixin.removeAccount(true);
             }
 
-
             @Override
-            public void onCancel(Platform arg0, int arg1) {
-                // TODO Auto-generated method stub
-
+            public void onCancel(Platform platform, int i) {
+                NToast.shortToast(context,"取消了");
             }
         });
 
-        wechat.authorize();
+        //授权并获取用户信息
+        weixin.showUser(null);
 
-        if(!wechat.isAuthValid()){
-            NToast.shortToast(context,"aaaaaaaaaaaaa");
-        } else {
-            NToast.shortToast(context,"bbbbbbbbbbbbb");
-        }
-
-
-
-
-
+//        if(!wechat.isAuthValid()){
+//            NToast.shortToast(context,"aaaaaaaaaaaaa");
+//        } else {
+//            NToast.shortToast(context,"bbbbbbbbbbbbb");
+//        }
 
 
 
     }
+
+    private void showUser_WeiXin(HashMap<String, Object> hashMap) {
+        String name = (String) hashMap.get("nickname");
+        NToast.shortToast(context,name);
+
+        String url = (String) hashMap.get("headimgurl");
+//        Glide.with(ShareLogin.this)
+//                .load(url)
+//                .placeholder(R.mipmap.ic_launcher)
+//                .error(R.mipmap.ic_launcher)
+//                .into(ivPortrait);
+    }
+
 
 
 
