@@ -214,22 +214,20 @@
         <activity android:name=".view.activity.ShowDetailActivity" />
         <activity android:name=".view.activity.MyVideoActivity" />
         <activity android:name=".view.activity.MyCommentActivity" />
+        <activity android:name=".view.activity.AboutActivity" />
         <activity
             android:name=".view.activity.ConversationListActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden|adjustResize">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
-
                 <category android:name="android.intent.category.DEFAULT" />
-
                 <data
                     android:host="com.xtdar.app"
                     android:pathPrefix="/conversationlist"
                     android:scheme="rong" />
             </intent-filter>
         </activity>
-        <activity android:name=".view.activity.AboutActivity" />
         <!-- 会话界面 -->
         <activity
             android:name=".view.activity.ConversationActivity"
@@ -237,9 +235,7 @@
             android:windowSoftInputMode="stateHidden|adjustResize">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
-
                 <category android:name="android.intent.category.DEFAULT" />
-
                 <data
                     android:host="com.xtdar.app"
                     android:pathPrefix="/conversation/"

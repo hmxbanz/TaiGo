@@ -15,6 +15,8 @@ import com.xtdar.app.view.activity.LoginActivity;
 import com.xtdar.app.view.activity.Main2Activity;
 import com.xtdar.app.view.widget.LoadDialog;
 
+import java.util.HashMap;
+
 import cn.sharesdk.framework.Platform;
 import cn.sharesdk.framework.PlatformActionListener;
 import cn.sharesdk.framework.ShareSDK;
@@ -99,15 +101,51 @@ public class LoginPresenter extends BasePresenter  {
     }
 
     public void wxLogin() {
-        Platform wechat = ShareSDK.getPlatform(Wechat.NAME);;
+        final Platform wechat = ShareSDK.getPlatform(Wechat.NAME);
         String name = wechat.getName();
+
+        wechat.setPlatformActionListener(new PlatformActionListener() {
+
+            @Override
+            public void onComplete(Platform platform, int i, HashMap<String, Object> hashMap) {
+                // TODO Auto-generated method stub
+                //输出所有授权信息
+                wechat.getDb().exportData();
+
+
+            }
+
+            @Override
+            public void onError(Platform arg0, int arg1, Throwable arg2) {
+                // TODO Auto-generated method stub
+                arg2.printStackTrace();
+            }
+
+
+            @Override
+            public void onCancel(Platform arg0, int arg1) {
+                // TODO Auto-generated method stub
+
+            }
+        });
+
         wechat.authorize();
+
         if(!wechat.isAuthValid()){
             NToast.shortToast(context,"aaaaaaaaaaaaa");
         } else {
             NToast.shortToast(context,"bbbbbbbbbbbbb");
         }
 
+
+
+
+
+
+
+
     }
+
+
 
 }
