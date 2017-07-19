@@ -224,7 +224,7 @@ public class BlePresenter extends BasePresenter implements OnDataListener, BleAd
             atm.request(BINDDEVICE,this);
         else
         {
-            DialogWithYesOrNoUtils.getInstance().showDialog(context, "请先登录再绑定设备", "前住登录", new AlertDialogCallback() {
+            DialogWithYesOrNoUtils.getInstance().showDialog(context, "请先登录再绑定设备",null, "前住登录", new AlertDialogCallback() {
                 @Override
                 public void executeEvent() {
                     context.startActivity(new Intent(context, LoginActivity.class));

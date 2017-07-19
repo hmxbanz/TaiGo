@@ -34,7 +34,7 @@ public class SettingPresenter extends BasePresenter {
     };
 public void logOff()
 {
-    DialogWithYesOrNoUtils.getInstance().showDialog(context, "确定要退出TaiGo吗?",null, new AlertDialogCallback() {
+    DialogWithYesOrNoUtils.getInstance().showDialog(context, "确定要退出TaiGo吗?",null,null, new AlertDialogCallback() {
         @Override
         public void executeEvent() {
             //File file = new File(Environment.getExternalStorageDirectory().getPath() + getPackageName());

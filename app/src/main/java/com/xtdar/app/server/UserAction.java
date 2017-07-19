@@ -31,6 +31,7 @@ import com.xtdar.app.server.response.TagResponse;
 import com.xtdar.app.server.response.TaobaoResponse;
 import com.xtdar.app.server.response.UserInfoResponse;
 import com.xtdar.app.server.response.VersionResponse;
+import com.xtdar.app.server.response.WxLoginResponse;
 import com.zhy.http.okhttp.OkHttpUtils;
 import com.zhy.http.okhttp.callback.StringCallback;
 
@@ -108,6 +109,71 @@ public class UserAction extends BaseAction {
             }
         }
         return loginResponse;
+
+    }
+
+
+    //微信绑定
+    public CommonResponse wxBind(String unionid,String cellPhone, String pwd) throws HttpException
+    {
+        String uri = getURL("kp_dyz/cli-tplogin-bindwx.php");
+        Response response=null;
+        try {
+            response=OkHttpUtils
+                    .get()
+                    .addParams("unionid",unionid)
+                    .addParams("cell_phone",cellPhone)
+                    .addParams("pwd",pwd)
+                    .url(uri)
+                    .build()
+                    .execute();
+            result =response.body().string();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        CommonResponse commonResponse = null;
+        if (!TextUtils.isEmpty(result)) {
+            NLog.e("接收的", result);
+
+            try {
+                commonResponse = JsonMananger.jsonToBean(result, CommonResponse.class);
+            } catch (JSONException e) {
+                NLog.d(TAG, "CommonResponse occurs JSONException e=" + e.toString());
+                return null;
+            }
+        }
+        return commonResponse;
+
+    }
+
+    //微信登录请求
+    public WxLoginResponse wxOpenId(String unionid) throws HttpException
+    {
+        String uri = getURL("kp_dyz/cli-tplogin-wxlogin.php");
+        Response response=null;
+        try {
+            response=OkHttpUtils
+                    .get()
+                    .addParams("unionid",unionid)
+                    .url(uri)
+                    .build()
+                    .execute();
+            result =response.body().string();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        WxLoginResponse wxLoginResponse = null;
+        if (!TextUtils.isEmpty(result)) {
+            NLog.e("接收的", result);
+
+            try {
+                wxLoginResponse = JsonMananger.jsonToBean(result, WxLoginResponse.class);
+            } catch (JSONException e) {
+                NLog.d(TAG, "wxLoginResponse occurs JSONException e=" + e.toString());
+                return null;
+            }
+        }
+        return wxLoginResponse;
 
     }
 

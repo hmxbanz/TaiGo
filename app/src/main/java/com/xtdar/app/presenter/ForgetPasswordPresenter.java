@@ -99,7 +99,7 @@ public class ForgetPasswordPresenter extends BasePresenter {
                 case RESETPWD:
                     CommonResponse commonResponse2 = (CommonResponse) result;
                     if (commonResponse2.getCode() == XtdConst.SUCCESS) {
-                        DialogWithYesOrNoUtils.getInstance().showDialog(context, "密码重置成功", null, new AlertDialogCallback() {
+                        DialogWithYesOrNoUtils.getInstance().showDialog(context, "密码重置成功",null, null, new AlertDialogCallback() {
                             @Override
                             public void executeEvent() {
                                 context.startActivity(new Intent(context, Main2Activity.class));

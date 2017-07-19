@@ -206,7 +206,7 @@ public class MePresenter extends BasePresenter implements OnDataListener{
                         mActivity.shouldShowRequestPermissionRationale(Manifest.permission.READ_EXTERNAL_STORAGE)) {
                     mActivity.requestPermissions(new String[] {Manifest.permission.CAMERA, Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE}, REQUEST_CODE_ASK_PERMISSIONS);
                 } else {
-                    DialogWithYesOrNoUtils.getInstance().showDialog(context, "您需要打开相机权限", "授权",new DialogWithYesOrNoUtils.DialogCallBack() {
+                    DialogWithYesOrNoUtils.getInstance().showDialog(context, "您需要打开相机权限", null,"授权",new DialogWithYesOrNoUtils.DialogCallBack() {
                         @Override
                         public void executeEvent() {
                             mActivity.requestPermissions(new String[]{Manifest.permission.CAMERA, Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE}, REQUEST_CODE_ASK_PERMISSIONS);

@@ -238,7 +238,7 @@ public class DynamicPresenter extends BasePresenter {
         CommonResponse commonResponse = (CommonResponse) result;
 
         if(commonResponse.getCode() == XtdConst.SUCCESS){
-            DialogWithYesOrNoUtils.getInstance().showDialog(context, "发布成功", null,new AlertDialogCallback());
+            DialogWithYesOrNoUtils.getInstance().showDialog(context, "发布成功", null,null,new AlertDialogCallback());
         }
 
         NToast.shortToast(context, commonResponse.getMsg());

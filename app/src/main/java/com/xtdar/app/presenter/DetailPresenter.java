@@ -205,7 +205,7 @@ public class DetailPresenter extends BasePresenter{
             case ADDFAVOR:
                 CommonResponse commonResponse=(CommonResponse) result;
                 if (commonResponse.getCode() == XtdConst.SUCCESS) {
-                    DialogWithYesOrNoUtils.getInstance().showDialog(context,"收藏成功",null ,new AlertDialogCallback());
+                    DialogWithYesOrNoUtils.getInstance().showDialog(context,"收藏成功",null,null ,new AlertDialogCallback());
                 }
                 NToast.shortToast(context,commonResponse.getMsg());
                 break;

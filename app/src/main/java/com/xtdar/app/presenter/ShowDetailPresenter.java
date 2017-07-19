@@ -220,7 +220,7 @@ public class ShowDetailPresenter extends BasePresenter{
             case ADDCOMMENT:
                 CommonResponse CommonResponse = (CommonResponse) result;
                 if (CommonResponse.getCode() == XtdConst.SUCCESS) {
-                    DialogWithYesOrNoUtils.getInstance().showDialog(context,"评论成功",null,new AlertDialogCallback());
+                    DialogWithYesOrNoUtils.getInstance().showDialog(context,"评论成功",null,null,new AlertDialogCallback());
                 }
                 NToast.shortToast(context,CommonResponse.getMsg());
                 break;

@@ -1,13 +1,16 @@
 package com.xtdar.app.view.activity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.xtdar.app.XtdConst;
 import com.xtdar.app.presenter.LoginPresenter;
 
 import com.xtdar.app.R;
@@ -20,6 +23,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
     private TextView mTextForgetPassword;
     private LoginPresenter mLoginPresenter;
     private TextView mTextRight;
+    private String openId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,15 +33,26 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
         initViews();
         mLoginPresenter = new LoginPresenter(this);
         mLoginPresenter.init(mUsername,mPassword);
+        mLoginPresenter.wxOpenId=openId;
+    }
+
+
+    public static void StartActivity(Context context, String openId, String type) {
+        Intent intent = new Intent(context, LoginActivity.class);
+        intent.putExtra("openId",openId);
+        intent.putExtra("type",type);
+        context.startActivity(intent);
     }
 
     private void initViews() {
+        Intent intent=getIntent();
+        openId = intent.getStringExtra("openId");
+
         layout_back = (RelativeLayout) findViewById(R.id.layout_back);
         layout_back.setOnClickListener(this);
         txtTitle =(TextView) findViewById(R.id.text_title);
-        txtTitle.setText("登录");
         mTextRight =(TextView) findViewById(R.id.text_right);
-        mTextRight.setText("注册");
+
         mTextRight.setOnClickListener(this);
 
 
@@ -51,6 +66,16 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
         mPassword = (EditText) findViewById(R.id.password);
         mBtnLogin = (Button) findViewById(R.id.btn_login);
         mBtnLogin.setOnClickListener(this);
+
+        if(TextUtils.isEmpty(openId)){
+            txtTitle.setText("登录");
+            mTextRight.setText("注册");
+        }
+        else
+        {
+            txtTitle.setText("绑定");
+            mBtnLogin.setText("绑定");
+        }
     }
 
     @Override
@@ -63,7 +88,14 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                 startActivity(new Intent(this,RegisterActivity.class));
                 break;
             case R.id.btn_login:
-                mLoginPresenter.login();
+                if(TextUtils.isEmpty(openId)){
+                    mLoginPresenter.login("nomal");
+                }
+                else
+                {
+                    mLoginPresenter.login("bind");
+                }
+
                 break;
             case R.id.text_forget_password:
                 startActivity(new Intent(this,ForgetPasswordActivity.class));

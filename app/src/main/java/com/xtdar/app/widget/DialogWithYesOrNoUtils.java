@@ -34,14 +34,17 @@ public class DialogWithYesOrNoUtils {
     private DialogWithYesOrNoUtils() {
     }
 
-    public void showDialog(Context context, String titleText,String confirmText ,final DialogCallBack callBack) {
+    public void showDialog(Context context, String titleText,String cancleText,String confirmText ,final DialogCallBack callBack) {
         final AlertDialog alterDialog = new AlertDialog.Builder(context).create();
         alterDialog.show();
         Window window=alterDialog.getWindow();
         window.setContentView(R.layout.alert_dialog);
         TextView textTitle = (TextView) window.findViewById(R.id.text_title);
         textTitle.setText(titleText);
+        TextView btnConfirm = (TextView) window.findViewById(R.id.btn_confirm);
+        if(!TextUtils.isEmpty(confirmText))    btnConfirm.setText(confirmText);
         TextView btnCancle = (TextView) window.findViewById(R.id.btn_cancle);
+        if(!TextUtils.isEmpty(cancleText))    btnCancle.setText(cancleText);
         btnCancle.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
@@ -49,8 +52,7 @@ public class DialogWithYesOrNoUtils {
                 callBack.onCancle();
             }
         });
-        TextView btnConfirm = (TextView) window.findViewById(R.id.btn_confirm);
-        if(!TextUtils.isEmpty(confirmText))    btnConfirm.setText(confirmText);
+
         btnConfirm.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {

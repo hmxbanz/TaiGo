@@ -54,7 +54,7 @@ public class Main2Presenter extends BasePresenter {
 
     public void onMeClick(final ViewPager viewPager) {
         if(!basePresenter.isLogin){
-            DialogWithYesOrNoUtils.getInstance().showDialog(context, "请先登录", "前住登录", new AlertDialogCallback() {
+            DialogWithYesOrNoUtils.getInstance().showDialog(context, "请先登录", null,"前住登录", new AlertDialogCallback() {
                 @Override
                 public void executeEvent() {
                     activity.startActivity(new Intent(activity, LoginActivity.class));
@@ -102,7 +102,7 @@ public class Main2Presenter extends BasePresenter {
                         int versionCode = Integer.parseInt(versionInfo[0]);
                         if(entity.getVersionCode()>versionCode)
                         {
-                            DialogWithYesOrNoUtils.getInstance().showDialog(activity, "发现新版本:"+entity.getVersionName(), "立即更新",new AlertDialogCallback() {
+                            DialogWithYesOrNoUtils.getInstance().showDialog(activity, "发现新版本:"+entity.getVersionName(), null,"立即更新",new AlertDialogCallback() {
                                 @Override
                                 public void executeEvent() {
                                     goToDownload(entity.getDownloadUrl());
