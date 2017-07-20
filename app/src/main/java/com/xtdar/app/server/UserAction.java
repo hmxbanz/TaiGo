@@ -177,6 +177,70 @@ public class UserAction extends BaseAction {
 
     }
 
+    //QQ登录请求
+    public WxLoginResponse qqOpenId(String unionid) throws HttpException
+    {
+        String uri = getURL("kp_dyz/cli-tplogin-qqlogin.php");
+        Response response=null;
+        try {
+            response=OkHttpUtils
+                    .get()
+                    .addParams("open_id",unionid)
+                    .url(uri)
+                    .build()
+                    .execute();
+            result =response.body().string();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        WxLoginResponse wxLoginResponse = null;
+        if (!TextUtils.isEmpty(result)) {
+            NLog.e("接收的", result);
+
+            try {
+                wxLoginResponse = JsonMananger.jsonToBean(result, WxLoginResponse.class);
+            } catch (JSONException e) {
+                NLog.d(TAG, "wxLoginResponse occurs JSONException e=" + e.toString());
+                return null;
+            }
+        }
+        return wxLoginResponse;
+
+    }
+    //微信绑定
+    public CommonResponse qqBind(String unionid,String cellPhone, String pwd) throws HttpException
+    {
+        String uri = getURL("kp_dyz/cli-tplogin-bindqq.php");
+        Response response=null;
+        try {
+            response=OkHttpUtils
+                    .get()
+                    .addParams("open_id",unionid)
+                    .addParams("cell_phone",cellPhone)
+                    .addParams("pwd",pwd)
+                    .url(uri)
+                    .build()
+                    .execute();
+            result =response.body().string();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        CommonResponse commonResponse = null;
+        if (!TextUtils.isEmpty(result)) {
+            NLog.e("接收的", result);
+
+            try {
+                commonResponse = JsonMananger.jsonToBean(result, CommonResponse.class);
+            } catch (JSONException e) {
+                NLog.d(TAG, "CommonResponse occurs JSONException e=" + e.toString());
+                return null;
+            }
+        }
+        return commonResponse;
+
+    }
+
+
 //获取验证码
     public CaptchaResponse getCaptcha(String cellPhone) throws HttpException
     {

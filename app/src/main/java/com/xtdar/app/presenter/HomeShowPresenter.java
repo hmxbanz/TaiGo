@@ -100,9 +100,6 @@ public class HomeShowPresenter extends BasePresenter implements OnDataListener,R
 
     @Override
     public void onItemClick(int position, String itemId, String classId) {
-        Intent intent = new Intent(context, ShowDetailActivity.class);
-        intent.putExtra("show_id", itemId);
-        context.startActivity(intent);
-
+        ShowDetailActivity.StartActivity(context,itemId,classId);
     }
 }

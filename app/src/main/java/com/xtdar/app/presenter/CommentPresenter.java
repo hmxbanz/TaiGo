@@ -11,6 +11,7 @@ import com.xtdar.app.server.HttpException;
 import com.xtdar.app.server.async.OnDataListener;
 import com.xtdar.app.server.response.MyCommentResponse;
 import com.xtdar.app.view.activity.DetailActivity;
+import com.xtdar.app.view.activity.ShowDetailActivity;
 import com.xtdar.app.view.widget.LoadDialog;
 
 import java.util.ArrayList;
@@ -71,7 +72,7 @@ public class CommentPresenter extends BasePresenter implements OnDataListener ,M
 
     @Override
     public boolean onItemClick(int position, View view, String status) {
-        DetailActivity.StartActivity(context,status,status);
+        ShowDetailActivity.StartActivity(context,status,status);
         return false;
     }
 }

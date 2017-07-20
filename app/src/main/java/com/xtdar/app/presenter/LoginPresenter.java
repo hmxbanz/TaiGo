@@ -5,10 +5,7 @@ import android.content.Intent;
 import android.text.TextUtils;
 import android.util.Log;
 import android.widget.EditText;
-import android.widget.Toast;
 
-import com.bumptech.glide.Glide;
-import com.mob.tools.utils.UIHandler;
 import com.xtdar.app.R;
 import com.xtdar.app.XtdConst;
 import com.xtdar.app.common.NToast;
@@ -27,7 +24,10 @@ import java.util.HashMap;
 
 import cn.sharesdk.framework.Platform;
 import cn.sharesdk.framework.PlatformActionListener;
+import cn.sharesdk.framework.PlatformDb;
 import cn.sharesdk.framework.ShareSDK;
+import cn.sharesdk.sina.weibo.SinaWeibo;
+import cn.sharesdk.tencent.qq.QQ;
 import cn.sharesdk.wechat.friends.Wechat;
 
 
@@ -42,11 +42,13 @@ public class LoginPresenter extends BasePresenter  {
     private static final int UPLOADWXOPENID = 3;
     private static final int WXLOGIN = 4;
     private static final int WXBIND = 5;
+    private static final int UPLOADQQOPENID = 6;
+    private static final int QQBIND = 7;
     private final BasePresenter basePresenter;
     private LoginActivity mActivity;
     private EditText mUsername;
     private EditText mPassword;
-    public String wxOpenId;
+    public String openId,loginType;
     private String access_key;
 
     public LoginPresenter(Context context){
@@ -77,8 +79,14 @@ public class LoginPresenter extends BasePresenter  {
         LoadDialog.show(context);
 
         if(type.equals("bind")) {
-            atm.request(WXBIND,this);
-
+            switch (loginType){
+                case "wx":
+                    atm.request(WXBIND,this);break;
+                case "qq":
+                    atm.request(QQBIND,this);break;
+                case "weibo":
+                    atm.request(WXBIND,this);
+            }
         }
         else
         {
@@ -93,15 +101,19 @@ public class LoginPresenter extends BasePresenter  {
             case LOGIN:
                 return mUserAction.login(mUsername.getText().toString(), mPassword.getText().toString());
             case UPLOADWXOPENID:
-                return mUserAction.wxOpenId(wxOpenId);
+                return mUserAction.wxOpenId(openId);
             case WXBIND:
-                return mUserAction.wxBind(wxOpenId,mUsername.getText().toString(), mPassword.getText().toString());
+                return mUserAction.wxBind(openId,mUsername.getText().toString(), mPassword.getText().toString());
+            case UPLOADQQOPENID:
+                return mUserAction.qqOpenId(openId);
+            case QQBIND:
+                return mUserAction.qqBind(openId,mUsername.getText().toString(), mPassword.getText().toString());
 
         }
         return null;
     }
     @Override
-    public void onSuccess(int requestCode, Object result) {
+    public void onSuccess(final int requestCode, Object result) {
         LoadDialog.dismiss(context);
         if (result != null) {
             switch (requestCode) {
@@ -117,6 +129,7 @@ public class LoginPresenter extends BasePresenter  {
                     NToast.shortToast(context, loginResponse.getMsg());
                     break;
                 case UPLOADWXOPENID:
+                case UPLOADQQOPENID:
                     WxLoginResponse response = (WxLoginResponse) result;
                     if (response != null && response.getCode() == XtdConst.SUCCESS) {
 
@@ -127,7 +140,10 @@ public class LoginPresenter extends BasePresenter  {
                         DialogWithYesOrNoUtils.getInstance().showDialog(context,"温馨提示","新用户请注册","老用户请绑定",new AlertDialogCallback(){
                             @Override
                             public void executeEvent() {
-                                LoginActivity.StartActivity(context,wxOpenId,"wx");
+                                if(requestCode==UPLOADWXOPENID)
+                                    LoginActivity.StartActivity(context, openId,"wx");
+                                else if(requestCode==UPLOADQQOPENID)
+                                    LoginActivity.StartActivity(context, openId,"qq");
                             }
 
                             @Override
@@ -143,6 +159,7 @@ public class LoginPresenter extends BasePresenter  {
                     break;
 
                 case WXBIND:
+                case QQBIND:
                     CommonResponse commonResponse = (CommonResponse) result;
                     if (commonResponse != null && commonResponse.getCode() == XtdConst.SUCCESS) {
                         DialogWithYesOrNoUtils.getInstance().showDialog(context,"绑定成功",null,null,new AlertDialogCallback(){
@@ -150,13 +167,7 @@ public class LoginPresenter extends BasePresenter  {
                             public void executeEvent() {
                                 atm.request(LOGIN,LoginPresenter.this);
                             }
-
-                            @Override
-                            public void onCancle() {
-
-                            }
                         });
-
                     }
                     NToast.shortToast(context, commonResponse.getMsg());
                     break;
@@ -210,14 +221,128 @@ public class LoginPresenter extends BasePresenter  {
 
 
     }
-
     private void showUser_WeiXin(HashMap<String, Object> hashMap) {
         String name = (String) hashMap.get("nickname");
-        wxOpenId=(String)hashMap.get("openid");
+        openId =(String)hashMap.get("openid");
         atm.request(UPLOADWXOPENID,this);
         NToast.shortToast(context,name);
 
         String url = (String) hashMap.get("headimgurl");
+//        Glide.with(ShareLogin.this)
+//                .load(url)
+//                .placeholder(R.mipmap.ic_launcher)
+//                .error(R.mipmap.ic_launcher)
+//                .into(ivPortrait);
+    }
+
+    public void qqLogin() {
+        //获取QQ平台手动授权
+        final Platform qq = ShareSDK.getPlatform(QQ.NAME);
+        //设置回调监听
+        qq.setPlatformActionListener(new PlatformActionListener() {
+            @Override
+            public void onComplete(Platform platform, int action, final HashMap<String, Object> hashMap) {
+                Log.d(TAG, " _QQ: -->> onComplete: Platform:" + platform.toString());
+                Log.d(TAG, " _QQ: -->> onComplete: hashMap:" + hashMap);
+                if (action == Platform.ACTION_USER_INFOR) {
+                    final PlatformDb platDB = platform.getDb();//获取数平台数据DB
+                    //通过DB获取各种数据
+                    platDB.getToken();
+                    platDB.getUserGender();
+                    platDB.getUserIcon();
+                    platDB.getUserId();
+                    platDB.getUserName();
+
+                    //当前线程不能执行UI操作，需要放到主线程中去
+                    mActivity.runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            showUser_QQ(platDB,hashMap);
+                        }
+                    });
+
+                }
+
+            }
+
+            @Override
+            public void onError(Platform platform, int action, Throwable throwable) {
+                Log.d(TAG, " _QQ: -->> onError:  " + throwable.toString());
+                throwable.printStackTrace();
+            }
+
+            @Override
+            public void onCancel(Platform platform, int i) {
+                qq.removeAccount(true);
+            }
+        });
+        //单独授权,进入输入用户名和密码界面
+        /*qq.authorize();*/
+        //授权并获得用户信息
+        qq.showUser(null);
+
+
+    }
+    private void showUser_QQ(PlatformDb platDB, HashMap<String, Object> hashMap) {
+        String name = (String) hashMap.get("nickname");
+        openId =platDB.getUserId();
+        atm.request(UPLOADQQOPENID,this);
+        NToast.shortToast(context,name);
+
+        String url = (String) hashMap.get("figureurl_qq_1");
+//        Glide.with(ShareLogin.this)
+//                .load(url)
+//                .placeholder(R.mipmap.ic_launcher)
+//                .error(R.mipmap.ic_launcher)
+//                .into(ivPortrait);
+    }
+
+    /**
+     * 新浪授权
+     */
+    public void weiboLogin() {
+        //获取具体的平台手动授权
+        final Platform weibo = ShareSDK.getPlatform(SinaWeibo.NAME);
+        //设置回调监听
+        weibo.setPlatformActionListener(new PlatformActionListener() {
+            @Override
+            public void onComplete(Platform platform, int i, final HashMap<String, Object> hashMap) {
+                Log.d(TAG, " _XinLang: -->> onComplete: Platform:" + platform.toString());
+                Log.d(TAG, " _XinLang: -->> onComplete: hashMap:" + hashMap);
+
+                //当前线程不能执行UI操作，需要放到主线程中去
+                mActivity.runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        showUser_XinLang(hashMap);
+                    }
+                });
+            }
+
+            @Override
+            public void onError(Platform platform, int i, Throwable throwable) {
+                Log.d(TAG, " _XinLang: -->> onError:  " + throwable.toString());
+                throwable.printStackTrace();
+            }
+
+            @Override
+            public void onCancel(Platform platform, int i) {
+                weibo.removeAccount(true);
+            }
+        });
+        //authorize与showUser单独调用一个即可，
+        //单独授权,进入输入用户名和密码界面
+        /*weibo.authorize();*/
+        //授权并获取用户信息
+        weibo.showUser(null);
+        //移除授权
+        /*weibo.removeAccount(true);*/
+    }
+    public void showUser_XinLang(HashMap<String, Object> params) {
+        String name = (String) params.get("name");
+//        tvName.setText(name);
+//
+//        String url = (String) params.get("profile_image_url");
 //        Glide.with(ShareLogin.this)
 //                .load(url)
 //                .placeholder(R.mipmap.ic_launcher)

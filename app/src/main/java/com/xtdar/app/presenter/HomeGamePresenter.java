@@ -39,8 +39,8 @@ public class HomeGamePresenter extends BasePresenter implements OnDataListener {
     @Override
     public Object doInBackground(int requestCode, String parameter) throws HttpException {
         switch (requestCode) {
-            case GETTAGS:
-                return mUserAction.getTags();
+//            case GETTAGS:
+//                return mUserAction.getTags();
         }
         return null;
     }

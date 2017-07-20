@@ -123,7 +123,7 @@ public class HomeAnimationPresenter extends BasePresenter implements OnDataListe
 
     @Override
     public void onItemClick(int position, String item_id,String class_id) {
-        DetailActivity.StartActivity(context,item_id,class_id);
+        //DetailActivity.StartActivity(context,item_id,class_id);
     }
 
     /**

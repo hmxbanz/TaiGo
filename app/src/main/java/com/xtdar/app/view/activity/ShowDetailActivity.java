@@ -162,7 +162,7 @@ public class ShowDetailActivity extends BaseActivity implements RecyclerViewAdap
 
     public static void StartActivity(Context context,String itemId,String classId) {
         Intent intent = new Intent(context, ShowDetailActivity.class);
-        intent.putExtra(XtdConst.ITEMID,itemId);
+        intent.putExtra("show_id",itemId);
         intent.putExtra(XtdConst.CLASSID,classId);
         context.startActivity(intent);
     }

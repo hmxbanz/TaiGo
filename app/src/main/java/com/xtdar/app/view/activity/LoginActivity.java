@@ -10,7 +10,6 @@ import android.widget.EditText;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.xtdar.app.XtdConst;
 import com.xtdar.app.presenter.LoginPresenter;
 
 import com.xtdar.app.R;
@@ -19,11 +18,11 @@ import com.xtdar.app.R;
 public class LoginActivity extends BaseActivity implements View.OnClickListener {
     private EditText mUsername,mPassword;
     private Button mBtnLogin;
-    private RelativeLayout mLayoutQqLogin,mLayoutWxLogin;
+    private RelativeLayout mLayoutQqLogin,mLayoutWxLogin,mLayoutWeiboWxLogin;
     private TextView mTextForgetPassword;
     private LoginPresenter mLoginPresenter;
     private TextView mTextRight;
-    private String openId;
+    private String openId,loginType;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,7 +32,8 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
         initViews();
         mLoginPresenter = new LoginPresenter(this);
         mLoginPresenter.init(mUsername,mPassword);
-        mLoginPresenter.wxOpenId=openId;
+        mLoginPresenter.openId =openId;
+        mLoginPresenter.loginType=loginType;
     }
 
 
@@ -47,6 +47,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
     private void initViews() {
         Intent intent=getIntent();
         openId = intent.getStringExtra("openId");
+        loginType = intent.getStringExtra("type");
 
         layout_back = (RelativeLayout) findViewById(R.id.layout_back);
         layout_back.setOnClickListener(this);
@@ -61,6 +62,8 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
         mLayoutQqLogin.setOnClickListener(this);
         mLayoutWxLogin = (RelativeLayout) findViewById(R.id.layout_wx_login);
         mLayoutWxLogin.setOnClickListener(this);
+        mLayoutWeiboWxLogin = (RelativeLayout) findViewById(R.id.layout_weibo_login);
+        mLayoutWeiboWxLogin.setOnClickListener(this);
         mTextForgetPassword.setOnClickListener(this);
         mUsername = (EditText) findViewById(R.id.username);
         mPassword = (EditText) findViewById(R.id.password);
@@ -89,19 +92,23 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                 break;
             case R.id.btn_login:
                 if(TextUtils.isEmpty(openId)){
-                    mLoginPresenter.login("nomal");
-                }
-                else
-                {
-                    mLoginPresenter.login("bind");
-                }
-
+                    mLoginPresenter.login("nomal");  return;
+                    }
+                mLoginPresenter.login("bind");
                 break;
             case R.id.text_forget_password:
                 startActivity(new Intent(this,ForgetPasswordActivity.class));
                 break;
             case R.id.layout_wx_login:
                 mLoginPresenter.wxLogin();
+                break;
+            case R.id.layout_qq_login:
+                mLoginPresenter.qqLogin();
+                break;
+            case R.id.layout_weibo_login:
+                mLoginPresenter.weiboLogin();
+                break;
+
         }
     }
 }
