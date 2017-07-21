@@ -13,6 +13,7 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.xtdar.app.common.NLog;
 import com.xtdar.app.common.PhotoUtils;
 import com.xtdar.app.presenter.MinePresenter;
 import com.xtdar.app.view.activity.MyCommentActivity;
@@ -66,7 +67,6 @@ public class MineFragment extends Fragment implements View.OnClickListener {
         mView = inflater.inflate(R.layout.fragment_mine, null);
         initViews();
         presenter = new MinePresenter(getActivity());
-        presenter.init(mImageView,nickName);
 //        initData();
 //        BroadcastManager.getInstance(getActivity()).addAction(SealConst.CHANGEINFO, new BroadcastReceiver() {
 //            @Override
@@ -79,7 +79,21 @@ public class MineFragment extends Fragment implements View.OnClickListener {
 //            }
 //        });
 //        compareVersion();
+        NLog.e("fragment-----","onCreateView");
         return mView;
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        presenter.init(mImageView,nickName);
+        NLog.e("fragment-----","onStart");
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        NLog.e("fragment-----","onResume");
     }
 
     private void initViews() {

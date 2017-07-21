@@ -111,52 +111,6 @@
     </RelativeLayout>
 
     <RelativeLayout
-        android:id="@+id/tab_layout_show"
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:layout_weight="3">
-
-        <FrameLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_centerInParent="true">
-
-            <RelativeLayout
-                android:paddingTop="3dp"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_centerHorizontal="true"
-                android:gravity="center">
-
-                <ImageView
-                    android:src="@drawable/icon_serial_no"
-                    android:id="@+id/tab_img_discovery"
-                    android:layout_width="45dp"
-                    android:layout_height="45dp"
-                    android:layout_centerHorizontal="true"
-                    android:background="#ffffff"
-                    android:focusable="false"
-                    android:scaleType="centerInside" />
-
-                <TextView
-                    android:id="@+id/tab_text_discovery"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@id/tab_img_discovery"
-                    android:layout_centerHorizontal="true"
-                    android:layout_marginTop="2dp"
-                    android:text="WIFI添加"
-                    android:textColor="#abadbb"
-                    android:textSize="10dp" />
-
-            </RelativeLayout>
-
-
-
-        </FrameLayout>
-
-    </RelativeLayout>
-    <RelativeLayout
         android:id="@+id/layout_more"
         android:layout_width="0dp"
         android:layout_height="match_parent"

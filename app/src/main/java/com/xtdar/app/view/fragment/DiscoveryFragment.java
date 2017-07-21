@@ -53,9 +53,13 @@ public class DiscoveryFragment extends Fragment implements View.OnClickListener 
         initMianViewPager();
 //        initData();
         discoveryPresenter = new DiscoveryPresenter(getContext());
-        discoveryPresenter.init(tabLayout);
-
         return view;
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        discoveryPresenter.init(tabLayout);
     }
 
     private void initViews() {

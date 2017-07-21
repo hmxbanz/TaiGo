@@ -1,7 +1,6 @@
 package com.xtdar.app.adapter;
 
 import android.content.Context;
-import android.content.Intent;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -12,38 +11,30 @@ import android.widget.TextView;
 
 import com.xtdar.app.R;
 import com.xtdar.app.XtdConst;
-import com.xtdar.app.common.NToast;
 import com.xtdar.app.loader.GlideImageLoader;
-import com.xtdar.app.model.UserList;
-import com.xtdar.app.server.response.RecommendResponse;
+import com.xtdar.app.server.response.ShopMoreResponse;
 import com.xtdar.app.server.response.TaobaoResponse;
-import com.xtdar.app.view.activity.DetailActivity;
-import com.xtdar.app.view.activity.DeviceActivity;
-import com.xtdar.app.view.activity.ShopMoreActivity;
 
 import java.util.List;
 
-import static com.mob.MobSDK.getContext;
-
 /**
- * Created by hugeterry(http://hugeterry.cn)
- * Date: 17/1/28 22:31
+ * Created by hmxbanz on 2017/3/8.
  */
 
-public class HomeRecommendAdapter extends RecyclerView.Adapter<HomeRecommendAdapter.DataHolder> {
-    private List<TaobaoResponse.DataBean.DeviceTypeListBean> listItems;
+public class ShopMoreAdapter extends RecyclerView.Adapter<ShopMoreAdapter.DataHolder>  {
+    private List<ShopMoreResponse.DataBean> listItems;
     private LayoutInflater layoutInflater;
     private  final int TYPE_HEADER = 0;
     private  final int TYPE_NORMAL = 1;
     private  final int TYPE_FOOTER = 2;
     private View mHeaderView;
     private View mFooterView;
-    private RecyclerViewAdapter.ItemClickListener mListener;
+    private ItemClickListener mListener;
     private RecyclerView mRecyclerView;
     private GlideImageLoader glideImageLoader;
     private Context context;
 
-    public void setOnItemClickListener(RecyclerViewAdapter.ItemClickListener listener) {
+    public void setOnItemClickListener(ItemClickListener listener) {
         mListener = listener;
     }
     public void setHeaderView(View headerView) {
@@ -63,7 +54,7 @@ public class HomeRecommendAdapter extends RecyclerView.Adapter<HomeRecommendAdap
         return mHeaderView;
     }
 
-    public HomeRecommendAdapter(List<TaobaoResponse.DataBean.DeviceTypeListBean> l, Context c){
+    public ShopMoreAdapter(List<ShopMoreResponse.DataBean> l, Context c){
         this.listItems=l;
         this.context=c;
         this.layoutInflater=LayoutInflater.from(c);
@@ -81,7 +72,7 @@ public class HomeRecommendAdapter extends RecyclerView.Adapter<HomeRecommendAdap
             return new DataHolder(mFooterView);
         }
         else {
-            View v = layoutInflater.inflate(R.layout.listitem_recommend_title, parent, false);
+            View v = layoutInflater.inflate(R.layout.listitem_recommend_item, parent, false);
             return new DataHolder(v);
         }
     }
@@ -91,41 +82,21 @@ public class HomeRecommendAdapter extends RecyclerView.Adapter<HomeRecommendAdap
         if(getItemViewType(position) == TYPE_FOOTER) return;
 
         final int pos = getRealPosition(holder);
-        final TaobaoResponse.DataBean.DeviceTypeListBean listItem = listItems.get(position);
+        final ShopMoreResponse.DataBean listItem = listItems.get(position);
         if(holder instanceof DataHolder) {
-            holder.txtTitle.setText(listItem.getDevice_type_name());
-            holder.listLayoutView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Intent moreIntent = new Intent(context, ShopMoreActivity.class);
-                    moreIntent.putExtra("deviceTtypeId", listItem.getDevice_type_id());
-                    context.startActivity(moreIntent);
-                }
-            });
-            //装入item
-            List<TaobaoResponse.DataBean.DeviceTypeListBean.DeviceListBean> items = listItem.getDevice_list();
-            GridLayoutManager gridLayoutManager=new GridLayoutManager(context,2);
-            holder.recyclerView.setLayoutManager(gridLayoutManager);
-            HomeRecommendItemAdapter dataAdapter = new HomeRecommendItemAdapter(items, context);
-            dataAdapter.setOnItemClickListener(new HomeRecommendItemAdapter.ItemClickListener() {
-                @Override
-                public void onItemClick(int position, String itemId,String classId) {
-                    //DetailActivity.StartActivity(context,itemId,classId);
-                    NToast.shortToast(context,"暂无库存，敬请关注！");
-                }
-            });
-            holder.recyclerView.setAdapter(dataAdapter);
-            //glideImageLoader.displayImage(context,listItem.getAvator(),holder.imageView);
+            holder.nickName.setText(listItem.getDevice_name());
+            //holder.className.setText(listItem.getChapter_name());
+            glideImageLoader.displayImage(context, XtdConst.IMGURI+listItem.getDevice_img(),holder.imageView);
+            //Glide.with(context).load(listItem.getAvator()).asBitmap().into(holder.imageView);
             //holder.imageView.setImageResource(listItem.getImgResource());
             if(mListener == null) return;
             holder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    mListener.onItemClick(position,listItem.getDevice_type_id());
+                    mListener.onItemClick(position,listItem.getDevice_id(),listItem.getPartner_id());
                 }
             });
         }
-
 
     }
     @Override
@@ -185,18 +156,20 @@ public class HomeRecommendAdapter extends RecyclerView.Adapter<HomeRecommendAdap
         return mHeaderView == null ? position : position - 1;
     }
     public interface ItemClickListener {
-        void onItemClick(int position, String data);
+        void onItemClick(int position, String itemId, String classId);
     }
     class DataHolder extends RecyclerView.ViewHolder implements View.OnClickListener
     {
-        private TextView txtTitle;
-        private RecyclerView recyclerView;
+        private TextView nickName;
+        private TextView className;
+        private ImageView imageView;
         private View listLayoutView;
 
         public DataHolder(View itemView) {
             super(itemView);
-            txtTitle = (TextView) itemView.findViewById(R.id.txt_title);
-            recyclerView = (RecyclerView) itemView.findViewById(R.id.recycler);
+            nickName = (TextView) itemView.findViewById(R.id.list_item_text);
+            className = (TextView) itemView.findViewById(R.id.list_item_text2);
+            imageView = (ImageView) itemView.findViewById(R.id.list_item_icon);
             listLayoutView = itemView.findViewById(R.id.list_item_layout);
         }
 
@@ -206,21 +179,17 @@ public class HomeRecommendAdapter extends RecyclerView.Adapter<HomeRecommendAdap
         public void setListLayoutView(View listLayoutView) {
             this.listLayoutView = listLayoutView;
         }
-
-        public TextView getTxtTitle() {
-            return txtTitle;
+        public ImageView getImageView() {
+            return imageView;
         }
-
-        public void setTxtTitle(TextView txtTitle) {
-            this.txtTitle = txtTitle;
+        public void setImageView(ImageView imageView) {
+            this.imageView = imageView;
         }
-
-        public RecyclerView getRecyclerView() {
-            return recyclerView;
+        public TextView getNickName() {
+            return nickName;
         }
-
-        public void setRecyclerView(RecyclerView recyclerView) {
-            this.recyclerView = recyclerView;
+        public void setNickName(TextView nickName) {
+            this.nickName = nickName;
         }
 
         @Override

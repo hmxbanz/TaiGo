@@ -24,6 +24,7 @@ import com.xtdar.app.server.response.MyCommentResponse;
 import com.xtdar.app.server.response.MyDevicesResponse;
 import com.xtdar.app.server.response.RecommendResponse;
 import com.xtdar.app.server.response.RelateRecommendResponse;
+import com.xtdar.app.server.response.ShopMoreResponse;
 import com.xtdar.app.server.response.ShowDetailResponse;
 import com.xtdar.app.server.response.ShowResponse;
 import com.xtdar.app.server.response.SongDetailResponse;
@@ -1141,5 +1142,32 @@ public CommonResponse register(String cellPhone, String password, String captcha
         }
         return myCommentResponse;
     }
-
+//获取更多设备
+    public ShopMoreResponse getShopMore(String device_type_id, String item_count, String last_device_id) throws HttpException {
+        String uri = getURL("kp_dyz/cli-dgc-devicelist.php");
+        Response response=null;
+        try {
+            response=OkHttpUtils
+                    .get()
+                    .addParams("device_type_id",device_type_id)
+                    .addParams("last_device_id",last_device_id)
+                    .addParams("item_count",item_count)
+                    .url(uri)
+                    .build()
+                    .execute();
+            result =response.body().string();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        ShopMoreResponse  shopMoreResponse= null;
+        if (!TextUtils.isEmpty(result)) {
+            try {
+                shopMoreResponse = JsonMananger.jsonToBean(result, ShopMoreResponse.class);
+            } catch (JSONException e) {
+                NLog.d(TAG, "CommentResponse occurs JSONException e=" + e.toString());
+                return null;
+            }
+        }
+        return shopMoreResponse;
+    }
 }

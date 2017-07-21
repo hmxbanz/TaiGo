@@ -5,30 +5,32 @@
     android:layout_height="wrap_content"
     android:gravity="top|center"
     android:id="@+id/list_item_layout"    >
-<LinearLayout
+<RelativeLayout
     android:background="@color/white"
     android:orientation="horizontal"
     android:layout_width="match_parent"
     android:layout_height="40dp">
 
     <TextView
+        android:layout_centerInParent="true"
         android:layout_marginTop="4dp"
         android:id="@+id/txt_title"
         android:text="分类标题"
         android:gravity="center"
         android:textSize="16dp"
         android:textColor="@color/viewfinder_mask"
-        android:layout_width="0dp"
-        android:layout_weight="1"
+        android:layout_width="wrap_content"
         android:layout_height="match_parent" />
     <TextView
+        android:layout_alignParentRight="true"
         android:id="@+id/txt_more"
         android:text="更多>>"
         android:gravity="center"
+        android:layout_marginRight="5dp"
         android:textColor="@color/appTextColor"
         android:layout_width="wrap_content"
         android:layout_height="match_parent" />
-</LinearLayout>
+</RelativeLayout>
 <android.support.v7.widget.RecyclerView
     android:id="@+id/recycler"
     android:layout_width="match_parent"
