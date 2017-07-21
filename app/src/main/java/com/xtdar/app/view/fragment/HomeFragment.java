@@ -47,7 +47,6 @@ private static final int Blue=0x001bb4fb;
     private TextView title;
     private RelativeLayout layout_back;
     private RecyclerView recycleView;
-    private TextView addDriver;
 
     public static HomeFragment getInstance() {
         if (instance == null) {
@@ -86,8 +85,7 @@ private static final int Blue=0x001bb4fb;
         layout_back.setVisibility(View.INVISIBLE);
         title=(TextView)view.findViewById(R.id.text_title);
         title.setText("设备");
-        addDriver=(TextView)view.findViewById(R.id.txt_add_driver);
-        addDriver.setOnClickListener(this);
+        view.findViewById(R.id.txt_add_driver).setOnClickListener(this);
         recycleView= (RecyclerView) view.findViewById(R.id.recyclerView);
         view.findViewById(R.id.layout_ble).setOnClickListener(this);
         view.findViewById(R.id.layout_ble_scan).setOnClickListener(this);

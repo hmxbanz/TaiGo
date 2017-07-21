@@ -100,7 +100,7 @@
                         android:layout_below="@id/tab_img_shop"
                         android:layout_centerHorizontal="true"
                         android:layout_marginTop="2dp"
-                        android:text="@string/shop"
+                        android:text="@string/game"
                         android:textColor="#abadbb"
                         android:textSize="10dp" />
 

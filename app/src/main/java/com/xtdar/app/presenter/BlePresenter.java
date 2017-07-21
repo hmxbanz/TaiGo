@@ -21,6 +21,7 @@ import android.support.v4.content.ContextCompat;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.clj.fastble.data.ScanResult;
@@ -42,6 +43,7 @@ import com.xtdar.app.view.activity.LoginActivity;
 import com.xtdar.app.view.activity.UnityPlayerActivity;
 import com.xtdar.app.view.widget.LoadDialog;
 import com.xtdar.app.widget.DialogWithYesOrNoUtils;
+import com.xtdar.app.widget.progressBar.MaterialProgressBar;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -69,6 +71,8 @@ public class BlePresenter extends BasePresenter implements OnDataListener, BleAd
     private BluetoothService mBluetoothService;
 
     private BasePresenter basePresenter;
+    private MaterialProgressBar progressWheel;
+    private RelativeLayout emptyView;
 
     public BlePresenter(Context context) {
         super(context);
@@ -78,10 +82,12 @@ public class BlePresenter extends BasePresenter implements OnDataListener, BleAd
         basePresenter = BasePresenter.getInstance(context);
     }
 
-    public void init(ListView listView, Button btnScan) {
+    public void init(ListView listView, Button btnScan, MaterialProgressBar progressWheel, RelativeLayout emptyView) {
         this.listView = listView;
-        listView.setAdapter(adapter);
         this.btnScan=btnScan;
+        this.progressWheel=progressWheel;
+        this.emptyView=emptyView;
+        listView.setAdapter(adapter);
 
 
         // 为了确保设备上蓝牙能使用, 如果当前蓝牙设备没启用,弹出对话框向用户要求授予权限来启用
@@ -129,12 +135,17 @@ public class BlePresenter extends BasePresenter implements OnDataListener, BleAd
         public void onStartScan() {
             adapter.clear();
             adapter.notifyDataSetChanged();
+            listView.setVisibility(View.GONE);
+            emptyView.setVisibility(View.VISIBLE);
+            progressWheel.setVisibility(View.VISIBLE);
             btnScan.setText("正在扫描...");
             btnScan.setEnabled(false);
         }
 
         @Override
         public void onScanning(ScanResult result) {
+            listView.setVisibility(View.VISIBLE);
+            emptyView.setVisibility(View.GONE);
             adapter.addResult(result);
             adapter.notifyDataSetChanged();
 
@@ -142,6 +153,7 @@ public class BlePresenter extends BasePresenter implements OnDataListener, BleAd
 
         @Override
         public void onScanComplete() {
+                progressWheel.setVisibility(View.GONE);
                 btnScan.setText("再次扫描");
                 btnScan.setEnabled(true);
         }

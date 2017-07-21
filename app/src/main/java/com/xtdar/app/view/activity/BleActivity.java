@@ -1,5 +1,6 @@
 package com.xtdar.app.view.activity;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
@@ -14,12 +15,16 @@ import com.xtdar.app.R;
 import com.xtdar.app.ble.BleScanner;
 import com.xtdar.app.presenter.BlePresenter;
 import com.xtdar.app.presenter.HelpPresenter;
+import com.xtdar.app.widget.progressBar.MaterialProgressBar;
 
 
 public class BleActivity extends BaseActivity implements View.OnClickListener {
-private BlePresenter presenter;
+    private static final int REQUEST_CODE = 1;
+    private BlePresenter presenter;
     private ListView listView;
     private Button btnScan;
+    private MaterialProgressBar progressWheel;
+    private RelativeLayout emptyView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,7 +33,7 @@ private BlePresenter presenter;
 
         initViews();
         presenter = new BlePresenter(this);
-        presenter.init(listView,btnScan);
+        presenter.init(listView,btnScan,progressWheel,emptyView);
 
     }
 
@@ -38,6 +43,9 @@ private BlePresenter presenter;
         txtTitle =(TextView) findViewById(R.id.text_title);
         txtTitle.setText("附近的蓝牙设备");
 
+        progressWheel=(MaterialProgressBar)findViewById(R.id.progress_wheel);
+        emptyView = (RelativeLayout) findViewById(R.id.empty_view);
+        findViewById(R.id.txt_add_driver).setOnClickListener(this);
         listView = (ListView) findViewById(R.id.listview_ble);
         btnScan = (Button) findViewById(R.id.btn_scan);
         btnScan.setOnClickListener(this);
@@ -52,6 +60,10 @@ private BlePresenter presenter;
                 break;
             case R.id.btn_scan:
                 presenter.startService();
+                break;
+            case R.id.txt_add_driver:
+                Intent intent = new Intent(this, QrCodeActivity.class);
+                startActivityForResult(intent, REQUEST_CODE);
                 break;
         }
     }
