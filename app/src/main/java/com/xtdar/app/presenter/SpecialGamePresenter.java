@@ -12,9 +12,7 @@ import com.xtdar.app.listener.EndlessRecyclerOnScrollListener;
 import com.xtdar.app.server.HttpException;
 import com.xtdar.app.server.async.OnDataListener;
 import com.xtdar.app.server.response.AdResponse;
-import com.xtdar.app.server.response.ClassListResponse;
 import com.xtdar.app.server.response.GameListResponse;
-import com.xtdar.app.view.activity.DetailActivity;
 import com.xtdar.app.view.widget.LoadDialog;
 import com.youth.banner.Banner;
 
@@ -25,7 +23,7 @@ import java.util.List;
  * Created by hmxbanz on 2017/4/5.
  */
 
-public class HomeAnimationPresenter extends BasePresenter implements OnDataListener,ClassListAnimationAdapter.ItemClickListener {
+public class SpecialGamePresenter extends BasePresenter implements OnDataListener,ClassListAnimationAdapter.ItemClickListener {
     private static final int GETADS = 1;
     private static final int GETANIMATION = 2;
     private Banner Banner;
@@ -38,7 +36,7 @@ public class HomeAnimationPresenter extends BasePresenter implements OnDataListe
     private int lastPosition;
     private boolean isAdapterSetted=false;
 
-    public HomeAnimationPresenter(Context context){
+    public SpecialGamePresenter(Context context){
         super(context);
         //mActivity = (ContactsActivity) context;
         dataAdapter = new ClassListAnimationAdapter(this.context);
@@ -52,7 +50,7 @@ public class HomeAnimationPresenter extends BasePresenter implements OnDataListe
             @Override
             public void onLoadMore(int currentPage) {
                 LoadDialog.show(context);
-                //atm.request(GETANIMATION,HomeAnimationPresenter.this);
+                //atm.request(GETANIMATION,MallGamePresenter.this);
             }
 
             @Override
@@ -64,6 +62,7 @@ public class HomeAnimationPresenter extends BasePresenter implements OnDataListe
             }
         });
         recyclerView.setNestedScrollingEnabled(false);
+
         LoadDialog.show(context);
         //atm.request(GETADS,this);
         atm.request(GETANIMATION,this);
@@ -76,7 +75,7 @@ public class HomeAnimationPresenter extends BasePresenter implements OnDataListe
             case GETADS:
                 return mUserAction.getAds();
             case GETANIMATION:
-                return mUserAction.getShot("0",lastItem,"12");
+                return mUserAction.getShot("-1",lastItem,"12");
         }
         return null;
     }

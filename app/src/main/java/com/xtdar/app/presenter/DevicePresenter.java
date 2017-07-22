@@ -1,7 +1,6 @@
 package com.xtdar.app.presenter;
 
 import android.content.Context;
-import android.content.Intent;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -10,11 +9,8 @@ import android.widget.Toast;
 
 import com.xtdar.app.R;
 import com.xtdar.app.adapter.RecyclerViewAdapterForShop;
-import com.xtdar.app.model.CategoryList;
 import com.xtdar.app.model.DeviceList;
-import com.xtdar.app.view.activity.CategoryActivity;
 import com.xtdar.app.view.activity.DeviceActivity;
-import com.xtdar.app.view.activity.SettingActivity;
 
 
 /**
@@ -31,7 +27,7 @@ public class DevicePresenter {
     }
     public void init(){
         //头部
-        RecyclerView recycleViewTop= (RecyclerView) mActivity.findViewById(R.id.shop_recyclerview_top);
+        RecyclerView recycleViewTop= (RecyclerView) mActivity.findViewById(R.id.shop_more_recyclerview);
         GridLayoutManager gridLayoutManager=new GridLayoutManager(mContext,4);
         recycleViewTop.setLayoutManager(gridLayoutManager);
         RecyclerViewAdapterForShop dataAdapter2 = new RecyclerViewAdapterForShop(DeviceList.getData(), mContext);

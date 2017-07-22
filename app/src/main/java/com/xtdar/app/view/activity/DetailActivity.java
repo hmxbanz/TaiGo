@@ -66,7 +66,7 @@ public class DetailActivity extends BaseActivity implements RecyclerViewAdapter.
     private DetailPresenter mDetailPresenter;
     private StandardGSYVideoPlayer videoPlayer;
 
-    private TextView title;
+    private TextView title,content;
     private LinearLayout layoutFavor;
 
     @Override
@@ -80,7 +80,7 @@ public class DetailActivity extends BaseActivity implements RecyclerViewAdapter.
         initViews();
         //initDatas();
         mDetailPresenter = new DetailPresenter(this);
-        mDetailPresenter.init(videoPlayer,title,recycleView);
+        mDetailPresenter.init(videoPlayer,title,content,recycleView);
 
     }
 
@@ -104,6 +104,7 @@ public class DetailActivity extends BaseActivity implements RecyclerViewAdapter.
         videoPlayer= (StandardGSYVideoPlayer) findViewById(R.id.detail_player);
 
         title = (TextView) findViewById(R.id.txt_title);
+        content = (TextView) findViewById(R.id.txt_content);
         layoutFavor = (LinearLayout) findViewById(R.id.layout_favor);
         layoutFavor.setOnClickListener(this);
 

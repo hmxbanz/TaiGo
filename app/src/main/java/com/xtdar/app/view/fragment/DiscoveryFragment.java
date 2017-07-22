@@ -14,7 +14,6 @@ import android.widget.TextView;
 
 import com.xtdar.app.R;
 import com.xtdar.app.presenter.DiscoveryPresenter;
-import com.xtdar.app.presenter.HomeGamePresenter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -66,7 +65,6 @@ public class DiscoveryFragment extends Fragment implements View.OnClickListener 
         tabLayout= (TabLayout) view.findViewById(R.id.tabLayout);
 
         //tabLayout.setTabTextColors(R.color.appTextColor, R.color.red);//设置文本在选中和为选中时候的颜色
-
         //tabLayout.setupWithViewPager(mViewPager);
     }
     private void initMianViewPager() {

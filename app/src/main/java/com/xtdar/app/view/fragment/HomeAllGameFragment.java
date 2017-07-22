@@ -16,7 +16,7 @@ import android.widget.Toast;
 
 import com.xtdar.app.R;
 import com.xtdar.app.adapter.RecyclerViewAdapter;
-import com.xtdar.app.presenter.HomeAnimationPresenter;
+import com.xtdar.app.presenter.MallGamePresenter;
 import com.xtdar.app.view.activity.DetailActivity;
 
 import java.util.ArrayList;
@@ -38,7 +38,7 @@ public class HomeAllGameFragment extends Fragment implements RecyclerViewAdapter
     private TextView mTextSearch;
     private TabLayout mTabLayout;
 
-    private HomeAnimationPresenter homeAnimationPresenter;
+    private MallGamePresenter homeAnimationPresenter;
 
     public static HomeAllGameFragment getInstance() {
         if (instance == null) {
@@ -53,7 +53,7 @@ public class HomeAllGameFragment extends Fragment implements RecyclerViewAdapter
         view = inflater.inflate(R.layout.fragment_home_animation, null);
         initViews();
 //        initData();
-        homeAnimationPresenter = new HomeAnimationPresenter(getContext());
+        homeAnimationPresenter = new MallGamePresenter(getContext());
         homeAnimationPresenter.init(recycleView);
         return view;
     }

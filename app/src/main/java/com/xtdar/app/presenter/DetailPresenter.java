@@ -42,7 +42,7 @@ public class DetailPresenter extends BasePresenter{
     private DetailActivity mActivity;
     private String itemId;
     private StandardGSYVideoPlayer videoPlayer;
-    private TextView title;
+    private TextView title,content;
     private OrientationUtils orientationUtils;
     private boolean isPlay;
     private boolean isPause;
@@ -56,9 +56,10 @@ public class DetailPresenter extends BasePresenter{
         glideImageLoader = new GlideImageLoader();
     }
 
-    public void init(StandardGSYVideoPlayer videoPlayer, TextView title, RecyclerView recycleView) {
+    public void init(StandardGSYVideoPlayer videoPlayer, TextView title, TextView content, RecyclerView recycleView) {
         this.videoPlayer=videoPlayer;
         this.title = title;
+        this.content=content;
         this.recycleView=recycleView;
         Intent intent = mActivity.getIntent();
         itemId = intent.getStringExtra(XtdConst.ITEMID);
@@ -162,6 +163,7 @@ public class DetailPresenter extends BasePresenter{
                     glideImageLoader.displayImage(context, XtdConst.IMGURI+entity.getItem_cover(),imageView);
                     videoPlayer.setThumbImageView(imageView);
                     this.title.setText(entity.getItem_title());
+                    this.content.setText(entity.getContent());
 
                     //请求推荐
                     atm.request(GETRELATERECOMMEND,this);

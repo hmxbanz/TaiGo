@@ -13,7 +13,6 @@ import com.xtdar.app.presenter.ShopMorePresenter;
 
 
 public class ShopMoreActivity extends BaseActivity implements View.OnClickListener {
-    private LinearLayout mLayoutAbout,mLayoutClear,mLayoutFeeback,mLayoutLogoff;
     private ShopMorePresenter presenter;
     private String deviceTtypeId;
     private RecyclerView recyclerView;
@@ -31,7 +30,7 @@ public class ShopMoreActivity extends BaseActivity implements View.OnClickListen
         layout_back.setOnClickListener(this);
         txtTitle =(TextView) findViewById(R.id.text_title);
         txtTitle.setText("更多设备");
-        recyclerView=(RecyclerView)findViewById(R.id.shop_recyclerview_top);
+        recyclerView=(RecyclerView)findViewById(R.id.shop_more_recyclerview);
 
         Intent comingIntent = getIntent();
         deviceTtypeId = comingIntent.getStringExtra("deviceTtypeId");

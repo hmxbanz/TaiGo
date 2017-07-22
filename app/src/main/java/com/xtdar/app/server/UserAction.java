@@ -925,7 +925,7 @@ public CommonResponse register(String cellPhone, String password, String captcha
             response=OkHttpUtils
                     .get()
                     .addParams("game_type_id",game_type_id)
-                    .addParams("last_item_id",last_item_id)
+                    .addParams("last_game_id",last_item_id)
                     .addParams("item_count",item_count)
                     .url(uri)
                     .build()

@@ -5,25 +5,20 @@
     android:layout_height="match_parent"
     android:background="#f0f0f6"
     android:orientation="vertical">
-    <include layout="@layout/layout_title_top2" />
 
-    <android.support.v7.widget.RecyclerView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"  >
-    </android.support.v7.widget.RecyclerView>
     <android.support.design.widget.TabLayout
-        android:visibility="gone"
         android:background="@color/white"
-    android:id="@+id/tabLayout"
-    android:layout_width="match_parent"
-    android:layout_height="40dp"
-        app:tabTextAppearance="@style/MyTabLayoutTextAppearance"
-    android:layout_gravity="bottom"
+        android:id="@+id/tabLayout"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        app:tabTextAppearance="@style/DiscoveryTabLayoutAppearance"
+        android:layout_gravity="bottom"
         app:tabIndicatorHeight="3dp"
-    app:tabSelectedTextColor="@color/titleBlue"
-    app:tabTextColor="@color/appTextColor"
-    app:tabIndicatorColor="@color/titleBlue"
-    >
+        app:tabSelectedTextColor="@color/white"
+        app:tabTextColor="@color/white"
+        app:tabIndicatorColor="@color/white"
+        app:tabBackground="@color/titleBlue"
+        >
 
 </android.support.design.widget.TabLayout>
     <android.support.v4.view.ViewPager

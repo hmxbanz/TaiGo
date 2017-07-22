@@ -7,7 +7,6 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v4.media.session.MediaSessionCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -21,11 +20,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.xtdar.app.R;
-import com.xtdar.app.adapter.RecyclerViewAdapter;
 import com.xtdar.app.adapter.RecyclerViewAdapterForShop;
-import com.xtdar.app.model.Category;
 import com.xtdar.app.model.CategoryList;
-import com.xtdar.app.model.UserList;
 import com.xtdar.app.view.activity.CategoryActivity;
 
 /**
@@ -64,7 +60,7 @@ public class ShopFragment extends Fragment  {
 
     private void initViews() {
         //头部
-        RecyclerView recycleViewTop= (RecyclerView) view.findViewById(R.id.shop_recyclerview_top);
+        RecyclerView recycleViewTop= (RecyclerView) view.findViewById(R.id.shop_more_recyclerview);
         GridLayoutManager gridLayoutManager=new GridLayoutManager(getContext(),4);
         recycleViewTop.setLayoutManager(gridLayoutManager);
         RecyclerViewAdapterForShop dataAdapter2 = new RecyclerViewAdapterForShop(CategoryList.getData(), getContext());

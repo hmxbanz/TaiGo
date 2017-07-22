@@ -16,7 +16,8 @@ import android.widget.Toast;
 
 import com.xtdar.app.R;
 import com.xtdar.app.adapter.RecyclerViewAdapter;
-import com.xtdar.app.presenter.HomeAnimationPresenter;
+import com.xtdar.app.presenter.MallGamePresenter;
+import com.xtdar.app.presenter.SpecialGamePresenter;
 import com.xtdar.app.view.activity.DetailActivity;
 
 import java.util.ArrayList;
@@ -26,23 +27,18 @@ import java.util.List;
  * Created by AMing on 16/6/21.
  * Company RongCloud
  */
-public class HomeShotGameFragment extends Fragment implements RecyclerViewAdapter.ItemClickListener {
-    public static HomeShotGameFragment instance = null;
+public class SpecialGameFragment extends Fragment {
+    public static SpecialGameFragment instance = null;
     public static List<?> images=new ArrayList<>();
     private RecyclerView recycleView;
-    private RecyclerViewAdapter dataAdapter;
     public ScrollView scrollView;
     private View view;
-    private GridLayoutManager gridLayoutManager;
 
-    private TextView mTextSearch;
-    private TabLayout mTabLayout;
+    private SpecialGamePresenter presenter;
 
-    private HomeAnimationPresenter presenter;
-
-    public static HomeShotGameFragment getInstance() {
+    public static SpecialGameFragment getInstance() {
         if (instance == null) {
-            instance = new HomeShotGameFragment();
+            instance = new SpecialGameFragment();
         }
         return instance;
     }
@@ -53,7 +49,7 @@ public class HomeShotGameFragment extends Fragment implements RecyclerViewAdapte
         view = inflater.inflate(R.layout.fragment_home_animation, null);
         initViews();
 //        initData();
-        presenter = new HomeAnimationPresenter(getContext());
+        presenter = new SpecialGamePresenter(getContext());
         presenter.init(recycleView);
         return view;
     }
@@ -66,12 +62,6 @@ public class HomeShotGameFragment extends Fragment implements RecyclerViewAdapte
     public void onDestroy() {
         super.onDestroy();
         //BroadcastManager.getInstance(getActivity()).destroy(SealConst.CHANGEINFO);
-    }
-
-    @Override
-    public void onItemClick(int position, String data) {
-        getActivity().startActivity(new Intent(getActivity(), DetailActivity.class));
-        Toast.makeText(getContext(),"你点击了位置："+String.valueOf(position)+"-标题："+data,Toast.LENGTH_SHORT).show();
     }
 
 

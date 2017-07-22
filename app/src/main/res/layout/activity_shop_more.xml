@@ -6,14 +6,13 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".view.activity.DeviceActivity">
+    tools:context=".view.activity.ShopMoreActivity">
     <include layout="@layout/layout_title_top" />
     <android.support.v7.widget.RecyclerView
-        android:background="@color/white"
-        android:id="@+id/shop_recyclerview_top"
+        android:id="@+id/shop_more_recyclerview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:padding="5dp" >
+         >
     </android.support.v7.widget.RecyclerView>
 
 </LinearLayout>
