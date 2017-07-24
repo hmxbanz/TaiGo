@@ -22,7 +22,6 @@ public class MyCommentActivity extends BaseActivity implements View.OnClickListe
         initViews();
         presenter = new CommentPresenter(this);
         presenter.init(listView);
-
     }
 
     private void initViews() {

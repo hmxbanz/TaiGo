@@ -22,6 +22,7 @@ import com.xtdar.app.server.response.HelpResponse;
 import com.xtdar.app.server.response.LoginResponse;
 import com.xtdar.app.server.response.MyCommentResponse;
 import com.xtdar.app.server.response.MyDevicesResponse;
+import com.xtdar.app.server.response.PersonMsgResponse;
 import com.xtdar.app.server.response.RecommendResponse;
 import com.xtdar.app.server.response.RelateRecommendResponse;
 import com.xtdar.app.server.response.ShopMoreResponse;
@@ -1203,7 +1204,7 @@ public CommonResponse register(String cellPhone, String password, String captcha
         return shopMoreResponse;
     }
 
-    //获取系统消息
+//获取系统消息
     public SysMsgResponse getSysMsgList(String list_count, String last_msg_id) throws HttpException {
         String uri = getURL("kp_dyz/cli-api-sysmsglist.php");
         Response response=null;
@@ -1241,5 +1242,44 @@ public CommonResponse register(String cellPhone, String password, String captcha
             }
         }
         return sysMsgResponse;
+    }
+//获取个人消息
+    public PersonMsgResponse getPersonMsgList(String list_count, String last_msg_id) throws HttpException {
+        String uri = getURL("kp_dyz/cli-api-mymsglist.php");
+        Response response=null;
+        try {
+            response=OkHttpUtils
+                    .get()
+                    .addParams(XtdConst.ACCESS_TOKEN,token)
+                    .addParams("last_msg_id",last_msg_id)
+                    .addParams("list_count",list_count)
+                    .url(uri)
+                    .build()
+                    .execute();
+            result =response.body().string();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        PersonMsgResponse  personMsgResponse= null;
+        if (!TextUtils.isEmpty(result)) {
+            try {
+                personMsgResponse = JsonMananger.jsonToBean(result, PersonMsgResponse.class);
+
+                for(PersonMsgResponse.DataBean bean:personMsgResponse.getData())
+                {
+
+                    if(TextUtils.isEmpty(bean.getLink()))
+                    {
+                        bean.setLink("{}");
+                    }
+                    PersonMsgResponse.DataBean.LinkBean linkObj = JsonMananger.jsonToBean(bean.getLink(), PersonMsgResponse.DataBean.LinkBean.class);
+                    bean.setLinkObj(linkObj);
+                }
+            } catch (JSONException e) {
+                NLog.d(TAG, "PersonMsgResponse occurs JSONException e=" + e.toString());
+                return null;
+            }
+        }
+        return personMsgResponse;
     }
 }

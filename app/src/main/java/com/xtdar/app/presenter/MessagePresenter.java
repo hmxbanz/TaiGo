@@ -14,6 +14,7 @@ import com.xtdar.app.server.async.OnDataListener;
 import com.xtdar.app.view.activity.FavorActivity;
 import com.xtdar.app.view.activity.MessageActivity;
 import com.xtdar.app.view.fragment.FavorVideoFragment;
+import com.xtdar.app.view.fragment.PersonMsgFragment;
 import com.xtdar.app.view.fragment.SysMsgFragment;
 
 import java.util.ArrayList;
@@ -50,7 +51,7 @@ public class MessagePresenter extends BasePresenter implements OnDataListener {
 
         mFragments = new ArrayList<>();
         mFragments.add(SysMsgFragment.getInstance());
-        //mFragments.add(FavorMusicFragment.getInstance());
+        mFragments.add(PersonMsgFragment.getInstance());
 
         mFragmentPagerAdapter = new FragmentPagerAdapter(mActivity.getSupportFragmentManager()) {
             @Override
@@ -66,7 +67,7 @@ public class MessagePresenter extends BasePresenter implements OnDataListener {
         viewpager.setOffscreenPageLimit(1);
         tabLayout.setupWithViewPager(viewpager);
         tabLayout.getTabAt(0).setText("系统消息");
-        //tabLayout.getTabAt(1).setText("个人消息");
+        tabLayout.getTabAt(1).setText("个人消息");
     };
 
 }
