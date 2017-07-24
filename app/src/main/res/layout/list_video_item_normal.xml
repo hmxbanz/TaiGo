@@ -24,6 +24,7 @@
       android:layout_width="match_parent"
       android:layout_height="50dp">
     <com.xtdar.app.view.widget.SelectableRoundedImageView
+        android:src="@drawable/logo"
         android:scaleType="centerCrop"
         app:sriv_left_bottom_corner_radius="50dip"
         app:sriv_left_top_corner_radius="50dip"

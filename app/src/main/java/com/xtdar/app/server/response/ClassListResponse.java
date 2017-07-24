@@ -71,6 +71,16 @@ public class ClassListResponse {
         private String item_cover;
         private String content;
 
+        public String getPost_date() {
+            return post_date;
+        }
+
+        public void setPost_date(String post_date) {
+            this.post_date = post_date;
+        }
+
+        private String post_date;
+
         public String getItem_id() {
             return item_id;
         }

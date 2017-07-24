@@ -1,34 +1,29 @@
 package com.xtdar.app.view.activity;
 
 import android.os.Bundle;
-import android.support.v7.widget.RecyclerView;
 import android.view.View;
-import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.xtdar.app.Interface.IFavorView;
 import com.xtdar.app.R;
 import com.xtdar.app.presenter.FavorPresenter;
-import com.xtdar.app.presenter.MyVideoPresenter;
+import com.xtdar.app.presenter.MessagePresenter;
 
-public class MyVideoActivity extends BaseActivity implements IFavorView,View.OnClickListener {
-    private MyVideoPresenter myVideoPresenter;
-    private ListView listView;
+public class MessageActivity extends BaseActivity implements IFavorView,View.OnClickListener {
+    private MessagePresenter presenter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_my_video);
+        setContentView(R.layout.activity_message);
         initViews();
-        myVideoPresenter=new MyVideoPresenter(this);
-        myVideoPresenter.init(listView);
+        presenter=new MessagePresenter(this);
+        presenter.init();
     }
     public void initViews(){
         layout_back= (RelativeLayout) findViewById(R.id.layout_back);
         layout_back.setOnClickListener(this);
         txtTitle =(TextView) findViewById(R.id.text_title);
-        txtTitle.setText("我的视频");
-        listView= (ListView) findViewById(R.id.listview_my_video);
     }
     @Override
     public void onClick(View v) {
@@ -41,7 +36,7 @@ public class MyVideoActivity extends BaseActivity implements IFavorView,View.OnC
 
     @Override
     public void initData() {
-        txtTitle.setText("我的视频");
+        txtTitle.setText("消息中心");
     }
 
 }

@@ -16,6 +16,7 @@ import android.widget.TextView;
 import com.xtdar.app.common.NLog;
 import com.xtdar.app.common.PhotoUtils;
 import com.xtdar.app.presenter.MinePresenter;
+import com.xtdar.app.view.activity.MessageActivity;
 import com.xtdar.app.view.activity.MyCommentActivity;
 import com.xtdar.app.view.activity.DynamicActivity;
 import com.xtdar.app.view.activity.MeActivity;
@@ -142,7 +143,7 @@ public class MineFragment extends Fragment implements View.OnClickListener {
                 startActivity(new Intent(getActivity(), MeActivity.class));
                 break;
             case R.id.layout_message:
-                //startActivity(new Intent(getActivity(), HistoryActivity.class));
+                startActivity(new Intent(getActivity(), MessageActivity.class));
                 break;
             case R.id.layout_my_video:
                 startActivity(new Intent(getActivity(), MyVideoActivity.class));

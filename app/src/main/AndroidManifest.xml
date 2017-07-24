@@ -216,6 +216,7 @@
         <activity android:name=".view.activity.MyCommentActivity" />
         <activity android:name=".view.activity.AboutActivity" />
         <activity android:name=".view.activity.ShopMoreActivity" />
+        <activity android:name=".view.activity.MessageActivity" />
         <activity
             android:name=".view.activity.ConversationListActivity"
             android:screenOrientation="portrait"

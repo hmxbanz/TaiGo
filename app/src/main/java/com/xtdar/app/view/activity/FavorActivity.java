@@ -36,7 +36,7 @@ public class FavorActivity extends BaseActivity implements IFavorView,View.OnCli
 
     @Override
     public void initData() {
-        txtTitle.setText("收藏");
+        txtTitle.setText("我的收藏");
     }
 
 }

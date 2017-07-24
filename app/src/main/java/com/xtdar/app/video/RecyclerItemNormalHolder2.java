@@ -64,8 +64,8 @@ public class RecyclerItemNormalHolder2 extends RecyclerItemBaseHolder {
         //glideImageLoader.displayImage(context, XtdConst.IMGURI+videoModel.get.getImg_path(),roundedImageView);
 
         //title.setText(videoModel.getTitle());
-        //nickName.setText(videoModel.getNick_name());
-        //createDate.setText(videoModel.getPost_date());
+        nickName.setText("TaiGo");
+        createDate.setText(videoModel.getPost_date());
         clickCount.setText("观看:"+videoModel.getClick_count());
         //commentCount.setText("评论:"+videoModel.getCom_count());
 //        if (position % 2 == 0) {

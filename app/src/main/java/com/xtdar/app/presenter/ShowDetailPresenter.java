@@ -177,7 +177,7 @@ public class ShowDetailPresenter extends BasePresenter{
                     ((TextView)mActivity.findViewById(R.id.txt_title)).setText(entity.getTitle());
                     ((TextView)mActivity.findViewById(R.id.new_comment)).setText("最新评论：("+entity.getCom_count()+")");
                     ((TextView)mActivity.findViewById(R.id.click_count)).setText("观看："+entity.getClick_count());
-                    ((TextView)mActivity.findViewById(R.id.comment_count)).setText("评论："+entity.getClick_count());
+                    ((TextView)mActivity.findViewById(R.id.comment_count)).setText("评论："+entity.getCom_count());
                     //请求评论
                     atm.request(GETCOMMENT,this);
 

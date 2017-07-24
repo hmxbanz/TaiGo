@@ -76,7 +76,7 @@
                         android:id="@+id/text_title"
                         style="@style/AppTitleStyle2"
                         android:gravity="center"
-                        android:text="秀场详情"
+                        android:text="视频详情"
                         android:textSize="20dp"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent" />

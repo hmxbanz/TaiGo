@@ -28,6 +28,7 @@ import com.xtdar.app.server.response.ShopMoreResponse;
 import com.xtdar.app.server.response.ShowDetailResponse;
 import com.xtdar.app.server.response.ShowResponse;
 import com.xtdar.app.server.response.SongDetailResponse;
+import com.xtdar.app.server.response.SysMsgResponse;
 import com.xtdar.app.server.response.TagResponse;
 import com.xtdar.app.server.response.TaobaoResponse;
 import com.xtdar.app.server.response.UserInfoResponse;
@@ -1114,6 +1115,37 @@ public CommonResponse register(String cellPhone, String password, String captcha
         }
         return commonResponse;
     }
+
+    //删除我的视频
+    public Object delMyVideo(String delId) throws HttpException {
+        String uri = getURL("kp_dyz/cli-api-delmyshow.php");
+        Response response=null;
+        try {
+            response=OkHttpUtils
+                    .post()
+                    .addParams(XtdConst.ACCESS_TOKEN,token)
+                    .addParams("show_id", delId)
+                    .url(uri)
+                    .build()
+                    .execute();
+            result =response.body().string();
+            Log.w(TAG, "接收的："+ result);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        CommonResponse commonResponse = null;
+        if (!TextUtils.isEmpty(result)) {
+            NLog.e("CommonResponse", result);
+
+            try {
+                commonResponse = JsonMananger.jsonToBean(result, CommonResponse.class);
+            } catch (JSONException e) {
+                NLog.d(TAG, "delMyVideo occurs JSONException e=" + e.toString());
+                return null;
+            }
+        }
+        return commonResponse;
+    }
 //获取我的评论
     public MyCommentResponse getCommentList(String list_count, String last_com_id) throws HttpException {
         String uri = getURL("kp_dyz/cli-api-mycommentlist.php");
@@ -1169,5 +1201,45 @@ public CommonResponse register(String cellPhone, String password, String captcha
             }
         }
         return shopMoreResponse;
+    }
+
+    //获取系统消息
+    public SysMsgResponse getSysMsgList(String list_count, String last_msg_id) throws HttpException {
+        String uri = getURL("kp_dyz/cli-api-sysmsglist.php");
+        Response response=null;
+        try {
+            response=OkHttpUtils
+                    .get()
+                    .addParams(XtdConst.ACCESS_TOKEN,token)
+                    .addParams("last_msg_id",last_msg_id)
+                    .addParams("list_count",list_count)
+                    .url(uri)
+                    .build()
+                    .execute();
+            result =response.body().string();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        SysMsgResponse  sysMsgResponse= null;
+        if (!TextUtils.isEmpty(result)) {
+            try {
+                sysMsgResponse = JsonMananger.jsonToBean(result, SysMsgResponse.class);
+
+                for(SysMsgResponse.DataBean bean:sysMsgResponse.getData())
+                {
+
+                    if(TextUtils.isEmpty(bean.getLink()))
+                    {
+                        bean.setLink("{}");
+                    }
+                    SysMsgResponse.DataBean.LinkBean linkObj = JsonMananger.jsonToBean(bean.getLink(), SysMsgResponse.DataBean.LinkBean.class);
+                    bean.setLinkObj(linkObj);
+                }
+            } catch (JSONException e) {
+                NLog.d(TAG, "SysMsgResponse occurs JSONException e=" + e.toString());
+                return null;
+            }
+        }
+        return sysMsgResponse;
     }
 }
