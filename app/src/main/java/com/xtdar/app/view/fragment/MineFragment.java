@@ -24,6 +24,7 @@ import com.xtdar.app.view.activity.FavorActivity;
 import com.xtdar.app.view.activity.MyVideoActivity;
 import com.xtdar.app.view.activity.SettingActivity;
 import com.xtdar.app.view.widget.BottomMenuDialog;
+import com.xtdar.app.view.widget.DragPointView;
 import com.xtdar.app.view.widget.SelectableRoundedImageView;
 import com.xtdar.app.widget.progressBar.MaterialProgressBar;
 
@@ -54,6 +55,7 @@ public class MineFragment extends Fragment implements View.OnClickListener {
     private TextView title;
     private MinePresenter presenter;
     private TextView nickName;
+    private DragPointView unreadNumView;
 
     public static MineFragment getInstance() {
         if (mFragment == null) {
@@ -87,7 +89,7 @@ public class MineFragment extends Fragment implements View.OnClickListener {
     @Override
     public void onStart() {
         super.onStart();
-        presenter.init(mImageView,nickName);
+        presenter.init(mImageView,nickName,unreadNumView);
         NLog.e("fragment-----","onStart");
     }
 
@@ -123,6 +125,7 @@ public class MineFragment extends Fragment implements View.OnClickListener {
         mLayoutSetting.setOnClickListener(this);
         mTxtMe = (LinearLayout) mView.findViewById(R.id.layout_update);
         mTxtMe.setOnClickListener(this);
+        unreadNumView =(DragPointView) mView.findViewById(R.id.unread_num);
 
     }
 

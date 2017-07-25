@@ -89,7 +89,6 @@ android {
 
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
-    compile files('libs/jpush-android-2.1.3.jar')
     compile project(':xutils')
     compile project(':pulltorefresh')
     //compile 'com.youth.xframe:xframe:1.0.1'

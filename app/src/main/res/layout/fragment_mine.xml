@@ -51,8 +51,12 @@
         </LinearLayout>
 
 </LinearLayout>
-
+<RelativeLayout
+    android:background="@color/white"
+    android:layout_width="match_parent"
+    android:layout_height="75dp">
     <LinearLayout
+        android:layout_alignParentBottom="true"
         android:paddingTop="5dp"
         android:paddingBottom="10dp"
         android:layout_width="match_parent"
@@ -81,29 +85,28 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
         </RelativeLayout>
-
         <RelativeLayout
             android:id="@+id/layout_message"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            >
-            <ImageView
-                android:layout_centerHorizontal="true"
-                android:id="@+id/icon_msg"
-                android:src="@drawable/icon_msg"
-                android:layout_width="25dp"
-                android:layout_height="25dp" />
-            <TextView
-                android:gravity="center"
-                android:layout_alignParentBottom="true"
-                android:layout_below="@+id/icon_msg"
-                android:text="消息"
-                android:textSize="14dp"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
-        </RelativeLayout>
+                >
+                <ImageView
+                    android:layout_centerHorizontal="true"
+                    android:id="@+id/icon_msg"
+                    android:src="@drawable/icon_msg"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp" />
 
+                <TextView
+                    android:gravity="center"
+                    android:layout_alignParentBottom="true"
+                    android:layout_below="@+id/icon_msg"
+                    android:text="消息"
+                    android:textSize="14dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+            </RelativeLayout>
         <RelativeLayout
             android:id="@+id/layout_my_video"
             android:layout_width="0dp"
@@ -125,8 +128,18 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
         </RelativeLayout>
-
     </LinearLayout>
+    <com.xtdar.app.view.widget.DragPointView
+        android:id="@+id/unread_num"
+        android:layout_width="16dp"
+        android:layout_height="16dp"
+        android:layout_marginLeft="190dp"
+        android:layout_marginTop="8dp"
+        android:textColor="@android:color/white"
+        android:textSize="10sp"
+        android:visibility="invisible" />
+</RelativeLayout>
+
 
 
     <LinearLayout

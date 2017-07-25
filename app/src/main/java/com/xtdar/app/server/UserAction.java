@@ -32,6 +32,7 @@ import com.xtdar.app.server.response.SongDetailResponse;
 import com.xtdar.app.server.response.SysMsgResponse;
 import com.xtdar.app.server.response.TagResponse;
 import com.xtdar.app.server.response.TaobaoResponse;
+import com.xtdar.app.server.response.UnReadMsgResponse;
 import com.xtdar.app.server.response.UserInfoResponse;
 import com.xtdar.app.server.response.VersionResponse;
 import com.xtdar.app.server.response.WxLoginResponse;
@@ -398,6 +399,34 @@ public CommonResponse register(String cellPhone, String password, String captcha
             }
         }
         return userInfoResponse;
+    }
+//取消息未读数
+    public UnReadMsgResponse getUnReadMsg() throws HttpException {
+        String uri = getURL("kp_dyz/cli-api-needreadcount.php");
+        Response response=null;
+        try {
+            response=OkHttpUtils
+                    .get()
+                    .addParams("access_key",token)
+                    .url(uri)
+                    .build()
+                    .execute();
+            result =response.body().string();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        UnReadMsgResponse unReadMsgResponse = null;
+        if (!TextUtils.isEmpty(result)) {
+            NLog.e("getUnReadMsg", result);
+
+            try {
+                unReadMsgResponse = JsonMananger.jsonToBean(result, UnReadMsgResponse.class);
+            } catch (JSONException e) {
+                NLog.d(TAG, "UnReadMsgResponse occurs JSONException e=" + e.toString());
+                return null;
+            }
+        }
+        return unReadMsgResponse;
     }
 
 //版本检查

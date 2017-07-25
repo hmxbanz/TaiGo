@@ -139,6 +139,7 @@
     <orderEntry type="jdk" jdkName="Android API 25 Platform" jdkType="Android SDK" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" exported="" name="ShareSDK-Wechat-2.8.3" level="project" />
+    <orderEntry type="library" exported="" name="jpush-android-3.0.7" level="project" />
     <orderEntry type="library" exported="" name="gson-2.1.8" level="project" />
     <orderEntry type="library" exported="" name="DanmakuFlameMaster-0.6.4" level="project" />
     <orderEntry type="library" exported="" name="transition-25.1.0" level="project" />
@@ -192,6 +193,7 @@
     <orderEntry type="library" exported="" name="animated-vector-drawable-25.1.0" level="project" />
     <orderEntry type="library" exported="" name="Vuforia" level="project" />
     <orderEntry type="library" exported="" name="multidex-1.0.1" level="project" />
+    <orderEntry type="library" exported="" name="jcore-android-1.1.5" level="project" />
     <orderEntry type="library" exported="" name="appcompat-v7-25.1.0" level="project" />
     <orderEntry type="library" exported="" name="recyclerview-v7-25.1.0" level="project" />
     <orderEntry type="library" exported="" name="ndkbitmap-x86-0.6.4" level="project" />

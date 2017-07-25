@@ -22,12 +22,14 @@ import com.xtdar.app.loader.GlideImageLoader;
 import com.xtdar.app.server.HttpException;
 import com.xtdar.app.server.async.OnDataListener;
 import com.xtdar.app.server.response.MyDevicesResponse;
+import com.xtdar.app.server.response.UnReadMsgResponse;
 import com.xtdar.app.server.response.UserInfoResponse;
 import com.xtdar.app.service.BluetoothService;
 import com.xtdar.app.view.activity.BleActivity;
 import com.xtdar.app.view.activity.LoginActivity;
 import com.xtdar.app.view.activity.QrCodeActivity;
 import com.xtdar.app.view.activity.UnityPlayerActivity;
+import com.xtdar.app.view.widget.DragPointView;
 import com.xtdar.app.view.widget.LoadDialog;
 import com.xtdar.app.view.widget.SelectableRoundedImageView;
 import com.xtdar.app.widget.DialogWithYesOrNoUtils;
@@ -41,10 +43,12 @@ import java.util.List;
 
 public class MinePresenter extends BasePresenter implements OnDataListener {
     private static final int GETINFO = 2;
+    private static final int GETMSGCOUNT = 3;
     private GlideImageLoader glideImageLoader;
     private final BasePresenter basePresenter;
     private SelectableRoundedImageView avator;
     private TextView nickName;
+    private DragPointView unreadNumView;
 
     public MinePresenter(Context context){
         super(context);
@@ -52,7 +56,8 @@ public class MinePresenter extends BasePresenter implements OnDataListener {
         glideImageLoader = new GlideImageLoader();
     }
 
-    public void init(SelectableRoundedImageView selectableRoundedImageView, TextView nickName) {
+    public void init(SelectableRoundedImageView selectableRoundedImageView, TextView nickName, DragPointView unreadNumView) {
+        this.unreadNumView=unreadNumView;
         this.avator = selectableRoundedImageView;
         this.nickName = nickName;
         LoadDialog.show(context);
@@ -64,6 +69,8 @@ public class MinePresenter extends BasePresenter implements OnDataListener {
         switch (requestCode) {
             case GETINFO:
                 return mUserAction.getInfo();
+            case GETMSGCOUNT:
+                return mUserAction.getUnReadMsg();
         }
         return null;
     }
@@ -79,8 +86,21 @@ public class MinePresenter extends BasePresenter implements OnDataListener {
                     //glideImageLoader.displayImage(context, XtdConst.IMGURI+entity.getImg_path(), this.avator);
                     Glide.with(context).load(XtdConst.IMGURI+entity.getImg_path()).skipMemoryCache(true).diskCacheStrategy( DiskCacheStrategy.NONE ).into(this.avator);
                     this.nickName.setText(entity.getNick_name());
+                    LoadDialog.show(context);
+                    atm.request(GETMSGCOUNT,this);
                 }
                 NToast.shortToast(context, userInfoResponse.getMsg());
+                break;
+            case GETMSGCOUNT:
+                UnReadMsgResponse unReadMsgResponse = (UnReadMsgResponse) result;
+                if (unReadMsgResponse.getCode() == XtdConst.SUCCESS) {
+                    UnReadMsgResponse.DataBean entity = unReadMsgResponse.getData();
+                    if(entity.getMsg_count()>0){
+                    this.unreadNumView.setText(entity.getMsg_count());
+                    this.unreadNumView.setVisibility(View.VISIBLE);
+                    }
+                }
+                NToast.shortToast(context, unReadMsgResponse.getMsg());
                 break;
 
         }
