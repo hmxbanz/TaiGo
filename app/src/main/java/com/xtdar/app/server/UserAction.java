@@ -244,7 +244,37 @@ public class UserAction extends BaseAction {
 
     }
 
+    //上传极光注册ID
+    public CommonResponse upLoadRid(String rid) throws HttpException
+    {
+        String uri = getURL("kp_dyz/cli-api-bindregistrationid.php");
+        Response response=null;
+        try {
+            response=OkHttpUtils
+                    .get()
+                    .addParams(XtdConst.ACCESS_TOKEN,token)
+                    .addParams("registration_id",rid)
+                    .url(uri)
+                    .build()
+                    .execute();
+            result =response.body().string();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        CommonResponse commonResponse = null;
+        if (!TextUtils.isEmpty(result)) {
+            NLog.e("接收的", result);
 
+            try {
+                commonResponse = JsonMananger.jsonToBean(result, CommonResponse.class);
+            } catch (JSONException e) {
+                NLog.d(TAG, "CommonResponse occurs JSONException e=" + e.toString());
+                return null;
+            }
+        }
+        return commonResponse;
+
+    }
 //获取验证码
     public CaptchaResponse getCaptcha(String cellPhone) throws HttpException
     {

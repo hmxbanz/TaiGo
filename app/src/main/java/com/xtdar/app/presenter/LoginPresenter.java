@@ -22,6 +22,7 @@ import com.xtdar.app.widget.DialogWithYesOrNoUtils;
 
 import java.util.HashMap;
 
+import cn.jpush.android.api.JPushInterface;
 import cn.sharesdk.framework.Platform;
 import cn.sharesdk.framework.PlatformActionListener;
 import cn.sharesdk.framework.PlatformDb;
@@ -44,12 +45,14 @@ public class LoginPresenter extends BasePresenter  {
     private static final int WXBIND = 5;
     private static final int UPLOADQQOPENID = 6;
     private static final int QQBIND = 7;
+    private static final int UPLOADRID = 8;
     private final BasePresenter basePresenter;
     private LoginActivity mActivity;
     private EditText mUsername;
     private EditText mPassword;
     public String openId,loginType;
     private String access_key;
+    private String rid;
 
     public LoginPresenter(Context context){
         super(context);
@@ -108,6 +111,8 @@ public class LoginPresenter extends BasePresenter  {
                 return mUserAction.qqOpenId(openId);
             case QQBIND:
                 return mUserAction.qqBind(openId,mUsername.getText().toString(), mPassword.getText().toString());
+            case UPLOADRID:
+                return mUserAction.upLoadRid(rid);
 
         }
         return null;
@@ -122,7 +127,8 @@ public class LoginPresenter extends BasePresenter  {
                     if (loginResponse.getCode() == XtdConst.SUCCESS) {
                         LoginResponse.ResultEntity entity=loginResponse.getData();
                         loginWork(entity.getAccess_key());
-
+                        LoadDialog.show(context);
+                        atm.request(UPLOADRID,LoginPresenter.this);
                     } else if (loginResponse.getCode() == XtdConst.FAILURE) {
 
                     }
@@ -170,6 +176,13 @@ public class LoginPresenter extends BasePresenter  {
                         });
                     }
                     NToast.shortToast(context, commonResponse.getMsg());
+                    break;
+                case UPLOADRID:
+                    CommonResponse commonResponse2 = (CommonResponse) result;
+                    if (commonResponse2 != null && commonResponse2.getCode() == XtdConst.SUCCESS) {
+                        context.startActivity(new Intent(context,Main2Activity.class));
+                    }
+                    NToast.shortToast(context, commonResponse2.getMsg());
                     break;
 
             }
@@ -358,7 +371,8 @@ public class LoginPresenter extends BasePresenter  {
         editor.putBoolean(XtdConst.ISLOGIN, true);
         editor.apply();
         basePresenter.initData();
-        context.startActivity(new Intent(context,Main2Activity.class));
+        rid = JPushInterface.getRegistrationID(context.getApplicationContext());
+
     }
 
 
