@@ -23,6 +23,8 @@ import com.xtdar.app.widget.downloadService.DownloadService;
 import com.xtdar.app.widget.permissionLibrary.PermissionsManager;
 import com.xtdar.app.widget.permissionLibrary.PermissionsResultAction;
 
+import cn.jpush.android.api.JPushInterface;
+
 import static com.xtdar.app.common.CommonTools.getVersionInfo;
 
 /**
@@ -85,9 +87,7 @@ public class Main2Presenter extends BasePresenter {
                     LoginResponse loginResponse = (LoginResponse) result;
                     if (loginResponse.getCode() == XtdConst.SUCCESS) {
                         LoginResponse.ResultEntity entity=loginResponse.getData();
-                        editor.putBoolean(XtdConst.ISLOGIN, true);
-                        editor.putString(XtdConst.ACCESS_TOKEN, entity.getAccess_key());
-                        editor.apply();
+                        loginWork(entity.getAccess_key());
                         LoadDialog.dismiss(activity);
                         NToast.shortToast(activity, "登录成功");
                     } else if (loginResponse.getCode() == XtdConst.FAILURE) {
@@ -153,7 +153,14 @@ public class Main2Presenter extends BasePresenter {
                     }
                 }, true);
 
-
+    }
+    private void loginWork(String access_key)
+    {
+        editor.putString(XtdConst.ACCESS_TOKEN, access_key);
+        editor.putBoolean(XtdConst.ISLOGIN, true);
+        editor.apply();
+        basePresenter.initData();
 
     }
+
 }
