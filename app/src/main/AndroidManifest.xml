@@ -208,7 +208,10 @@
         <activity android:name=".view.activity.BleActivity" />
         <activity android:name=".view.activity.ControllerActivity" />
         <activity android:name=".view.activity.HelpDetailActivity" />
-        <activity android:name=".view.activity.ShowDetailActivity" android:configChanges="orientation|keyboardHidden|screenSize" />
+        <activity android:name=".view.activity.ShowDetailActivity"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:windowSoftInputMode="stateHidden|adjustResize" />
         <activity android:name=".view.activity.MyVideoActivity" />
         <activity android:name=".view.activity.MyCommentActivity" />
         <activity android:name=".view.activity.AboutActivity" />

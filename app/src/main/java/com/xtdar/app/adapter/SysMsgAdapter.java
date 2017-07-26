@@ -71,7 +71,7 @@ public class SysMsgAdapter extends BaseAdapter {
                             mOnItemButtonClick.onItemClick(position, v, entity.getMsg_id());
                         }
                     });
-                    holder.mTitle.setText(entity.getMsg());
+                    holder.mTitle.setText(entity.getLinkObj().getTitle());
                     holder.createDate.setText(entity.getPost_time());
                     String avator=XtdConst.IMGURI+entity.getLinkObj().getImg();
                     Glide.with(mContext).load(avator).into(holder.mCover);

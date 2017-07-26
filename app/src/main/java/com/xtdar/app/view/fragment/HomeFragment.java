@@ -100,7 +100,7 @@ private static final int Blue=0x001bb4fb;
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.txt_add_driver:
-                homeFragmentPresenter.onQrClick();
+                homeFragmentPresenter.onScanClick();
                 break;
             case R.id.right_icon:
                 homeFragmentPresenter.onScanClick();

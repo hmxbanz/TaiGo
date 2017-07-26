@@ -13,93 +13,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         >
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="45dp"
-            android:background="@color/white"
-            android:orientation="vertical"
-            android:layout_marginBottom="2dp"
-            android:id="@+id/layout_title_top">
-
-            <LinearLayout
-                android:paddingLeft="10dp"
-                android:paddingRight="10dp"
-                android:orientation="horizontal"
-                android:layout_width="match_parent"
-                android:layout_height="45dp"   >
-                <!-- 头部导航 -->
-
-                <RelativeLayout
-                    android:id="@+id/layout_back"
-                    android:layout_width="60dp"
-                    android:layout_height="match_parent"
-                    >
-                    <FrameLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_centerInParent="true">
-
-                        <RelativeLayout
-                            android:id="@+id/ll"
-                            android:layout_marginBottom="2dp"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:layout_centerHorizontal="true"
-                            android:gravity="center">
-                            <ImageView
-                                android:src="@drawable/icon_arrow_left"
-                                android:scaleType="centerInside"
-                                android:layout_width="20dp"
-                                android:layout_height="20dp"
-                                android:layout_centerVertical="true"/>
-                            <TextView
-                                android:layout_marginLeft="20dp"
-                                android:gravity="center"
-                                android:id="@+id/text_back"
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:text="返回"
-                                android:textColor="@color/titleBlue"
-                                android:textSize="18dp" />
-
-                        </RelativeLayout>
-                    </FrameLayout>
-                </RelativeLayout>
-                <RelativeLayout
-                    android:id="@+id/tag_layout_logo"
-                    android:layout_width="0dp"
-                    android:layout_weight="1"
-                    android:layout_height="match_parent"
-                    >
-
-                    <TextView
-                        android:id="@+id/text_title"
-                        style="@style/AppTitleStyle2"
-                        android:gravity="center"
-                        android:text="视频详情"
-                        android:textSize="20dp"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent" />
-
-                </RelativeLayout>
-                <RelativeLayout
-
-                    android:id="@+id/message"
-                    android:layout_width="60dp"
-                    android:layout_height="match_parent"
-                    >
-
-                    <TextView
-                        android:layout_marginRight="5dp"
-                        android:gravity="center"
-                        android:id="@+id/text_right"
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:text=""
-                        android:textSize="16dp" />
-                </RelativeLayout>
-            </LinearLayout>
-        </LinearLayout>
 
         <android.support.design.widget.CollapsingToolbarLayout
             android:id="@+id/collapsing_toolbar_layout"
@@ -111,7 +24,6 @@
             app:expandedTitleMarginStart="48dp"
             app:expandedTitleTextAppearance="@style/transparentText"
             app:layout_scrollFlags="scroll|exitUntilCollapsed">
-
 
             <LinearLayout
                 android:background="@color/white"
@@ -178,13 +90,13 @@
                 </LinearLayout>
             </LinearLayout>
 
-            <!--<android.support.v7.widget.Toolbar-->
-                <!--android:id="@+id/toolbar"-->
-                <!--android:layout_width="match_parent"-->
-                <!--android:layout_height="?attr/actionBarSize"-->
-                <!--app:layout_collapseMode="pin"-->
-                <!--app:popupTheme="@style/ThemeOverlay.AppCompat.Light"-->
-                <!--app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"/>-->
+            <android.support.v7.widget.Toolbar
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                app:layout_collapseMode="pin"
+                app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+                app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"/>
 
         </android.support.design.widget.CollapsingToolbarLayout>
 
@@ -207,7 +119,7 @@
         <android.support.v7.widget.RecyclerView
             android:id="@+id/recyclerView"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
              >
         </android.support.v7.widget.RecyclerView>
 

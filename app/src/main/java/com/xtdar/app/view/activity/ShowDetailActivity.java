@@ -82,22 +82,21 @@ public class ShowDetailActivity extends BaseActivity implements RecyclerViewAdap
         recycleView= (RecyclerView) findViewById(R.id.recyclerView);
 
         AppBarLayout app_bar_layout = (AppBarLayout) findViewById(R.id.app_bar_layout);
-//        Toolbar mToolbar = (Toolbar) findViewById(R.id.toolbar);
-//        setSupportActionBar(mToolbar);
-//        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-//        mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                onBackPressed();
-//            }
-//        });
+        Toolbar mToolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(mToolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
+            }
+        });
 
         videoPlayer= (StandardGSYVideoPlayer) findViewById(R.id.detail_player);
         title = (TextView) findViewById(R.id.title);
         comment = (EditText) findViewById(R.id.comment);
         btnSend = (TextView) findViewById(R.id.btn_send);
         btnSend.setOnClickListener(this);
-        findViewById(R.id.layout_back).setOnClickListener(this);
 
     }
 
@@ -105,9 +104,6 @@ public class ShowDetailActivity extends BaseActivity implements RecyclerViewAdap
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.layout_back:
-                finish();
-                break;
             case R.id.btn_send:
                 presenter.addComment(comment);
                 break;

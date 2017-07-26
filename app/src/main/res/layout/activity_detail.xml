@@ -124,7 +124,6 @@
 
         </android.support.design.widget.CollapsingToolbarLayout>
 
-
         <LinearLayout
             android:layout_marginTop="10dp"
             android:background="@color/white"
