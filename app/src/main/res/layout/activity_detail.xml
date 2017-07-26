@@ -165,5 +165,57 @@
              >
         </android.support.v7.widget.RecyclerView>
 
+
     </android.support.v4.widget.NestedScrollView>
+
+    <android.support.v4.widget.NestedScrollView
+        android:layout_marginTop="280dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true"
+        android:scrollbars="none"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+        <android.support.v7.widget.RecyclerView
+
+            android:id="@+id/recyclerView_comment"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            >
+        </android.support.v7.widget.RecyclerView>
+
+    </android.support.v4.widget.NestedScrollView>
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:orientation="horizontal"
+            android:background="@color/white"
+            android:layout_gravity="bottom"
+            android:gravity="center_vertical"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            >
+            <EditText
+                android:id="@+id/comment"
+                android:background="@drawable/bg_button_gray"
+                android:padding="5dp"
+                android:layout_marginLeft="20dp"
+                style="@style/AppTitleStyle2"
+                android:hint="我要评论"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="30dp" />
+            <TextView
+                android:gravity="center_vertical"
+                android:padding="5dp"
+                android:layout_marginRight="20dp"
+                style="@style/AppTitleStyle2"
+                android:id="@+id/btn_send"
+                android:text="发送"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent" />
+        </LinearLayout>
+
+    </FrameLayout>
 </android.support.design.widget.CoordinatorLayout>

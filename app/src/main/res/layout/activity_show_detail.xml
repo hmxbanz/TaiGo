@@ -189,23 +189,6 @@
         </android.support.design.widget.CollapsingToolbarLayout>
 
 
-        <LinearLayout
-            android:layout_marginTop="10dp"
-            android:background="@color/white"
-            android:orientation="horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="50dp">
-            <TextView
-                android:layout_marginLeft="10dp"
-                android:id="@+id/new_comment"
-                android:text="最新评论"
-                style="@style/AppTitleStyle2"
-                android:layout_width="0dp"
-                android:layout_weight="5"
-                android:gravity="center_vertical"
-                android:layout_height="match_parent" />
-        </LinearLayout>
-
     </android.support.design.widget.AppBarLayout>
 
     <android.support.v4.widget.NestedScrollView
@@ -221,7 +204,6 @@
         <!--android:layout_width="match_parent"-->
         <!--android:layout_height="match_parent"-->
         <!--app:layout_behavior="@string/appbar_scrolling_view_behavior"/>-->
-
         <android.support.v7.widget.RecyclerView
             android:id="@+id/recyclerView"
             android:layout_width="match_parent"

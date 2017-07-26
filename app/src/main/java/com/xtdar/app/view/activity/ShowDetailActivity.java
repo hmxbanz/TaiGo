@@ -24,6 +24,7 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.lzy.ninegrid.NineGridView;
+import com.shuyu.gsyvideoplayer.GSYVideoManager;
 import com.shuyu.gsyvideoplayer.video.StandardGSYVideoPlayer;
 import com.xtdar.app.R;
 import com.xtdar.app.XtdConst;
@@ -165,6 +166,12 @@ public class ShowDetailActivity extends BaseActivity implements RecyclerViewAdap
         intent.putExtra("show_id",itemId);
         intent.putExtra(XtdConst.CLASSID,classId);
         context.startActivity(intent);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        GSYVideoManager.onPause();
     }
 
 }

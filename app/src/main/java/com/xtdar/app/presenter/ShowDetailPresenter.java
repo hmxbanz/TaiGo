@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Build;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -146,7 +147,7 @@ public class ShowDetailPresenter extends BasePresenter{
             case GETDETAIL:
                 return mUserAction.getShowDetail(itemId);
             case GETCOMMENT:
-                return mUserAction.getComment(itemId,"0","10");
+                return mUserAction.getComment(itemId,"t_show","0","10");
             case ADDFAVOR:
                 return mUserAction.addFavor(itemId);
             case ADDCOMMENT:
@@ -175,7 +176,7 @@ public class ShowDetailPresenter extends BasePresenter{
                     glideImageLoader.displayImage(context, XtdConst.IMGURI+entity.getImg_path(),avatar);
                     ((TextView)mActivity.findViewById(R.id.nickname)).setText(entity.getNick_name());
                     ((TextView)mActivity.findViewById(R.id.txt_title)).setText(entity.getTitle());
-                    ((TextView)mActivity.findViewById(R.id.new_comment)).setText("最新评论：("+entity.getCom_count()+")");
+                    //((TextView)mActivity.findViewById(R.id.new_comment)).setText("最新评论：("+entity.getCom_count()+")");
                     ((TextView)mActivity.findViewById(R.id.click_count)).setText("观看："+entity.getClick_count());
                     ((TextView)mActivity.findViewById(R.id.comment_count)).setText("评论："+entity.getCom_count());
                     //请求评论
@@ -193,7 +194,7 @@ public class ShowDetailPresenter extends BasePresenter{
                     gridLayoutManager=new GridLayoutManager(context,1);
                     recycleView.setLayoutManager(gridLayoutManager);
                     CommentAdapter dataAdapter = new CommentAdapter(entities, context);
-                    //dataAdapter.setFooterView(LayoutInflater.from(this).inflate(R.layout.recyclerview_footer,null));
+                    dataAdapter.setHeaderView(LayoutInflater.from(context).inflate(R.layout.recyclerview_top2,null));
                     recycleView.setAdapter(dataAdapter);
                     recycleView.setNestedScrollingEnabled(false);
                     if(Build.VERSION.SDK_INT>=23)

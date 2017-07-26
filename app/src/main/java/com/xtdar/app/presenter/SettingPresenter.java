@@ -40,6 +40,8 @@ public void logOff()
             //File file = new File(Environment.getExternalStorageDirectory().getPath() + getPackageName());
             //deleteFile(file);
             editor.putBoolean(XtdConst.ISLOGIN, false);//退出改登录标记
+            editor.putString(XtdConst.LOGIN_USERNAME, "");
+            editor.putString(XtdConst.LOGING_PASSWORD, "");
             editor.commit();
             basePresenter.initData();
             NToast.shortToast(context, "退出成功");

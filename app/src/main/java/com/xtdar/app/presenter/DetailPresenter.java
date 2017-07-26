@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Build;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -12,7 +13,9 @@ import android.widget.TextView;
 import com.shuyu.gsyvideoplayer.listener.LockClickListener;
 import com.shuyu.gsyvideoplayer.utils.OrientationUtils;
 import com.shuyu.gsyvideoplayer.video.StandardGSYVideoPlayer;
+import com.xtdar.app.R;
 import com.xtdar.app.XtdConst;
+import com.xtdar.app.adapter.CommentAdapter;
 import com.xtdar.app.adapter.RelateRecommendItemAdapter;
 import com.xtdar.app.common.NToast;
 import com.xtdar.app.listener.AlertDialogCallback;
@@ -38,6 +41,7 @@ public class DetailPresenter extends BasePresenter{
     private static final int GETDETAIL = 1;
     private static final int ADDFAVOR = 2;
     private static final int GETRELATERECOMMEND = 3;
+    private static final int GETCOMMENT = 4;
     private final GlideImageLoader glideImageLoader;
     private DetailActivity mActivity;
     private String itemId;
@@ -46,7 +50,7 @@ public class DetailPresenter extends BasePresenter{
     private OrientationUtils orientationUtils;
     private boolean isPlay;
     private boolean isPause;
-    private RecyclerView recycleView;
+    private RecyclerView recycleView,recycleViewComment;
     private String classId;
     private GridLayoutManager gridLayoutManager;
 
@@ -56,11 +60,12 @@ public class DetailPresenter extends BasePresenter{
         glideImageLoader = new GlideImageLoader();
     }
 
-    public void init(StandardGSYVideoPlayer videoPlayer, TextView title, TextView content, RecyclerView recycleView) {
+    public void init(StandardGSYVideoPlayer videoPlayer, TextView title, TextView content, RecyclerView recycleView, RecyclerView recycleViewComment) {
         this.videoPlayer=videoPlayer;
         this.title = title;
         this.content=content;
         this.recycleView=recycleView;
+        this.recycleViewComment=recycleViewComment;
         Intent intent = mActivity.getIntent();
         itemId = intent.getStringExtra(XtdConst.ITEMID);
         classId = intent.getStringExtra(XtdConst.CLASSID);
@@ -143,6 +148,8 @@ public class DetailPresenter extends BasePresenter{
                 return mUserAction.getRelateRecommend(classId);
             case ADDFAVOR:
                 return mUserAction.addFavor(itemId);
+            case GETCOMMENT:
+                return mUserAction.getComment(itemId,"t_class_item","0","10");
         }
         return null;
     }
@@ -202,6 +209,7 @@ public class DetailPresenter extends BasePresenter{
                     });
 
                 }
+                atm.request(GETCOMMENT,this);
                 NToast.shortToast(context,relateRecommendResponse.getMsg());
                 break;
             case ADDFAVOR:
@@ -210,6 +218,38 @@ public class DetailPresenter extends BasePresenter{
                     DialogWithYesOrNoUtils.getInstance().showDialog(context,"收藏成功",null,null ,new AlertDialogCallback());
                 }
                 NToast.shortToast(context,commonResponse.getMsg());
+                break;
+            case GETCOMMENT:
+                CommentResponse commentResponse = (CommentResponse) result;
+                if (commentResponse.getCode() == XtdConst.SUCCESS) {
+                    List<CommentResponse.DataBean> entities = commentResponse.getData();
+
+                    gridLayoutManager=new GridLayoutManager(context,1);
+                    recycleViewComment.setLayoutManager(gridLayoutManager);
+                    CommentAdapter dataAdapter = new CommentAdapter(entities, context);
+                    dataAdapter.setHeaderView(LayoutInflater.from(context).inflate(R.layout.recyclerview_top2,null));
+                    recycleViewComment.setAdapter(dataAdapter);
+                    recycleViewComment.setNestedScrollingEnabled(false);
+                    if(Build.VERSION.SDK_INT>=23)
+                        recycleViewComment.setOnScrollChangeListener(new View.OnScrollChangeListener() {
+                            @Override
+                            public void onScrollChange(View v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
+                                if (gridLayoutManager.findLastCompletelyVisibleItemPosition()==(UserList.getData().size()-1))
+                                {}
+                            }
+                        });
+                    //recycleView.addItemDecoration(new DividerItemDecoration(getContext(),DividerItemDecoration.HORIZONTAL));
+                    dataAdapter.setOnItemClickListener(new CommentAdapter.ItemClickListener() {
+                        @Override
+                        public void onItemClick(int position, String itemId, String classId) {
+                            //DetailActivity.StartActivity(context,itemId,classId);
+                        }
+
+
+                    });
+
+                }
+                NToast.shortToast(context,commentResponse.getMsg());
                 break;
 
         }

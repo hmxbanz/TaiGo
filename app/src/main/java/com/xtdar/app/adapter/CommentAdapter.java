@@ -79,11 +79,11 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.DataHold
     }
     @Override
     public void onBindViewHolder(DataHolder holder, final int position) {
-
+        if(getItemViewType(position) == TYPE_HEADER) return;
         if(getItemViewType(position) == TYPE_FOOTER) return;
 
         final int pos = getRealPosition(holder);
-        final CommentResponse.DataBean listItem = listItems.get(position);
+        final CommentResponse.DataBean listItem = listItems.get(pos);
         if(holder instanceof DataHolder) {
             holder.nickName.setText(listItem.getNick_name());
             holder.content.setText(listItem.getComment());

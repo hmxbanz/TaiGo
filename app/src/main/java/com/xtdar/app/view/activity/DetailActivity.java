@@ -29,6 +29,7 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.lzy.ninegrid.ImageInfo;
 import com.lzy.ninegrid.NineGridView;
 import com.lzy.ninegrid.preview.ImagePreviewActivity;
+import com.shuyu.gsyvideoplayer.GSYVideoManager;
 import com.shuyu.gsyvideoplayer.listener.LockClickListener;
 import com.shuyu.gsyvideoplayer.utils.OrientationUtils;
 import com.shuyu.gsyvideoplayer.video.StandardGSYVideoPlayer;
@@ -52,7 +53,7 @@ import com.xtdar.app.view.fragment.LiftShareFragment;
 
 public class DetailActivity extends BaseActivity implements RecyclerViewAdapter.ItemClickListener,View.OnClickListener {
     public static List<?> images=new ArrayList<>();
-    private RecyclerView recycleView;
+    private RecyclerView recycleView,recycleViewComment;
     public ScrollView scrollView;
     private View view;
 
@@ -80,7 +81,7 @@ public class DetailActivity extends BaseActivity implements RecyclerViewAdapter.
         initViews();
         //initDatas();
         mDetailPresenter = new DetailPresenter(this);
-        mDetailPresenter.init(videoPlayer,title,content,recycleView);
+        mDetailPresenter.init(videoPlayer,title,content,recycleView,recycleViewComment);
 
     }
 
@@ -88,6 +89,7 @@ public class DetailActivity extends BaseActivity implements RecyclerViewAdapter.
         //mCoordinatorTabLayout = (CoordinatorTabLayout) findViewById(R.id.coordinatortablayout);
 
         recycleView= (RecyclerView) findViewById(R.id.recyclerView);
+        recycleViewComment= (RecyclerView) findViewById(R.id.recyclerView_comment);
 
         AppBarLayout app_bar_layout = (AppBarLayout) findViewById(R.id.app_bar_layout);
         Toolbar mToolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -210,6 +212,13 @@ public class DetailActivity extends BaseActivity implements RecyclerViewAdapter.
         intent.putExtra(XtdConst.ITEMID,itemId);
         intent.putExtra(XtdConst.CLASSID,classId);
         context.startActivity(intent);
+    }
+
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        GSYVideoManager.onPause();
     }
 
 }

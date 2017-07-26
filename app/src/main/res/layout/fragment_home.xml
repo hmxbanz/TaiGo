@@ -5,153 +5,96 @@
     android:layout_height="match_parent"
     android:background="#f0f0f6"
     android:orientation="vertical">
-    <include layout="@layout/layout_title_top2" />
+
+    <LinearLayout
+        android:background="@color/titleBlue"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"   >
+        <!-- 头部导航 -->
+
+        <RelativeLayout
+            android:id="@+id/layout_back"
+            android:layout_width="60dp"
+            android:layout_height="match_parent"
+            >
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_centerInParent="true">
+
+                <RelativeLayout
+                    android:id="@+id/ll"
+                    android:layout_marginBottom="2dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_centerHorizontal="true"
+                    android:gravity="center">
+                    <ImageView
+                        android:src="@drawable/icon_arrow_left"
+                        android:scaleType="centerInside"
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:layout_centerVertical="true"/>
+                    <TextView
+                        android:layout_marginLeft="20dp"
+                        android:gravity="center"
+                        android:id="@+id/text_back"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:text="返回"
+                        android:textColor="@color/titleBlue"
+                        android:textSize="18dp" />
+
+                </RelativeLayout>
+            </FrameLayout>
+        </RelativeLayout>
+        <RelativeLayout
+            android:id="@+id/tag_layout_logo"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="match_parent"
+            >
+
+            <TextView
+                android:id="@+id/text_title"
+                style="@style/AppTitleStyle"
+                android:gravity="center"
+                android:text="标题"
+                android:textSize="20dp"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+
+        </RelativeLayout>
+        <RelativeLayout
+            android:id="@+id/message"
+            android:layout_width="60dp"
+            android:layout_height="match_parent"
+            >
+            <ImageView
+                android:layout_centerInParent="true"
+                android:id="@+id/right_icon"
+                android:src="@drawable/icon_add2"
+                android:layout_width="20dp"
+                android:layout_height="20dp" />
+        </RelativeLayout>
+    </LinearLayout>
     <!-- 底部导航 -->
     <LinearLayout
-    android:background="@color/white"
+    android:background="@color/titleBlue"
     android:id="@+id/dervice"
     android:layout_width="match_parent"
     android:layout_height="80dp"
     android:gravity="center_vertical"
     android:orientation="horizontal">
 
-    <RelativeLayout
-        android:id="@+id/tab_layout_home"
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:layout_weight="3">
-
-        <FrameLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_centerInParent="true">
-
-            <RelativeLayout
-                android:id="@+id/layout_ble_scan"
-                android:paddingTop="3dp"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_centerHorizontal="true"
-                android:gravity="center">
-
-                <ImageView
-                    android:src="@drawable/icon_ble"
-                    android:id="@+id/tab_img_home"
-                    android:layout_width="45dp"
-                    android:layout_height="45dp"
-                    android:layout_centerHorizontal="true"
-                    android:background="#ffffff"
-                    android:focusable="false"
-                    android:scaleType="centerInside" />
-
-                <TextView
-                    android:id="@+id/tab_text_home"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@id/tab_img_home"
-                    android:layout_centerHorizontal="true"
-                    android:layout_marginTop="2dp"
-                    android:text="蓝牙添加"
-                    android:textColor="#abadbb"
-                    android:textSize="10dp" />
-
-            </RelativeLayout>
-
-
-        </FrameLayout>
-
-
-    </RelativeLayout>
-    <RelativeLayout
-        android:id="@+id/layout_ble"
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:layout_weight="3">
-
-        <FrameLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_centerInParent="true">
-
-            <RelativeLayout
-                android:paddingTop="3dp"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_centerHorizontal="true"
-                android:gravity="center">
-
-                <ImageView
-                    android:src="@drawable/icon_scan"
-                    android:id="@+id/tab_img_shop"
-                    android:layout_width="45dp"
-                    android:layout_height="45dp"
-                    android:layout_centerHorizontal="true"
-                    android:background="#ffffff"
-                    android:focusable="false"
-                    android:scaleType="centerInside" />
-
-                <TextView
-                    android:id="@+id/tab_text_shop"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@id/tab_img_shop"
-                    android:layout_centerHorizontal="true"
-                    android:layout_marginTop="2dp"
-                    android:text="扫码添加"
-                    android:textColor="#abadbb"
-                    android:textSize="10dp" />
-
-            </RelativeLayout>
-
-
-
-        </FrameLayout>
-
-
-    </RelativeLayout>
-
-    <RelativeLayout
-        android:id="@+id/layout_more"
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:layout_weight="3"
-        android:paddingTop="5dp"
-        >
-        <FrameLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_centerInParent="true">
-            <RelativeLayout
-                android:paddingTop="3dp"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_centerHorizontal="true"
-                android:gravity="center">
-                <ImageView
-                    android:src="@drawable/icon_more"
-                    android:id="@+id/tab_img_me"
-                    android:layout_width="45dp"
-                    android:layout_height="45dp"
-                    android:layout_centerHorizontal="true"
-                    android:background="#ffffff"
-                    android:focusable="false"
-                    android:scaleType="centerInside" />
-                <TextView
-                    android:id="@+id/tab_text_me"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@id/tab_img_me"
-                    android:layout_centerHorizontal="true"
-                    android:layout_marginTop="2.2dp"
-                    android:text="更多设备"
-                    android:textColor="#abadbb"
-                    android:textSize="10dp" />
-            </RelativeLayout>
-
-
-        </FrameLayout>
-
-    </RelativeLayout>
+<ImageView
+    android:scaleType="center"
+    android:src="@drawable/img_help"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" />
 
 </LinearLayout>
     <LinearLayout
@@ -210,11 +153,19 @@
 
     <RelativeLayout
         android:layout_marginTop="1dp"
+        android:paddingTop="50dp"
         android:background="@color/white"
-        android:gravity="center"
+        android:gravity="center_horizontal"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+        <ImageView
+            android:id="@+id/img_null"
+            android:src="@drawable/img_null"
+            android:layout_width="300dp"
+            android:layout_height="150dp"
+            android:layout_centerHorizontal="true" />
         <TextView
+            android:layout_below="@+id/img_null"
             android:id="@+id/no_driver"
             android:gravity="center"
             android:textSize="18dp"

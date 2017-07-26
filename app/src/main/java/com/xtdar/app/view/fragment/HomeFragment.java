@@ -87,9 +87,7 @@ private static final int Blue=0x001bb4fb;
         title.setText("设备");
         view.findViewById(R.id.txt_add_driver).setOnClickListener(this);
         recycleView= (RecyclerView) view.findViewById(R.id.recyclerView);
-        view.findViewById(R.id.layout_ble).setOnClickListener(this);
-        view.findViewById(R.id.layout_ble_scan).setOnClickListener(this);
-        view.findViewById(R.id.layout_more).setOnClickListener(this);
+        view.findViewById(R.id.right_icon).setOnClickListener(this);
 
     }
 
@@ -101,15 +99,14 @@ private static final int Blue=0x001bb4fb;
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.layout_ble:
             case R.id.txt_add_driver:
                 homeFragmentPresenter.onQrClick();
                 break;
-            case R.id.layout_ble_scan:
+            case R.id.right_icon:
                 homeFragmentPresenter.onScanClick();
                 break;
-            case R.id.layout_more:
-                ((Main2Activity)getActivity()).getViewPager().setCurrentItem(2, false);
+//            case R.id.layout_more:
+//                ((Main2Activity)getActivity()).getViewPager().setCurrentItem(2, false);
 
         }
     }

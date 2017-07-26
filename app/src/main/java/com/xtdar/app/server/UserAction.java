@@ -722,7 +722,7 @@ public CommonResponse register(String cellPhone, String password, String captcha
             response=OkHttpUtils
                     .get()
                     .addParams(XtdConst.CLASSID,classId)
-                    .addParams("item_count","6")
+                    .addParams("item_count","4")
                     .url(uri)
                     .build()
                     .execute();
@@ -1009,13 +1009,13 @@ public CommonResponse register(String cellPhone, String password, String captcha
         return gameListResponse;
     }
 
-    public CommentResponse getComment(String itemId, String last_item_id, String item_count) throws HttpException {
+    public CommentResponse getComment(String itemId, String comment_tag,String last_item_id, String item_count) throws HttpException {
         String uri = getURL("kp_dyz/cli-comm-commentlist.php");
         Response response=null;
         try {
             response=OkHttpUtils
                     .get()
-                    .addParams("comment_tag","t_show")
+                    .addParams("comment_tag",comment_tag)
                     .addParams("item_id",itemId)
                     .addParams("last_com_id",last_item_id)
                     .addParams("list_count",item_count)

@@ -16,6 +16,7 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.shuyu.gsyvideoplayer.GSYVideoManager;
 import com.xtdar.app.R;
 import com.xtdar.app.presenter.Main2Presenter;
 import com.xtdar.app.view.fragment.DiscoveryFragment;
@@ -248,5 +249,11 @@ public class Main2Activity extends BaseActivity implements View.OnClickListener{
     protected void onDestroy() {
         super.onDestroy();
         main2Presenter.onDestroy();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        GSYVideoManager.onPause();
     }
 }
