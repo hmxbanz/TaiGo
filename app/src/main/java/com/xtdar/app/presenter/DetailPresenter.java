@@ -7,6 +7,7 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -42,6 +43,7 @@ public class DetailPresenter extends BasePresenter{
     private static final int ADDFAVOR = 2;
     private static final int GETRELATERECOMMEND = 3;
     private static final int GETCOMMENT = 4;
+    private static final int ADDCOMMENT = 5;
     private final GlideImageLoader glideImageLoader;
     private DetailActivity mActivity;
     private String itemId;
@@ -53,6 +55,7 @@ public class DetailPresenter extends BasePresenter{
     private RecyclerView recycleView,recycleViewComment;
     private String classId;
     private GridLayoutManager gridLayoutManager;
+    private EditText comment;
 
     public DetailPresenter(Context context){
         super(context);
@@ -150,6 +153,8 @@ public class DetailPresenter extends BasePresenter{
                 return mUserAction.addFavor(itemId);
             case GETCOMMENT:
                 return mUserAction.getComment(itemId,"t_class_item","0","10");
+            case ADDCOMMENT:
+                return mUserAction.addComment(itemId,"t_class_item",comment.getText().toString());
         }
         return null;
     }
@@ -251,6 +256,13 @@ public class DetailPresenter extends BasePresenter{
                 }
                 NToast.shortToast(context,commentResponse.getMsg());
                 break;
+            case ADDCOMMENT:
+                CommonResponse CommonResponse = (CommonResponse) result;
+                if (CommonResponse.getCode() == XtdConst.SUCCESS) {
+                    DialogWithYesOrNoUtils.getInstance().showDialog(context,"评论成功",null,null,new AlertDialogCallback());
+                }
+                NToast.shortToast(context,CommonResponse.getMsg());
+                break;
 
         }
     }
@@ -258,5 +270,16 @@ public class DetailPresenter extends BasePresenter{
     public void addFavor() {
         LoadDialog.show(context);
         atm.request(ADDFAVOR,this);
+    }
+
+    public void addComment(EditText comment) {
+        this.comment = comment;
+        if ("".equals(this.comment.getText().toString().trim()))
+        {
+            NToast.shortToast(context,"请输入评论内容");
+            return;
+        }
+        LoadDialog.show(context);
+        atm.request(ADDCOMMENT,this);
     }
 }

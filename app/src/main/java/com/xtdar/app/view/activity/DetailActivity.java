@@ -1,15 +1,12 @@
 package com.xtdar.app.view.activity;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
-import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
@@ -17,7 +14,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
-import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
@@ -26,25 +23,18 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
-import com.lzy.ninegrid.ImageInfo;
 import com.lzy.ninegrid.NineGridView;
-import com.lzy.ninegrid.preview.ImagePreviewActivity;
 import com.shuyu.gsyvideoplayer.GSYVideoManager;
-import com.shuyu.gsyvideoplayer.listener.LockClickListener;
-import com.shuyu.gsyvideoplayer.utils.OrientationUtils;
 import com.shuyu.gsyvideoplayer.video.StandardGSYVideoPlayer;
 import com.xtdar.app.XtdConst;
 import com.xtdar.app.adapter.RecyclerViewAdapter;
-import com.xtdar.app.model.UserList;
 import com.xtdar.app.presenter.DetailPresenter;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 import cn.hugeterry.coordinatortablayout.CoordinatorTabLayout;
 import com.xtdar.app.R;
-import com.xtdar.app.video.SampleListener;
 import com.xtdar.app.view.fragment.AlubmFragment;
 import com.xtdar.app.view.fragment.FriendConditionFragment;
 import com.xtdar.app.view.fragment.InfoFragment;
@@ -64,9 +54,9 @@ public class DetailActivity extends BaseActivity implements RecyclerViewAdapter.
     private ArrayList<Fragment> mFragments;
     private final String[] mTabTitles = {"个人资料", "条件", "动态", "相册"};
     private ViewPager mViewPager;
-    private DetailPresenter mDetailPresenter;
+    private DetailPresenter presenter;
     private StandardGSYVideoPlayer videoPlayer;
-
+    private EditText comment;
     private TextView title,content;
     private LinearLayout layoutFavor;
 
@@ -80,8 +70,8 @@ public class DetailActivity extends BaseActivity implements RecyclerViewAdapter.
 
         initViews();
         //initDatas();
-        mDetailPresenter = new DetailPresenter(this);
-        mDetailPresenter.init(videoPlayer,title,content,recycleView,recycleViewComment);
+        presenter = new DetailPresenter(this);
+        presenter.init(videoPlayer,title,content,recycleView,recycleViewComment);
 
     }
 
@@ -109,6 +99,9 @@ public class DetailActivity extends BaseActivity implements RecyclerViewAdapter.
         content = (TextView) findViewById(R.id.txt_content);
         layoutFavor = (LinearLayout) findViewById(R.id.layout_favor);
         layoutFavor.setOnClickListener(this);
+        comment = (EditText) findViewById(R.id.comment);
+        findViewById(R.id.btn_send).setOnClickListener(this);
+
 
         //initFragments();
         //initViewPager();
@@ -155,7 +148,10 @@ public class DetailActivity extends BaseActivity implements RecyclerViewAdapter.
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.layout_favor:
-                mDetailPresenter.addFavor();
+                presenter.addFavor();
+                break;
+            case R.id.btn_send:
+                presenter.addComment(comment);
                 break;
 
         }
