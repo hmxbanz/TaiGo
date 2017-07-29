@@ -25,6 +25,7 @@ import com.xtdar.app.service.BluetoothService;
 import com.xtdar.app.service.DeviceConectService;
 import com.xtdar.app.view.activity.BleActivity;
 import com.xtdar.app.view.activity.LoginActivity;
+import com.xtdar.app.view.activity.Main2Activity;
 import com.xtdar.app.view.activity.QrCodeActivity;
 import com.xtdar.app.view.activity.UnityPlayerActivity;
 import com.xtdar.app.view.widget.LoadDialog;
@@ -120,15 +121,18 @@ public void loadData(){
     }
 
     @Override
-    public void onItemClick(int position, String itemId, String deviceName) {
+    public void onItemClick(int position, MyDevicesResponse.DataBean item) {
         //Intent startConectServiceIntent = new Intent(context, DeviceConectService.class);
         //startConectServiceIntent.putExtra("deviceName", deviceName);
         //context.startService(startConectServiceIntent);
-        this.deviceName=deviceName;
+        this.deviceName=item.getMac_address();
+
         if (mBluetoothService == null) {
             bindService();
         } else {
-            mBluetoothService.scanDevice();
+            //mBluetoothService.scanDevice();
+            LoadDialog.show(context);
+            mBluetoothService.scanAndConnect5(HomeFragmentPresenter.this.deviceName);
         }
     }
 
@@ -147,7 +151,10 @@ public void loadData(){
         public void onServiceConnected(ComponentName name, IBinder service) {
             mBluetoothService = ((BluetoothService.BluetoothBinder) service).getService();
             mBluetoothService.setScanCallback(callback);
-            mBluetoothService.scanDevice();
+            LoadDialog.show(context);
+            mBluetoothService.scanAndConnect5(HomeFragmentPresenter.this.deviceName);
+
+            //mBluetoothService.scanDevice();
         }
 
         @Override
@@ -164,11 +171,11 @@ public void loadData(){
         @Override
         public void onScanning(ScanResult result) {
             LoadDialog.show(context);
-            if(HomeFragmentPresenter.this.deviceName.equals(result.getDevice().getName()))
-            {
-                LoadDialog.dismiss(context);
-                mBluetoothService.connectDevice(result);
-            }
+//            if(HomeFragmentPresenter.this.deviceName.equals(result.getDevice().getName()))
+//            {
+//                LoadDialog.dismiss(context);
+//                mBluetoothService.connectDevice(result);
+//            }
             NToast.shortToast(context,result.getDevice().getName());
         }
 
@@ -195,8 +202,10 @@ public void loadData(){
         @Override
         public void onServicesDiscovered() {
             LoadDialog.dismiss(context);
-            Intent intent = new Intent(context, UnityPlayerActivity.class);
-            context.startActivity(intent);
+            NToast.longToast(context, "连接成功，请选择游戏开始玩。");
+            ((Main2Activity)context).getViewPager().setCurrentItem(1, false);
+//            Intent intent = new Intent(context, UnityPlayerActivity.class);
+//            context.startActivity(intent);
 
         }
     };

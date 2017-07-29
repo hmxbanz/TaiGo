@@ -34,11 +34,13 @@ import com.xtdar.app.common.NumberUtils;
 import com.xtdar.app.listener.AlertDialogCallback;
 import com.xtdar.app.server.HttpException;
 import com.xtdar.app.server.async.OnDataListener;
+import com.xtdar.app.server.response.BindResponse;
 import com.xtdar.app.server.response.CommonResponse;
 import com.xtdar.app.server.response.HelpResponse;
 import com.xtdar.app.service.BluetoothService;
 import com.xtdar.app.view.activity.BleActivity;
 import com.xtdar.app.view.activity.ControllerActivity;
+import com.xtdar.app.view.activity.HelpDetailActivity;
 import com.xtdar.app.view.activity.LoginActivity;
 import com.xtdar.app.view.activity.UnityPlayerActivity;
 import com.xtdar.app.view.widget.LoadDialog;
@@ -58,6 +60,7 @@ public class BlePresenter extends BasePresenter implements OnDataListener, BleAd
     private static final String TAG = BlePresenter.class.getSimpleName();
     private static final long SCAN_PERIOD = 10000;
     private static final int BINDDEVICE = 1;
+    private static final int GETHELP = 2;
     //private final Handler handler;
     private ListView listView;
     private List<BluetoothDevice> list=new ArrayList<>();
@@ -73,6 +76,7 @@ public class BlePresenter extends BasePresenter implements OnDataListener, BleAd
     private BasePresenter basePresenter;
     private MaterialProgressBar progressWheel;
     private RelativeLayout emptyView;
+    private String driverId;
 
     public BlePresenter(Context context) {
         super(context);
@@ -212,15 +216,23 @@ public class BlePresenter extends BasePresenter implements OnDataListener, BleAd
 
     @Override
     public Object doInBackground(int requestCode, String parameter) throws HttpException {
-        return mUserAction.bindDevice(selectedDevice.getDevice().getName());
+        switch (requestCode) {
+            case BINDDEVICE:
+                return mUserAction.bindDevice(selectedDevice.getDevice().getAddress());
+
+        }
+            return null;
     }
 
     @Override
     public void onSuccess(int requestCode, Object result) {
         LoadDialog.dismiss(context);
-        CommonResponse response = (CommonResponse) result;
+        BindResponse response = (BindResponse) result;
         if (response != null && response.getCode() == XtdConst.SUCCESS) {
-
+            Intent intent = new Intent(context, HelpDetailActivity.class);
+            intent.putExtra("title","设备绑定成功");
+            intent.putExtra("url","http://120.24.231.219/kp_dyz/cli-dgc-devicehelp.php?device_id="+response.getData().getDevice_id());
+            context.startActivity(intent);
         }
         NToast.shortToast(context,response.getMsg());
     }

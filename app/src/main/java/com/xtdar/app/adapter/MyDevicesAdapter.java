@@ -116,7 +116,7 @@ public class MyDevicesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
             dataDolder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    mListener.onItemClick(position,listItem.getDevice_id(),listItem.getDevice_item_name());
+                    mListener.onItemClick(position,listItem);
                 }
             });
         }
@@ -185,7 +185,7 @@ public class MyDevicesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
     }
 
     public interface ItemClickListener {
-        void onItemClick(int position, String itemId, String classId);
+        void onItemClick(int position, MyDevicesResponse.DataBean item);
     }
     class HeaderHolder extends RecyclerView.ViewHolder  {
         private Banner banner;

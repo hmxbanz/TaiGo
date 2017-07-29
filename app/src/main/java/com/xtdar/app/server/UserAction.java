@@ -11,6 +11,7 @@ import com.xtdar.app.common.json.JsonMananger;
 import com.xtdar.app.server.request.LoginRequest;
 import com.xtdar.app.server.request.UpdateRequest;
 import com.xtdar.app.server.response.AdResponse;
+import com.xtdar.app.server.response.BindResponse;
 import com.xtdar.app.server.response.CaptchaResponse;
 import com.xtdar.app.server.response.ClassListResponse;
 import com.xtdar.app.server.response.CommentResponse;
@@ -901,6 +902,7 @@ public CommonResponse register(String cellPhone, String password, String captcha
         return helpResponse;
     }
 
+
     public CommonResponse save(String nickName) throws HttpException {
         String uri = getURL("kp_dyz/cli-api-setuserinfo.php");
         String json = JsonMananger.beanToJson(new UpdateRequest(nickName,token));
@@ -931,15 +933,15 @@ public CommonResponse register(String cellPhone, String password, String captcha
 
     }
 
-    public CommonResponse bindDevice(String bleName) throws HttpException{
-        String uri = getURL("kp_dyz/cli-dg-binddevicebyname.php");
+    public BindResponse bindDevice(String mac) throws HttpException{
+        String uri = getURL("kp_dyz/cli-dg-binddevicebymac.php");
         Response response=null;
         try {
             response=OkHttpUtils
                     .get()
                     .url(uri)
                     .addParams("access_key",token)
-                    .addParams("device_item_name",bleName)
+                    .addParams("mac_address",mac)
                     .build()
                     .execute();
             result =response.body().string();
@@ -948,11 +950,11 @@ public CommonResponse register(String cellPhone, String password, String captcha
             e.printStackTrace();
 
         }
-        CommonResponse commonResponse = null;
+        BindResponse bindResponse = null;
         if (!TextUtils.isEmpty(result)) {
-            commonResponse = JsonMananger.jsonToBean(result, CommonResponse.class);
+            bindResponse = JsonMananger.jsonToBean(result, BindResponse.class);
         }
-        return commonResponse;
+        return bindResponse;
     }
 
     public MyDevicesResponse getDevices() throws HttpException {

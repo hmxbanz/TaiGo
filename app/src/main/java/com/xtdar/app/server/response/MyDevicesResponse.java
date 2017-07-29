@@ -7,7 +7,7 @@ public class MyDevicesResponse {
 
 
     /**
-     * data : [{"bind_device_id":"8","user_id":"39","device_item_id":"27","device_id":"2","device_item_name":"TAv22u-B903","device_name":"MG237 AR魔力枪","device_img":"a_device_img/dc39cafaa413cde60e72478ae5b05b29.jpg","service_uuid":"FFE5","read_uuid":"FFE4","write_uuid":"FFE9"}]
+     * data : [{"bind_device_id":"38","user_id":"48","device_item_id":"27","device_id":"2","device_item_name":"TAv22u-B903","mac_address":"ggzz","device_name":"BLE","device_img":"a_device_img/9b6ae7e28292db1c48e5eb3ebde7da2b.jpg","device_conf":"{\"is_high\":\"1\"}","service_uuid":"AE00","read_uuid":"AE02","write_uuid":"AE01"}]
      * code : 1
      * msg : 返回数据
      */
@@ -42,16 +42,18 @@ public class MyDevicesResponse {
 
     public static class DataBean {
         /**
-         * bind_device_id : 8
-         * user_id : 39
+         * bind_device_id : 38
+         * user_id : 48
          * device_item_id : 27
          * device_id : 2
          * device_item_name : TAv22u-B903
-         * device_name : MG237 AR魔力枪
-         * device_img : a_device_img/dc39cafaa413cde60e72478ae5b05b29.jpg
-         * service_uuid : FFE5
-         * read_uuid : FFE4
-         * write_uuid : FFE9
+         * mac_address : ggzz
+         * device_name : BLE
+         * device_img : a_device_img/9b6ae7e28292db1c48e5eb3ebde7da2b.jpg
+         * device_conf : {"is_high":"1"}
+         * service_uuid : AE00
+         * read_uuid : AE02
+         * write_uuid : AE01
          */
 
         private String bind_device_id;
@@ -59,8 +61,10 @@ public class MyDevicesResponse {
         private String device_item_id;
         private String device_id;
         private String device_item_name;
+        private String mac_address;
         private String device_name;
         private String device_img;
+        private String device_conf;
         private String service_uuid;
         private String read_uuid;
         private String write_uuid;
@@ -105,6 +109,14 @@ public class MyDevicesResponse {
             this.device_item_name = device_item_name;
         }
 
+        public String getMac_address() {
+            return mac_address;
+        }
+
+        public void setMac_address(String mac_address) {
+            this.mac_address = mac_address;
+        }
+
         public String getDevice_name() {
             return device_name;
         }
@@ -119,6 +131,14 @@ public class MyDevicesResponse {
 
         public void setDevice_img(String device_img) {
             this.device_img = device_img;
+        }
+
+        public String getDevice_conf() {
+            return device_conf;
+        }
+
+        public void setDevice_conf(String device_conf) {
+            this.device_conf = device_conf;
         }
 
         public String getService_uuid() {
