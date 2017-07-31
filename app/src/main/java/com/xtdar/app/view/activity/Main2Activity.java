@@ -19,6 +19,7 @@ import android.widget.TextView;
 import com.shuyu.gsyvideoplayer.GSYVideoManager;
 import com.xtdar.app.R;
 import com.xtdar.app.presenter.Main2Presenter;
+import com.xtdar.app.service.BluetoothService;
 import com.xtdar.app.view.fragment.DiscoveryFragment;
 import com.xtdar.app.view.fragment.GameFragment;
 import com.xtdar.app.view.fragment.HomeFragment;
@@ -45,6 +46,7 @@ public class Main2Activity extends BaseActivity implements View.OnClickListener{
 
     private View viewMainTop;
     private Main2Presenter main2Presenter;
+    public BluetoothService mBluetoothService;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         // 设置一个exit transition

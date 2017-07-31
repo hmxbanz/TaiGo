@@ -19,6 +19,7 @@ import com.xtdar.app.video.RecyclerNormalAdapter;
 import com.xtdar.app.view.activity.DetailActivity;
 import com.xtdar.app.view.widget.LoadDialog;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -32,18 +33,21 @@ public class HomeNuPresenter extends BasePresenter implements OnDataListener,Cla
     private RecyclerView videoList;
     private String lastItem ="0";
     private ClassListNuAdapter dataAdapter;
+    List<ClassListResponse.DataBean> datas = new ArrayList<>();
 
     //private ContactsActivity mActivity;
     public HomeNuPresenter(Context context){
         super(context);
         //mActivity = (ContactsActivity) context;
         linearLayoutManager = new LinearLayoutManager(context);
+        dataAdapter = new ClassListNuAdapter(context,datas);
     }
 
     public void init(RecyclerView videoList) {
         this.videoList=videoList;
-        LoadDialog.show(context);
+        this.videoList.setAdapter(dataAdapter);
 
+        LoadDialog.show(context);
         atm.request(GETSHOWLIST,this);
 
         videoList.setLayoutManager(linearLayoutManager);
@@ -93,11 +97,9 @@ public class HomeNuPresenter extends BasePresenter implements OnDataListener,Cla
             case GETSHOWLIST:
                 ClassListResponse response = (ClassListResponse) result;
                 if (response.getCode() == XtdConst.SUCCESS) {
-                    final List<ClassListResponse.DataBean> datas = response.getData();
+                    datas.addAll(response.getData());
                     lastItem=((ClassListResponse.DataBean) datas.get(datas.size()-1)).getItem_id();
-                    dataAdapter = new ClassListNuAdapter(context,datas);
                     dataAdapter.setOnItemClickListener(this);
-                    this.videoList.setAdapter(dataAdapter);
                     dataAdapter.notifyDataSetChanged();
 
                 }

@@ -51,11 +51,11 @@ public class HomeFragmentPresenter extends BasePresenter implements OnDataListen
     private BluetoothService mBluetoothService;
     private String deviceName;
 
-    //private ContactsActivity mActivity;
+    private Main2Activity mActivity;
     public HomeFragmentPresenter(Context context){
         super(context);
         basePresenter = BasePresenter.getInstance(context);
-        //mActivity = (ContactsActivity) context;
+        mActivity = (Main2Activity) context;
         dataAdapter = new MyDevicesAdapter(this.context);
     }
 
@@ -136,14 +136,13 @@ public void loadData(){
         }
     }
 
-
     public void bindService() {
         Intent bindIntent = new Intent(context, BluetoothService.class);
         context.bindService(bindIntent, mFhrSCon, Context.BIND_AUTO_CREATE);
     }
 
-    private void unbindService() {
-        context.unbindService(mFhrSCon);
+    public void unbindService() {
+        //context.unbindService(mFhrSCon);
     }
 
     private ServiceConnection mFhrSCon = new ServiceConnection() {

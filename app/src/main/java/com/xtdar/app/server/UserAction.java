@@ -18,6 +18,7 @@ import com.xtdar.app.server.response.CommentResponse;
 import com.xtdar.app.server.response.CommonResponse;
 import com.xtdar.app.server.response.DetailResponse;
 import com.xtdar.app.server.response.FavorResponse;
+import com.xtdar.app.server.response.GameCheckResponse;
 import com.xtdar.app.server.response.GameListResponse;
 import com.xtdar.app.server.response.HelpResponse;
 import com.xtdar.app.server.response.LoginResponse;
@@ -1342,5 +1343,9 @@ public CommonResponse register(String cellPhone, String password, String captcha
             }
         }
         return personMsgResponse;
+    }
+//检查游戏是否可玩
+    public GameCheckResponse gameCheck(String gameName) {
+        return new GameCheckResponse();
     }
 }

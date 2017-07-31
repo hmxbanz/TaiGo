@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -16,6 +17,7 @@ import android.widget.Toast;
 
 import com.xtdar.app.R;
 import com.xtdar.app.adapter.RecyclerViewAdapter;
+import com.xtdar.app.common.NToast;
 import com.xtdar.app.presenter.MallGamePresenter;
 import com.xtdar.app.view.activity.DetailActivity;
 
@@ -34,6 +36,7 @@ public class MallGameFragment extends Fragment {
     private View view;
 
     private MallGamePresenter presenter;
+    private SwipeRefreshLayout swiper;
 
     public static MallGameFragment getInstance() {
         if (instance == null) {
@@ -49,11 +52,12 @@ public class MallGameFragment extends Fragment {
         initViews();
 //        initData();
         presenter = new MallGamePresenter(getContext());
-        presenter.init(recycleView);
+        presenter.init(swiper,recycleView);
         return view;
     }
 
     private void initViews() {
+        swiper=(SwipeRefreshLayout)view.findViewById(R.id.swiper);
         recycleView= (RecyclerView) view.findViewById(R.id.recyclerView);
     }
 
@@ -62,5 +66,11 @@ public class MallGameFragment extends Fragment {
         super.onDestroy();
         //BroadcastManager.getInstance(getActivity()).destroy(SealConst.CHANGEINFO);
     }
+    @Override
+    public void onPause() {
+        super.onPause();
+        presenter.unbindService();
+    }
+
 
 }

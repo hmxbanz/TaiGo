@@ -1,14 +1,9 @@
 package com.xtdar.app.view.fragment;
 
 import android.content.Intent;
-import android.graphics.Color;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v4.view.ViewPager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,22 +11,11 @@ import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import com.jaeger.library.StatusBarUtil;
-import com.uuzuche.lib_zxing.activity.CaptureActivity;
 import com.uuzuche.lib_zxing.activity.CodeUtils;
 import com.xtdar.app.R;
-import com.xtdar.app.common.NLog;
 import com.xtdar.app.common.NToast;
 import com.xtdar.app.presenter.HomeFragmentPresenter;
-import com.xtdar.app.view.activity.BleActivity;
-import com.xtdar.app.view.activity.DownloadActivity;
-import com.xtdar.app.view.activity.HistoryActivity;
-import com.xtdar.app.view.activity.Main2Activity;
-import com.xtdar.app.view.activity.QrCodeActivity;
-import com.xtdar.app.view.activity.SearchActivity;
 
 /**
  * Created by AMing on 16/6/21.
@@ -43,7 +27,7 @@ private static final int Blue=0x001bb4fb;
     public static HomeFragment instance = null;
 
 
-    private HomeFragmentPresenter homeFragmentPresenter;
+    private HomeFragmentPresenter presenter;
     private TextView title;
     private RelativeLayout layout_back;
     private RecyclerView recycleView;
@@ -62,8 +46,8 @@ private static final int Blue=0x001bb4fb;
         initViews();
 
 //        initData();
-        homeFragmentPresenter = new HomeFragmentPresenter(getContext());
-        homeFragmentPresenter.init(recycleView);
+        presenter = new HomeFragmentPresenter(getContext());
+        presenter.init(recycleView);
         //StatusBarUtil.setTranslucent(getActivity(), StatusBarUtil.);
         StatusBarUtil.setColor(getActivity(), Blue,0);
         return view;
@@ -72,7 +56,7 @@ private static final int Blue=0x001bb4fb;
     @Override
     public void onResume() {
         super.onResume();
-        homeFragmentPresenter.loadData();
+        presenter.loadData();
     }
 
     @Override
@@ -92,6 +76,12 @@ private static final int Blue=0x001bb4fb;
     }
 
     @Override
+    public void onPause() {
+        super.onPause();
+        presenter.unbindService();
+    }
+
+    @Override
     public void onDestroy() {
         super.onDestroy();
     }
@@ -100,10 +90,10 @@ private static final int Blue=0x001bb4fb;
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.txt_add_driver:
-                homeFragmentPresenter.onScanClick();
+                presenter.onScanClick();
                 break;
             case R.id.right_icon:
-                homeFragmentPresenter.onScanClick();
+                presenter.onScanClick();
                 break;
 //            case R.id.layout_more:
 //                ((Main2Activity)getActivity()).getViewPager().setCurrentItem(2, false);

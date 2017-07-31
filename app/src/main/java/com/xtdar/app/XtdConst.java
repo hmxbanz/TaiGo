@@ -19,8 +19,8 @@ public class XtdConst {
     public static final String USERID = "userId";
     public static final String USERINFOID = "userInfoId";
     public static final String DYNAMICID = "dynamicId";
-    public static final String IMGURI="http://120.24.231.219/kp_dyz/";
-    public static final String SERVERURI="http://120.24.231.219/";
+    public static final String IMGURI="http://dyz.173csw.com/";
+    public static final String SERVERURI="http://dyz.173csw.com/";
     public static final String ISLOGIN = "isLogin";
     public static final String ITEMID = "item_id";
     public static final String CLASSID = "class_id";

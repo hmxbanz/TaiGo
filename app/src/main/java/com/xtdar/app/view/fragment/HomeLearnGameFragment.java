@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -39,6 +40,7 @@ public class HomeLearnGameFragment extends Fragment implements RecyclerViewAdapt
     private TabLayout mTabLayout;
 
     private MallGamePresenter homeAnimationPresenter;
+    private SwipeRefreshLayout swiper;
 
     public static HomeLearnGameFragment getInstance() {
         if (instance == null) {
@@ -54,12 +56,12 @@ public class HomeLearnGameFragment extends Fragment implements RecyclerViewAdapt
         initViews();
 //        initData();
         homeAnimationPresenter = new MallGamePresenter(getContext());
-        homeAnimationPresenter.init(recycleView);
+        homeAnimationPresenter.init(swiper, recycleView);
         return view;
     }
 
     private void initViews() {
-
+        swiper = (SwipeRefreshLayout) view.findViewById(R.id.swiper);
         recycleView= (RecyclerView) view.findViewById(R.id.recyclerView);
 
 
