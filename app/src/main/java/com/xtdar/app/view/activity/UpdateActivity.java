@@ -12,7 +12,7 @@ import com.xtdar.app.R;
 
 public class UpdateActivity extends BaseActivity implements View.OnClickListener {
     public TextView txt_right;
-    private UpdatePresenter mUpdatePresenter;
+    private UpdatePresenter presenter;
     private EditText nickName;
 
     @Override
@@ -20,8 +20,8 @@ public class UpdateActivity extends BaseActivity implements View.OnClickListener
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_update);
         initViews();
-        mUpdatePresenter = new UpdatePresenter(this);
-        mUpdatePresenter.init();
+        presenter = new UpdatePresenter(this);
+        presenter.init();
     }
 
     private void initViews() {
@@ -44,7 +44,7 @@ public class UpdateActivity extends BaseActivity implements View.OnClickListener
                 finish();
                 break;
             case R.id.text_right:
-                mUpdatePresenter.save(nickName);
+                presenter.save(nickName);
                 break;
         }
 

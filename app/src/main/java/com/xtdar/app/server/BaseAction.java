@@ -14,8 +14,7 @@ import okhttp3.OkHttpClient;
  * Company RongCloud
  */
 public class BaseAction {
-    private static final String DOMAIN = "http://120.24.231.219/";
-    //private static final String DOMAIN = "http://192.168.2.123/";
+    private static final String DOMAIN = "http://dyz.173csw.com/";
     protected Context mContext;
     protected OkHttpClient httpManager;
 

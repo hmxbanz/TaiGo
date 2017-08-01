@@ -89,7 +89,7 @@ public class UserAction extends BaseAction {
 //登录
     public LoginResponse login(String userName, String password) throws HttpException
     {
-        String uri = getURL("kp_dyz/cli-comm-login.php");
+        String uri = getURL("cli-comm-login.php");
         Response response=null;
         try {
             response=OkHttpUtils
@@ -122,7 +122,7 @@ public class UserAction extends BaseAction {
     //微信绑定
     public CommonResponse wxBind(String unionid,String cellPhone, String pwd) throws HttpException
     {
-        String uri = getURL("kp_dyz/cli-tplogin-bindwx.php");
+        String uri = getURL("cli-tplogin-bindwx.php");
         Response response=null;
         try {
             response=OkHttpUtils
@@ -155,7 +155,7 @@ public class UserAction extends BaseAction {
     //微信登录请求
     public WxLoginResponse wxOpenId(String unionid) throws HttpException
     {
-        String uri = getURL("kp_dyz/cli-tplogin-wxlogin.php");
+        String uri = getURL("cli-tplogin-wxlogin.php");
         Response response=null;
         try {
             response=OkHttpUtils
@@ -186,7 +186,7 @@ public class UserAction extends BaseAction {
     //QQ登录请求
     public WxLoginResponse qqOpenId(String unionid) throws HttpException
     {
-        String uri = getURL("kp_dyz/cli-tplogin-qqlogin.php");
+        String uri = getURL("cli-tplogin-qqlogin.php");
         Response response=null;
         try {
             response=OkHttpUtils
@@ -213,10 +213,10 @@ public class UserAction extends BaseAction {
         return wxLoginResponse;
 
     }
-    //微信绑定
+    //QQ绑定
     public CommonResponse qqBind(String unionid,String cellPhone, String pwd) throws HttpException
     {
-        String uri = getURL("kp_dyz/cli-tplogin-bindqq.php");
+        String uri = getURL("cli-tplogin-bindqq.php");
         Response response=null;
         try {
             response=OkHttpUtils
@@ -245,11 +245,73 @@ public class UserAction extends BaseAction {
         return commonResponse;
 
     }
+    //微博登录请求
+    public WxLoginResponse wbOpenId(String unionid) throws HttpException
+    {
+        String uri = getURL("cli-tplogin-wblogin.php");
+        Response response=null;
+        try {
+            response=OkHttpUtils
+                    .get()
+                    .addParams("uid",unionid)
+                    .url(uri)
+                    .build()
+                    .execute();
+            result =response.body().string();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        WxLoginResponse wxLoginResponse = null;
+        if (!TextUtils.isEmpty(result)) {
+            NLog.e("接收的", result);
+
+            try {
+                wxLoginResponse = JsonMananger.jsonToBean(result, WxLoginResponse.class);
+            } catch (JSONException e) {
+                NLog.d(TAG, "wbLoginResponse occurs JSONException e=" + e.toString());
+                return null;
+            }
+        }
+        return wxLoginResponse;
+
+    }
+    //微博绑定
+    public CommonResponse wbBind(String unionid,String cellPhone, String pwd) throws HttpException
+    {
+        String uri = getURL("cli-tplogin-bindwb.php");
+        Response response=null;
+        try {
+            response=OkHttpUtils
+                    .get()
+                    .addParams("uid",unionid)
+                    .addParams("cell_phone",cellPhone)
+                    .addParams("pwd",pwd)
+                    .url(uri)
+                    .build()
+                    .execute();
+            result =response.body().string();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        CommonResponse commonResponse = null;
+        if (!TextUtils.isEmpty(result)) {
+            NLog.e("接收的", result);
+
+            try {
+                commonResponse = JsonMananger.jsonToBean(result, CommonResponse.class);
+            } catch (JSONException e) {
+                NLog.d(TAG, "CommonResponse occurs JSONException e=" + e.toString());
+                return null;
+            }
+        }
+        return commonResponse;
+
+    }
 
     //上传极光注册ID
     public CommonResponse upLoadRid(String rid) throws HttpException
     {
-        String uri = getURL("kp_dyz/cli-api-bindregistrationid.php");
+        String uri = getURL("cli-api-bindregistrationid.php");
         Response response=null;
         try {
             response=OkHttpUtils
@@ -280,7 +342,7 @@ public class UserAction extends BaseAction {
 //获取验证码
     public CaptchaResponse getCaptcha(String cellPhone) throws HttpException
     {
-        String uri = getURL("kp_dyz/cli-comm-sendregmsg.php");
+        String uri = getURL("cli-comm-sendregmsg.php");
         Response response=null;
         try {
             response=OkHttpUtils
@@ -312,7 +374,7 @@ public class UserAction extends BaseAction {
 //获取验证码(取回密码)
     public CommonResponse getCaptchaForget(String cellPhone) throws HttpException
     {
-        String uri = getURL("kp_dyz/cli-comm-sendpwdmsg.php");
+        String uri = getURL("cli-comm-sendpwdmsg.php");
         Response response=null;
         try {
             response=OkHttpUtils
@@ -343,7 +405,7 @@ public class UserAction extends BaseAction {
 //注册
 public CommonResponse register(String cellPhone, String password, String captcha) throws HttpException
 {
-    String uri = getURL("kp_dyz/cli-comm-register.php");
+    String uri = getURL("cli-comm-register.php");
     Response response=null;
     try {
         response=OkHttpUtils
@@ -375,7 +437,7 @@ public CommonResponse register(String cellPhone, String password, String captcha
 //重置密码
     public CommonResponse resetPassword(String cellPhone, String password, String captcha) throws HttpException
     {
-        String uri = getURL("kp_dyz/cli-comm-setpwd.php");
+        String uri = getURL("cli-comm-setpwd.php");
         Response response=null;
         try {
             response=OkHttpUtils
@@ -406,7 +468,7 @@ public CommonResponse register(String cellPhone, String password, String captcha
     }
 //取个人资料
     public UserInfoResponse getInfo() throws HttpException {
-        String uri = getURL("kp_dyz/cli-api-userinfo.php");
+        String uri = getURL("cli-api-userinfo.php");
         Response response=null;
         try {
             response=OkHttpUtils
@@ -434,7 +496,7 @@ public CommonResponse register(String cellPhone, String password, String captcha
     }
 //取消息未读数
     public UnReadMsgResponse getUnReadMsg() throws HttpException {
-        String uri = getURL("kp_dyz/cli-api-needreadcount.php");
+        String uri = getURL("cli-api-needreadcount.php");
         Response response=null;
         try {
             response=OkHttpUtils
@@ -464,7 +526,7 @@ public CommonResponse register(String cellPhone, String password, String captcha
 //版本检查
     public VersionResponse checkVersion() throws HttpException {
         //String uri = getURL("version.txt");
-        String uri ="http://120.24.231.219/kp_dyz/app_source/dl/version.txt";
+        String uri ="app_source/dl/version.txt";
         Response response=null;
         try {
             response=OkHttpUtils
@@ -492,7 +554,7 @@ public CommonResponse register(String cellPhone, String password, String captcha
     }
 
     public TagResponse getTags() throws HttpException {
-        String uri = getURL("kp_dyz/cli-comm-classtag.php");
+        String uri = getURL("cli-comm-classtag.php");
         Response response=null;
         try {
             response=OkHttpUtils
@@ -520,7 +582,7 @@ public CommonResponse register(String cellPhone, String password, String captcha
     }
 
     public AdResponse getAds() throws HttpException{
-        String uri = getURL("kp_dyz/cli-comm-classslideimg.php");
+        String uri = getURL("cli-comm-classslideimg.php");
         Response response=null;
         try {
             response=OkHttpUtils
@@ -549,7 +611,7 @@ public CommonResponse register(String cellPhone, String password, String captcha
     }
 //获取推荐
     public RecommendResponse getRecommends()throws HttpException {
-        String uri = getURL("kp_dyz/cli-comm-recommend.php");
+        String uri = getURL("cli-comm-recommend.php");
         Response response=null;
         try {
             response=OkHttpUtils
@@ -576,7 +638,7 @@ public CommonResponse register(String cellPhone, String password, String captcha
     }
     //获取淘设备
     public TaobaoResponse getTaobao()throws HttpException {
-        String uri = getURL("kp_dyz/cli-dgc-devicemain.php");
+        String uri = getURL("cli-dgc-devicemain.php");
         Response response=null;
         try {
             response=OkHttpUtils
@@ -603,7 +665,7 @@ public CommonResponse register(String cellPhone, String password, String captcha
     }
 //项详情(图文、视频、音频)
     public DetailResponse getDetail(String itemId) throws HttpException{
-        String uri = getURL("kp_dyz/cli-comm-itemdetail.php");
+        String uri = getURL("cli-comm-itemdetail.php");
         Response response=null;
         try {
             response=OkHttpUtils
@@ -631,7 +693,7 @@ public CommonResponse register(String cellPhone, String password, String captcha
     }
 //秀场项详情
     public ShowDetailResponse getShowDetail(String itemId) throws HttpException{
-        String uri = getURL("kp_dyz/cli-comm-showdetail.php");
+        String uri = getURL("cli-comm-showdetail.php");
         Response response=null;
         try {
             response=OkHttpUtils
@@ -658,7 +720,7 @@ public CommonResponse register(String cellPhone, String password, String captcha
     }
 //收藏
         public CommonResponse addFavor(String itemId) throws HttpException{
-            String uri = getURL("kp_dyz/cli-api-setcollect.php");
+            String uri = getURL("cli-api-setcollect.php");
             Response response=null;
             try {
                 response=OkHttpUtils
@@ -687,7 +749,7 @@ public CommonResponse register(String cellPhone, String password, String captcha
     }
 //评论
     public CommonResponse addComment(String itemId,String comment_tag,String comment) throws HttpException{
-        String uri = getURL("kp_dyz/cli-api-postcomment.php");
+        String uri = getURL("cli-api-postcomment.php");
         Response response=null;
         try {
             response=OkHttpUtils
@@ -718,7 +780,7 @@ public CommonResponse register(String cellPhone, String password, String captcha
     }
 
     public RelateRecommendResponse getRelateRecommend(String classId) throws HttpException{
-        String uri = getURL("kp_dyz/cli-comm-classrecommend.php");
+        String uri = getURL("cli-comm-classrecommend.php");
         Response response=null;
         try {
             response=OkHttpUtils
@@ -747,7 +809,7 @@ public CommonResponse register(String cellPhone, String password, String captcha
     }
     //获取分类项列表（动画）
     public ClassListResponse getAnimations(String class_id,String last_item_id,String item_count) throws HttpException{
-        String uri = getURL("kp_dyz/cli-comm-classlist.php");
+        String uri = getURL("cli-comm-classlist.php");
         Response response=null;
         try {
             response=OkHttpUtils
@@ -777,7 +839,7 @@ public CommonResponse register(String cellPhone, String password, String captcha
     }
 
     public SongDetailResponse getSongAlbumDetail(String itemId) throws HttpException {
-        String uri = getURL("kp_dyz/cli-comm-albumdetail.php");
+        String uri = getURL("cli-comm-albumdetail.php");
         Response response=null;
         try {
             response=OkHttpUtils
@@ -805,7 +867,7 @@ public CommonResponse register(String cellPhone, String password, String captcha
     }
 
     public ShowResponse getShowList(String last_show_id,String list_count) throws HttpException {
-        String uri = getURL("kp_dyz/cli-comm-showitemlist.php");
+        String uri = getURL("cli-comm-showitemlist.php");
         Response response=null;
         try {
             response=OkHttpUtils
@@ -834,7 +896,7 @@ public CommonResponse register(String cellPhone, String password, String captcha
     }
 //我的视频
     public ShowResponse getMyVideo() throws HttpException {
-        String uri = getURL("kp_dyz/cli-api-myshowlist.php");
+        String uri = getURL("cli-api-myshowlist.php");
         Response response=null;
         try {
             response=OkHttpUtils
@@ -862,7 +924,7 @@ public CommonResponse register(String cellPhone, String password, String captcha
     }
 
     public String getProtocol() {
-        String uri = "http://120.24.231.219/kp_dyz/app_source/dl/protocol.html";
+        String uri = "app_source/dl/protocol.html";
         Response response=null;
         try {
             response=OkHttpUtils
@@ -882,7 +944,7 @@ public CommonResponse register(String cellPhone, String password, String captcha
     }
 
     public HelpResponse getHelps() throws HttpException {
-        String uri = getURL("kp_dyz/cli-dgc-helplist.php");
+        String uri = getURL("cli-dgc-helplist.php");
         Response response=null;
         try {
             response=OkHttpUtils
@@ -905,7 +967,7 @@ public CommonResponse register(String cellPhone, String password, String captcha
 
 
     public CommonResponse save(String nickName) throws HttpException {
-        String uri = getURL("kp_dyz/cli-api-setuserinfo.php");
+        String uri = getURL("cli-api-setuserinfo.php");
         String json = JsonMananger.beanToJson(new UpdateRequest(nickName,token));
         Log.w(TAG, "请求的："+json);
         Response response=null;
@@ -935,7 +997,7 @@ public CommonResponse register(String cellPhone, String password, String captcha
     }
 
     public BindResponse bindDevice(String mac) throws HttpException{
-        String uri = getURL("kp_dyz/cli-dg-binddevicebymac.php");
+        String uri = getURL("cli-dg-binddevicebymac.php");
         Response response=null;
         try {
             response=OkHttpUtils
@@ -959,7 +1021,7 @@ public CommonResponse register(String cellPhone, String password, String captcha
     }
 
     public MyDevicesResponse getDevices() throws HttpException {
-        String uri = getURL("kp_dyz/cli-dg-mydevicelist.php");
+        String uri = getURL("cli-dg-mydevicelist.php");
         Response response=null;
         try {
             response=OkHttpUtils
@@ -983,7 +1045,7 @@ public CommonResponse register(String cellPhone, String password, String captcha
 
     //获取游戏列表（射击）
     public GameListResponse getShot(String game_type_id, String last_item_id, String item_count) throws HttpException{
-        String uri = getURL("kp_dyz/cli-dgc-gamelist.php");
+        String uri = getURL("cli-dgc-gamelist.php");
         Response response=null;
         try {
             response=OkHttpUtils
@@ -1013,7 +1075,7 @@ public CommonResponse register(String cellPhone, String password, String captcha
     }
 
     public CommentResponse getComment(String itemId, String comment_tag,String last_item_id, String item_count) throws HttpException {
-        String uri = getURL("kp_dyz/cli-comm-commentlist.php");
+        String uri = getURL("cli-comm-commentlist.php");
         Response response=null;
         try {
             response=OkHttpUtils
@@ -1046,7 +1108,7 @@ public CommonResponse register(String cellPhone, String password, String captcha
 
     //上传头像
     public CommonResponse uploadAvatar(File imgFile) throws HttpException {
-        String uri = getURL("kp_dyz/cli-api-setimg.php");
+        String uri = getURL("cli-api-setimg.php");
 //        final MediaType MEDIA_TYPE_PNG = MediaType.parse("image/png");
 //
 //        RequestBody requestBody = new MultipartBody.Builder()
@@ -1083,7 +1145,7 @@ public CommonResponse register(String cellPhone, String password, String captcha
 
     //发新动态
     public CommonResponse addDynamic(String content, File mp4File)throws HttpException{
-        String uri = getURL("kp_dyz/cli-api-upshow.php");
+        String uri = getURL("cli-api-upshow.php");
 //        final MediaType MEDIA_TYPE_PNG = MediaType.parse("image/png");
 //
 //        RequestBody requestBody = new MultipartBody.Builder()
@@ -1122,7 +1184,7 @@ public CommonResponse register(String cellPhone, String password, String captcha
     }
 //获取收藏
     public FavorResponse getFavorList(String list_count,String last_collect_id) throws HttpException {
-        String uri = getURL("kp_dyz/cli-api-collectmp4list.php");
+        String uri = getURL("cli-api-collectmp4list.php");
         Response response=null;
         try {
             response=OkHttpUtils
@@ -1150,7 +1212,7 @@ public CommonResponse register(String cellPhone, String password, String captcha
     }
 //删除收藏
     public Object delFavor(String delFavorId) throws HttpException {
-        String uri = getURL("kp_dyz/cli-api-cancelcollect.php");
+        String uri = getURL("cli-api-cancelcollect.php");
         Response response=null;
         try {
             response=OkHttpUtils
@@ -1181,7 +1243,7 @@ public CommonResponse register(String cellPhone, String password, String captcha
 
     //删除我的视频
     public Object delMyVideo(String delId) throws HttpException {
-        String uri = getURL("kp_dyz/cli-api-delmyshow.php");
+        String uri = getURL("cli-api-delmyshow.php");
         Response response=null;
         try {
             response=OkHttpUtils
@@ -1211,7 +1273,7 @@ public CommonResponse register(String cellPhone, String password, String captcha
     }
 //获取我的评论
     public MyCommentResponse getCommentList(String list_count, String last_com_id) throws HttpException {
-        String uri = getURL("kp_dyz/cli-api-mycommentlist.php");
+        String uri = getURL("cli-api-mycommentlist.php");
         Response response=null;
         try {
             response=OkHttpUtils
@@ -1239,7 +1301,7 @@ public CommonResponse register(String cellPhone, String password, String captcha
     }
 //获取更多设备
     public ShopMoreResponse getShopMore(String device_type_id, String item_count, String last_device_id) throws HttpException {
-        String uri = getURL("kp_dyz/cli-dgc-devicelist.php");
+        String uri = getURL("cli-dgc-devicelist.php");
         Response response=null;
         try {
             response=OkHttpUtils
@@ -1268,7 +1330,7 @@ public CommonResponse register(String cellPhone, String password, String captcha
 
 //获取系统消息
     public SysMsgResponse getSysMsgList(String list_count, String last_msg_id) throws HttpException {
-        String uri = getURL("kp_dyz/cli-api-sysmsglist.php");
+        String uri = getURL("cli-api-sysmsglist.php");
         Response response=null;
         try {
             response=OkHttpUtils
@@ -1307,7 +1369,7 @@ public CommonResponse register(String cellPhone, String password, String captcha
     }
 //获取个人消息
     public PersonMsgResponse getPersonMsgList(String list_count, String last_msg_id) throws HttpException {
-        String uri = getURL("kp_dyz/cli-api-mymsglist.php");
+        String uri = getURL("cli-api-mymsglist.php");
         Response response=null;
         try {
             response=OkHttpUtils

@@ -1,6 +1,7 @@
 package com.xtdar.app.presenter;
 
 import android.content.Context;
+import android.text.TextUtils;
 import android.widget.EditText;
 
 import com.xtdar.app.XtdConst;
@@ -32,6 +33,10 @@ public class UpdatePresenter extends BasePresenter{
 
     public void save(EditText nickName) {
         this.nickName = nickName;
+        if(TextUtils.isEmpty(this.nickName.getText()))
+        {
+            NToast.shortToast(context,"请输入新昵称");return;
+        }
         LoadDialog.show(context);
         atm.request(SAVE,this);
 

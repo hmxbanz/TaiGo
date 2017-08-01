@@ -46,6 +46,8 @@ public class LoginPresenter extends BasePresenter  {
     private static final int UPLOADQQOPENID = 6;
     private static final int QQBIND = 7;
     private static final int UPLOADRID = 8;
+    private static final int UPLOADWBOPENID = 9;
+    private static final int WBBIND = 10;
     private final BasePresenter basePresenter;
     private LoginActivity mActivity;
     private EditText mUsername;
@@ -87,8 +89,8 @@ public class LoginPresenter extends BasePresenter  {
                     atm.request(WXBIND,this);break;
                 case "qq":
                     atm.request(QQBIND,this);break;
-                case "weibo":
-                    atm.request(WXBIND,this);
+                case "wb":
+                    atm.request(WBBIND,this);
             }
         }
         else
@@ -111,6 +113,10 @@ public class LoginPresenter extends BasePresenter  {
                 return mUserAction.qqOpenId(openId);
             case QQBIND:
                 return mUserAction.qqBind(openId,mUsername.getText().toString(), mPassword.getText().toString());
+            case UPLOADWBOPENID:
+                return mUserAction.wbOpenId(openId);
+            case WBBIND:
+                return mUserAction.wbBind(openId,mUsername.getText().toString(), mPassword.getText().toString());
             case UPLOADRID:
                 return mUserAction.upLoadRid(rid);
 
@@ -136,12 +142,13 @@ public class LoginPresenter extends BasePresenter  {
                     break;
                 case UPLOADWXOPENID:
                 case UPLOADQQOPENID:
+                case UPLOADWBOPENID:
                     WxLoginResponse response = (WxLoginResponse) result;
                     if (response != null && response.getCode() == XtdConst.SUCCESS) {
-
                         WxLoginResponse.DataBean entity = response.getData();
                         access_key=entity.getAccess_key();
                         loginWork(entity.getAccess_key());
+                        context.startActivity(new Intent(context,Main2Activity.class));
                     } else if (response.getCode() == XtdConst.FAILURE) {
                         DialogWithYesOrNoUtils.getInstance().showDialog(context,"温馨提示","新用户请注册","老用户请绑定",new AlertDialogCallback(){
                             @Override
@@ -150,6 +157,8 @@ public class LoginPresenter extends BasePresenter  {
                                     LoginActivity.StartActivity(context, openId,"wx");
                                 else if(requestCode==UPLOADQQOPENID)
                                     LoginActivity.StartActivity(context, openId,"qq");
+                                else if(requestCode==UPLOADWBOPENID)
+                                    LoginActivity.StartActivity(context, openId,"wb");
                             }
 
                             @Override
@@ -166,6 +175,7 @@ public class LoginPresenter extends BasePresenter  {
 
                 case WXBIND:
                 case QQBIND:
+                case WBBIND:
                     CommonResponse commonResponse = (CommonResponse) result;
                     if (commonResponse != null && commonResponse.getCode() == XtdConst.SUCCESS) {
                         DialogWithYesOrNoUtils.getInstance().showDialog(context,"绑定成功",null,null,new AlertDialogCallback(){
@@ -303,11 +313,7 @@ public class LoginPresenter extends BasePresenter  {
         NToast.shortToast(context,name);
 
         String url = (String) hashMap.get("figureurl_qq_1");
-//        Glide.with(ShareLogin.this)
-//                .load(url)
-//                .placeholder(R.mipmap.ic_launcher)
-//                .error(R.mipmap.ic_launcher)
-//                .into(ivPortrait);
+
     }
 
     /**
@@ -322,12 +328,14 @@ public class LoginPresenter extends BasePresenter  {
             public void onComplete(Platform platform, int i, final HashMap<String, Object> hashMap) {
                 Log.d(TAG, " _XinLang: -->> onComplete: Platform:" + platform.toString());
                 Log.d(TAG, " _XinLang: -->> onComplete: hashMap:" + hashMap);
+//获取微博平台手动授权
+                final Platform weibo = ShareSDK.getPlatform(SinaWeibo.NAME);
 
                 //当前线程不能执行UI操作，需要放到主线程中去
                 mActivity.runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        showUser_XinLang(hashMap);
+                        showUser_XinLang(hashMap,weibo.getDb().getToken());
                     }
                 });
             }
@@ -351,11 +359,10 @@ public class LoginPresenter extends BasePresenter  {
         //移除授权
         /*weibo.removeAccount(true);*/
     }
-    public void showUser_XinLang(HashMap<String, Object> params) {
-        String name = (String) params.get("name");
-//        tvName.setText(name);
-//
-//        String url = (String) params.get("profile_image_url");
+    public void showUser_XinLang(HashMap<String, Object> params, String token) {
+        openId =token;
+        LoadDialog.show(context);
+        atm.request(UPLOADWBOPENID,this);
 //        Glide.with(ShareLogin.this)
 //                .load(url)
 //                .placeholder(R.mipmap.ic_launcher)
