@@ -82,7 +82,7 @@ public class HomeShowPresenter extends BasePresenter implements OnDataListener,R
                 ShowResponse showResponse=(ShowResponse)result;
                 if (showResponse != null && showResponse.getData() != null) {
                     datas.addAll(showResponse.getData());
-                    lastItem=datas.get(0).getShow_id();
+                    lastItem=datas.get(datas.size()-1).getShow_id();
                    recyclerNormalAdapter.notifyDataSetChanged();
 
                 }

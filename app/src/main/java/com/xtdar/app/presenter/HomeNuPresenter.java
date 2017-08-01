@@ -82,7 +82,7 @@ public class HomeNuPresenter extends BasePresenter implements OnDataListener,Cla
                 ClassListResponse response = (ClassListResponse) result;
                 if (response.getCode() == XtdConst.SUCCESS) {
                     datas.addAll(response.getData());
-                    lastItem=datas.get(0).getItem_id();
+                    lastItem=datas.get(datas.size()-1).getItem_id();
                     dataAdapter.setOnItemClickListener(this);
                     dataAdapter.notifyDataSetChanged();
 

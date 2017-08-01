@@ -3,6 +3,7 @@ package com.xtdar.app.server;
 import android.content.Context;
 import android.text.TextUtils;
 import android.util.Log;
+import android.widget.EditText;
 
 import com.alibaba.fastjson.JSONException;
 import com.xtdar.app.XtdConst;
@@ -1409,5 +1410,37 @@ public CommonResponse register(String cellPhone, String password, String captcha
 //检查游戏是否可玩
     public GameCheckResponse gameCheck(String gameName) {
         return new GameCheckResponse();
+    }
+//用户反馈
+    public CommonResponse feedback(EditText reportContent, EditText cellphone) throws HttpException {
+        String uri = getURL("cli-api-upshow.php");
+
+        Response response=null;
+        try {
+            response=OkHttpUtils
+                    .get()
+                    .addParams(XtdConst.ACCESS_TOKEN,token)
+                    .addParams("content",reportContent.getText().toString())
+                    .addParams("cellphone",cellphone.getText().toString())
+                    .url(uri)
+                    .build()
+                    .execute();
+            result =response.body().string();
+            Log.w(TAG, "接收的："+ result);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        CommonResponse commonResponse = null;
+        if (!TextUtils.isEmpty(result)) {
+            NLog.e("CommonResponse", result);
+
+            try {
+                commonResponse = JsonMananger.jsonToBean(result, CommonResponse.class);
+            } catch (JSONException e) {
+                NLog.d(TAG, "feedback occurs JSONException e=" + e.toString());
+                return null;
+            }
+        }
+        return commonResponse;
     }
 }

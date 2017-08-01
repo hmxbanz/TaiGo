@@ -1,6 +1,5 @@
 package com.xtdar.app.view.activity;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -15,18 +14,17 @@ import com.xtdar.app.R;
 
 
 public class FeedbackActivity extends BaseActivity implements View.OnClickListener {
-    private EditText mReportContent;
+    private EditText reportContent,cellphone;
     private Button mBtnRport;
-    private CheckBox mCheckboxViolence, mCheckboxPolitics, mCheckboxPorn, mCheckboxFraud, mCheckboxOther;
-    private ReportPresenter mReportPresenter;
+    private ReportPresenter presenter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_feedback);
         initViews();
-        mReportPresenter = new ReportPresenter(this);
-        mReportPresenter.init();
+        presenter = new ReportPresenter(this);
+        presenter.init();
     }
 
     private void initViews() {
@@ -35,7 +33,8 @@ public class FeedbackActivity extends BaseActivity implements View.OnClickListen
         mBtnRport =(Button)findViewById(R.id.btn_report);
         mBtnRport.setOnClickListener(this);
 
-        mReportContent = (EditText) findViewById(R.id.report_content);
+        reportContent = (EditText) findViewById(R.id.report_content);
+        cellphone = (EditText) findViewById(R.id.cellphone);
         txtTitle = (TextView) findViewById(R.id.text_title);
         txtTitle.setText("用户反馈");
     }
@@ -46,8 +45,8 @@ public class FeedbackActivity extends BaseActivity implements View.OnClickListen
             case R.id.layout_back:
                 finish();
                 break;
-            case R.id.layout_register:
-                startActivity(new Intent(this,RegisterActivity.class));
+            case R.id.btn_report:
+                presenter.submit(reportContent,cellphone);
                 break;
 
         }
