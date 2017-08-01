@@ -24,7 +24,6 @@ import com.xtdar.app.view.fragment.DiscoveryFragment;
 import com.xtdar.app.view.fragment.GameFragment;
 import com.xtdar.app.view.fragment.HomeFragment;
 import com.xtdar.app.view.fragment.MineFragment;
-import com.xtdar.app.view.fragment.ShowFragment;
 import com.xtdar.app.view.widget.DragPointView;
 
 import java.util.ArrayList;

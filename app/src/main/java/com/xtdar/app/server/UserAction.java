@@ -804,14 +804,14 @@ public CommonResponse register(String cellPhone, String password, String captcha
         return detailResponse;
     }
 
-    public ShowResponse getShowList() throws HttpException {
+    public ShowResponse getShowList(String last_show_id,String list_count) throws HttpException {
         String uri = getURL("kp_dyz/cli-comm-showitemlist.php");
         Response response=null;
         try {
             response=OkHttpUtils
                     .get()
-                    .addParams("list_count","12")
-                    .addParams("last_show_id","0")
+                    .addParams("list_count",list_count)
+                    .addParams("last_show_id",last_show_id)
                     .url(uri)
                     .build()
                     .execute();

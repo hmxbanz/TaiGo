@@ -1,6 +1,7 @@
 package com.xtdar.app.presenter;
 
 import android.content.Context;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
@@ -9,13 +10,13 @@ import com.shuyu.gsyvideoplayer.GSYVideoPlayer;
 import com.xtdar.app.XtdConst;
 import com.xtdar.app.adapter.ClassListAnimationAdapter;
 import com.xtdar.app.adapter.ClassListNuAdapter;
+import com.xtdar.app.listener.GSYVideoPlayerOnScrollListener;
 import com.xtdar.app.server.HttpException;
 import com.xtdar.app.server.async.OnDataListener;
 import com.xtdar.app.server.response.ClassListResponse;
 import com.xtdar.app.server.response.GameListResponse;
 import com.xtdar.app.server.response.ShowResponse;
 import com.xtdar.app.video.RecyclerItemNormalHolder;
-import com.xtdar.app.video.RecyclerNormalAdapter;
 import com.xtdar.app.view.activity.DetailActivity;
 import com.xtdar.app.view.widget.LoadDialog;
 
@@ -26,7 +27,7 @@ import java.util.List;
  * Created by hmxbanz on 2017/4/5.
  */
 
-public class HomeNuPresenter extends BasePresenter implements OnDataListener,ClassListNuAdapter.ItemClickListener {
+public class HomeNuPresenter extends BasePresenter implements OnDataListener,ClassListNuAdapter.ItemClickListener, SwipeRefreshLayout.OnRefreshListener {
     private static final int GETSHOWLIST = 1;
     private final LinearLayoutManager linearLayoutManager;
     private List<ShowResponse.DataBean> entity;
@@ -34,6 +35,7 @@ public class HomeNuPresenter extends BasePresenter implements OnDataListener,Cla
     private String lastItem ="0";
     private ClassListNuAdapter dataAdapter;
     List<ClassListResponse.DataBean> datas = new ArrayList<>();
+    private SwipeRefreshLayout swiper;
 
     //private ContactsActivity mActivity;
     public HomeNuPresenter(Context context){
@@ -43,43 +45,23 @@ public class HomeNuPresenter extends BasePresenter implements OnDataListener,Cla
         dataAdapter = new ClassListNuAdapter(context,datas);
     }
 
-    public void init(RecyclerView videoList) {
+    public void init(SwipeRefreshLayout swiper,RecyclerView videoList) {
+        this.swiper=swiper;
+        this.swiper.setOnRefreshListener(this);
         this.videoList=videoList;
         this.videoList.setAdapter(dataAdapter);
+        videoList.setLayoutManager(linearLayoutManager);
+        videoList.addOnScrollListener(new GSYVideoPlayerOnScrollListener(linearLayoutManager) {
+            @Override
+            public void onLoadMore(int currentPage) {
+                LoadDialog.show(context);
+                atm.request(GETSHOWLIST,HomeNuPresenter.this);
+            }
+        });
+
 
         LoadDialog.show(context);
         atm.request(GETSHOWLIST,this);
-
-        videoList.setLayoutManager(linearLayoutManager);
-        videoList.addOnScrollListener(new RecyclerView.OnScrollListener() {
-
-            int firstVisibleItem, lastVisibleItem;
-
-            @Override
-            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
-                super.onScrollStateChanged(recyclerView, newState);
-            }
-
-            @Override
-            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
-                super.onScrolled(recyclerView, dx, dy);
-                firstVisibleItem   = linearLayoutManager.findFirstVisibleItemPosition();
-                lastVisibleItem = linearLayoutManager.findLastVisibleItemPosition();
-                //大于0说明有播放
-                if (GSYVideoManager.instance().getPlayPosition() >= 0) {
-                    //当前播放的位置
-                    int position = GSYVideoManager.instance().getPlayPosition();
-                    //对应的播放列表TAG
-                    if (GSYVideoManager.instance().getPlayTag().equals(RecyclerItemNormalHolder.TAG)
-                            && (position < firstVisibleItem || position > lastVisibleItem)) {
-
-                        //如果滑出去了上面和下面就是否，和今日头条一样
-                        GSYVideoPlayer.releaseAllVideos();
-                        //recyclerNormalAdapter.notifyDataSetChanged();
-                    }
-                }
-            }
-        });
     }
 
     @Override
@@ -93,12 +75,14 @@ public class HomeNuPresenter extends BasePresenter implements OnDataListener,Cla
 
     @Override
     public void onSuccess(int requestCode, Object result) {
+        LoadDialog.dismiss(context);
+        this.swiper.setRefreshing(false);
         switch (requestCode) {
             case GETSHOWLIST:
                 ClassListResponse response = (ClassListResponse) result;
                 if (response.getCode() == XtdConst.SUCCESS) {
                     datas.addAll(response.getData());
-                    lastItem=((ClassListResponse.DataBean) datas.get(datas.size()-1)).getItem_id();
+                    lastItem=datas.get(0).getItem_id();
                     dataAdapter.setOnItemClickListener(this);
                     dataAdapter.notifyDataSetChanged();
 
@@ -111,5 +95,19 @@ public class HomeNuPresenter extends BasePresenter implements OnDataListener,Cla
     @Override
     public void onItemClick(int position, String itemId, String classId) {
         DetailActivity.StartActivity(context,itemId,classId);
+    }
+
+    @Override
+    public void onRefresh() {
+        lastItem ="0";
+        datas.clear();
+        videoList.addOnScrollListener(new GSYVideoPlayerOnScrollListener(linearLayoutManager) {
+            @Override
+            public void onLoadMore(int currentPage) {
+                LoadDialog.show(context);
+                atm.request(GETSHOWLIST,HomeNuPresenter.this);
+            }
+        });
+        atm.request(GETSHOWLIST,this);
     }
 }

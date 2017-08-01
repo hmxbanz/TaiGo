@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.text.TextUtils;
 
 import com.xtdar.app.common.NLog;
+import com.xtdar.app.server.broadcast.BroadcastManager;
 import com.xtdar.app.view.activity.LoginActivity;
 import com.xtdar.app.view.activity.Main2Activity;
 
@@ -16,6 +17,8 @@ import org.json.JSONObject;
 import java.util.Iterator;
 
 import cn.jpush.android.api.JPushInterface;
+
+import static com.xtdar.app.presenter.MinePresenter.UPDATEUNREAD;
 
 /**
  * 自定义接收器
@@ -46,6 +49,8 @@ public class MyReceiver extends BroadcastReceiver {
 				NLog.d(TAG, "[MyReceiver] 接收到推送下来的通知");
 				int notifactionId = bundle.getInt(JPushInterface.EXTRA_NOTIFICATION_ID);
 				NLog.d(TAG, "[MyReceiver] 接收到推送下来的通知的ID: " + notifactionId);
+
+				BroadcastManager.getInstance(context).sendBroadcast(UPDATEUNREAD,"updateUnread");
 
 			} else if (JPushInterface.ACTION_NOTIFICATION_OPENED.equals(intent.getAction())) {
 				NLog.d(TAG, "[MyReceiver] 用户点击打开了通知");

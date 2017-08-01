@@ -48,7 +48,6 @@ public class MallGamePresenter extends BasePresenter implements  SwipeRefreshLay
     private String lastItem ="0";
     private int lastOffset;
     private int lastPosition;
-    private boolean isAdapterSetted=false;
     private BluetoothService mBluetoothService;
     private String deviceName;
     private Main2Activity mActivity;
@@ -60,16 +59,17 @@ public class MallGamePresenter extends BasePresenter implements  SwipeRefreshLay
     public MallGamePresenter(Context context){
         super(context);
         mActivity = (Main2Activity) context;
-        mBluetoothService=mActivity.mBluetoothService;
         dataAdapter = new ClassListAnimationAdapter(this.context);
+
     }
 
-    public void init(SwipeRefreshLayout swiper, RecyclerView recycleView) {
+    public void init(SwipeRefreshLayout swiper, RecyclerView recyclerView) {
         this.swiper=swiper;
-        this.recyclerView =recycleView;
         this.swiper.setOnRefreshListener(this);
+        this.recyclerView =recyclerView;
         gridLayoutManager=new GridLayoutManager(context,1);
-        recycleView.setLayoutManager(gridLayoutManager);
+        recyclerView.setLayoutManager(gridLayoutManager);
+        recyclerView.setAdapter(dataAdapter);
         recyclerView.addOnScrollListener(new EndlessRecyclerOnScrollListener(gridLayoutManager) {
             @Override
             public void onLoadMore(int currentPage) {
@@ -119,13 +119,7 @@ public class MallGamePresenter extends BasePresenter implements  SwipeRefreshLay
                     //dataAdapter.setHeaderView(LayoutInflater.from(context).inflate(R.layout.recyclerview_header,null));
                     dataAdapter.setListItems(list);
                     dataAdapter.setOnItemClickListener(this);
-
-                    if(!isAdapterSetted)
-                        recyclerView.setAdapter(dataAdapter);
-                    isAdapterSetted=true;
                     dataAdapter.notifyDataSetChanged();
-
-
                 }
                 break;
             case GAMECHECK :

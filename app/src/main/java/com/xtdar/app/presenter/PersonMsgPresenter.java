@@ -8,6 +8,7 @@ import com.xtdar.app.XtdConst;
 import com.xtdar.app.adapter.PersonMsgAdapter;
 import com.xtdar.app.server.HttpException;
 import com.xtdar.app.server.async.OnDataListener;
+import com.xtdar.app.server.broadcast.BroadcastManager;
 import com.xtdar.app.server.response.PersonMsgResponse;
 import com.xtdar.app.view.activity.DetailActivity;
 import com.xtdar.app.view.activity.ShowDetailActivity;
@@ -15,6 +16,8 @@ import com.xtdar.app.view.widget.LoadDialog;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static com.xtdar.app.presenter.MinePresenter.UPDATEUNREAD;
 
 /**
  * Created by hmxbanz on 2017/4/5.
@@ -65,6 +68,7 @@ public class PersonMsgPresenter extends BasePresenter implements OnDataListener,
                     }
 
                 }
+                BroadcastManager.getInstance(context).sendBroadcast(UPDATEUNREAD,"updateUnread");
                 break;
 
         }

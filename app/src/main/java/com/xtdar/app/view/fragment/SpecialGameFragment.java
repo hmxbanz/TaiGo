@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -35,6 +36,7 @@ public class SpecialGameFragment extends Fragment {
     private View view;
 
     private SpecialGamePresenter presenter;
+    private SwipeRefreshLayout swiper;
 
     public static SpecialGameFragment getInstance() {
         if (instance == null) {
@@ -48,20 +50,19 @@ public class SpecialGameFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_home_animation, null);
         initViews();
-//        initData();
         presenter = new SpecialGamePresenter(getContext());
-        presenter.init(recycleView);
+        presenter.init(swiper,recycleView);
         return view;
     }
 
     private void initViews() {
+        swiper=(SwipeRefreshLayout)view.findViewById(R.id.swiper);
         recycleView= (RecyclerView) view.findViewById(R.id.recyclerView);
     }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
-        //BroadcastManager.getInstance(getActivity()).destroy(SealConst.CHANGEINFO);
     }
 
 

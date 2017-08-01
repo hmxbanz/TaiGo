@@ -17,7 +17,6 @@ import com.xtdar.app.server.response.GameListResponse;
 import com.xtdar.app.server.response.ShowResponse;
 import com.xtdar.app.video.RecyclerItemNormalHolder;
 import com.xtdar.app.video.RecyclerItemNormalHolder2;
-import com.xtdar.app.video.RecyclerNormalAdapter;
 import com.youth.banner.Banner;
 
 import java.util.List;

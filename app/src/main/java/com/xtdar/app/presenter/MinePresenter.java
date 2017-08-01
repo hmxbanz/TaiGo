@@ -1,41 +1,25 @@
 package com.xtdar.app.presenter;
 
-import android.app.Activity;
-import android.content.ComponentName;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import android.content.ServiceConnection;
-import android.os.IBinder;
-import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
-import com.clj.fastble.data.ScanResult;
 import com.xtdar.app.XtdConst;
-import com.xtdar.app.adapter.MyDevicesAdapter;
 import com.xtdar.app.common.NToast;
-import com.xtdar.app.listener.AlertDialogCallback;
 import com.xtdar.app.loader.GlideImageLoader;
 import com.xtdar.app.server.HttpException;
 import com.xtdar.app.server.async.OnDataListener;
-import com.xtdar.app.server.response.MyDevicesResponse;
+import com.xtdar.app.server.broadcast.BroadcastManager;
 import com.xtdar.app.server.response.UnReadMsgResponse;
 import com.xtdar.app.server.response.UserInfoResponse;
-import com.xtdar.app.service.BluetoothService;
-import com.xtdar.app.view.activity.BleActivity;
-import com.xtdar.app.view.activity.LoginActivity;
-import com.xtdar.app.view.activity.QrCodeActivity;
-import com.xtdar.app.view.activity.UnityPlayerActivity;
 import com.xtdar.app.view.widget.DragPointView;
 import com.xtdar.app.view.widget.LoadDialog;
 import com.xtdar.app.view.widget.SelectableRoundedImageView;
-import com.xtdar.app.widget.DialogWithYesOrNoUtils;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by hmxbanz on 2017/4/5.
@@ -44,6 +28,7 @@ import java.util.List;
 public class MinePresenter extends BasePresenter implements OnDataListener {
     private static final int GETINFO = 2;
     private static final int GETMSGCOUNT = 3;
+    public static final String UPDATEUNREAD = "updateUnread";
     private GlideImageLoader glideImageLoader;
     private final BasePresenter basePresenter;
     private SelectableRoundedImageView avator;
@@ -60,6 +45,27 @@ public class MinePresenter extends BasePresenter implements OnDataListener {
         this.unreadNumView=unreadNumView;
         this.avator = selectableRoundedImageView;
         this.nickName = nickName;
+
+        BroadcastManager.getInstance(context).addAction(MinePresenter.UPDATEUNREAD, new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                String command = intent.getAction();
+                String s=intent.getStringExtra("String");
+                if (!TextUtils.isEmpty(command)) {
+                    switch (s){
+                        case "updateUnread":
+                            reloadMsgCount();
+                            break;
+                        default:
+
+                    }
+
+                }
+            }
+        });
+
+    }
+    public void initData(){
         LoadDialog.show(context);
         atm.request(GETINFO,this);
     }
@@ -86,8 +92,7 @@ public class MinePresenter extends BasePresenter implements OnDataListener {
                     //glideImageLoader.displayImage(context, XtdConst.IMGURI+entity.getImg_path(), this.avator);
                     Glide.with(context).load(XtdConst.IMGURI+entity.getImg_path()).skipMemoryCache(true).diskCacheStrategy( DiskCacheStrategy.NONE ).into(this.avator);
                     this.nickName.setText(entity.getNick_name());
-                    LoadDialog.show(context);
-                    atm.request(GETMSGCOUNT,this);
+                    reloadMsgCount();
                 }
                 NToast.shortToast(context, userInfoResponse.getMsg());
                 break;
@@ -96,8 +101,12 @@ public class MinePresenter extends BasePresenter implements OnDataListener {
                 if (unReadMsgResponse.getCode() == XtdConst.SUCCESS) {
                     UnReadMsgResponse.DataBean entity = unReadMsgResponse.getData();
                     if(entity.getMsg_count()>0){
-                    this.unreadNumView.setText(entity.getMsg_count());
+                    this.unreadNumView.setText(String.valueOf(entity.getMsg_count()));
                     this.unreadNumView.setVisibility(View.VISIBLE);
+                    }
+                    else
+                    {
+                        this.unreadNumView.setVisibility(View.GONE);
                     }
                 }
                 NToast.shortToast(context, unReadMsgResponse.getMsg());
@@ -106,6 +115,9 @@ public class MinePresenter extends BasePresenter implements OnDataListener {
         }
     }
 
-
+    private void reloadMsgCount() {
+        LoadDialog.show(context);
+        atm.request(GETMSGCOUNT,this);
+    }
 
 }

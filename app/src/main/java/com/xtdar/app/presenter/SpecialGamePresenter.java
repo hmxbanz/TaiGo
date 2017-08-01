@@ -1,6 +1,7 @@
 package com.xtdar.app.presenter;
 
 import android.content.Context;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -23,8 +24,7 @@ import java.util.List;
  * Created by hmxbanz on 2017/4/5.
  */
 
-public class SpecialGamePresenter extends BasePresenter implements OnDataListener,ClassListAnimationAdapter.ItemClickListener {
-    private static final int GETADS = 1;
+public class SpecialGamePresenter extends BasePresenter implements SwipeRefreshLayout.OnRefreshListener,OnDataListener,ClassListAnimationAdapter.ItemClickListener {
     private static final int GETANIMATION = 2;
     private Banner Banner;
     private RecyclerView recyclerView;
@@ -34,23 +34,25 @@ public class SpecialGamePresenter extends BasePresenter implements OnDataListene
     private String lastItem ="0";
     private int lastOffset;
     private int lastPosition;
-    private boolean isAdapterSetted=false;
+    private SwipeRefreshLayout swiper;
 
     public SpecialGamePresenter(Context context){
         super(context);
-        //mActivity = (ContactsActivity) context;
         dataAdapter = new ClassListAnimationAdapter(this.context);
     }
 
-    public void init(RecyclerView recycleView) {
-        this.recyclerView =recycleView;
+    public void init(SwipeRefreshLayout swiper, RecyclerView recyclerView) {
+        this.swiper=swiper;
+        this.swiper.setOnRefreshListener(this);
+        this.recyclerView =recyclerView;
         gridLayoutManager=new GridLayoutManager(context,1);
-        recycleView.setLayoutManager(gridLayoutManager);
+        recyclerView.setLayoutManager(gridLayoutManager);
+        recyclerView.setAdapter(dataAdapter);
         recyclerView.addOnScrollListener(new EndlessRecyclerOnScrollListener(gridLayoutManager) {
             @Override
             public void onLoadMore(int currentPage) {
                 LoadDialog.show(context);
-                //atm.request(GETANIMATION,MallGamePresenter.this);
+                atm.request(GETANIMATION,SpecialGamePresenter.this);
             }
 
             @Override
@@ -64,7 +66,6 @@ public class SpecialGamePresenter extends BasePresenter implements OnDataListene
         recyclerView.setNestedScrollingEnabled(false);
 
         LoadDialog.show(context);
-        //atm.request(GETADS,this);
         atm.request(GETANIMATION,this);
 
     }
@@ -72,10 +73,8 @@ public class SpecialGamePresenter extends BasePresenter implements OnDataListene
     @Override
     public Object doInBackground(int requestCode, String parameter) throws HttpException {
         switch (requestCode) {
-            case GETADS:
-                return mUserAction.getAds();
             case GETANIMATION:
-                return mUserAction.getShot("-1",lastItem,"12");
+                return mUserAction.getShot("-1",lastItem,"4");
         }
         return null;
     }
@@ -83,34 +82,19 @@ public class SpecialGamePresenter extends BasePresenter implements OnDataListene
     @Override
     public void onSuccess(int requestCode, Object result) {
         LoadDialog.dismiss(context);
+        this.swiper.setRefreshing(false);
         switch (requestCode) {
-            case GETADS:
-                AdResponse adResponse = (AdResponse) result;
-                if (adResponse.getCode() == XtdConst.SUCCESS) {
-                    List<String> images = new ArrayList<>();
-                    for (String s : adResponse.getData()) {
-                        s=XtdConst.IMGURI+s;
-                        images.add(s);
-                    }
-                    dataAdapter.setAdImages(images);
-                    atm.request(GETANIMATION,this);
-                }
-                break;
             case GETANIMATION:
                 GameListResponse response = (GameListResponse) result;
                 if (response.getCode() == XtdConst.SUCCESS) {
                     final List<GameListResponse.DataBean> datas = response.getData();
-                    lastItem=((GameListResponse.DataBean) datas.get(datas.size()-1)).getGame_id();
+                    lastItem=datas.get(datas.size()-1).getGame_id();
                     list.addAll(response.getData());
                     //设置列表
                     //dataAdapter.setHeaderView(LayoutInflater.from(context).inflate(R.layout.recyclerview_header,null));
                     dataAdapter.setListItems(list);
                     dataAdapter.setOnItemClickListener(this);
-                    //dataAdapter.setFooterView(LayoutInflater.from(context).inflate(R.layout.recyclerview_footer,null));
 
-                    if(!isAdapterSetted)
-                        recyclerView.setAdapter(dataAdapter);
-                    isAdapterSetted=true;
                     dataAdapter.notifyDataSetChanged();
 
 
@@ -147,5 +131,28 @@ public class SpecialGamePresenter extends BasePresenter implements OnDataListene
         if(recyclerView.getLayoutManager() != null && lastPosition >= 0) {
             ((LinearLayoutManager) recyclerView.getLayoutManager()).scrollToPositionWithOffset(lastPosition, lastOffset);
         }
+    }
+
+    @Override
+    public void onRefresh() {
+        lastItem ="0";
+        list.clear();
+        recyclerView.addOnScrollListener(new EndlessRecyclerOnScrollListener(gridLayoutManager) {
+            @Override
+            public void onLoadMore(int currentPage) {
+                LoadDialog.show(context);
+                atm.request(GETANIMATION,SpecialGamePresenter.this);
+            }
+
+            @Override
+            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+                super.onScrollStateChanged(recyclerView, newState);
+                if(recyclerView.getLayoutManager() != null) {
+                    //getPositionAndOffset();
+                }
+            }
+        });
+        LoadDialog.show(context);
+        atm.request(GETANIMATION,this);
     }
 }

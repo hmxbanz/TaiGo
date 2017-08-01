@@ -16,6 +16,7 @@ import android.widget.TextView;
 import com.xtdar.app.common.NLog;
 import com.xtdar.app.common.PhotoUtils;
 import com.xtdar.app.presenter.MinePresenter;
+import com.xtdar.app.server.broadcast.BroadcastManager;
 import com.xtdar.app.view.activity.MessageActivity;
 import com.xtdar.app.view.activity.MyCommentActivity;
 import com.xtdar.app.view.activity.DynamicActivity;
@@ -70,17 +71,8 @@ public class MineFragment extends Fragment implements View.OnClickListener {
         mView = inflater.inflate(R.layout.fragment_mine, null);
         initViews();
         presenter = new MinePresenter(getActivity());
-//        initData();
-//        BroadcastManager.getInstance(getActivity()).addAction(SealConst.CHANGEINFO, new BroadcastReceiver() {
-//            @Override
-//            public void onReceive(Context context, Intent intent) {
-//                String userid = sp.getString("loginid", "");
-//                String username = sp.getString("loginnickname", "");
-//                String userportrait = sp.getString("loginPortrait", "");
-//                mName.setText(username);
-//                ImageLoader.getInstance().displayImage(TextUtils.isEmpty(userportrait) ? RongGenerate.generateDefaultAvatar(username, userid) : userportrait, imageView, App.getOptions());
-//            }
-//        });
+        presenter.init(mImageView,nickName,unreadNumView);
+        //initData();
 //        compareVersion();
         NLog.e("fragment-----","onCreateView");
         return mView;
@@ -89,7 +81,7 @@ public class MineFragment extends Fragment implements View.OnClickListener {
     @Override
     public void onStart() {
         super.onStart();
-        presenter.init(mImageView,nickName,unreadNumView);
+        presenter.initData();
         NLog.e("fragment-----","onStart");
     }
 
@@ -132,7 +124,7 @@ public class MineFragment extends Fragment implements View.OnClickListener {
     @Override
     public void onDestroy() {
         super.onDestroy();
-        //BroadcastManager.getInstance(getActivity()).destroy(SealConst.CHANGEINFO);
+        BroadcastManager.getInstance(getActivity()).destroy(MinePresenter.UPDATEUNREAD);
     }
 
     @Override

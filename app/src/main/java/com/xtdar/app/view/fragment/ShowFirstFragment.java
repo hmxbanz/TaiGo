@@ -3,6 +3,7 @@ package com.xtdar.app.view.fragment;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,11 +13,6 @@ import android.widget.RelativeLayout;
 import com.shuyu.gsyvideoplayer.video.StandardGSYVideoPlayer;
 import com.xtdar.app.R;
 import com.xtdar.app.presenter.HomeNuPresenter;
-import com.xtdar.app.presenter.HomeShowPresenter;
-import com.xtdar.app.server.response.ShowResponse;
-
-import java.util.ArrayList;
-import java.util.List;
 
 
 /**
@@ -27,12 +23,10 @@ public class ShowFirstFragment extends Fragment  {
     RelativeLayout layoutBack,layoutRight;
     //@BindView(R.id.list_item_recycler)
     RecyclerView videoList;
-
-    List<ShowResponse.DataBean> dataList = new ArrayList<>();
-
     private View view;
     HomeNuPresenter presenter;
     public static ShowFirstFragment instance = null;
+    private SwipeRefreshLayout swiper;
 
 
     public static ShowFirstFragment getInstance() {
@@ -46,23 +40,19 @@ public class ShowFirstFragment extends Fragment  {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_show, null);
-        videoList= (RecyclerView) view.findViewById(R.id.list_item_recycler);
-
-        resolveData();
+        initViews();
 
         presenter = new HomeNuPresenter(getContext());
-        presenter.init(videoList);
+        presenter.init(swiper,videoList);
         return view;
 
 
     }
-
-    private void resolveData() {
-        for (int i = 0; i < 19; i++) {
-            ShowResponse.DataBean videoModel = new ShowResponse.DataBean();
-            dataList.add(videoModel);
-        }
+    private void initViews() {
+        swiper=(SwipeRefreshLayout)view.findViewById(R.id.swiper);
+        videoList= (RecyclerView) view.findViewById(R.id.list_item_recycler);
     }
+
     public boolean onBackPressed() {
         if (StandardGSYVideoPlayer.backFromWindowFull(getActivity())) {
             return true;
