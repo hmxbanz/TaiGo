@@ -1412,16 +1412,16 @@ public CommonResponse register(String cellPhone, String password, String captcha
         return new GameCheckResponse();
     }
 //用户反馈
-    public CommonResponse feedback(EditText reportContent, EditText cellphone) throws HttpException {
-        String uri = getURL("cli-api-upshow.php");
+    public CommonResponse feedback(String reportContent, String cellphone) throws HttpException {
+        String uri = getURL("cli-api-postfeedback.php");
 
         Response response=null;
         try {
             response=OkHttpUtils
                     .get()
                     .addParams(XtdConst.ACCESS_TOKEN,token)
-                    .addParams("content",reportContent.getText().toString())
-                    .addParams("cellphone",cellphone.getText().toString())
+                    .addParams("feedback",reportContent)
+                    .addParams("contact",cellphone)
                     .url(uri)
                     .build()
                     .execute();

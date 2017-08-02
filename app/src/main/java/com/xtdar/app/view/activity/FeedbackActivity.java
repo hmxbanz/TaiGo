@@ -3,12 +3,11 @@ package com.xtdar.app.view.activity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.xtdar.app.presenter.ReportPresenter;
+import com.xtdar.app.presenter.FeedBackPresenter;
 
 import com.xtdar.app.R;
 
@@ -16,14 +15,14 @@ import com.xtdar.app.R;
 public class FeedbackActivity extends BaseActivity implements View.OnClickListener {
     private EditText reportContent,cellphone;
     private Button mBtnRport;
-    private ReportPresenter presenter;
+    private FeedBackPresenter presenter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_feedback);
         initViews();
-        presenter = new ReportPresenter(this);
+        presenter = new FeedBackPresenter(this);
         presenter.init();
     }
 
