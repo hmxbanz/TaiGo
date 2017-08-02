@@ -20,7 +20,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
     private Button mBtnLogin;
     private RelativeLayout mLayoutQqLogin,mLayoutWxLogin,mLayoutWeiboWxLogin;
     private TextView mTextForgetPassword;
-    private LoginPresenter mLoginPresenter;
+    private LoginPresenter presenter;
     private TextView mTextRight;
     private String openId,loginType;
 
@@ -30,10 +30,10 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
         setContentView(R.layout.activity_login);
 
         initViews();
-        mLoginPresenter = new LoginPresenter(this);
-        mLoginPresenter.init(mUsername,mPassword);
-        mLoginPresenter.openId =openId;
-        mLoginPresenter.loginType=loginType;
+        presenter = new LoginPresenter(this);
+        presenter.init(mUsername,mPassword);
+        presenter.openId =openId;
+        presenter.loginType=loginType;
     }
 
 
@@ -92,21 +92,21 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                 break;
             case R.id.btn_login:
                 if(TextUtils.isEmpty(openId)){
-                    mLoginPresenter.login("nomal");  return;
+                    presenter.login("nomal");  return;
                     }
-                mLoginPresenter.login("bind");
+                presenter.login("bind");
                 break;
             case R.id.text_forget_password:
                 startActivity(new Intent(this,ForgetPasswordActivity.class));
                 break;
             case R.id.layout_wx_login:
-                mLoginPresenter.wxLogin();
+                presenter.wxLogin();
                 break;
             case R.id.layout_qq_login:
-                mLoginPresenter.qqLogin();
+                presenter.qqLogin();
                 break;
             case R.id.layout_weibo_login:
-                mLoginPresenter.weiboLogin();
+                presenter.weiboLogin();
                 break;
 
         }

@@ -1,9 +1,11 @@
 package com.xtdar.app.server.response;
 
 
+import android.support.annotation.NonNull;
+
 import java.util.List;
 
-public class MyDevicesResponse {
+public class MyDevicesResponse  {
 
 
     /**
@@ -40,7 +42,8 @@ public class MyDevicesResponse {
         this.data = data;
     }
 
-    public static class DataBean {
+
+    public static class DataBean implements Comparable<DataBean> {
         /**
          * bind_device_id : 38
          * user_id : 48
@@ -68,6 +71,16 @@ public class MyDevicesResponse {
         private String service_uuid;
         private String read_uuid;
         private String write_uuid;
+
+        public Integer getStatus() {
+            return status;
+        }
+        public void setStatus(int status) {
+            this.status = status;
+        }
+
+        private int status;////////////////////////////////////////////////增加的属性和后台不一样
+
 
         public String getBind_device_id() {
             return bind_device_id;
@@ -163,6 +176,11 @@ public class MyDevicesResponse {
 
         public void setWrite_uuid(String write_uuid) {
             this.write_uuid = write_uuid;
+        }
+
+        @Override
+        public int compareTo(@NonNull DataBean o) {
+            return this.getStatus().compareTo(o.getStatus());
         }
     }
 }

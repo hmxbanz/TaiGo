@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -31,6 +32,7 @@ private static final int Blue=0x001bb4fb;
     private TextView title;
     private RelativeLayout layout_back;
     private RecyclerView recycleView;
+    private SwipeRefreshLayout swiper;
 
     public static HomeFragment getInstance() {
         if (instance == null) {
@@ -47,7 +49,7 @@ private static final int Blue=0x001bb4fb;
 
 //        initData();
         presenter = new HomeFragmentPresenter(getContext());
-        presenter.init(recycleView);
+        presenter.init(swiper,recycleView);
         //StatusBarUtil.setTranslucent(getActivity(), StatusBarUtil.);
         StatusBarUtil.setColor(getActivity(), Blue,0);
         return view;
@@ -71,6 +73,7 @@ private static final int Blue=0x001bb4fb;
         title.setText("设备");
         view.findViewById(R.id.txt_add_driver).setOnClickListener(this);
         recycleView= (RecyclerView) view.findViewById(R.id.recyclerView);
+        swiper= (SwipeRefreshLayout) view.findViewById(R.id.swiper);
         view.findViewById(R.id.right_icon).setOnClickListener(this);
 
     }

@@ -200,6 +200,7 @@ public class LoginPresenter extends BasePresenter  {
     }
 
     public void wxLogin() {
+        LoadDialog.show(context);
         final Platform weixin = ShareSDK.getPlatform(Wechat.NAME);
         String name = weixin.getName();
 
@@ -259,6 +260,7 @@ public class LoginPresenter extends BasePresenter  {
     }
 
     public void qqLogin() {
+        LoadDialog.show(context);
         //获取QQ平台手动授权
         final Platform qq = ShareSDK.getPlatform(QQ.NAME);
         //设置回调监听
@@ -320,6 +322,7 @@ public class LoginPresenter extends BasePresenter  {
      * 新浪授权
      */
     public void weiboLogin() {
+        LoadDialog.show(context);
         //获取具体的平台手动授权
         final Platform weibo = ShareSDK.getPlatform(SinaWeibo.NAME);
         //设置回调监听

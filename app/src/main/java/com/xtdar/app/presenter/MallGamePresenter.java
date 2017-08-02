@@ -55,7 +55,7 @@ public class MallGamePresenter extends BasePresenter implements  SwipeRefreshLay
 
 
     private SwipeRefreshLayout swiper;
-    private List<ScanResult> scanResultList;
+    private List<ScanResult> scanResultList=new ArrayList<>();
     private AlertListAdapter alertListAdapter;
     private List<GameCheckResponse.DataBean> deviceList;
     private Intent toUnityPlayerActivityInent;

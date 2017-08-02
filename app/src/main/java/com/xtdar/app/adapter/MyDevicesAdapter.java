@@ -119,6 +119,12 @@ public class MyDevicesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
                     mListener.onItemClick(position,listItem);
                 }
             });
+            if(listItem.getStatus()==1){dataDolder.statueIcon.setVisibility(View.VISIBLE);
+            dataDolder.statueIcon.setImageDrawable(context.getResources().getDrawable(R.drawable.icon_not_connected));}
+            else if(listItem.getStatus()==2){dataDolder.statueIcon.setVisibility(View.VISIBLE);
+                dataDolder.statueIcon.setImageDrawable(context.getResources().getDrawable(R.drawable.icon_connected));}
+            else
+                dataDolder.statueIcon.setVisibility(View.GONE);
         }
     }
 
@@ -202,6 +208,7 @@ public class MyDevicesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
         private TextView title;
         private TextView className;
         private ImageView imageView;
+        private ImageView statueIcon;
         private View listLayoutView;
 
         public DataHolder(View itemView) {
@@ -209,6 +216,7 @@ public class MyDevicesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
 //            title = (TextView) itemView.findViewById(R.id.txt_title);
 //            className = (TextView) itemView.findViewById(R.id.txt_class_name);
             imageView = (ImageView) itemView.findViewById(R.id.list_item_icon);
+            statueIcon = (ImageView) itemView.findViewById(R.id.statue_icon);
             listLayoutView = itemView.findViewById(R.id.list_item_layout);
         }
 

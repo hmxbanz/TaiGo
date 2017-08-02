@@ -102,7 +102,7 @@ public class BluetoothLeService extends Service {
         };
 
         /*
-         * when connected successfully will callback this method
+         * when icon_connected successfully will callback this method
          * this method can dealwith send password or data analyze
          *
          * */
@@ -208,7 +208,7 @@ public class BluetoothLeService extends Service {
             return false;
         }
 
-        // Previously connected device. Try to reconnect. (锟斤拷前锟斤拷锟接碉拷锟借备锟斤拷 锟斤拷锟斤拷锟斤拷锟斤拷锟斤拷锟斤拷)
+        // Previously icon_connected device. Try to reconnect. (锟斤拷前锟斤拷锟接碉拷锟借备锟斤拷 锟斤拷锟斤拷锟斤拷锟斤拷锟斤拷锟斤拷)
         if (mBluetoothDeviceAddress != null
                 && address.equals(mBluetoothDeviceAddress)
                 && mBluetoothGatt != null) {
@@ -313,7 +313,7 @@ public class BluetoothLeService extends Service {
     }
 
     /**
-     * Retrieves a list of supported GATT services on the connected device. This
+     * Retrieves a list of supported GATT services on the icon_connected device. This
      * should be invoked only after {@code BluetoothGatt#discoverServices()}
      * completes successfully.
      *
@@ -327,7 +327,7 @@ public class BluetoothLeService extends Service {
     }
 
     /**
-     * Read the RSSI for a connected remote device.
+     * Read the RSSI for a icon_connected remote device.
      * */
     public boolean getRssiVal() {
         if (mBluetoothGatt == null)

@@ -6,8 +6,10 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
 import android.os.IBinder;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 
@@ -31,14 +33,17 @@ import com.xtdar.app.view.activity.UnityPlayerActivity;
 import com.xtdar.app.view.widget.LoadDialog;
 import com.xtdar.app.widget.DialogWithYesOrNoUtils;
 
+import org.w3c.dom.Text;
+
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
  * Created by hmxbanz on 2017/4/5.
  */
 
-public class HomeFragmentPresenter extends BasePresenter implements OnDataListener,MyDevicesAdapter.ItemClickListener {
+public class HomeFragmentPresenter extends BasePresenter implements OnDataListener,MyDevicesAdapter.ItemClickListener,SwipeRefreshLayout.OnRefreshListener {
     private static final int GETDRIVERS = 1;
     public static final int REQUEST_CODE = 1;
     private final BasePresenter basePresenter;
@@ -52,6 +57,8 @@ public class HomeFragmentPresenter extends BasePresenter implements OnDataListen
     private String deviceName;
 
     private Main2Activity mActivity;
+    private SwipeRefreshLayout swiper;
+
     public HomeFragmentPresenter(Context context){
         super(context);
         basePresenter = BasePresenter.getInstance(context);
@@ -59,14 +66,21 @@ public class HomeFragmentPresenter extends BasePresenter implements OnDataListen
         dataAdapter = new MyDevicesAdapter(this.context);
     }
 
-    public void init(RecyclerView recyclerView) {
+    public void init(SwipeRefreshLayout swiper, RecyclerView recyclerView) {
+        this.swiper=swiper;
+        this.swiper.setOnRefreshListener(this);
         this.recyclerView=recyclerView;
+        this.recyclerView.setNestedScrollingEnabled(false);
         gridLayoutManager=new GridLayoutManager(context,1);
         recyclerView.setLayoutManager(gridLayoutManager);
-
+        if (mBluetoothService == null) {
+            bindService();
+        } else {
+            LoadDialog.show(context);
+        }
     }
-public void loadData(){
-    if(basePresenter.isLogin){
+    public void loadData(){
+        if(basePresenter.isLogin){
         LoadDialog.show(context);
         atm.request(GETDRIVERS,this);
     }
@@ -102,7 +116,9 @@ public void loadData(){
                         if(!isAdapterSetted)
                             recyclerView.setAdapter(dataAdapter);
                         isAdapterSetted=true;
+
                         dataAdapter.notifyDataSetChanged();
+                        this.swiper.setVisibility(View.VISIBLE);
                         this.recyclerView.setVisibility(View.VISIBLE);
                     }
                 }
@@ -125,14 +141,13 @@ public void loadData(){
         //Intent startConectServiceIntent = new Intent(context, DeviceConectService.class);
         //startConectServiceIntent.putExtra("deviceName", deviceName);
         //context.startService(startConectServiceIntent);
-        this.deviceName=item.getMac_address();
+        String mac=item.getMac_address();
 
         if (mBluetoothService == null) {
             bindService();
         } else {
-            //mBluetoothService.scanDevice();
             LoadDialog.show(context);
-            mBluetoothService.scanAndConnect5(HomeFragmentPresenter.this.deviceName);
+            mBluetoothService.scanAndConnect5(mac);
         }
     }
 
@@ -151,7 +166,7 @@ public void loadData(){
             mBluetoothService = ((BluetoothService.BluetoothBinder) service).getService();
             mBluetoothService.setScanCallback(callback);
             LoadDialog.show(context);
-            mBluetoothService.scanAndConnect5(HomeFragmentPresenter.this.deviceName);
+            //mBluetoothService.scanAndConnect5(HomeFragmentPresenter.this.deviceName);
 
             //mBluetoothService.scanDevice();
         }
@@ -169,17 +184,28 @@ public void loadData(){
 
         @Override
         public void onScanning(ScanResult result) {
-            LoadDialog.show(context);
-//            if(HomeFragmentPresenter.this.deviceName.equals(result.getDevice().getName()))
-//            {
-//                LoadDialog.dismiss(context);
-//                mBluetoothService.connectDevice(result);
-//            }
-            NToast.shortToast(context,result.getDevice().getName());
+            //LoadDialog.show(context);
+            String mac=result.getDevice().getAddress();
+
+            for(MyDevicesResponse.DataBean bean:list)
+            {
+                bean.setStatus(0);
+                String mac2=bean.getMac_address();
+                if(mac2.toUpperCase().equals(mac))
+                    bean.setStatus(1);
+
+                NToast.shortToast(context,mac+"----"+mac2);
+            }
+            Collections.sort(list);
+            Collections.reverse(list);
+            dataAdapter.notifyDataSetChanged();
+
+
         }
 
         @Override
         public void onScanComplete() {
+            HomeFragmentPresenter.this.swiper.setRefreshing(false);
         }
 
         @Override
@@ -201,12 +227,30 @@ public void loadData(){
         @Override
         public void onServicesDiscovered() {
             LoadDialog.dismiss(context);
-            NToast.longToast(context, "连接成功，请选择游戏开始玩。");
-            ((Main2Activity)context).getViewPager().setCurrentItem(1, false);
+            String mac=mBluetoothService.getMac();
+                for(MyDevicesResponse.DataBean bean:list)
+                {
+                    String mac2=bean.getMac_address();
+                    if(mac2.toUpperCase().equals(mac))
+                        bean.setStatus(2);
+
+                }
+            Collections.sort(list);
+            Collections.reverse(list);
+            dataAdapter.notifyDataSetChanged();
+//
+//            LoadDialog.dismiss(context);
+//            NToast.longToast(context, "连接成功，请选择游戏开始玩。");
+//            ((Main2Activity)context).getViewPager().setCurrentItem(1, false);
 //            Intent intent = new Intent(context, UnityPlayerActivity.class);
 //            context.startActivity(intent);
 
         }
     };
+
+    @Override
+    public void onRefresh() {
+        mBluetoothService.scanDevice();
+    }
 
 }

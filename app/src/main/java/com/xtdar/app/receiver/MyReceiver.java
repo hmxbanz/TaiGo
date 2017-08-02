@@ -68,7 +68,7 @@ public class MyReceiver extends BroadcastReceiver {
 
 			} else if(JPushInterface.ACTION_CONNECTION_CHANGE.equals(intent.getAction())) {
 				boolean connected = intent.getBooleanExtra(JPushInterface.EXTRA_CONNECTION_CHANGE, false);
-				NLog.w(TAG, "[MyReceiver]" + intent.getAction() +" connected state change to "+connected);
+				NLog.w(TAG, "[MyReceiver]" + intent.getAction() +" icon_connected state change to "+connected);
 			} else {
 				NLog.d(TAG, "[MyReceiver] Unhandled intent - " + intent.getAction());
 			}
