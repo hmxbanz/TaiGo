@@ -209,12 +209,16 @@ public class DetailActivity extends BaseActivity implements RecyclerViewAdapter.
         intent.putExtra(XtdConst.CLASSID,classId);
         context.startActivity(intent);
     }
-
-
     @Override
     protected void onPause() {
         super.onPause();
         GSYVideoManager.onPause();
+    }
+    public void onBackPressed() {
+        if (StandardGSYVideoPlayer.backFromWindowFull(this)) {
+            return;
+        }
+        finish();
     }
 
 }

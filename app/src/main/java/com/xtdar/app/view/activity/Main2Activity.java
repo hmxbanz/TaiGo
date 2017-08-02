@@ -17,6 +17,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.shuyu.gsyvideoplayer.GSYVideoManager;
+import com.shuyu.gsyvideoplayer.video.StandardGSYVideoPlayer;
 import com.xtdar.app.R;
 import com.xtdar.app.presenter.Main2Presenter;
 import com.xtdar.app.service.BluetoothService;
@@ -244,6 +245,9 @@ public class Main2Activity extends BaseActivity implements View.OnClickListener{
 //        if (ShowFragment.getInstance().onBackPressed()) {
 //            return;
 //        }
+        if (StandardGSYVideoPlayer.backFromWindowFull(this)) {
+             return;
+            }
         finish();
     }
     @Override

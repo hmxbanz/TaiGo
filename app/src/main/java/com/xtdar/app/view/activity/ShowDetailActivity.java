@@ -169,5 +169,11 @@ public class ShowDetailActivity extends BaseActivity implements RecyclerViewAdap
         super.onPause();
         GSYVideoManager.onPause();
     }
-
+    @Override
+    public void onBackPressed() {
+        if (StandardGSYVideoPlayer.backFromWindowFull(this)) {
+            return;
+        }
+        finish();
+    }
 }
