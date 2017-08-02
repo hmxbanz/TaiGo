@@ -58,7 +58,8 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
                 startActivity(new Intent(this,AboutActivity.class));
                 break;
             case R.id.layout_clear:
-                DialogWithYesOrNoUtils.getInstance().showDialog(this, "确定要清除缓存吗?",null,null, new DialogWithYesOrNoUtils.DialogCallBack() {
+                DialogWithYesOrNoUtils d=DialogWithYesOrNoUtils.getInstance();
+                d.showDialog(this, "确定要清除缓存吗?",null,null, new DialogWithYesOrNoUtils.DialogCallBack() {
                     @Override
                     public void executeEvent() {
                         File file = new File(Environment.getExternalStorageDirectory().getPath() + getPackageName());
