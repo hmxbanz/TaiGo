@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/appbg"
+    >
+
+        <TextView
+            android:background="@color/white"
+            android:id="@+id/txt_device_name"
+            style="@style/AppPlaintTextStyle"
+            android:paddingLeft="10dp"
+            android:gravity="center_vertical"
+            android:text="名称"
+            android:layout_width="match_parent"
+            android:layout_height="50dp" />
+
+</LinearLayout>

@@ -109,9 +109,9 @@ public class HomeSongPresenter extends BasePresenter implements OnDataListener,C
         }
     }
 
-
     @Override
-    public void onItemClick(int position, String item_id,String class_id) {
-        SongAlbumActivity.StartActivity(context,item_id);
+    public void onItemClick(int position, GameListResponse.DataBean bean) {
+        SongAlbumActivity.StartActivity(context,bean.getGame_id());
     }
+
 }

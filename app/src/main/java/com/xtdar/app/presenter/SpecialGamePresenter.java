@@ -104,10 +104,6 @@ public class SpecialGamePresenter extends BasePresenter implements SwipeRefreshL
     }
 
 
-    @Override
-    public void onItemClick(int position, String item_id,String class_id) {
-        //DetailActivity.StartActivity(context,item_id,class_id);
-    }
 
     /**
      * 记录RecyclerView当前位置
@@ -154,5 +150,10 @@ public class SpecialGamePresenter extends BasePresenter implements SwipeRefreshL
         });
         LoadDialog.show(context);
         atm.request(GETANIMATION,this);
+    }
+
+    @Override
+    public void onItemClick(int position, GameListResponse.DataBean bean) {
+
     }
 }

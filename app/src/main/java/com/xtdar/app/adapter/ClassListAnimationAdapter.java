@@ -119,7 +119,7 @@ public class ClassListAnimationAdapter extends RecyclerView.Adapter<RecyclerView
             dataDolder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    mListener.onItemClick(position,listItem.getGame_id(),listItem.getGame_name());
+                    mListener.onItemClick(position,listItem);
                 }
             });
         }
@@ -188,7 +188,7 @@ public class ClassListAnimationAdapter extends RecyclerView.Adapter<RecyclerView
     }
 
     public interface ItemClickListener {
-        void onItemClick(int position, String itemId,String classId);
+        void onItemClick(int position,GameListResponse.DataBean bean );
     }
     class HeaderHolder extends RecyclerView.ViewHolder  {
         private Banner banner;
