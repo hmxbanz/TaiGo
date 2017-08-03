@@ -19,31 +19,32 @@ public class DialogWithList {
 
     private static DialogWithList instance = null;
     private final AlertDialog alterDialog;
+    private final Window window;
     private TextView textTitle,btnCancle,btnConfirm,content;
     private View line;
     private ListView listView;
 
     public static DialogWithList getInstance(Context context) {
-        if (instance == null) {
+        //if (instance == null) {
             instance = new DialogWithList(context);
-        }
+        //}
         return instance;
     }
 
     private DialogWithList(Context context) {
         alterDialog = new AlertDialog.Builder(context,R.style.mydialog).create();
-        Window window=alterDialog.getWindow();
-        window.setContentView(R.layout.alert_dialog_list);
         alterDialog.show();
+        window=alterDialog.getWindow();
+        window.setContentView(R.layout.alert_dialog_list);
     }
 
     public void showDialog(final DialogCallBack callBack) {
-        textTitle = (TextView) alterDialog.findViewById(R.id.text_title);
-        btnConfirm = (TextView) alterDialog.findViewById(R.id.btn_confirm);
-        btnCancle = (TextView) alterDialog.findViewById(R.id.btn_cancle);
+        textTitle = (TextView) window.findViewById(R.id.text_title);
+        btnConfirm = (TextView) window.findViewById(R.id.btn_confirm);
+        btnCancle = (TextView) window.findViewById(R.id.btn_cancle);
         line=alterDialog.findViewById(R.id.line);
-        content = (TextView) alterDialog.findViewById(R.id.txt_content);
-        listView = (ListView) alterDialog.findViewById(R.id.listView);
+        content = (TextView) window.findViewById(R.id.txt_content);
+        listView = (ListView) window.findViewById(R.id.listView);
 
         btnCancle.setOnClickListener(new View.OnClickListener(){
             @Override

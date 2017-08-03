@@ -56,8 +56,10 @@ public class AlertListAdapter extends BaseAdapter {
             }
         });
 
+        if(entity.getStatus()==1)
+            holder.deviceName.setTextColor(mContext.getResources().getColor(R.color.red));
 
-        holder.deviceName.setText(entity.getDevice_name());
+        holder.deviceName.setText(entity.getDevice_name()+"-"+entity.getMac_address());
 
         return convertView;
     }

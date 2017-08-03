@@ -64,6 +64,7 @@ public class UnityPlayerActivity extends Activity
     private BluetoothService mBluetoothService;
     private String isExisted="0";
     private int firstTime=0;
+    private String ServiceId,ReadId,WriteId,isHigh,gameId;
 
     // Setup activity layout
     @Override protected void onCreate (Bundle savedInstanceState)
@@ -76,10 +77,12 @@ public class UnityPlayerActivity extends Activity
         mUnityPlayer = new UnityPlayer(this);
         setContentView(mUnityPlayer);
         mUnityPlayer.requestFocus();
-        //device = getIntent().getParcelableExtra("device");
-//        connector = new BleConnector(handle);
-//        connector.connect(this, device);
-
+        Intent intent = getIntent();
+        ServiceId=intent.getStringExtra("ServiceId");
+        ReadId=intent.getStringExtra("ReadId");
+        WriteId=intent.getStringExtra("WriteId");
+        isHigh=intent.getStringExtra("isHigh");
+        gameId=intent.getStringExtra("gameId");
         //firstTime=1;
         UnityPlayer.UnitySendMessage("Main Camera","ChooseGame","");     //第二次进入调用
 
@@ -380,7 +383,7 @@ private static String hexStr = "0123456789ABCDEF"; //全局
 
 
     public void unityGetEnterOrExit()  {
-        UnityPlayer.UnitySendMessage("Main Camera","SendEnterOrExit",isExisted+","+"0");     //设置进入或退出
+        UnityPlayer.UnitySendMessage("Main Camera","SendEnterOrExit",isExisted+","+isHigh);     //设置进入或退出
     }
     //获取进入退出判断
     public void unitySetEnterOrExit(String _value) {
@@ -391,7 +394,7 @@ private static String hexStr = "0123456789ABCDEF"; //全局
     }  //退出unity视图
 
     public void UnitySceneReady(){
-        UnityPlayer.UnitySendMessage("Main Camera","playGame","1");     //进入游戏
+        UnityPlayer.UnitySendMessage("Main Camera","playGame",gameId);     //进入游戏
     }  //准备好了
 
 }

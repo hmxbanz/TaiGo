@@ -1408,9 +1408,37 @@ public CommonResponse register(String cellPhone, String password, String captcha
         return personMsgResponse;
     }
 //检查游戏是否可玩
-    public GameCheckResponse gameCheck(String gameName) {
-        return new GameCheckResponse();
+    public GameCheckResponse gameCheck(String gameName) throws HttpException{
+        String uri = getURL("cli-dg-checkdevicegame.php");
+
+        Response response=null;
+        try {
+            response=OkHttpUtils
+                    .get()
+                    .addParams(XtdConst.ACCESS_TOKEN,token)
+                    .addParams("game_id",gameName)
+                    .url(uri)
+                    .build()
+                    .execute();
+            result =response.body().string();
+            Log.w(TAG, "接收的："+ result);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        GameCheckResponse commonResponse = null;
+        if (!TextUtils.isEmpty(result)) {
+            NLog.e("CommonResponse", result);
+
+            try {
+                commonResponse = JsonMananger.jsonToBean(result, GameCheckResponse.class);
+            } catch (JSONException e) {
+                NLog.d(TAG, "feedback occurs JSONException e=" + e.toString());
+                return null;
+            }
+        }
+        return commonResponse;
     }
+
 //用户反馈
     public CommonResponse feedback(String reportContent, String cellphone) throws HttpException {
         String uri = getURL("cli-api-postfeedback.php");

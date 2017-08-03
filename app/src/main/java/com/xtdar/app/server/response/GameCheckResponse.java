@@ -5,86 +5,68 @@ import java.util.List;
 
 public class GameCheckResponse {
 
+
     /**
-     * code : 200
-     * result : {"id":"t1hWCOGvX","token":"B0DA/kKanJviD5xxUzhwsEFIJad0/86YwGxBwz1417WFQi/Vr2OJay26s5IFDffGZaUYRMAkvN0ikvOcTl7RN9JilKZlosfQ"}
+     * data : [{"device_id":"2","device_name":"BLE","service_uuid":"ae00","read_uuid":"ae02","write_uuid":"ae01","taobao_url":"https://detail.tmall.com/item.htm?spm=a230r.1.14.6.jE1Qvq&id=549995049215&cm_id=140105335569ed55e27b&abbucket=8&sku_properties=5919063:6536025","mac_address":"CA:C1:B9:B7:90:1A"},{"device_id":"4","device_name":"BLE","service_uuid":"ae00","read_uuid":"ae02","write_uuid":"ae01","taobao_url":"asdf","mac_address":"21:E4:8D:45:CA:E7"}]
+     * code : 1
+     * msg : 用户可玩设备列表
      */
 
     private int code;
     private String msg;
-    private List<GameCheckResponse.DataBean> data;
+    private List<DataBean> data;
+
+    public int getCode() {
+        return code;
+    }
+
+    public void setCode(int code) {
+        this.code = code;
+    }
+
+    public String getMsg() {
+        return msg;
+    }
+
+    public void setMsg(String msg) {
+        this.msg = msg;
+    }
 
     public List<DataBean> getData() {
         return data;
     }
 
-    public void setData(List<GameCheckResponse.DataBean> data) {
+    public void setData(List<DataBean> data) {
         this.data = data;
     }
-    public int getCode() {
-        return code;
-    }
-    public void setCode(int code) {
-        this.code = code;
-    }
-    public String getMsg() {
-        return msg;
-    }
-    public void setMsg(String msg) {
-        this.msg = msg;
-    }
+
     public static class DataBean {
         /**
-         * bind_device_id : 38
-         * user_id : 48
-         * device_item_id : 27
          * device_id : 2
-         * device_item_name : TAv22u-B903
-         * mac_address : ggzz
          * device_name : BLE
-         * device_img : a_device_img/9b6ae7e28292db1c48e5eb3ebde7da2b.jpg
-         * device_conf : {"is_high":"1"}
-         * service_uuid : AE00
-         * read_uuid : AE02
-         * write_uuid : AE01
+         * service_uuid : ae00
+         * read_uuid : ae02
+         * write_uuid : ae01
+         * taobao_url : https://detail.tmall.com/item.htm?spm=a230r.1.14.6.jE1Qvq&id=549995049215&cm_id=140105335569ed55e27b&abbucket=8&sku_properties=5919063:6536025
+         * mac_address : CA:C1:B9:B7:90:1A
          */
 
-        private String bind_device_id;
-        private String user_id;
-        private String device_item_id;
         private String device_id;
-        private String device_item_name;
-        private String mac_address;
         private String device_name;
-        private String device_img;
-        private String device_conf;
         private String service_uuid;
         private String read_uuid;
         private String write_uuid;
+        private String taobao_url;
+        private String mac_address;
 
-        public String getBind_device_id() {
-            return bind_device_id;
+        public Integer getStatus() {
+            return status;
+        }
+        public void setStatus(int status) {
+            this.status = status;
         }
 
-        public void setBind_device_id(String bind_device_id) {
-            this.bind_device_id = bind_device_id;
-        }
-
-        public String getUser_id() {
-            return user_id;
-        }
-
-        public void setUser_id(String user_id) {
-            this.user_id = user_id;
-        }
-
-        public String getDevice_item_id() {
-            return device_item_id;
-        }
-
-        public void setDevice_item_id(String device_item_id) {
-            this.device_item_id = device_item_id;
-        }
+        private int status;////////////////////////////////////////////////增加的属性和后台不一样
 
         public String getDevice_id() {
             return device_id;
@@ -94,44 +76,12 @@ public class GameCheckResponse {
             this.device_id = device_id;
         }
 
-        public String getDevice_item_name() {
-            return device_item_name;
-        }
-
-        public void setDevice_item_name(String device_item_name) {
-            this.device_item_name = device_item_name;
-        }
-
-        public String getMac_address() {
-            return mac_address;
-        }
-
-        public void setMac_address(String mac_address) {
-            this.mac_address = mac_address;
-        }
-
         public String getDevice_name() {
             return device_name;
         }
 
         public void setDevice_name(String device_name) {
             this.device_name = device_name;
-        }
-
-        public String getDevice_img() {
-            return device_img;
-        }
-
-        public void setDevice_img(String device_img) {
-            this.device_img = device_img;
-        }
-
-        public String getDevice_conf() {
-            return device_conf;
-        }
-
-        public void setDevice_conf(String device_conf) {
-            this.device_conf = device_conf;
         }
 
         public String getService_uuid() {
@@ -157,6 +107,21 @@ public class GameCheckResponse {
         public void setWrite_uuid(String write_uuid) {
             this.write_uuid = write_uuid;
         }
-    }
 
+        public String getTaobao_url() {
+            return taobao_url;
+        }
+
+        public void setTaobao_url(String taobao_url) {
+            this.taobao_url = taobao_url;
+        }
+
+        public String getMac_address() {
+            return mac_address;
+        }
+
+        public void setMac_address(String mac_address) {
+            this.mac_address = mac_address;
+        }
+    }
 }
