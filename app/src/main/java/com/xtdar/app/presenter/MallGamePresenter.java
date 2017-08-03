@@ -72,6 +72,8 @@ public class MallGamePresenter extends BasePresenter implements  SwipeRefreshLay
         //启动扫描蓝牙
         if (mBluetoothService == null)
             bindService();
+        else
+            mBluetoothService.scanDevice();
 
         this.swiper=swiper;
         this.swiper.setOnRefreshListener(this);
@@ -143,6 +145,7 @@ public class MallGamePresenter extends BasePresenter implements  SwipeRefreshLay
                     for(GameCheckResponse.DataBean bean: deviceList){
                         for(ScanResult result1:scanResultList)
                         {
+                            NToast.shortToast(context,bean.getMac_address()+"="+result1.getDevice().getAddress());
                             if (bean.getMac_address().equals(result1.getDevice().getAddress()))
                                 bean.setStatus(1);
                         }
@@ -200,15 +203,15 @@ public class MallGamePresenter extends BasePresenter implements  SwipeRefreshLay
         this.gameId =bean.getGame_id();
         scanResultList.clear();
         mBluetoothService.setScanCallback(callback);
-        mBluetoothService.scanDevice();
+        //mBluetoothService.scanDevice();
 
-        if(isClickable) {
+        //if(isClickable) {
             //传游戏名查询
             LoadDialog.show(context);
             atm.request(GAMECHECK,this);
-        }
-        else
-            DialogWithYesOrNoUtils.getInstance().showDialog(context,"请稍候，正在扫描",null,null,new AlertDialogCallback());
+        //}
+        //else
+           // DialogWithYesOrNoUtils.getInstance().showDialog(context,"请稍候，正在扫描",null,null,new AlertDialogCallback());
     }
 
     /**

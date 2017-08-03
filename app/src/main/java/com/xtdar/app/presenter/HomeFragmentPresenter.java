@@ -166,9 +166,6 @@ public class HomeFragmentPresenter extends BasePresenter implements OnDataListen
             mBluetoothService = ((BluetoothService.BluetoothBinder) service).getService();
             mBluetoothService.setScanCallback(callback);
             LoadDialog.show(context);
-            //mBluetoothService.scanAndConnect5(HomeFragmentPresenter.this.deviceName);
-
-            //mBluetoothService.scanDevice();
         }
 
         @Override
@@ -180,6 +177,10 @@ public class HomeFragmentPresenter extends BasePresenter implements OnDataListen
     private BluetoothService.Callback callback = new BluetoothService.Callback() {
         @Override
         public void onStartScan() {
+            for(MyDevicesResponse.DataBean bean:list)
+            {
+                    bean.setStatus(0);
+            }
         }
 
         @Override
@@ -189,7 +190,6 @@ public class HomeFragmentPresenter extends BasePresenter implements OnDataListen
 
             for(MyDevicesResponse.DataBean bean:list)
             {
-                bean.setStatus(0);
                 String mac2=bean.getMac_address();
                 if(mac2.toUpperCase().equals(mac))
                     bean.setStatus(1);
@@ -250,6 +250,7 @@ public class HomeFragmentPresenter extends BasePresenter implements OnDataListen
 
     @Override
     public void onRefresh() {
+        mBluetoothService.setScanCallback(callback);
         mBluetoothService.scanDevice();
     }
 
