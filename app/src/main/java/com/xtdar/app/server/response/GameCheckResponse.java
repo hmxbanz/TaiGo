@@ -59,6 +59,26 @@ public class GameCheckResponse {
         private String taobao_url;
         private String mac_address;
 
+        public String getDevice_conf() {
+            return device_conf;
+        }
+
+        public void setDevice_conf(String device_conf) {
+            this.device_conf = device_conf;
+        }
+
+        private String device_conf;
+
+        public DeviceConfig getDeviceConfig() {
+            return deviceConfig;
+        }
+
+        public void setDeviceConfig(DeviceConfig deviceConfig) {
+            this.deviceConfig = deviceConfig;
+        }
+
+        private DeviceConfig deviceConfig;
+
         public Integer getStatus() {
             return status;
         }
@@ -122,6 +142,19 @@ public class GameCheckResponse {
 
         public void setMac_address(String mac_address) {
             this.mac_address = mac_address;
+        }
+
+        public static class DeviceConfig{
+            public String getIsHigh() {
+                return isHigh;
+            }
+
+            public void setIsHigh(String isHigh) {
+                this.isHigh = isHigh;
+            }
+
+            private String isHigh;
+
         }
     }
 }

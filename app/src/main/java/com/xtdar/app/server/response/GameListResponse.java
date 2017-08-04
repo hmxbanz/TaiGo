@@ -61,6 +61,16 @@ public class GameListResponse {
         private String min_an_ver;
         private String min_ios_ver;
 
+        public GameConfig getGameConfig() {
+            return gameConfig;
+        }
+
+        public void setGameConfig(GameConfig gameConfig) {
+            this.gameConfig = gameConfig;
+        }
+
+        public GameConfig gameConfig;
+
         public String getGame_id() {
             return game_id;
         }
@@ -124,5 +134,26 @@ public class GameListResponse {
         public void setMin_ios_ver(String min_ios_ver) {
             this.min_ios_ver = min_ios_ver;
         }
+
+        public static class GameConfig {
+
+            /**
+             * unity_game_id : 2
+             */
+
+            private int unity_game_id;
+
+            public int getUnity_game_id() {
+                return unity_game_id;
+            }
+
+            public void setUnity_game_id(int unity_game_id) {
+                this.unity_game_id = unity_game_id;
+            }
+        }
     }
 }
+
+
+
+

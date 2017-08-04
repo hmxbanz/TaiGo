@@ -9,31 +9,22 @@ import android.os.IBinder;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 
 import com.clj.fastble.data.ScanResult;
 import com.xtdar.app.XtdConst;
-import com.xtdar.app.adapter.ClassListAnimationAdapter;
 import com.xtdar.app.adapter.MyDevicesAdapter;
 import com.xtdar.app.common.NToast;
 import com.xtdar.app.listener.AlertDialogCallback;
 import com.xtdar.app.server.HttpException;
 import com.xtdar.app.server.async.OnDataListener;
-import com.xtdar.app.server.response.ClassListResponse;
 import com.xtdar.app.server.response.MyDevicesResponse;
 import com.xtdar.app.service.BluetoothService;
-import com.xtdar.app.service.DeviceConectService;
 import com.xtdar.app.view.activity.BleActivity;
-import com.xtdar.app.view.activity.LoginActivity;
 import com.xtdar.app.view.activity.Main2Activity;
 import com.xtdar.app.view.activity.QrCodeActivity;
-import com.xtdar.app.view.activity.UnityPlayerActivity;
 import com.xtdar.app.view.widget.LoadDialog;
 import com.xtdar.app.widget.DialogWithYesOrNoUtils;
-
-import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -58,6 +49,8 @@ public class HomeFragmentPresenter extends BasePresenter implements OnDataListen
 
     private Main2Activity mActivity;
     private SwipeRefreshLayout swiper;
+
+    private String connectMac;
 
     public HomeFragmentPresenter(Context context){
         super(context);
@@ -194,8 +187,17 @@ public class HomeFragmentPresenter extends BasePresenter implements OnDataListen
                 if(mac2.toUpperCase().equals(mac))
                     bean.setStatus(1);
 
-                NToast.shortToast(context,mac+"----"+mac2);
+               // NToast.shortToast(context,connectMac+"----"+mac2);
             }
+
+            for(MyDevicesResponse.DataBean bean:list)
+            {
+                String mac2=bean.getMac_address();
+                if(mac2.toUpperCase().equals(connectMac))
+                    bean.setStatus(2);
+
+            }
+
             Collections.sort(list);
             Collections.reverse(list);
             dataAdapter.notifyDataSetChanged();
@@ -224,21 +226,32 @@ public class HomeFragmentPresenter extends BasePresenter implements OnDataListen
             NToast.longToast(context, "连接断开");
         }
 
+
+
         @Override
         public void onServicesDiscovered() {
             LoadDialog.dismiss(context);
-            String mac=mBluetoothService.getMac();
+            connectMac =mBluetoothService.getMac();
                 for(MyDevicesResponse.DataBean bean:list)
                 {
                     String mac2=bean.getMac_address();
-                    if(mac2.toUpperCase().equals(mac))
+                    if(mac2.toUpperCase().equals(connectMac))
                         bean.setStatus(2);
 
                 }
             Collections.sort(list);
             Collections.reverse(list);
             dataAdapter.notifyDataSetChanged();
+
+            DialogWithYesOrNoUtils.getInstance().showDialog(context,"连接成功",null,"去玩游戏",new AlertDialogCallback(){
+                @Override
+                public void executeEvent() {
+                    mActivity.getViewPager().setCurrentItem(1, false);
+                }
+            });
+
 //
+
 //            LoadDialog.dismiss(context);
 //            NToast.longToast(context, "连接成功，请选择游戏开始玩。");
 //            ((Main2Activity)context).getViewPager().setCurrentItem(1, false);

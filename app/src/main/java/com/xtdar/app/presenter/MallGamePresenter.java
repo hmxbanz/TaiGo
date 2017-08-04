@@ -9,6 +9,7 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.View;
 
 import com.clj.fastble.data.ScanResult;
@@ -16,7 +17,7 @@ import com.xtdar.app.XtdConst;
 import com.xtdar.app.adapter.AlertListAdapter;
 import com.xtdar.app.adapter.ClassListAnimationAdapter;
 import com.xtdar.app.common.NToast;
-import com.xtdar.app.listener.AlertDialogCallback;
+import com.xtdar.app.common.json.JsonMananger;
 import com.xtdar.app.listener.EndlessRecyclerOnScrollListener;
 import com.xtdar.app.server.HttpException;
 import com.xtdar.app.server.async.OnDataListener;
@@ -27,7 +28,6 @@ import com.xtdar.app.view.activity.Main2Activity;
 import com.xtdar.app.view.activity.UnityPlayerActivity;
 import com.xtdar.app.view.widget.LoadDialog;
 import com.xtdar.app.widget.DialogWithList;
-import com.xtdar.app.widget.DialogWithYesOrNoUtils;
 import com.youth.banner.Banner;
 
 import java.util.ArrayList;
@@ -51,6 +51,7 @@ public class MallGamePresenter extends BasePresenter implements  SwipeRefreshLay
     private BluetoothService mBluetoothService;
     private String deviceName;
     private Main2Activity mActivity;
+    private String unityGameId;
     private String gameId;
 
 
@@ -140,8 +141,22 @@ public class MallGamePresenter extends BasePresenter implements  SwipeRefreshLay
                 if (gameCheckResponse.getCode() == 1) {
                         //可以玩弹出选择设备列表
                     //弹出设备推荐列表
+//找高低配设备属性
                     deviceList=gameCheckResponse.getData();
-                    String mac=mBluetoothService.getMac();
+                    for(GameCheckResponse.DataBean bean:deviceList)
+                    {
+                        GameCheckResponse.DataBean.DeviceConfig gameConfig = null;
+                        try {
+                            gameConfig = JsonMananger.jsonToBean(bean.getDevice_conf(), GameCheckResponse.DataBean.DeviceConfig.class);
+                            bean.setDeviceConfig(gameConfig);
+                        } catch (HttpException e) {
+                            e.printStackTrace();
+                        }
+
+
+                    }
+//对比
+
                     for(GameCheckResponse.DataBean bean: deviceList){
                         for(ScanResult result1:scanResultList)
                         {
@@ -150,6 +165,14 @@ public class MallGamePresenter extends BasePresenter implements  SwipeRefreshLay
                                 bean.setStatus(1);
                         }
                     }
+
+                    String connectMac =mBluetoothService.getMac();
+
+                    for(GameCheckResponse.DataBean bean2: deviceList){
+                        if (bean2.getMac_address().equals(connectMac))
+                            bean2.setStatus(1);
+                    }
+
                     DialogWithList dialogWithList=DialogWithList.getInstance(context);
                     dialogWithList.showDialog(new DialogWithList.DialogCallBack(){
                         @Override
@@ -189,6 +212,7 @@ public class MallGamePresenter extends BasePresenter implements  SwipeRefreshLay
                     dialogWithList.setContent("该游戏需要以下设备才能运行");
                     dialogWithList.setCancleText("前往购买");
                     dialogWithList.setConfirmText("玩其它游戏");
+                    dialogWithList.getContent().setVisibility(View.VISIBLE);
                     this.alertListAdapter.setmList(gameCheckResponse.getData());
                     dialogWithList.getListView().setAdapter(this.alertListAdapter);
                 }
@@ -200,10 +224,12 @@ public class MallGamePresenter extends BasePresenter implements  SwipeRefreshLay
 
     @Override
     public void onItemClick(int position, GameListResponse.DataBean bean) {
+        this.unityGameId =String.valueOf(bean.getGameConfig().getUnity_game_id());
         this.gameId =bean.getGame_id();
         scanResultList.clear();
         mBluetoothService.setScanCallback(callback);
         //mBluetoothService.scanDevice();
+
 
         //if(isClickable) {
             //传游戏名查询
@@ -273,7 +299,7 @@ public class MallGamePresenter extends BasePresenter implements  SwipeRefreshLay
         @Override
         public void onScanning(ScanResult result) {
             scanResultList.add(result);
-            NToast.shortToast(context, "name:::::"+result.getDevice().getAddress());
+            //NToast.shortToast(context, "name:::::"+result.getDevice().getAddress());
         }
 
         @Override
@@ -289,7 +315,7 @@ public class MallGamePresenter extends BasePresenter implements  SwipeRefreshLay
         @Override
         public void onConnectFail() {
             LoadDialog.dismiss(context);
-            NToast.shortToast(context, "连接失败");
+            NToast.shortToast(context, "连接失败,请检查设备是否开启");
         }
 
         @Override
@@ -330,13 +356,21 @@ public class MallGamePresenter extends BasePresenter implements  SwipeRefreshLay
     @Override
     public boolean onClick(int position, View view, GameCheckResponse.DataBean entity) {
             GameCheckResponse.DataBean bean = deviceList.get(position);
+        toUnityPlayerActivityInent = new Intent(context, UnityPlayerActivity.class);
+        toUnityPlayerActivityInent.putExtra("ServiceId", bean.getService_uuid());
+        toUnityPlayerActivityInent.putExtra("ReadId", bean.getRead_uuid());
+        toUnityPlayerActivityInent.putExtra("WriteId", bean.getWrite_uuid());
+        toUnityPlayerActivityInent.putExtra("isHigh", bean.getDeviceConfig().getIsHigh());
+        toUnityPlayerActivityInent.putExtra("gameId", unityGameId);
+            String connectMac =mBluetoothService.getMac();
+        if(TextUtils.isEmpty(connectMac)) {
             mBluetoothService.scanAndConnect5(bean.getMac_address());
-            toUnityPlayerActivityInent = new Intent(context, UnityPlayerActivity.class);
-            toUnityPlayerActivityInent.putExtra("ServiceId", bean.getService_uuid());
-            toUnityPlayerActivityInent.putExtra("ReadId", bean.getRead_uuid());
-            toUnityPlayerActivityInent.putExtra("WriteId", bean.getWrite_uuid());
-            toUnityPlayerActivityInent.putExtra("isHigh", "0");
-            toUnityPlayerActivityInent.putExtra("gameId", gameId);
+
+        }
+        else {
+
+            context.startActivity(toUnityPlayerActivityInent);
+        }
 
 
         return true;

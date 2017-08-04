@@ -84,7 +84,7 @@ public class UnityPlayerActivity extends Activity
         isHigh=intent.getStringExtra("isHigh");
         gameId=intent.getStringExtra("gameId");
         //firstTime=1;
-        UnityPlayer.UnitySendMessage("Main Camera","ChooseGame","");     //第二次进入调用
+        //UnityPlayer.UnitySendMessage("Main Camera","ChooseGame","");     //第二次进入调用
 
         bindService();
 
@@ -171,7 +171,7 @@ public class UnityPlayerActivity extends Activity
         for (BluetoothGattService servicess : gatt.getServices()) {
             Log.w(TAG, "================== find service: " + servicess.getUuid().toString());
             //if (service.getUuid().toString().startsWith("0000ffe5-")) {//手机发给枪
-            if (servicess.getUuid().toString().startsWith("0000ae00-")) {//枪发给手机
+            if (servicess.getUuid().toString().startsWith("0000"+ServiceId)) {//枪发给手机
                 mBluetoothService.setService(servicess);
                 List<BluetoothGattCharacteristic> characteristics = servicess.getCharacteristics();
                 for (BluetoothGattCharacteristic characteristic : characteristics) {
@@ -181,7 +181,7 @@ public class UnityPlayerActivity extends Activity
                     //Log.w(TAG, "================== characteristic value: " + byte2HexStr(characteristic.getValue()));
                     //gatt.setCharacteristicNotification(characteristic, true);
                     Log.w(TAG, "================== Thread : " + Thread.currentThread().getId());
-                    if (characteristic.getUuid().toString().startsWith("0000ae02-")) {
+                    if (characteristic.getUuid().toString().startsWith("0000"+ReadId)) {
                         mBluetoothService.setCharacteristic(characteristic);
 
                     }
@@ -390,7 +390,7 @@ private static String hexStr = "0123456789ABCDEF"; //全局
         isExisted=_value;
     }     //设置进入退出判断
     public void exitUnity()    {
-        finish ();
+        mUnityPlayer.pause();
     }  //退出unity视图
 
     public void UnitySceneReady(){

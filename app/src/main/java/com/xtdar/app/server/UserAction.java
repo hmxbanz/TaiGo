@@ -1067,6 +1067,13 @@ public CommonResponse register(String cellPhone, String password, String captcha
 
             try {
                 gameListResponse = JsonMananger.jsonToBean(result, GameListResponse.class);
+                for(GameListResponse.DataBean bean:gameListResponse.getData())
+                {
+                    GameListResponse.DataBean.GameConfig gameConfig = JsonMananger.jsonToBean(bean.getGame_config(), GameListResponse.DataBean.GameConfig.class);
+                        bean.setGameConfig(gameConfig);
+
+                }
+
             } catch (JSONException e) {
                 NLog.d(TAG, "ClassListResponse occurs JSONException e=" + e.toString());
                 return null;

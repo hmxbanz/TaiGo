@@ -69,7 +69,7 @@ public class DialogWithList {
     }
     public void setConfirmText(String confirmText){
         if(!TextUtils.isEmpty(confirmText))
-            btnCancle.setText(confirmText);
+            btnConfirm.setText(confirmText);
     }
 
     public void setCancleVisibility(int flag){
@@ -86,6 +86,9 @@ public class DialogWithList {
 
     public void setContent(String content){
         this.content.setText(content);
+    }
+    public TextView getContent(){
+        return this.content;
     }
 
     public interface DialogCallBack {
