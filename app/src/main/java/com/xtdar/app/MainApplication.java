@@ -2,6 +2,8 @@ package com.xtdar.app;
 
 import android.app.Application;
 
+import com.alibaba.baichuan.android.trade.AlibcTradeSDK;
+import com.alibaba.baichuan.android.trade.callback.AlibcTradeInitCallback;
 import com.uuzuche.lib_zxing.activity.ZXingLibrary;
 import com.xtdar.app.common.CommonTools;
 
@@ -20,6 +22,52 @@ public class MainApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
+        //阿里百川商城
+        AlibcTradeSDK.asyncInit(this, new AlibcTradeInitCallback() {
+            @Override
+            public void onSuccess() {
+                //初始化成功，设置相关的全局配置参数
+                // 是否使用支付宝
+                AlibcTradeSDK.setShouldUseAlipay(true);
+
+                // 设置是否使用同步淘客打点
+//                AlibcTradeSDK.setSyncForTaoke(true);
+
+//                // 是否走强制H5的逻辑，为true时全部页面均为H5打开
+//                AlibcTradeSDK.setForceH5(true);
+//
+//                // 设置全局淘客参数，方便开发者用同一个淘客参数，不需要在show接口重复传入
+//                AlibcTradeSDK.setTaokeParams(taokeParams)
+//
+//                // 设置渠道信息(如果有渠道专享价，需要设置)
+//                AlibcTradeSDK.setChannel(typeName, channelName)
+
+                // ...
+
+                /**
+                 * 百川电商SDK初始化【异步】
+                 *
+                 * @param context 建议设置Application（必填）
+                 * @param initResultCallback  初始化状态信息回调（可以为null）
+                 */
+                AlibcTradeSDK.asyncInit(MainApplication.this, new AlibcTradeInitCallback() {
+                    @Override
+                    public void onSuccess() {
+
+                    }
+
+                    @Override
+                    public void onFailure(int i, String s) {
+
+                    }
+                });
+            }
+
+            @Override
+            public void onFailure(int code, String msg) {
+                //初始化失败，可以根据code和msg判断失败原因，详情参见错误说明
+            }
+        });
         //极光推送
         JPushInterface.setDebugMode(true);
         JPushInterface.init(this);

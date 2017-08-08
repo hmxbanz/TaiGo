@@ -41,13 +41,6 @@
       <sourceFolder url="file://$MODULE_DIR$/src/baiduDebug/java" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/src/baiduDebug/rs" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/src/baiduDebug/shaders" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/src/testBaiduDebug/res" type="java-test-resource" />
-      <sourceFolder url="file://$MODULE_DIR$/src/testBaiduDebug/resources" type="java-test-resource" />
-      <sourceFolder url="file://$MODULE_DIR$/src/testBaiduDebug/assets" type="java-test-resource" />
-      <sourceFolder url="file://$MODULE_DIR$/src/testBaiduDebug/aidl" isTestSource="true" />
-      <sourceFolder url="file://$MODULE_DIR$/src/testBaiduDebug/java" isTestSource="true" />
-      <sourceFolder url="file://$MODULE_DIR$/src/testBaiduDebug/rs" isTestSource="true" />
-      <sourceFolder url="file://$MODULE_DIR$/src/testBaiduDebug/shaders" isTestSource="true" />
       <sourceFolder url="file://$MODULE_DIR$/build/generated/source/r/androidTest/baidu/debug" isTestSource="true" generated="true" />
       <sourceFolder url="file://$MODULE_DIR$/build/generated/source/aidl/androidTest/baidu/debug" isTestSource="true" generated="true" />
       <sourceFolder url="file://$MODULE_DIR$/build/generated/source/buildConfig/androidTest/baidu/debug" isTestSource="true" generated="true" />
@@ -55,6 +48,13 @@
       <sourceFolder url="file://$MODULE_DIR$/build/generated/source/apt/androidTest/baidu/debug" isTestSource="true" generated="true" />
       <sourceFolder url="file://$MODULE_DIR$/build/generated/res/rs/androidTest/baidu/debug" type="java-test-resource" />
       <sourceFolder url="file://$MODULE_DIR$/build/generated/res/resValues/androidTest/baidu/debug" type="java-test-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/src/testBaiduDebug/res" type="java-test-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/src/testBaiduDebug/resources" type="java-test-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/src/testBaiduDebug/assets" type="java-test-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/src/testBaiduDebug/aidl" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/src/testBaiduDebug/java" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/src/testBaiduDebug/rs" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/src/testBaiduDebug/shaders" isTestSource="true" />
       <sourceFolder url="file://$MODULE_DIR$/src/baidu/res" type="java-resource" />
       <sourceFolder url="file://$MODULE_DIR$/src/baidu/resources" type="java-resource" />
       <sourceFolder url="file://$MODULE_DIR$/src/baidu/assets" type="java-resource" />
@@ -140,14 +140,18 @@
     </content>
     <orderEntry type="jdk" jdkName="Android API 25 Platform" jdkType="Android SDK" />
     <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="library" exported="" name="alibabauth_ext-1.1.4" level="project" />
     <orderEntry type="library" exported="" name="ShareSDK-Wechat-2.8.3" level="project" />
     <orderEntry type="library" exported="" name="jpush-android-3.0.7" level="project" />
     <orderEntry type="library" exported="" name="gson-2.1.8" level="project" />
+    <orderEntry type="library" exported="" name="alibc_trade_sdk-3.1.0.7" level="project" />
     <orderEntry type="library" exported="" name="DanmakuFlameMaster-0.6.4" level="project" />
     <orderEntry type="library" exported="" name="transition-25.1.0" level="project" />
     <orderEntry type="library" exported="" name="ShareSDK-Wechat-Core-2.8.3" level="project" />
     <orderEntry type="library" exported="" name="rxandroid-2.0.1" level="project" />
+    <orderEntry type="library" exported="" name="alipaySingle-20160825" level="project" />
     <orderEntry type="library" exported="" name="library-1.1.1" level="project" />
+    <orderEntry type="library" exported="" name="alibc_applink-2.0.0.9" level="project" />
     <orderEntry type="library" exported="" name="videocache-2.6.4" level="project" />
     <orderEntry type="library" exported="" name="zip_file" level="project" />
     <orderEntry type="library" exported="" scope="TEST" name="multidex-instrumentation-1.0.1" level="project" />
@@ -158,6 +162,7 @@
     <orderEntry type="library" exported="" name="ShareSDK-Wechat-Moments-2.8.3" level="project" />
     <orderEntry type="library" exported="" name="transitionseverywhere-1.7.0" level="project" />
     <orderEntry type="library" exported="" name="MobTools-2017.0412.1554" level="project" />
+    <orderEntry type="library" exported="" name="alibabauth_core-1.1.4" level="project" />
     <orderEntry type="library" exported="" name="viewanimator-1.0.3" level="project" />
     <orderEntry type="library" exported="" name="support-compat-25.1.0" level="project" />
     <orderEntry type="library" exported="" name="support-v4-25.1.0" level="project" />
@@ -170,6 +175,8 @@
     <orderEntry type="library" exported="" name="butterknife-annotations-8.2.1" level="project" />
     <orderEntry type="library" exported="" name="ShareSDK-Core-2.8.3" level="project" />
     <orderEntry type="library" exported="" name="design-25.1.0" level="project" />
+    <orderEntry type="library" exported="" name="securityguardaar3-5.1.81" level="project" />
+    <orderEntry type="library" exported="" name="mtopsdk_allinone_open-1.2.2.4" level="project" />
     <orderEntry type="library" exported="" name="ijkplayer-java-0.7.9" level="project" />
     <orderEntry type="library" exported="" name="constraint-layout-1.0.2" level="project" />
     <orderEntry type="library" exported="" name="ijkplayer-exo-0.7.9" level="project" />
@@ -186,15 +193,18 @@
     <orderEntry type="library" exported="" name="zxing-library-2.1" level="project" />
     <orderEntry type="library" exported="" name="support-core-utils-25.1.0" level="project" />
     <orderEntry type="library" exported="" name="gson-2.5" level="project" />
+    <orderEntry type="library" exported="" name="app-monitor-sdk-2.5.1.3_for_bc_proguard" level="project" />
     <orderEntry type="library" exported="" name="constraint-layout-solver-1.0.2" level="project" />
     <orderEntry type="library" exported="" name="SwipeDelMenuLayout-V1.2.5" level="project" />
     <orderEntry type="library" exported="" name="ShareSDK-QQ-2.8.3" level="project" />
     <orderEntry type="library" exported="" name="banner-1.4.9" level="project" />
     <orderEntry type="library" exported="" name="VuforiaUnityPlayer" level="project" />
     <orderEntry type="library" exported="" name="animated-vector-drawable-25.1.0" level="project" />
+    <orderEntry type="library" exported="" name="utdid4all-1.1.5.3_proguard" level="project" />
     <orderEntry type="library" exported="" name="Vuforia" level="project" />
     <orderEntry type="library" exported="" name="multidex-1.0.1" level="project" />
     <orderEntry type="library" exported="" name="jcore-android-1.1.5" level="project" />
+    <orderEntry type="library" exported="" name="alibabauth_ui-1.1.4" level="project" />
     <orderEntry type="library" exported="" name="appcompat-v7-25.1.0" level="project" />
     <orderEntry type="library" exported="" name="recyclerview-v7-25.1.0" level="project" />
     <orderEntry type="library" exported="" name="ndkbitmap-x86-0.6.4" level="project" />

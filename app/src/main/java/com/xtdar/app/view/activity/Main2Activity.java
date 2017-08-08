@@ -18,6 +18,7 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.alibaba.baichuan.android.trade.AlibcTradeSDK;
 import com.clj.fastble.data.ScanResult;
 import com.shuyu.gsyvideoplayer.GSYVideoManager;
 import com.shuyu.gsyvideoplayer.video.StandardGSYVideoPlayer;
@@ -261,6 +262,7 @@ public class Main2Activity extends BaseActivity implements View.OnClickListener{
     protected void onDestroy() {
         super.onDestroy();
         main2Presenter.onDestroy();
+        AlibcTradeSDK.destory();//释放阿里百川
     }
 
     @Override

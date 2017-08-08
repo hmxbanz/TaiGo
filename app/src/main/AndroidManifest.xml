@@ -30,7 +30,6 @@
     <!-- Optional for location -->
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" /> <!-- 用于开启 debug 版本的应用在6.0 系统上 层叠窗口权限 -->
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
-    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_LOCATION_EXTRA_COMMANDS" />
     <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE" />
@@ -50,7 +49,7 @@
         android:label="@string/xtdar_app_name"
         android:logo="@drawable/logo"
         android:theme="@style/AppTheme"
-        tools:replace="android:label"> <!-- 改成现有的可修复输入法遮挡问题android:theme="@android:style/Theme.NoTitleBar.Fullscreen"> -->
+        tools:replace="android:label,android:allowBackup"> <!-- 改成现有的可修复输入法遮挡问题android:theme="@android:style/Theme.NoTitleBar.Fullscreen"> -->
         <uses-library android:name="android.test.runner" /> <!-- 为测试添加 android.test.runner -->
         <provider
             android:name="android.support.v4.content.FileProvider"

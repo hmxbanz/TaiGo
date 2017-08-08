@@ -92,7 +92,7 @@ public class HomeRecommendItemAdapter extends RecyclerView.Adapter<HomeRecommend
             holder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    mListener.onItemClick(position,listItem.getDevice_id(),listItem.getPartner_id());
+                    mListener.onItemClick(position,listItem.getTaobao_url(),listItem.getPartner_id());
                 }
             });
         }

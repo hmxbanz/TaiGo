@@ -7,6 +7,15 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.TextView;
 
+import com.alibaba.baichuan.android.trade.AlibcTrade;
+import com.alibaba.baichuan.android.trade.callback.AlibcTradeCallback;
+import com.alibaba.baichuan.android.trade.constants.AlibcConstants;
+import com.alibaba.baichuan.android.trade.model.AlibcShowParams;
+import com.alibaba.baichuan.android.trade.model.OpenType;
+import com.alibaba.baichuan.android.trade.model.TradeResult;
+import com.alibaba.baichuan.android.trade.page.AlibcBasePage;
+import com.alibaba.baichuan.android.trade.page.AlibcMyCartsPage;
+import com.alibaba.baichuan.android.trade.page.AlibcMyOrdersPage;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.xtdar.app.XtdConst;
@@ -17,9 +26,13 @@ import com.xtdar.app.server.async.OnDataListener;
 import com.xtdar.app.server.broadcast.BroadcastManager;
 import com.xtdar.app.server.response.UnReadMsgResponse;
 import com.xtdar.app.server.response.UserInfoResponse;
+import com.xtdar.app.view.activity.Main2Activity;
 import com.xtdar.app.view.widget.DragPointView;
 import com.xtdar.app.view.widget.LoadDialog;
 import com.xtdar.app.view.widget.SelectableRoundedImageView;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created by hmxbanz on 2017/4/5.
@@ -119,5 +132,58 @@ public class MinePresenter extends BasePresenter implements OnDataListener {
         LoadDialog.show(context);
         atm.request(GETMSGCOUNT,this);
     }
+    public void openShopCar() {
+        LoadDialog.show(context);
+        //提供给三方传递配置参数
+        Map<String, String> exParams = new HashMap<>();
+        exParams.put(AlibcConstants.ISV_CODE, "appisvcode");
+        //实例化我的购物车打开page
+        AlibcBasePage myCartsPage = new AlibcMyCartsPage();
+        //设置页面打开方式
+        AlibcShowParams showParams = new AlibcShowParams(OpenType.Native, false);
 
+        //使用百川sdk提供默认的Activity打开detail
+        AlibcTrade.show((Main2Activity)context, myCartsPage, showParams, null, null ,
+                new AlibcTradeCallback() {
+                    @Override
+                    public void onTradeSuccess(TradeResult tradeResult) {
+                        //打开电商组件，用户操作中成功信息回调。tradeResult：成功信息（结果类型：加购，支付；支付结果）
+                        LoadDialog.dismiss(context);
+                    }
+
+                    @Override
+                    public void onFailure(int code, String msg) {
+                        //打开电商组件，用户操作中错误信息回调。code：错误码；msg：错误信息
+                    }
+                });
+    }
+
+    public void openOrder() {
+        LoadDialog.show(context);
+        //实例化我的订单打开page
+        AlibcBasePage ordersPage = new AlibcMyOrdersPage(0, true);
+
+        //提供给三方传递配置参数
+        Map<String, String> exParams = new HashMap<>();
+        exParams.put(AlibcConstants.ISV_CODE, "appisvcode");
+        //实例化我的购物车打开page
+        AlibcBasePage myCartsPage = new AlibcMyCartsPage();
+        //设置页面打开方式
+        AlibcShowParams showParams = new AlibcShowParams(OpenType.Native, false);
+
+        //使用百川sdk提供默认的Activity打开detail
+        AlibcTrade.show((Main2Activity)context, ordersPage, showParams, null, null ,
+                new AlibcTradeCallback() {
+                    @Override
+                    public void onTradeSuccess(TradeResult tradeResult) {
+                        //打开电商组件，用户操作中成功信息回调。tradeResult：成功信息（结果类型：加购，支付；支付结果）
+                        LoadDialog.dismiss(context);
+                    }
+
+                    @Override
+                    public void onFailure(int code, String msg) {
+                        //打开电商组件，用户操作中错误信息回调。code：错误码；msg：错误信息
+                    }
+                });
+    }
 }

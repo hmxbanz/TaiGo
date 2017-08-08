@@ -145,5 +145,25 @@ dependencies {
     compile 'com.android.support:gridlayout-v7:25.1.0'
     compile 'com.clj.fastble:FastBleLib:1.2.1'
     //蓝牙
-
+    //阿里百川(开始)
+    //安全黑匣子（无线保镖）
+    compile 'com.taobao.android:securityguardaar3:5.1.81@aar'
+    //deviceID，主要用于计算设备的uttid， 设备唯一标识 （67kb）
+    compile 'com.taobao.android:utdid4all:1.1.5'
+    // UT，用于组件、接口可用性统计（337kb）
+    compile 'com.taobao.android:utdid4all:1.1.5.3_proguard@jar'
+    compile 'com.alibaba.mtl:app-monitor-sdk:2.5.1.3_for_bc_proguard@jar'
+    //登陆授权(必选)
+    compile 'com.ali.auth.sdk:alibabauth_core:1.1.4@jar'
+    compile 'com.ali.auth.sdk:alibabauth_ui:1.1.4@aar'
+    compile 'com.ali.auth.sdk:alibabauth_ext:1.1.4@jar'
+    //基础电商组件(必选)
+    compile 'com.alibaba.sdk.android:alibc_trade_sdk:3.1.0.7@aar'
+    //mtop(必选)
+    compile 'com.taobao.android:mtopsdk_allinone_open:1.2.2.4@jar'
+    //applink，打通“手机淘宝”与三方app的桥梁，实现手机淘宝与三方app之间的往返跳转
+    compile 'com.taobao.android:alibc_applink:2.0.0.9@jar'
+    //支付宝SDK
+    compile 'com.alibaba.alipay:alipaySingle:20160825@jar'
+    //阿里百川(结束)
 }

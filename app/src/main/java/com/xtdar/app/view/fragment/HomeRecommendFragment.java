@@ -13,6 +13,7 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.xtdar.app.adapter.ShopRecommendAdapter;
 import com.xtdar.app.loader.GlideImageLoader;
 import com.xtdar.app.presenter.HomeRecommendPresenter;
 import com.xtdar.app.view.activity.DetailActivity;
@@ -28,7 +29,7 @@ import com.xtdar.app.adapter.RecyclerViewAdapter;
  * Created by AMing on 16/6/21.
  * Company RongCloud
  */
-public class HomeRecommendFragment extends BaseFragment implements RecyclerViewAdapter.ItemClickListener {
+public class HomeRecommendFragment extends BaseFragment implements ShopRecommendAdapter.ItemClickListener {
     public static HomeRecommendFragment instance = null;
     public static List<?> images=new ArrayList<>();
     private RecyclerView recycleView;

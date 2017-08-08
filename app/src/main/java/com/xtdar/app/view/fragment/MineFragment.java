@@ -13,6 +13,15 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.alibaba.baichuan.android.trade.AlibcTrade;
+import com.alibaba.baichuan.android.trade.callback.AlibcTradeCallback;
+import com.alibaba.baichuan.android.trade.constants.AlibcConstants;
+import com.alibaba.baichuan.android.trade.model.AlibcShowParams;
+import com.alibaba.baichuan.android.trade.model.OpenType;
+import com.alibaba.baichuan.android.trade.model.TradeResult;
+import com.alibaba.baichuan.android.trade.page.AlibcBasePage;
+import com.alibaba.baichuan.android.trade.page.AlibcMyCartsPage;
+import com.alibaba.baichuan.android.trade.page.AlibcMyOrdersPage;
 import com.xtdar.app.common.NLog;
 import com.xtdar.app.common.PhotoUtils;
 import com.xtdar.app.presenter.MinePresenter;
@@ -31,6 +40,9 @@ import com.xtdar.app.widget.progressBar.MaterialProgressBar;
 
 import com.xtdar.app.R;
 
+import java.util.HashMap;
+import java.util.Map;
+
 
 /**
  * Created by AMing on 16/6/21.
@@ -41,7 +53,7 @@ public class MineFragment extends Fragment implements View.OnClickListener {
     public static final String SHOWRED = "SHOWRED";
     public static MineFragment mFragment = null;
     private RelativeLayout mLayoutAr, mLayoutMyVideo, mLayoutMsg;
-    private LinearLayout mLayoutFriendCondition, mLayoutFavor, mLayoutSetting, mLayoutComment;
+    private LinearLayout mLayoutFriendCondition, mLayoutFavor, mLayoutSetting, mLayoutComment,mLayoutShopCar,mLayoutOrder;
     private View mView;
 
     private SelectableRoundedImageView mImageView;
@@ -119,6 +131,11 @@ public class MineFragment extends Fragment implements View.OnClickListener {
         mTxtMe.setOnClickListener(this);
         unreadNumView =(DragPointView) mView.findViewById(R.id.unread_num);
 
+        mLayoutShopCar = (LinearLayout) mView.findViewById(R.id.layout_shop_car);
+        mLayoutShopCar.setOnClickListener(this);
+        mLayoutOrder = (LinearLayout) mView.findViewById(R.id.layout_order);
+        mLayoutOrder.setOnClickListener(this);
+
     }
 
     @Override
@@ -152,6 +169,13 @@ public class MineFragment extends Fragment implements View.OnClickListener {
             case R.id.layout_favor:
             startActivity(new Intent(getActivity(), FavorActivity.class));
             break;
+            case R.id.layout_shop_car:
+                presenter.openShopCar();
+                break;
+            case R.id.layout_order:
+                presenter.openOrder();
+
+                break;
         }
     }
 

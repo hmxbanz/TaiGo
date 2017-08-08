@@ -220,12 +220,12 @@
         "source": "C:\\Users\\Administrator\\Desktop\\work\\TaiGo\\IMKit\\build\\intermediates\\bundles\\default\\res\\drawable-xhdpi-v4\\rc_img_camera.png"
     },
     {
-        "merged": "C:\\Users\\Administrator\\Desktop\\work\\TaiGo\\CallKit\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-xhdpi-v4\\rc_ic_def_msg_portrait.png",
-        "source": "C:\\Users\\Administrator\\Desktop\\work\\TaiGo\\IMKit\\build\\intermediates\\bundles\\default\\res\\drawable-xhdpi-v4\\rc_ic_def_msg_portrait.png"
-    },
-    {
         "merged": "C:\\Users\\Administrator\\Desktop\\work\\TaiGo\\CallKit\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-xhdpi-v4\\u2b50.png",
         "source": "C:\\Users\\Administrator\\Desktop\\work\\TaiGo\\IMKit\\build\\intermediates\\bundles\\default\\res\\drawable-xhdpi-v4\\u2b50.png"
+    },
+    {
+        "merged": "C:\\Users\\Administrator\\Desktop\\work\\TaiGo\\CallKit\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-xhdpi-v4\\rc_ic_def_msg_portrait.png",
+        "source": "C:\\Users\\Administrator\\Desktop\\work\\TaiGo\\IMKit\\build\\intermediates\\bundles\\default\\res\\drawable-xhdpi-v4\\rc_ic_def_msg_portrait.png"
     },
     {
         "merged": "C:\\Users\\Administrator\\Desktop\\work\\TaiGo\\CallKit\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-xhdpi-v4\\u1f609.png",
@@ -484,16 +484,16 @@
         "source": "C:\\Users\\Administrator\\Desktop\\work\\TaiGo\\IMKit\\build\\intermediates\\bundles\\default\\res\\drawable-xhdpi-v4\\u1f601.png"
     },
     {
+        "merged": "C:\\Users\\Administrator\\Desktop\\work\\TaiGo\\CallKit\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-xhdpi-v4\\rc_ad_list_other_icon.png",
+        "source": "C:\\Users\\Administrator\\Desktop\\work\\TaiGo\\IMKit\\build\\intermediates\\bundles\\default\\res\\drawable-xhdpi-v4\\rc_ad_list_other_icon.png"
+    },
+    {
         "merged": "C:\\Users\\Administrator\\Desktop\\work\\TaiGo\\CallKit\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-xhdpi-v4\\u1f624.png",
         "source": "C:\\Users\\Administrator\\Desktop\\work\\TaiGo\\IMKit\\build\\intermediates\\bundles\\default\\res\\drawable-xhdpi-v4\\u1f624.png"
     },
     {
         "merged": "C:\\Users\\Administrator\\Desktop\\work\\TaiGo\\CallKit\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-xhdpi-v4\\rc_btn_send_normal.9.png",
         "source": "C:\\Users\\Administrator\\Desktop\\work\\TaiGo\\IMKit\\build\\intermediates\\bundles\\default\\res\\drawable-xhdpi-v4\\rc_btn_send_normal.9.png"
-    },
-    {
-        "merged": "C:\\Users\\Administrator\\Desktop\\work\\TaiGo\\CallKit\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-xhdpi-v4\\rc_ad_list_other_icon.png",
-        "source": "C:\\Users\\Administrator\\Desktop\\work\\TaiGo\\IMKit\\build\\intermediates\\bundles\\default\\res\\drawable-xhdpi-v4\\rc_ad_list_other_icon.png"
     },
     {
         "merged": "C:\\Users\\Administrator\\Desktop\\work\\TaiGo\\CallKit\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-xhdpi-v4\\rc_voip_minimize.png",
@@ -1036,12 +1036,12 @@
         "source": "C:\\Users\\Administrator\\Desktop\\work\\TaiGo\\IMKit\\build\\intermediates\\bundles\\default\\res\\drawable-xhdpi-v4\\rc_ed_pub_service_search_hover.9.png"
     },
     {
-        "merged": "C:\\Users\\Administrator\\Desktop\\work\\TaiGo\\CallKit\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-xhdpi-v4\\rc_ic_phone_normal.png",
-        "source": "C:\\Users\\Administrator\\Desktop\\work\\TaiGo\\IMKit\\build\\intermediates\\bundles\\default\\res\\drawable-xhdpi-v4\\rc_ic_phone_normal.png"
-    },
-    {
         "merged": "C:\\Users\\Administrator\\Desktop\\work\\TaiGo\\CallKit\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-xhdpi-v4\\u1f612.png",
         "source": "C:\\Users\\Administrator\\Desktop\\work\\TaiGo\\IMKit\\build\\intermediates\\bundles\\default\\res\\drawable-xhdpi-v4\\u1f612.png"
+    },
+    {
+        "merged": "C:\\Users\\Administrator\\Desktop\\work\\TaiGo\\CallKit\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-xhdpi-v4\\rc_ic_phone_normal.png",
+        "source": "C:\\Users\\Administrator\\Desktop\\work\\TaiGo\\IMKit\\build\\intermediates\\bundles\\default\\res\\drawable-xhdpi-v4\\rc_ic_phone_normal.png"
     },
     {
         "merged": "C:\\Users\\Administrator\\Desktop\\work\\TaiGo\\CallKit\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-xhdpi-v4\\rc_cs_group_check.png",
