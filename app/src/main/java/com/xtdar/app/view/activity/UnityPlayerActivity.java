@@ -224,6 +224,12 @@ public class UnityPlayerActivity extends Activity
                                 int aaaaa=command & 0x01;
                                 NLog.e("BLEBLE",aaaaa);
 
+                                String x = s.substring(14, 18);
+                                String y = s.substring(18, 22);
+                                if(!"0000".equals(x) && !"0000".equals(y)){
+                                    UnityPlayer.UnitySendMessage("Main Camera","eee",x+","+y);
+                                }
+
                                 if((int)command==1)
                                     UnityPlayer.UnitySendMessage("Main Camera","eee","a");
                                 else if ((int)command==2)
@@ -390,7 +396,7 @@ private static String hexStr = "0123456789ABCDEF"; //全局
         isExisted=_value;
     }     //设置进入退出判断
     public void exitUnity()    {
-        mUnityPlayer.pause();
+        finish();
     }  //退出unity视图
 
     public void UnitySceneReady(){

@@ -18,16 +18,19 @@ import com.xtdar.app.adapter.AlertListAdapter;
 import com.xtdar.app.adapter.ClassListAnimationAdapter;
 import com.xtdar.app.common.NToast;
 import com.xtdar.app.common.json.JsonMananger;
+import com.xtdar.app.listener.AlertDialogCallback;
 import com.xtdar.app.listener.EndlessRecyclerOnScrollListener;
 import com.xtdar.app.server.HttpException;
 import com.xtdar.app.server.async.OnDataListener;
 import com.xtdar.app.server.response.GameCheckResponse;
 import com.xtdar.app.server.response.GameListResponse;
 import com.xtdar.app.service.BluetoothService;
+import com.xtdar.app.view.activity.LoginActivity;
 import com.xtdar.app.view.activity.Main2Activity;
 import com.xtdar.app.view.activity.UnityPlayerActivity;
 import com.xtdar.app.view.widget.LoadDialog;
 import com.xtdar.app.widget.DialogWithList;
+import com.xtdar.app.widget.DialogWithYesOrNoUtils;
 import com.youth.banner.Banner;
 
 import java.util.ArrayList;
@@ -48,7 +51,6 @@ public class MallGamePresenter extends BasePresenter implements  SwipeRefreshLay
     private String lastItem ="0";
     private int lastOffset;
     private int lastPosition;
-    private BluetoothService mBluetoothService;
     private String deviceName;
     private Main2Activity mActivity;
     private String unityGameId;
@@ -56,25 +58,22 @@ public class MallGamePresenter extends BasePresenter implements  SwipeRefreshLay
 
 
     private SwipeRefreshLayout swiper;
-    private List<ScanResult> scanResultList=new ArrayList<>();
     private AlertListAdapter alertListAdapter;
     private List<GameCheckResponse.DataBean> deviceList;
     private Intent toUnityPlayerActivityInent;
     private boolean isClickable=false;
+    private BasePresenter basePresenter;
+
     public MallGamePresenter(Context context){
         super(context);
         mActivity = (Main2Activity) context;
+        basePresenter = BasePresenter.getInstance(context);
         dataAdapter = new ClassListAnimationAdapter(this.context);
         alertListAdapter= new AlertListAdapter(context);
 
     }
 
     public void init(SwipeRefreshLayout swiper, RecyclerView recyclerView) {
-        //启动扫描蓝牙
-        if (mBluetoothService == null)
-            bindService();
-        else
-            mBluetoothService.scanDevice();
 
         this.swiper=swiper;
         this.swiper.setOnRefreshListener(this);
@@ -101,8 +100,6 @@ public class MallGamePresenter extends BasePresenter implements  SwipeRefreshLay
 
         LoadDialog.show(context);
         atm.request(GETANIMATION,this);
-
-
     }
 
     @Override
@@ -158,19 +155,19 @@ public class MallGamePresenter extends BasePresenter implements  SwipeRefreshLay
 //对比
 
                     for(GameCheckResponse.DataBean bean: deviceList){
-                        for(ScanResult result1:scanResultList)
+                        for(ScanResult result1:mActivity.scanResultList)
                         {
-                            NToast.shortToast(context,bean.getMac_address()+"="+result1.getDevice().getAddress());
+                            //NToast.shortToast(context,bean.getMac_address()+"="+result1.getDevice().getAddress());
                             if (bean.getMac_address().equals(result1.getDevice().getAddress()))
                                 bean.setStatus(1);
                         }
                     }
 
-                    String connectMac =mBluetoothService.getMac();
+                    String connectMac =mActivity.mBluetoothService.getMac();
 
                     for(GameCheckResponse.DataBean bean2: deviceList){
                         if (bean2.getMac_address().equals(connectMac))
-                            bean2.setStatus(1);
+                            bean2.setStatus(2);
                     }
 
                     DialogWithList dialogWithList=DialogWithList.getInstance(context);
@@ -224,12 +221,19 @@ public class MallGamePresenter extends BasePresenter implements  SwipeRefreshLay
 
     @Override
     public void onItemClick(int position, GameListResponse.DataBean bean) {
+        if(!basePresenter.isLogin){
+            DialogWithYesOrNoUtils.getInstance().showDialog(context, "请先登录", null,"前住登录", new AlertDialogCallback() {
+                @Override
+                public void executeEvent() {
+                    context.startActivity(new Intent(context, LoginActivity.class));
+                }
+
+            });
+        }
         this.unityGameId =String.valueOf(bean.getGameConfig().getUnity_game_id());
         this.gameId =bean.getGame_id();
-        scanResultList.clear();
-        mBluetoothService.setScanCallback(callback);
-        //mBluetoothService.scanDevice();
-
+        /////////////////////////////////////////mActivity.scanResultList.clear();
+        mActivity.mBluetoothService.setScanCallback(callback);
 
         //if(isClickable) {
             //传游戏名查询
@@ -264,32 +268,6 @@ public class MallGamePresenter extends BasePresenter implements  SwipeRefreshLay
         }
     }
 
-    public void bindService() {
-        Intent bindIntent = new Intent(context, BluetoothService.class);
-        context.bindService(bindIntent, mFhrSCon, Context.BIND_AUTO_CREATE);
-    }
-
-    public void unbindService() {
-        //context.unbindService(mFhrSCon);
-    }
-
-    private ServiceConnection mFhrSCon = new ServiceConnection() {
-        @Override
-        public void onServiceConnected(ComponentName name, IBinder service) {
-            mBluetoothService = ((BluetoothService.BluetoothBinder) service).getService();
-            mBluetoothService.setScanCallback(callback);
-//            LoadDialog.show(context);
-//            mBluetoothService.scanAndConnect5(MallGamePresenter.this.deviceName);
-
-            mBluetoothService.scanDevice();
-        }
-
-        @Override
-        public void onServiceDisconnected(ComponentName name) {
-            mBluetoothService = null;
-        }
-    };
-
 
     private BluetoothService.Callback callback = new BluetoothService.Callback() {
         @Override
@@ -298,7 +276,7 @@ public class MallGamePresenter extends BasePresenter implements  SwipeRefreshLay
 
         @Override
         public void onScanning(ScanResult result) {
-            scanResultList.add(result);
+
             //NToast.shortToast(context, "name:::::"+result.getDevice().getAddress());
         }
 
@@ -355,16 +333,16 @@ public class MallGamePresenter extends BasePresenter implements  SwipeRefreshLay
 //弹出框蓝牙列表点击事件
     @Override
     public boolean onClick(int position, View view, GameCheckResponse.DataBean entity) {
-            GameCheckResponse.DataBean bean = deviceList.get(position);
+        GameCheckResponse.DataBean bean = deviceList.get(position);
         toUnityPlayerActivityInent = new Intent(context, UnityPlayerActivity.class);
         toUnityPlayerActivityInent.putExtra("ServiceId", bean.getService_uuid());
         toUnityPlayerActivityInent.putExtra("ReadId", bean.getRead_uuid());
         toUnityPlayerActivityInent.putExtra("WriteId", bean.getWrite_uuid());
         toUnityPlayerActivityInent.putExtra("isHigh", bean.getDeviceConfig().getIsHigh());
         toUnityPlayerActivityInent.putExtra("gameId", unityGameId);
-            String connectMac =mBluetoothService.getMac();
+            String connectMac =mActivity.mBluetoothService.getMac();
         if(TextUtils.isEmpty(connectMac)) {
-            mBluetoothService.scanAndConnect5(bean.getMac_address());
+            mActivity.mBluetoothService.scanAndConnect5(bean.getMac_address());
 
         }
         else {

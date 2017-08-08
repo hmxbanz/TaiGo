@@ -1,6 +1,8 @@
 package com.xtdar.app.view.activity;
 
+import android.Manifest;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
@@ -16,9 +18,11 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.clj.fastble.data.ScanResult;
 import com.shuyu.gsyvideoplayer.GSYVideoManager;
 import com.shuyu.gsyvideoplayer.video.StandardGSYVideoPlayer;
 import com.xtdar.app.R;
+import com.xtdar.app.listener.AlertDialogCallback;
 import com.xtdar.app.presenter.Main2Presenter;
 import com.xtdar.app.service.BluetoothService;
 import com.xtdar.app.view.fragment.DiscoveryFragment;
@@ -26,6 +30,7 @@ import com.xtdar.app.view.fragment.GameFragment;
 import com.xtdar.app.view.fragment.HomeFragment;
 import com.xtdar.app.view.fragment.MineFragment;
 import com.xtdar.app.view.widget.DragPointView;
+import com.xtdar.app.widget.DialogWithYesOrNoUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -47,6 +52,7 @@ public class Main2Activity extends BaseActivity implements View.OnClickListener{
     private View viewMainTop;
     private Main2Presenter main2Presenter;
     public BluetoothService mBluetoothService;
+    public List<ScanResult> scanResultList=new ArrayList<>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         // 设置一个exit transition
@@ -83,6 +89,9 @@ public class Main2Activity extends BaseActivity implements View.OnClickListener{
         discoveryLayout.setOnClickListener(this);
         meLayout.setOnClickListener(this);
         viewMainTop = findViewById(R.id.main_top);
+//请求权限
+        checkPermissions();
+
     }
     private void initMianViewPager() {
         Fragment mConversationList;
@@ -110,8 +119,6 @@ public class Main2Activity extends BaseActivity implements View.OnClickListener{
             }
         };
         viewPager.setAdapter(mFragmentPagerAdapter);
-        viewPager.setCurrentItem(CURRENTVIEWPAGEINDEX);
-        viewPager.setOffscreenPageLimit(MAXCACHEVIEWPAGES);
         viewPager.setOnPageChangeListener(new PageChangerListener());
         //initData();
     }
@@ -260,5 +267,32 @@ public class Main2Activity extends BaseActivity implements View.OnClickListener{
     protected void onPause() {
         super.onPause();
         GSYVideoManager.onPause();
+    }
+    private void checkPermissions() {
+        if (Build.VERSION.SDK_INT >= 23) {
+            String[] permissions = {Manifest.permission.ACCESS_FINE_LOCATION};
+            List<String> permissionDeniedList = new ArrayList<>();
+
+            for (String permission : permissions) {
+                int permissionCheck = checkSelfPermission(permission);
+                if (permissionCheck == PackageManager.PERMISSION_GRANTED) {
+
+                } else {
+                    permissionDeniedList.add(permission);
+                }
+            }
+            if (!permissionDeniedList.isEmpty()) {
+                String[] deniedPermissions = permissionDeniedList.toArray(new String[permissionDeniedList.size()]);
+                requestPermissions(deniedPermissions, 12);
+            }
+//            if (shouldShowRequestPermissionRationale(Manifest.permission.ACCESS_FINE_LOCATION)){
+//
+//            }else
+//            {
+//                DialogWithYesOrNoUtils dialog=DialogWithYesOrNoUtils.getInstance();
+//                dialog.showDialog(this,"打开权限提示",null,null,new AlertDialogCallback());
+//                dialog.setContent("设置>应用管理>Taigo>\n权限管理>打开定位权限");
+//            }
+        }
     }
 }

@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import com.xtdar.app.R;
 import com.xtdar.app.XtdConst;
+import com.xtdar.app.common.NLog;
 import com.xtdar.app.loader.GlideImageLoader;
 import com.xtdar.app.server.response.ClassListResponse;
 import com.xtdar.app.server.response.GameListResponse;
@@ -51,6 +52,8 @@ import java.util.List;
 
         @Override
         public void onBindViewHolder(final RecyclerView.ViewHolder holder,  final int position) {
+            NLog.e("ClassNuListAdapterdata",itemDataList.toString());
+            NLog.e("ClassNuListAdapterdata",itemDataList.get(position).toString());
             RecyclerItemNormalHolder2 recyclerItemViewHolder = (RecyclerItemNormalHolder2) holder;
             recyclerItemViewHolder.setRecyclerBaseAdapter(this);
             recyclerItemViewHolder.onBind(position, itemDataList.get(position));

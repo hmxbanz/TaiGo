@@ -52,6 +52,7 @@ public class HomeFragmentPresenter extends BasePresenter implements OnDataListen
 
     private String connectMac;
 
+
     public HomeFragmentPresenter(Context context){
         super(context);
         basePresenter = BasePresenter.getInstance(context);
@@ -77,6 +78,8 @@ public class HomeFragmentPresenter extends BasePresenter implements OnDataListen
         LoadDialog.show(context);
         atm.request(GETDRIVERS,this);
     }
+    else
+        {this.swiper.setVisibility(View.GONE);}
 }
     @Override
     public Object doInBackground(int requestCode, String parameter) throws HttpException {
@@ -112,7 +115,6 @@ public class HomeFragmentPresenter extends BasePresenter implements OnDataListen
 
                         dataAdapter.notifyDataSetChanged();
                         this.swiper.setVisibility(View.VISIBLE);
-                        this.recyclerView.setVisibility(View.VISIBLE);
                     }
                 }
                 NToast.longToast(context,response.getMsg());
@@ -159,6 +161,7 @@ public class HomeFragmentPresenter extends BasePresenter implements OnDataListen
             mBluetoothService = ((BluetoothService.BluetoothBinder) service).getService();
             mBluetoothService.setScanCallback(callback);
             LoadDialog.show(context);
+            mActivity.mBluetoothService=mBluetoothService;
         }
 
         @Override
@@ -178,6 +181,7 @@ public class HomeFragmentPresenter extends BasePresenter implements OnDataListen
 
         @Override
         public void onScanning(ScanResult result) {
+            mActivity.scanResultList.add(result);
             //LoadDialog.show(context);
             String mac=result.getDevice().getAddress();
 

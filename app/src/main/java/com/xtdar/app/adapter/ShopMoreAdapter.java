@@ -13,7 +13,6 @@ import com.xtdar.app.R;
 import com.xtdar.app.XtdConst;
 import com.xtdar.app.loader.GlideImageLoader;
 import com.xtdar.app.server.response.ShopMoreResponse;
-import com.xtdar.app.server.response.TaobaoResponse;
 
 import java.util.List;
 
@@ -84,7 +83,7 @@ public class ShopMoreAdapter extends RecyclerView.Adapter<ShopMoreAdapter.DataHo
         final int pos = getRealPosition(holder);
         final ShopMoreResponse.DataBean listItem = listItems.get(position);
         if(holder instanceof DataHolder) {
-            holder.nickName.setText(listItem.getDevice_name());
+            holder.title.setText(listItem.getDevice_name());
             //holder.className.setText(listItem.getChapter_name());
             glideImageLoader.displayImage(context, XtdConst.IMGURI+listItem.getDevice_img(),holder.imageView);
             //Glide.with(context).load(listItem.getAvator()).asBitmap().into(holder.imageView);
@@ -160,15 +159,15 @@ public class ShopMoreAdapter extends RecyclerView.Adapter<ShopMoreAdapter.DataHo
     }
     class DataHolder extends RecyclerView.ViewHolder implements View.OnClickListener
     {
-        private TextView nickName;
+        private TextView title;
         private TextView className;
         private ImageView imageView;
         private View listLayoutView;
 
         public DataHolder(View itemView) {
             super(itemView);
-            nickName = (TextView) itemView.findViewById(R.id.list_item_text);
-            className = (TextView) itemView.findViewById(R.id.list_item_text2);
+            title = (TextView) itemView.findViewById(R.id.title);
+            className = (TextView) itemView.findViewById(R.id.price);
             imageView = (ImageView) itemView.findViewById(R.id.list_item_icon);
             listLayoutView = itemView.findViewById(R.id.list_item_layout);
         }
@@ -185,11 +184,11 @@ public class ShopMoreAdapter extends RecyclerView.Adapter<ShopMoreAdapter.DataHo
         public void setImageView(ImageView imageView) {
             this.imageView = imageView;
         }
-        public TextView getNickName() {
-            return nickName;
+        public TextView getTitle() {
+            return title;
         }
-        public void setNickName(TextView nickName) {
-            this.nickName = nickName;
+        public void setTitle(TextView title) {
+            this.title = title;
         }
 
         @Override

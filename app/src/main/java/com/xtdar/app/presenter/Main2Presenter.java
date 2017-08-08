@@ -102,7 +102,8 @@ public class Main2Presenter extends BasePresenter {
                         int versionCode = Integer.parseInt(versionInfo[0]);
                         if(entity.getVersionCode()>versionCode)
                         {
-                            DialogWithYesOrNoUtils.getInstance().showDialog(activity, "发现新版本:"+entity.getVersionName(), null,"立即更新",new AlertDialogCallback() {
+                            DialogWithYesOrNoUtils dialog=DialogWithYesOrNoUtils.getInstance();
+                            dialog.showDialog(activity, "发现新版本:"+entity.getVersionName(), null,"立即更新",new AlertDialogCallback() {
                                 @Override
                                 public void executeEvent() {
                                     goToDownload(entity.getDownloadUrl());
@@ -110,6 +111,7 @@ public class Main2Presenter extends BasePresenter {
 
 
                             });
+                            dialog.setContent(entity.getVersionInfo());
                         }
                         LoadDialog.dismiss(activity);
                         NToast.shortToast(activity, "版本检测成功");

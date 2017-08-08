@@ -34,8 +34,8 @@
             android:textSize="14dp"
             android:textColor="@color/browser_error_page_text_color"
             android:visibility="gone"
+            android:paddingBottom="10dp"
             android:text="内容" />
-
 
     </LinearLayout>
     <View

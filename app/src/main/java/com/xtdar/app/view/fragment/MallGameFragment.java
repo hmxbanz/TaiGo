@@ -60,7 +60,7 @@ public class MallGameFragment extends Fragment {
     @Override
     public void onPause() {
         super.onPause();
-        presenter.unbindService();
+        //presenter.unbindService();
     }
 
 

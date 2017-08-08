@@ -5,11 +5,7 @@
     android:layout_height="match_parent"
     android:background="@color/appbg"
     android:orientation="vertical">
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/list_item_recycler"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-   />
+
     <ScrollView
             android:id="@+id/scrollview"
             android:layout_width="match_parent"
@@ -60,7 +56,7 @@
                 <android.support.v7.widget.RecyclerView
                         android:id="@+id/recyclerView"
                         android:layout_width="match_parent"
-                        android:layout_height="800dp"
+                        android:layout_height="680dp"
                     >
                     </android.support.v7.widget.RecyclerView>
             </LinearLayout>

@@ -98,6 +98,7 @@ public class DialogWithYesOrNoUtils {
 
     public void setContent(String content){
         this.content.setText(content);
+        this.content.setVisibility(View.VISIBLE);
     }
 
     public interface DialogCallBack {

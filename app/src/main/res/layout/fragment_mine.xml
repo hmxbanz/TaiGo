@@ -143,7 +143,7 @@
 
 
     <LinearLayout
-        android:layout_marginTop="40dp"
+        android:layout_marginTop="20dp"
         android:id="@+id/layout_favor"
         android:paddingLeft="10dp"
         android:paddingRight="10dp"
@@ -261,6 +261,68 @@
             android:paddingLeft="10dp"
             android:gravity="center_vertical"
             android:text="设置与帮助"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="match_parent" />
+        <ImageView
+            android:src="@drawable/icon_arrow_right"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:tint="@color/grayLine"
+            />
+    </LinearLayout>
+    <LinearLayout
+        android:id="@+id/layout_order"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:orientation="horizontal"
+        android:background="@drawable/bg_line2"
+        android:gravity="center_vertical"
+        >
+        <ImageView
+            android:layout_alignParentLeft="true"
+            android:src="@drawable/icon_order"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:tint="@color/titleBlue"/>
+        <TextView
+            style="@style/MenuTitleStyle"
+            android:paddingLeft="10dp"
+            android:gravity="center_vertical"
+            android:text="我的订单"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="match_parent" />
+        <ImageView
+            android:src="@drawable/icon_arrow_right"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:tint="@color/grayLine"
+            />
+    </LinearLayout>
+    <LinearLayout
+        android:id="@+id/layout_shop_car"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:orientation="horizontal"
+        android:background="@drawable/bg_line2"
+        android:gravity="center_vertical"
+        >
+        <ImageView
+            android:layout_alignParentLeft="true"
+            android:src="@drawable/icon_shop_car"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:tint="@color/titleBlue"/>
+        <TextView
+            style="@style/MenuTitleStyle"
+            android:paddingLeft="10dp"
+            android:gravity="center_vertical"
+            android:text="购物车"
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="match_parent" />

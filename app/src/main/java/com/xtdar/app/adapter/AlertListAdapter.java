@@ -56,10 +56,19 @@ public class AlertListAdapter extends BaseAdapter {
             }
         });
 
-        if(entity.getStatus()==1)
-            holder.deviceName.setTextColor(mContext.getResources().getColor(R.color.red));
+        if(entity.getStatus()==1){
+            holder.deviceName.setTextColor(mContext.getResources().getColor(R.color.titleBlue));
+            holder.deviceName.setText(entity.getDevice_name()+"-已开启");}
+        else if(entity.getStatus()==2){
+            holder.deviceName.setTextColor(mContext.getResources().getColor(R.color.green));
+            holder.deviceName.setText(entity.getDevice_name()+"-已连接");
+        }
+        else {
+            holder.deviceName.setTextColor(mContext.getResources().getColor(R.color.black));
+            holder.deviceName.setText(entity.getDevice_name()+"-"+entity.getMac_address());
+        }
 
-        holder.deviceName.setText(entity.getDevice_name()+"-"+entity.getMac_address());
+
 
         return convertView;
     }

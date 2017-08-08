@@ -95,6 +95,6 @@ public class BleActivity extends BaseActivity implements View.OnClickListener {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-presenter.onDestroy();
+        presenter.onDestroy();
     }
 }

@@ -37,7 +37,7 @@ public class QrCodeActivity extends BaseActivity implements View.OnClickListener
         layout_back = (RelativeLayout) findViewById(R.id.layout_back);
         layout_back.setOnClickListener(this);
         txtTitle =(TextView) findViewById(R.id.text_title);
-        txtTitle.setText("条形码扫描");
+        txtTitle.setText("二维码扫描");
 
         //权限申请
         PermissionsManager.getInstance().requestPermissionsIfNecessaryForResult(this,new String[]{Manifest.permission.CAMERA}, new PermissionsResultAction() {

@@ -12,8 +12,6 @@ import android.widget.TextView;
 import com.xtdar.app.R;
 import com.xtdar.app.XtdConst;
 import com.xtdar.app.loader.GlideImageLoader;
-import com.xtdar.app.model.User;
-import com.xtdar.app.server.response.RecommendResponse;
 import com.xtdar.app.server.response.TaobaoResponse;
 
 import java.util.List;
@@ -85,8 +83,8 @@ public class HomeRecommendItemAdapter extends RecyclerView.Adapter<HomeRecommend
         final int pos = getRealPosition(holder);
         final TaobaoResponse.DataBean.DeviceTypeListBean.DeviceListBean listItem = listItems.get(position);
         if(holder instanceof DataHolder) {
-            holder.nickName.setText(listItem.getDevice_name());
-            //holder.className.setText(listItem.getChapter_name());
+            holder.title.setText(listItem.getDevice_name());
+            holder.price.setText("¥"+listItem.getPrice()+"元");
             glideImageLoader.displayImage(context, XtdConst.IMGURI+listItem.getDevice_img(),holder.imageView);
             //Glide.with(context).load(listItem.getAvator()).asBitmap().into(holder.imageView);
             //holder.imageView.setImageResource(listItem.getImgResource());
@@ -161,15 +159,15 @@ public class HomeRecommendItemAdapter extends RecyclerView.Adapter<HomeRecommend
     }
     class DataHolder extends RecyclerView.ViewHolder implements View.OnClickListener
     {
-        private TextView nickName;
-        private TextView className;
+        private TextView title;
+        private TextView price;
         private ImageView imageView;
         private View listLayoutView;
 
         public DataHolder(View itemView) {
             super(itemView);
-            nickName = (TextView) itemView.findViewById(R.id.list_item_text);
-            className = (TextView) itemView.findViewById(R.id.list_item_text2);
+            title = (TextView) itemView.findViewById(R.id.title);
+            price = (TextView) itemView.findViewById(R.id.price);
             imageView = (ImageView) itemView.findViewById(R.id.list_item_icon);
             listLayoutView = itemView.findViewById(R.id.list_item_layout);
         }
@@ -186,11 +184,11 @@ public class HomeRecommendItemAdapter extends RecyclerView.Adapter<HomeRecommend
         public void setImageView(ImageView imageView) {
             this.imageView = imageView;
         }
-        public TextView getNickName() {
-            return nickName;
+        public TextView getTitle() {
+            return title;
         }
-        public void setNickName(TextView nickName) {
-            this.nickName = nickName;
+        public void setTitle(TextView title) {
+            this.title = title;
         }
 
         @Override
@@ -199,8 +197,6 @@ public class HomeRecommendItemAdapter extends RecyclerView.Adapter<HomeRecommend
             switch (v.getId())
             {
                 case R.id.list_item_layout:
-
-
             }
         }
     }

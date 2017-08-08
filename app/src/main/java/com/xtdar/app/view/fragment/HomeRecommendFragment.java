@@ -1,12 +1,10 @@
 package com.xtdar.app.view.fragment;
 
 import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
-import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,13 +14,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.xtdar.app.loader.GlideImageLoader;
-import com.xtdar.app.model.UserList;
 import com.xtdar.app.presenter.HomeRecommendPresenter;
 import com.xtdar.app.view.activity.DetailActivity;
 import com.youth.banner.Banner;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import com.xtdar.app.R;
@@ -32,7 +28,7 @@ import com.xtdar.app.adapter.RecyclerViewAdapter;
  * Created by AMing on 16/6/21.
  * Company RongCloud
  */
-public class HomeRecommendFragment extends Fragment implements RecyclerViewAdapter.ItemClickListener {
+public class HomeRecommendFragment extends BaseFragment implements RecyclerViewAdapter.ItemClickListener {
     public static HomeRecommendFragment instance = null;
     public static List<?> images=new ArrayList<>();
     private RecyclerView recycleView;
@@ -44,7 +40,7 @@ public class HomeRecommendFragment extends Fragment implements RecyclerViewAdapt
     private TextView mTextSearch;
     private TabLayout mTabLayout;
 
-    private HomeRecommendPresenter homeRecommendPresenter;
+    private HomeRecommendPresenter presenter;
     private Banner banner;
 
     public static HomeRecommendFragment getInstance() {
@@ -54,19 +50,27 @@ public class HomeRecommendFragment extends Fragment implements RecyclerViewAdapt
         return instance;
     }
 
-    @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        view = inflater.inflate(R.layout.fragment_home_recommend, null);
-        initViews();
-//        initData();
-        homeRecommendPresenter = new HomeRecommendPresenter(getContext());
-        homeRecommendPresenter.init(banner,recycleView);
-        return view;
+    public void onStart() {
+        super.onStart();
     }
 
-    private void initViews() {
-//        TypedArray typedArray = context.obtainStyledAttributes(attrs
+    @Override
+    protected int getLayoutId() {
+        return R.layout.fragment_home_recommend;
+    }
+
+    @Override
+    protected void initView() {
+        presenter = new HomeRecommendPresenter(getContext());
+        //简单使用
+        banner = findView(R.id.banner);
+        banner.setImageLoader(new GlideImageLoader());//设置图片加载器
+        //banner.setOnBannerListener(this);
+
+        recycleView= findView(R.id.recyclerView);
+
+        //        TypedArray typedArray = context.obtainStyledAttributes(attrs
 //                , cn.hugeterry.coordinatortablayout.R.styleable.CoordinatorTabLayout);
         //mTabLayout = (TabLayout) view.findViewById(R.id.tabLayout);
 //        int tabIndicatorColor = typedArray.getColor(cn.hugeterry.coordinatortablayout.R.styleable.CoordinatorTabLayout_tabIndicatorColor, getResources().getColor(cn.hugeterry.coordinatortablayout.R.color.mainColorPinkDark));
@@ -82,12 +86,6 @@ public class HomeRecommendFragment extends Fragment implements RecyclerViewAdapt
 //        List list = Arrays.asList(urls);
 //        images = new ArrayList(list);
 
-        //简单使用
-        banner = (Banner) view.findViewById(R.id.banner);
-        banner.setImageLoader(new GlideImageLoader());//设置图片加载器
-        //banner.setOnBannerListener(this);
-
-        recycleView= (RecyclerView) view.findViewById(R.id.recyclerView);
 
         //if(Build.VERSION.SDK_INT>=23)
 //        recycleView.setOnScrollChangeListener(new View.OnScrollChangeListener() {
@@ -99,8 +97,12 @@ public class HomeRecommendFragment extends Fragment implements RecyclerViewAdapt
 //        });
         //recycleView.addItemDecoration(new DividerItemDecoration(getContext(),DividerItemDecoration.HORIZONTAL));
         //dataAdapter.setOnItemClickListener(this);
-        //scrollView=(ScrollView) view.findViewById(R.id.scrollview);
-        //scrollView.smoothScrollTo(0, 0);
+
+    }
+
+    @Override
+    protected void initData() {
+        presenter.init(banner,recycleView);
     }
 
     @Override

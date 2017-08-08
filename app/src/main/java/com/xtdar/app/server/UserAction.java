@@ -526,8 +526,7 @@ public CommonResponse register(String cellPhone, String password, String captcha
 
 //版本检查
     public VersionResponse checkVersion() throws HttpException {
-        //String uri = getURL("version.txt");
-        String uri ="app_source/dl/version.txt";
+        String uri =getURL("app_source/dl/version.txt");
         Response response=null;
         try {
             response=OkHttpUtils
@@ -1071,7 +1070,6 @@ public CommonResponse register(String cellPhone, String password, String captcha
                 {
                     GameListResponse.DataBean.GameConfig gameConfig = JsonMananger.jsonToBean(bean.getGame_config(), GameListResponse.DataBean.GameConfig.class);
                         bean.setGameConfig(gameConfig);
-
                 }
 
             } catch (JSONException e) {

@@ -36,6 +36,16 @@ public class VersionResponse {
         private String VersionName;
         private String DownloadUrl;
 
+        public String getVersionInfo() {
+            return VersionInfo;
+        }
+
+        public void setVersionInfo(String versionInfo) {
+            VersionInfo = versionInfo;
+        }
+
+        private String VersionInfo;
+
         public int getVersionCode() {
             return VersionCode;
         }
