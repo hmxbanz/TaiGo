@@ -29,7 +29,7 @@ import com.xtdar.app.adapter.RecyclerViewAdapter;
  * Created by AMing on 16/6/21.
  * Company RongCloud
  */
-public class HomeRecommendFragment extends BaseFragment implements ShopRecommendAdapter.ItemClickListener {
+public class HomeRecommendFragment extends BaseFragment  {
     public static HomeRecommendFragment instance = null;
     public static List<?> images=new ArrayList<>();
     private RecyclerView recycleView;
@@ -111,12 +111,5 @@ public class HomeRecommendFragment extends BaseFragment implements ShopRecommend
         super.onDestroy();
         //BroadcastManager.getInstance(getActivity()).destroy(SealConst.CHANGEINFO);
     }
-
-    @Override
-    public void onItemClick(int position, String data) {
-        getActivity().startActivity(new Intent(getActivity(), DetailActivity.class));
-        Toast.makeText(getContext(),"你点击了位置："+String.valueOf(position)+"-标题："+data,Toast.LENGTH_SHORT).show();
-    }
-
 
 }

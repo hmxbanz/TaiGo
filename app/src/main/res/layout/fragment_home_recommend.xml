@@ -5,7 +5,10 @@
     android:layout_height="match_parent"
     android:background="@color/appbg"
     android:orientation="vertical">
-
+    <android.support.v7.widget.RecyclerView
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        />
     <ScrollView
             android:id="@+id/scrollview"
             android:layout_width="match_parent"

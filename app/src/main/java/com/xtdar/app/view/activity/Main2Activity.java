@@ -120,6 +120,7 @@ public class Main2Activity extends BaseActivity implements View.OnClickListener{
             }
         };
         viewPager.setAdapter(mFragmentPagerAdapter);
+        viewPager.setOffscreenPageLimit(3);
         viewPager.setOnPageChangeListener(new PageChangerListener());
         //initData();
     }

@@ -141,4 +141,13 @@ public abstract class BaseFragment extends Fragment {
         super.onDestroy();
         NLog.w("onDestroy" + "   " + this.getClass().getSimpleName());
     }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+          isVisible = false;
+          isInitView = false;
+          isFirstLoad = true;
+
+    }
 }

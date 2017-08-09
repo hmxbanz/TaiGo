@@ -21,7 +21,7 @@ import java.util.List;
 public class GamePresenter extends BasePresenter {
     private static final int GETTAGS = 1;
     private final int CURRENTVIEWPAGEINDEX =1;
-    private final int MAXCACHEVIEWPAGES =3;
+    private final int MAXCACHEVIEWPAGES =2;
     private TabLayout tabLayout;
     private List<TagResponse.DataBean> tagList;
     private List<Fragment> mFragments;

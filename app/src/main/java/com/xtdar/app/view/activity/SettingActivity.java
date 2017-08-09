@@ -20,6 +20,7 @@ import java.io.File;
 public class SettingActivity extends BaseActivity implements View.OnClickListener {
     private LinearLayout mLayoutAbout,mLayoutClear,mLayoutFeeback,mLayoutLogoff,mLayoutHelp,mLayoutShareTaigo;
     private SettingPresenter presenter;
+    private TextView txt_about;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,7 +28,7 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
         setContentView(R.layout.activity_setting);
         initViews();
         presenter =new SettingPresenter(this);
-        presenter.init();
+        presenter.init(txt_about);
     }
     public void initViews(){
         layout_back= (RelativeLayout) findViewById(R.id.layout_back);
@@ -47,6 +48,7 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
 
         txtTitle =(TextView) findViewById(R.id.text_title);
         txtTitle.setText("设置");
+        txt_about =(TextView) findViewById(R.id.txt_about);
     }
     @Override
     public void onClick(View v) {

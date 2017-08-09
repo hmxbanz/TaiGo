@@ -87,6 +87,7 @@ public class DiscoveryFragment extends Fragment implements View.OnClickListener 
             }
         };
         mViewPager.setAdapter(mFragmentPagerAdapter);
+        mViewPager.setOffscreenPageLimit(3);
         //mViewPager.setOnPageChangeListener(new PageChangerListener());
         //initData();
         tabLayout.setupWithViewPager(mViewPager);

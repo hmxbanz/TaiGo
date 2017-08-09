@@ -3,6 +3,8 @@ package com.xtdar.app.presenter;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Environment;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.xtdar.app.XtdConst;
 import com.xtdar.app.common.NToast;
@@ -14,6 +16,8 @@ import com.xtdar.app.widget.DialogWithYesOrNoUtils;
 import java.io.File;
 
 import cn.sharesdk.onekeyshare.OnekeyShare;
+
+import static com.xtdar.app.common.CommonTools.getVersionInfo;
 
 
 /**
@@ -29,7 +33,10 @@ public class SettingPresenter extends BasePresenter {
         super(context);
         basePresenter = BasePresenter.getInstance(context);
     }
-    public void init(){
+    public void init(TextView txtAbout){
+        String[] versionInfo = getVersionInfo(context);
+        String versionName = versionInfo[1];
+        txtAbout.setText(txtAbout.getText().toString()+" "+versionName);
     //mView.initData();
     };
 public void logOff()
