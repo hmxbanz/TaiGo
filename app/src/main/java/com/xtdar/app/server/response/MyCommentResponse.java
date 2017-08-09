@@ -6,7 +6,7 @@ import java.util.List;
 public class MyCommentResponse {
 
     /**
-     * data : [{"com_id":"5","item_id":"43","comment":"好吧，再试下","com_date":"2017-07-12 15:59:06","title":"我来发一个～～","head_img":"a_show/efcad2417baaec520f65d513bd70c30b.jpg","nick_name":"幸运欣","img_path":"a_user_img/51.jpg"},{"com_id":"4","item_id":"43","comment":"评论zzz测试","com_date":"2017-07-12 15:57:48","title":"我来发一个～～","head_img":"a_show/efcad2417baaec520f65d513bd70c30b.jpg","nick_name":"幸运欣","img_path":"a_user_img/51.jpg"},{"com_id":"1","item_id":"43","comment":"评论测试","com_date":"2017-07-12 15:54:40","title":"我来发一个～～","head_img":"a_show/efcad2417baaec520f65d513bd70c30b.jpg","nick_name":"幸运欣","img_path":"a_user_img/51.jpg"}]
+     * data : [{"com_id":"21","comment_tag":"t_show","item_id":"59","comment":"66","com_date":"2017-08-01 10:39:53","reviewed_title":"汕头天坑","reviewed_img":"a_show/583a3f1bdafc03469e3fb814e0645fa2.jpg","nick_name":"幸运欣2","img_path":"a_user_img/48.jpg"},{"com_id":"20","comment_tag":"t_show","item_id":"57","comment":"好的","com_date":"2017-07-26 17:16:09","reviewed_title":"欢迎来到王者荣耀","reviewed_img":"a_show/902de8d93b753daf48be5f88ce2d09f0.jpg","nick_name":"幸运欣2","img_path":"a_user_img/48.jpg"},{"com_id":"19","comment_tag":"t_show","item_id":"59","comment":"(๑\u203e᷅^\u203e᷅๑) 嫌弃你","com_date":"2017-07-26 16:32:23","reviewed_title":"汕头天坑","reviewed_img":"a_show/583a3f1bdafc03469e3fb814e0645fa2.jpg","nick_name":"幸运欣2","img_path":"a_user_img/48.jpg"},{"com_id":"18","comment_tag":"t_show","item_id":"50","comment":"好的","com_date":"2017-07-26 16:30:02","reviewed_title":"来一个帅的！！","reviewed_img":"a_show/18342e5fb85c3ed1722629070601e5bd.jpg","nick_name":"幸运欣2","img_path":"a_user_img/48.jpg"},{"com_id":"17","comment_tag":"t_show","item_id":"59","comment":"好的","com_date":"2017-07-26 16:28:09","reviewed_title":"汕头天坑","reviewed_img":"a_show/583a3f1bdafc03469e3fb814e0645fa2.jpg","nick_name":"幸运欣2","img_path":"a_user_img/48.jpg"},{"com_id":"14","comment_tag":"t_class_item","item_id":"49","comment":"好的","com_date":"2017-07-26 16:14:19","reviewed_title":"当世上有超过 50% 的人无法上网","reviewed_img":"a_class_item_cover/d754fac32660c29e42ab9f2f153d0dd7.jpg","nick_name":"幸运欣2","img_path":"a_user_img/48.jpg"},{"com_id":"13","comment_tag":"t_show","item_id":"59","comment":"自己发的","com_date":"2017-07-23 13:39:01","reviewed_title":"汕头天坑","reviewed_img":"a_show/583a3f1bdafc03469e3fb814e0645fa2.jpg","nick_name":"幸运欣2","img_path":"a_user_img/48.jpg"},{"com_id":"5","comment_tag":"t_show","item_id":"58","comment":"自己来","com_date":"2017-07-22 14:56:26","reviewed_title":"小狒狒","reviewed_img":"a_show/01ca1be17164633684759dfd602c4e4c.jpg","nick_name":"幸运欣2","img_path":"a_user_img/48.jpg"}]
      * code : 1
      * msg : 返回数据
      */
@@ -41,22 +41,24 @@ public class MyCommentResponse {
 
     public static class DataBean {
         /**
-         * com_id : 5
-         * item_id : 43
-         * comment : 好吧，再试下
-         * com_date : 2017-07-12 15:59:06
-         * title : 我来发一个～～
-         * head_img : a_show/efcad2417baaec520f65d513bd70c30b.jpg
-         * nick_name : 幸运欣
-         * img_path : a_user_img/51.jpg
+         * com_id : 21
+         * comment_tag : t_show
+         * item_id : 59
+         * comment : 66
+         * com_date : 2017-08-01 10:39:53
+         * reviewed_title : 汕头天坑
+         * reviewed_img : a_show/583a3f1bdafc03469e3fb814e0645fa2.jpg
+         * nick_name : 幸运欣2
+         * img_path : a_user_img/48.jpg
          */
 
         private String com_id;
+        private String comment_tag;
         private String item_id;
         private String comment;
         private String com_date;
-        private String title;
-        private String head_img;
+        private String reviewed_title;
+        private String reviewed_img;
         private String nick_name;
         private String img_path;
 
@@ -66,6 +68,14 @@ public class MyCommentResponse {
 
         public void setCom_id(String com_id) {
             this.com_id = com_id;
+        }
+
+        public String getComment_tag() {
+            return comment_tag;
+        }
+
+        public void setComment_tag(String comment_tag) {
+            this.comment_tag = comment_tag;
         }
 
         public String getItem_id() {
@@ -92,20 +102,20 @@ public class MyCommentResponse {
             this.com_date = com_date;
         }
 
-        public String getTitle() {
-            return title;
+        public String getReviewed_title() {
+            return reviewed_title;
         }
 
-        public void setTitle(String title) {
-            this.title = title;
+        public void setReviewed_title(String reviewed_title) {
+            this.reviewed_title = reviewed_title;
         }
 
-        public String getHead_img() {
-            return head_img;
+        public String getReviewed_img() {
+            return reviewed_img;
         }
 
-        public void setHead_img(String head_img) {
-            this.head_img = head_img;
+        public void setReviewed_img(String reviewed_img) {
+            this.reviewed_img = reviewed_img;
         }
 
         public String getNick_name() {

@@ -165,7 +165,7 @@ public class RelateRecommendItemAdapter extends RecyclerView.Adapter<RelateRecom
 
         public DataHolder(View itemView) {
             super(itemView);
-            title = (TextView) itemView.findViewById(R.id.list_item_text);
+            title = (TextView) itemView.findViewById(R.id.title);
             imageView = (ImageView) itemView.findViewById(R.id.list_item_icon);
             listLayoutView = itemView.findViewById(R.id.list_item_layout);
         }

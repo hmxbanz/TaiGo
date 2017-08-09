@@ -33,13 +33,7 @@ public class HomeRecommendFragment extends BaseFragment  {
     public static HomeRecommendFragment instance = null;
     public static List<?> images=new ArrayList<>();
     private RecyclerView recycleView;
-
     public ScrollView scrollView;
-    private View view;
-
-
-    private TextView mTextSearch;
-    private TabLayout mTabLayout;
 
     private HomeRecommendPresenter presenter;
     private Banner banner;

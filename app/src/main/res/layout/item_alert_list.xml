@@ -3,7 +3,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="@color/appbg"
     >
 
         <TextView
@@ -15,5 +14,10 @@
             android:text="名称"
             android:layout_width="match_parent"
             android:layout_height="50dp" />
+
+        <View
+            android:background="@color/grayLine"
+            android:layout_width="match_parent"
+            android:layout_height="1dp" />
 
 </LinearLayout>

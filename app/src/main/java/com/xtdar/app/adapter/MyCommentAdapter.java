@@ -56,9 +56,9 @@ public class MyCommentAdapter extends BaseAdapter {
         final MyCommentResponse.DataBean entity = (MyCommentResponse.DataBean) mList.get(position);
         holder.nickname.setText(entity.getNick_name());
         holder.content.setText(entity.getComment());
-        holder.article_title.setText(entity.getTitle());
+        holder.article_title.setText(entity.getReviewed_title());
         glideImageLoader.displayImage(mContext, XtdConst.IMGURI+entity.getImg_path(),holder.avatar);
-        glideImageLoader.displayImage(mContext, XtdConst.IMGURI+entity.getHead_img(),holder.article_img);
+        glideImageLoader.displayImage(mContext, XtdConst.IMGURI+entity.getReviewed_img(),holder.article_img);
         convertView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
