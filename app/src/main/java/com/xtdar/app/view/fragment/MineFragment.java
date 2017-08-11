@@ -53,7 +53,7 @@ public class MineFragment extends Fragment implements View.OnClickListener {
     public static final String SHOWRED = "SHOWRED";
     public static MineFragment mFragment = null;
     private RelativeLayout mLayoutAr, mLayoutMyVideo, mLayoutMsg;
-    private LinearLayout mLayoutFriendCondition, mLayoutFavor, mLayoutSetting, mLayoutComment,mLayoutShopCar,mLayoutOrder;
+    private LinearLayout mLayoutTitle, mLayoutFavor, mLayoutSetting, mLayoutComment,mLayoutShopCar,mLayoutOrder;
     private View mView;
 
     private SelectableRoundedImageView mImageView;
@@ -112,7 +112,7 @@ public class MineFragment extends Fragment implements View.OnClickListener {
 //        mImageSetting.setOnClickListener(this);
         mImageView = (SelectableRoundedImageView) mView.findViewById(R.id.img_avator);
         mImageView.setOnClickListener(this);
-                nickName=(TextView)mView.findViewById(R.id.nick_name);
+        nickName=(TextView)mView.findViewById(R.id.nick_name);
 
         mLayoutAr = (RelativeLayout) mView.findViewById(R.id.layout_dynamic);
         mLayoutAr.setOnClickListener(this);
@@ -152,6 +152,7 @@ public class MineFragment extends Fragment implements View.OnClickListener {
                 startActivity(new Intent(getActivity(), DynamicActivity.class));
                 break;
             case R.id.layout_update:
+            case R.id.img_avator:
                 startActivity(new Intent(getActivity(), MeActivity.class));
                 break;
             case R.id.layout_message:
@@ -174,7 +175,6 @@ public class MineFragment extends Fragment implements View.OnClickListener {
                 break;
             case R.id.layout_order:
                 presenter.openOrder();
-
                 break;
         }
     }

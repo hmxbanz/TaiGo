@@ -29,7 +29,7 @@ public class HomeRecommendPresenter extends BasePresenter implements OnDataListe
     private RecyclerView recycleView;
     private GridLayoutManager gridLayoutManager;
     private HomeRecommendAdapter dataAdapter;
-    private List<TaobaoResponse.DataBean.DeviceTypeListBean> list;
+    private List<TaobaoResponse.DataBean.DeviceTypeListBean> list=new ArrayList<>();
 
     public HomeRecommendPresenter(Context context){
         super(context);
@@ -42,15 +42,6 @@ public class HomeRecommendPresenter extends BasePresenter implements OnDataListe
 
         gridLayoutManager=new GridLayoutManager(context,1);
         recycleView.setLayoutManager(gridLayoutManager);
-        //取缓存
-        String RecommendListCache = aCache.getAsString("RecommendList");
-        if(RecommendListCache!=null && !("null").equals(RecommendListCache))
-            try {
-                list = JsonMananger.jsonToList(RecommendListCache, TaobaoResponse.DataBean.DeviceTypeListBean.class);
-            } catch (HttpException e) {
-                e.printStackTrace();
-            }
-
 
         //设置列表
         dataAdapter = new HomeRecommendAdapter(list, context);
@@ -58,8 +49,10 @@ public class HomeRecommendPresenter extends BasePresenter implements OnDataListe
         recycleView.setAdapter(dataAdapter);
         recycleView.setNestedScrollingEnabled(false);
 
+
         LoadDialog.show(context);
         atm.request(GETADS,this);
+
     }
 
     @Override
@@ -80,20 +73,19 @@ public class HomeRecommendPresenter extends BasePresenter implements OnDataListe
             case GETADS:
                 AdResponse adResponse = (AdResponse) result;
                 if (adResponse.getCode() == XtdConst.SUCCESS) {
-
-                    atm.request(GETRECOMMEND,this);
+                    //atm.request(GETRECOMMEND,this);
                 }
                 break;
             case GETRECOMMEND:
                 TaobaoResponse taobaoResponse = (TaobaoResponse) result;
                 if (taobaoResponse.getCode() == XtdConst.SUCCESS) {
-                    list=taobaoResponse.getData().getDevice_type_list();
                     try {
-                        String cache=JsonMananger.beanToJson(list);
+                        String cache=JsonMananger.beanToJson(taobaoResponse.getData());
                         aCache.put("RecommendList",cache);
                     } catch (HttpException e) {
                         e.printStackTrace();
                     }
+                    list.addAll(taobaoResponse.getData().getDevice_type_list());
                     dataAdapter.notifyDataSetChanged();
 
                     List<String> images = new ArrayList<>();
@@ -101,10 +93,37 @@ public class HomeRecommendPresenter extends BasePresenter implements OnDataListe
                         s=XtdConst.IMGURI+s;
                         images.add(s);
                     }
+
                     Banner.setImages(images);//设置图片集合
                     Banner.start();
                 }
                 break;
         }
+    }
+
+    //加载数据
+    public void loadData() {
+        //取缓存
+            String Cache = aCache.getAsString("RecommendList");
+            if(Cache!=null && !("null").equals(Cache))
+                try {
+                    TaobaoResponse.DataBean listCache = JsonMananger.jsonToBean(Cache, TaobaoResponse.DataBean.class);
+                    list.addAll(listCache.getDevice_type_list());
+                    dataAdapter.notifyDataSetChanged();
+
+                    List<String> images = new ArrayList<>();
+                    for (String s : listCache.getImg_list()) {
+                        s=XtdConst.IMGURI+s;
+                        images.add(s);
+                    }
+                    Banner.setImages(images);//设置图片集合
+                    Banner.start();
+
+                } catch (HttpException e) {
+                    e.printStackTrace();
+                }
+
+        LoadDialog.show(context);
+        atm.request(GETRECOMMEND,this);
     }
 }

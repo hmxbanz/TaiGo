@@ -657,7 +657,7 @@ public class BluetoothService extends Service {
     }
 
 
-    private void resetInfo() {
+    public void resetInfo() {
         name = null;
         mac = null;
         gatt = null;

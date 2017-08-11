@@ -43,10 +43,13 @@ public class ShowFirstFragment extends Fragment  {
         initViews();
 
         presenter = new HomeNuPresenter(getContext());
-        presenter.init(swiper,videoList);
         return view;
-
-
+    }
+    @Override
+    public void onStart() {
+        super.onStart();
+        presenter.init(swiper,videoList);
+        presenter.loadData();
     }
     private void initViews() {
         swiper=(SwipeRefreshLayout)view.findViewById(R.id.swiper);

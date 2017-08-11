@@ -58,7 +58,6 @@ public class GamePresenter extends BasePresenter {
             }
         };
         viewPager.setAdapter(mFragmentPagerAdapter);
-        viewPager.setCurrentItem(0);
         viewPager.setOffscreenPageLimit(MAXCACHEVIEWPAGES);
         //mViewPager.setOnPageChangeListener(new PageChangerListener());
         //initData();

@@ -9,10 +9,10 @@ import android.view.View;
 
 import com.xtdar.app.XtdConst;
 import com.xtdar.app.adapter.ClassListAnimationAdapter;
+import com.xtdar.app.common.json.JsonMananger;
 import com.xtdar.app.listener.EndlessRecyclerOnScrollListener;
 import com.xtdar.app.server.HttpException;
 import com.xtdar.app.server.async.OnDataListener;
-import com.xtdar.app.server.response.AdResponse;
 import com.xtdar.app.server.response.GameListResponse;
 import com.xtdar.app.view.widget.LoadDialog;
 import com.youth.banner.Banner;
@@ -25,7 +25,7 @@ import java.util.List;
  */
 
 public class SpecialGamePresenter extends BasePresenter implements SwipeRefreshLayout.OnRefreshListener,OnDataListener,ClassListAnimationAdapter.ItemClickListener {
-    private static final int GETANIMATION = 2;
+    private static final int GETSPECIALlIST = 2;
     private Banner Banner;
     private RecyclerView recyclerView;
     private GridLayoutManager gridLayoutManager;
@@ -36,9 +36,15 @@ public class SpecialGamePresenter extends BasePresenter implements SwipeRefreshL
     private int lastPosition;
     private SwipeRefreshLayout swiper;
 
+    private boolean isFirstLoad=true;
+
     public SpecialGamePresenter(Context context){
         super(context);
         dataAdapter = new ClassListAnimationAdapter(this.context);
+        dataAdapter.setOnItemClickListener(this);
+
+        dataAdapter.setListItems(list);
+
     }
 
     public void init(SwipeRefreshLayout swiper, RecyclerView recyclerView) {
@@ -52,7 +58,7 @@ public class SpecialGamePresenter extends BasePresenter implements SwipeRefreshL
             @Override
             public void onLoadMore(int currentPage) {
                 LoadDialog.show(context);
-                atm.request(GETANIMATION,SpecialGamePresenter.this);
+                atm.request(GETSPECIALlIST,SpecialGamePresenter.this);
             }
 
             @Override
@@ -66,14 +72,14 @@ public class SpecialGamePresenter extends BasePresenter implements SwipeRefreshL
         recyclerView.setNestedScrollingEnabled(false);
 
         LoadDialog.show(context);
-        atm.request(GETANIMATION,this);
+        atm.request(GETSPECIALlIST,this);
 
     }
 
     @Override
     public Object doInBackground(int requestCode, String parameter) throws HttpException {
         switch (requestCode) {
-            case GETANIMATION:
+            case GETSPECIALlIST:
                 return mUserAction.getShot("-1",lastItem,"4");
         }
         return null;
@@ -84,17 +90,25 @@ public class SpecialGamePresenter extends BasePresenter implements SwipeRefreshL
         LoadDialog.dismiss(context);
         this.swiper.setRefreshing(false);
         switch (requestCode) {
-            case GETANIMATION:
+            case GETSPECIALlIST:
                 GameListResponse response = (GameListResponse) result;
                 if (response.getCode() == XtdConst.SUCCESS) {
                     final List<GameListResponse.DataBean> datas = response.getData();
                     lastItem=datas.get(datas.size()-1).getGame_id();
+                    if(isFirstLoad) {
+                        list = response.getData();
+                        isFirstLoad=false;
+                        try {
+                            String cache=JsonMananger.beanToJson(datas);
+                            aCache.put("SpecialGameList",cache);
+                        } catch (HttpException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                    else
                     list.addAll(response.getData());
-                    //设置列表
-                    //dataAdapter.setHeaderView(LayoutInflater.from(context).inflate(R.layout.recyclerview_header,null));
-                    dataAdapter.setListItems(list);
-                    dataAdapter.setOnItemClickListener(this);
 
+                    dataAdapter.setListItems(list);
                     dataAdapter.notifyDataSetChanged();
 
 
@@ -137,7 +151,7 @@ public class SpecialGamePresenter extends BasePresenter implements SwipeRefreshL
             @Override
             public void onLoadMore(int currentPage) {
                 LoadDialog.show(context);
-                atm.request(GETANIMATION,SpecialGamePresenter.this);
+                atm.request(GETSPECIALlIST,SpecialGamePresenter.this);
             }
 
             @Override
@@ -149,11 +163,31 @@ public class SpecialGamePresenter extends BasePresenter implements SwipeRefreshL
             }
         });
         LoadDialog.show(context);
-        atm.request(GETANIMATION,this);
+        atm.request(GETSPECIALlIST,this);
     }
 
     @Override
     public void onItemClick(int position, GameListResponse.DataBean bean) {
 
     }
+
+    //加载数据
+    public void loadData() {
+        if(isFirstLoad) {
+            String Cache = aCache.getAsString("SpecialGameList");
+            if(Cache!=null && !("null").equals(Cache))
+                try {
+                    List<GameListResponse.DataBean> gameListCache = JsonMananger.jsonToList(Cache, GameListResponse.DataBean.class);
+                    list.addAll(gameListCache);
+                    dataAdapter.notifyDataSetChanged();
+
+                } catch (HttpException e) {
+                    e.printStackTrace();
+                }
+        }
+
+        LoadDialog.show(context);
+        atm.request(GETSPECIALlIST,this);
+    }
+
 }

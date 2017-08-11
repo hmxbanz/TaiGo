@@ -27,7 +27,6 @@ private static final int Blue=0x001bb4fb;
     private View view;
     public static HomeFragment instance = null;
 
-
     private HomeFragmentPresenter presenter;
     private TextView title;
     private RelativeLayout layout_back;
@@ -49,7 +48,6 @@ private static final int Blue=0x001bb4fb;
 
 //        initData();
         presenter = new HomeFragmentPresenter(getContext());
-        presenter.init(swiper,recycleView);
         //StatusBarUtil.setTranslucent(getActivity(), StatusBarUtil.);
         StatusBarUtil.setColor(getActivity(), Blue,0);
         return view;
@@ -65,6 +63,7 @@ private static final int Blue=0x001bb4fb;
     @Override
     public void onStart() {
         super.onStart();
+        presenter.init(swiper,recycleView);
     }
 
     private void initViews() {
@@ -76,7 +75,6 @@ private static final int Blue=0x001bb4fb;
         recycleView= (RecyclerView) view.findViewById(R.id.recyclerView);
         swiper= (SwipeRefreshLayout) view.findViewById(R.id.swiper);
         view.findViewById(R.id.right_icon).setOnClickListener(this);
-
     }
 
     @Override

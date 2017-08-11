@@ -44,6 +44,8 @@ public class HelpDetailActivity extends BaseActivity implements View.OnClickList
     private long lastBackPressTime;
     private MyWebChromeClient myWebChromeClient;
     private String url;
+    private TextView txtRight;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,6 +75,13 @@ public class HelpDetailActivity extends BaseActivity implements View.OnClickList
         txtTitle = (TextView) findViewById(R.id.text_title);
         txtTitle.setText(title);
                mWebView.loadUrl(url);
+        if(url.indexOf("cli-dgc-devicehelp")>0){
+            txtRight = (TextView) findViewById(R.id.text_right);
+            txtRight.setText("去游戏");
+            txtRight.setTextColor(getResources().getColor(R.color.titleBlue));
+            txtRight.setOnClickListener(this);
+        }
+
     }
 
     @Override
@@ -267,11 +276,13 @@ public class HelpDetailActivity extends BaseActivity implements View.OnClickList
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.layout_back:
-                if(url.indexOf("cli-dgc-devicehelp")>0)
-                Main2Activity.StartActivity(this,1);
-                else
+//                if(url.indexOf("cli-dgc-devicehelp")>0)
+//                Main2Activity.StartActivity(this,1);
+//                else
                     finish();
                 break;
+            case R.id.text_right:
+                Main2Activity.StartActivity(this,1);
         }
     }
 }

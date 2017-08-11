@@ -43,8 +43,14 @@ public class MallGameFragment extends Fragment {
         view = inflater.inflate(R.layout.fragment_home_animation, null);
         initViews();
         presenter = new MallGamePresenter(getContext());
-        presenter.init(swiper,recycleView);
         return view;
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        presenter.init(swiper,recycleView);
+        presenter.loadData();
     }
 
     private void initViews() {

@@ -1,10 +1,7 @@
 package com.xtdar.app.presenter;
 
-import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
-import android.content.ServiceConnection;
-import android.os.IBinder;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
@@ -42,13 +39,13 @@ import java.util.List;
  */
 
 public class MallGamePresenter extends BasePresenter implements  SwipeRefreshLayout.OnRefreshListener,OnDataListener,ClassListAnimationAdapter.ItemClickListener, AlertListAdapter.OnItemClick {
-    private static final int GETANIMATION = 2;
+    private static final int GETMALLLIST = 2;
     private static final int GAMECHECK = 3;
     private Banner Banner;
     private RecyclerView recyclerView;
     private GridLayoutManager gridLayoutManager;
     private ClassListAnimationAdapter dataAdapter;
-    private List<GameListResponse.DataBean> gameList =new ArrayList<>();
+    private List<GameListResponse.DataBean> list =new ArrayList<>();
     private String lastItem ="0";
     private int lastOffset;
     private int lastPosition;
@@ -64,6 +61,8 @@ public class MallGamePresenter extends BasePresenter implements  SwipeRefreshLay
     private Intent toUnityPlayerActivityInent;
     private boolean isClickable=false;
     private BasePresenter basePresenter;
+    private boolean isFirstLoad=true;
+
 
     public MallGamePresenter(Context context){
         super(context);
@@ -71,11 +70,11 @@ public class MallGamePresenter extends BasePresenter implements  SwipeRefreshLay
         basePresenter = BasePresenter.getInstance(context);
         dataAdapter = new ClassListAnimationAdapter(this.context);
         alertListAdapter= new AlertListAdapter(context);
-
+        dataAdapter.setListItems(list);
+        dataAdapter.setOnItemClickListener(this);
     }
 
     public void init(SwipeRefreshLayout swiper, RecyclerView recyclerView) {
-
         this.swiper=swiper;
         this.swiper.setOnRefreshListener(this);
         this.recyclerView =recyclerView;
@@ -86,7 +85,7 @@ public class MallGamePresenter extends BasePresenter implements  SwipeRefreshLay
             @Override
             public void onLoadMore(int currentPage) {
                 LoadDialog.show(context);
-                atm.request(GETANIMATION,MallGamePresenter.this);
+                atm.request(GETMALLLIST,MallGamePresenter.this);
             }
 
             @Override
@@ -98,15 +97,14 @@ public class MallGamePresenter extends BasePresenter implements  SwipeRefreshLay
             }
         });
         recyclerView.setNestedScrollingEnabled(false);
-
-        LoadDialog.show(context);
-        atm.request(GETANIMATION,this);
     }
+
+
 
     @Override
     public Object doInBackground(int requestCode, String parameter) throws HttpException {
         switch (requestCode) {
-            case GETANIMATION:
+            case GETMALLLIST:
                 return mUserAction.getShot("0",lastItem,"4");
             case GAMECHECK:
                 return mUserAction.gameCheck(gameId);
@@ -119,17 +117,27 @@ public class MallGamePresenter extends BasePresenter implements  SwipeRefreshLay
         LoadDialog.dismiss(context);
         this.swiper.setRefreshing(false);
         switch (requestCode) {
-            case GETANIMATION:
+            case GETMALLLIST:
                 GameListResponse response = (GameListResponse) result;
-                if (response.getCode() == XtdConst.SUCCESS) {
+                if (response !=null && response.getCode() == XtdConst.SUCCESS) {
                     final List<GameListResponse.DataBean> datas = response.getData();
                     lastItem=datas.get(datas.size()-1).getGame_id();
-                    gameList.addAll(response.getData());
-                    //设置列表
-                    //dataAdapter.setHeaderView(LayoutInflater.from(context).inflate(R.layout.recyclerview_header,null));
-                    dataAdapter.setListItems(gameList);
-                    dataAdapter.setOnItemClickListener(this);
+                    if(isFirstLoad) {
+                        list = response.getData();
+                        isFirstLoad=false;
+                        try {
+                            String cache=JsonMananger.beanToJson(datas);
+                            basePresenter.aCache.put("MallGameList",cache);
+                        } catch (HttpException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                    else
+                    list.addAll(datas);
+
+                    dataAdapter.setListItems(list);
                     dataAdapter.notifyDataSetChanged();
+
                 }
                 break;
             case GAMECHECK :
@@ -155,26 +163,23 @@ public class MallGamePresenter extends BasePresenter implements  SwipeRefreshLay
                     }
 //对比
 
+                    String connectMac =mActivity.mBluetoothService.getMac();
                     for(GameCheckResponse.DataBean bean: deviceList){
                         for(ScanResult result1:mActivity.scanResultList)
                         {
-                            //NToast.shortToast(context,bean.getMac_address()+"="+result1.getDevice().getAddress());
                             if (bean.getMac_address().equals(result1.getDevice().getAddress()))
                                 bean.setStatus(1);
                         }
+
+                        if (bean.getMac_address().equals(connectMac))
+                            bean.setStatus(2);
                     }
 
-                    String connectMac =mActivity.mBluetoothService.getMac();
-                    for(GameCheckResponse.DataBean bean2: deviceList){
-                        if (bean2.getMac_address().equals(connectMac))
-                            bean2.setStatus(2);
-                    }
-
-                    Iterator<GameCheckResponse.DataBean> stuIter = deviceList.iterator();
-                    while (stuIter.hasNext()) {
-                        GameCheckResponse.DataBean student = stuIter.next();
+                    Iterator<GameCheckResponse.DataBean> iterator = deviceList.iterator();
+                    while (iterator.hasNext()) {
+                        GameCheckResponse.DataBean student = iterator.next();
                             if (student.getStatus() == 0)
-                            stuIter.remove();//这里要使用Iterator的remove方法移除当前对象，如果使用List的remove方法，则同样会出现ConcurrentModificationException
+                                iterator.remove();//这里要使用Iterator的remove方法移除当前对象，如果使用List的remove方法，则同样会出现ConcurrentModificationException
                     }
 
 
@@ -331,12 +336,12 @@ public class MallGamePresenter extends BasePresenter implements  SwipeRefreshLay
     @Override
     public void onRefresh() {
         lastItem ="0";
-        gameList.clear();
+        list.clear();
         recyclerView.addOnScrollListener(new EndlessRecyclerOnScrollListener(gridLayoutManager) {
             @Override
             public void onLoadMore(int currentPage) {
                 LoadDialog.show(context);
-                atm.request(GETANIMATION,MallGamePresenter.this);
+                atm.request(GETMALLLIST,MallGamePresenter.this);
             }
 
             @Override
@@ -347,7 +352,7 @@ public class MallGamePresenter extends BasePresenter implements  SwipeRefreshLay
                 }
             }
         });
-        atm.request(GETANIMATION,this);
+        atm.request(GETMALLLIST,this);
     }
 //弹出框蓝牙列表点击事件
     @Override
@@ -371,5 +376,23 @@ public class MallGamePresenter extends BasePresenter implements  SwipeRefreshLay
 
 
         return true;
+    }
+//加载数据
+    public void loadData() {
+        if(isFirstLoad) {
+        String Cache = aCache.getAsString("MallGameList");
+        if(Cache!=null && !("null").equals(Cache))
+            try {
+                    List<GameListResponse.DataBean> gameListCache = JsonMananger.jsonToList(Cache, GameListResponse.DataBean.class);
+                    list.addAll(gameListCache);
+                    dataAdapter.notifyDataSetChanged();
+
+            } catch (HttpException e) {
+                e.printStackTrace();
+            }
+        }
+
+        LoadDialog.show(context);
+        atm.request(GETMALLLIST,this);
     }
 }

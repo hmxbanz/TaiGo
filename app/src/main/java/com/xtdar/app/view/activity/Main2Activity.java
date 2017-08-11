@@ -81,10 +81,19 @@ public class Main2Activity extends BaseActivity implements View.OnClickListener{
     @Override
     protected void onStart() {
         super.onStart();
-        Intent intent=getIntent();
+
+    }
+
+    //finsh之后是不执行的
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        //setIntent(intent);//设置新的intent
+
         int pageId = intent.getIntExtra("pageId",0);
         if(pageId>0)
             viewPager.setCurrentItem(1);
+
     }
 
     @Override

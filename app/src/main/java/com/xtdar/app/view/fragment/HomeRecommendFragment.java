@@ -98,6 +98,7 @@ public class HomeRecommendFragment extends BaseFragment  {
     @Override
     protected void initData() {
         presenter.init(banner,recycleView);
+        presenter.loadData();
     }
 
     @Override

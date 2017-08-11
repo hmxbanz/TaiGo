@@ -64,12 +64,15 @@ public class HomeFragmentPresenter extends BasePresenter implements OnDataListen
         basePresenter = BasePresenter.getInstance(context);
         mActivity = (Main2Activity) context;
         dataAdapter = new MyDevicesAdapter(this.context);
+        dataAdapter.setListItems(list);
+        dataAdapter.setOnItemClickListener(this);
     }
 
     public void init(SwipeRefreshLayout swiper, RecyclerView recyclerView) {
         this.swiper=swiper;
         this.swiper.setOnRefreshListener(this);
         this.recyclerView=recyclerView;
+        recyclerView.setAdapter(dataAdapter);
         this.recyclerView.setNestedScrollingEnabled(false);
         gridLayoutManager=new GridLayoutManager(context,1);
         recyclerView.setLayoutManager(gridLayoutManager);
@@ -78,8 +81,6 @@ public class HomeFragmentPresenter extends BasePresenter implements OnDataListen
         } else {
             LoadDialog.show(context);
         }
-
-
     }
     public void loadData(){
         if(basePresenter.isLogin){
@@ -88,7 +89,8 @@ public class HomeFragmentPresenter extends BasePresenter implements OnDataListen
     }
     else
         {this.swiper.setVisibility(View.GONE);}
-}
+        }
+
     @Override
     public Object doInBackground(int requestCode, String parameter) throws HttpException {
         switch (requestCode) {
@@ -108,21 +110,12 @@ public class HomeFragmentPresenter extends BasePresenter implements OnDataListen
                 MyDevicesResponse response = (MyDevicesResponse) result;
                 if (response.getCode() == XtdConst.SUCCESS) {
                     if (response.getData().size() == 0) {
-
                     }
                     else {
                         list.clear();
                         list.addAll(response.getData());
                         //设置列表
                         //dataAdapter.setHeaderView(LayoutInflater.from(context).inflate(R.layout.recyclerview_header,null));
-                        dataAdapter.setListItems(list);
-                        dataAdapter.setOnItemClickListener(this);
-                        //dataAdapter.setFooterView(LayoutInflater.from(context).inflate(R.layout.recyclerview_footer,null));
-
-                        if(!isAdapterSetted)
-                            recyclerView.setAdapter(dataAdapter);
-                        isAdapterSetted=true;
-
                         dataAdapter.notifyDataSetChanged();
                         this.swiper.setVisibility(View.VISIBLE);
                     }
@@ -132,9 +125,19 @@ public class HomeFragmentPresenter extends BasePresenter implements OnDataListen
             case UNBINDDEVICE:
                 CommonResponse commonResponse = (CommonResponse) result;
                 if (commonResponse.getCode() == XtdConst.SUCCESS) {
+                    //解绑已连接设备动作
+                    if(list.get(itemIndex).getMac_address().equals(connectMac) && mBluetoothService !=null) {
+                        mBluetoothService.closeConnect();
+                        connectMac="";
+                    }
+
                     list.remove(itemIndex);
+                    if (list.size() == 0) {
+                        this.swiper.setVisibility(View.GONE);
+                    }
                     dataAdapter.notifyDataSetChanged();
                     DialogWithYesOrNoUtils.getInstance().showDialog(context,"解绑成功",null,null,new AlertDialogCallback());
+
                 }
                 NToast.longToast(context,commonResponse.getMsg());
                 break;
@@ -170,7 +173,6 @@ public class HomeFragmentPresenter extends BasePresenter implements OnDataListen
                 });
             }
             else {
-
                 LoadDialog.show(context);
                 mBluetoothService.closeConnect();
                 mBluetoothService.scanAndConnect5(mac);
