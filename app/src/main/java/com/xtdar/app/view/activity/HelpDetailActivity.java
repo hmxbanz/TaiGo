@@ -43,6 +43,7 @@ public class HelpDetailActivity extends BaseActivity implements View.OnClickList
     private final static int menuService=1002;
     private long lastBackPressTime;
     private MyWebChromeClient myWebChromeClient;
+    private String url;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,7 +68,7 @@ public class HelpDetailActivity extends BaseActivity implements View.OnClickList
         //mWebView.getSettings().setUserAgentString("Android Chrome/37.0.0.0 Mobile Safari/537.36");
         mWebView.getSettings().setAppCacheEnabled(true);
         //设置缓存模式
-        String url = getIntent().getStringExtra("url");
+        url = getIntent().getStringExtra("url");
         String title = getIntent().getStringExtra("title");
         txtTitle = (TextView) findViewById(R.id.text_title);
         txtTitle.setText(title);
@@ -266,7 +267,10 @@ public class HelpDetailActivity extends BaseActivity implements View.OnClickList
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.layout_back:
-                finish();
+                if(url.indexOf("cli-dgc-devicehelp")>0)
+                Main2Activity.StartActivity(this,1);
+                else
+                    finish();
                 break;
         }
     }

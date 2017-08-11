@@ -3,12 +3,13 @@ package com.xtdar.app.adapter;
 import android.content.Context;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.LinearInterpolator;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.xtdar.app.R;
 import com.xtdar.app.loader.GlideImageLoader;
 import com.xtdar.app.server.response.GameCheckResponse;
-import com.xtdar.app.server.response.HelpResponse;
 
 /**
  * Created by Bob on 2015/3/26.
@@ -43,6 +44,8 @@ public class AlertListAdapter extends BaseAdapter {
             holder = new AlertListAdapter.ViewHoler();
             convertView = mInflater.inflate(R.layout.item_alert_list, null);
             holder.deviceName = (TextView) convertView.findViewById(R.id.txt_device_name);
+            holder.deviceState = (TextView) convertView.findViewById(R.id.txt_device_state);
+            holder.layout_item = (LinearLayout) convertView.findViewById(R.id.layout_item);
             convertView.setTag(holder);
         } else {
             holder = (AlertListAdapter.ViewHoler) convertView.getTag();
@@ -58,14 +61,22 @@ public class AlertListAdapter extends BaseAdapter {
 
         if(entity.getStatus()==1){
             holder.deviceName.setTextColor(mContext.getResources().getColor(R.color.titleBlue));
-            holder.deviceName.setText(entity.getDevice_name()+"-已开启");}
+            holder.deviceName.setText(entity.getDevice_name());
+            holder.deviceState.setTextColor(mContext.getResources().getColor(R.color.titleBlue));
+            holder.deviceState.setText("已开启");
+            holder.layout_item.setBackgroundColor(mContext.getResources().getColor(R.color.titleBlue));
+        }
         else if(entity.getStatus()==2){
             holder.deviceName.setTextColor(mContext.getResources().getColor(R.color.green));
-            holder.deviceName.setText(entity.getDevice_name()+"-已连接");
+            holder.deviceName.setText(entity.getDevice_name());
+            holder.deviceState.setTextColor(mContext.getResources().getColor(R.color.titleBlue));
+            holder.deviceState.setText("已连接");
+            holder.layout_item.setBackgroundColor(mContext.getResources().getColor(R.color.titleBlue));
         }
         else {
             holder.deviceName.setTextColor(mContext.getResources().getColor(R.color.black));
-            holder.deviceName.setText(entity.getDevice_name()+"-"+entity.getMac_address());
+            holder.deviceName.setText(entity.getDevice_name());
+            holder.deviceState.setText("");
         }
 
 
@@ -80,6 +91,8 @@ public class AlertListAdapter extends BaseAdapter {
 
     class ViewHoler {
         TextView deviceName;
+        TextView deviceState;
+        LinearLayout layout_item;
     }
 
 

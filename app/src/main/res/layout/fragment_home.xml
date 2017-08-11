@@ -86,16 +86,15 @@
     android:background="@color/titleBlue"
     android:id="@+id/dervice"
     android:layout_width="match_parent"
-    android:layout_height="80dp"
+    android:layout_height="wrap_content"
     android:gravity="center_vertical"
     android:orientation="horizontal">
 
 <ImageView
-    android:scaleType="center"
+    android:scaleType="centerInside"
     android:src="@drawable/img_help"
     android:layout_width="match_parent"
-    android:layout_height="match_parent" />
-
+    android:layout_height="wrap_content" />
 </LinearLayout>
     <LinearLayout
         android:layout_marginTop="5dp"

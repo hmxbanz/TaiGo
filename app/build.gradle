@@ -7,8 +7,8 @@ android {
         applicationId 'com.xtdar.app'
         minSdkVersion 18
         targetSdkVersion 25
-        versionCode 20170809
-        versionName '1.0.1.1'
+        versionCode 20170810
+        versionName '1.0.1.2'
         // dex突破65535的限制
         multiDexEnabled true
         // 默认是umeng的渠道

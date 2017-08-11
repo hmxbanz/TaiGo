@@ -9,6 +9,7 @@ import android.os.IBinder;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.View;
 
 import com.clj.fastble.data.ScanResult;
@@ -18,6 +19,8 @@ import com.xtdar.app.common.NToast;
 import com.xtdar.app.listener.AlertDialogCallback;
 import com.xtdar.app.server.HttpException;
 import com.xtdar.app.server.async.OnDataListener;
+import com.xtdar.app.server.response.CommentResponse;
+import com.xtdar.app.server.response.CommonResponse;
 import com.xtdar.app.server.response.MyDevicesResponse;
 import com.xtdar.app.service.BluetoothService;
 import com.xtdar.app.view.activity.BleActivity;
@@ -37,6 +40,7 @@ import java.util.List;
 public class HomeFragmentPresenter extends BasePresenter implements OnDataListener,MyDevicesAdapter.ItemClickListener,SwipeRefreshLayout.OnRefreshListener {
     private static final int GETDRIVERS = 1;
     public static final int REQUEST_CODE = 1;
+    public static final int UNBINDDEVICE = 2;
     private final BasePresenter basePresenter;
     private List<MyDevicesResponse.DataBean> list=new ArrayList<>();
     private RecyclerView recyclerView;
@@ -51,6 +55,8 @@ public class HomeFragmentPresenter extends BasePresenter implements OnDataListen
     private SwipeRefreshLayout swiper;
 
     private String connectMac;
+    private String deviceId;
+    private int itemIndex;
 
 
     public HomeFragmentPresenter(Context context){
@@ -72,6 +78,8 @@ public class HomeFragmentPresenter extends BasePresenter implements OnDataListen
         } else {
             LoadDialog.show(context);
         }
+
+
     }
     public void loadData(){
         if(basePresenter.isLogin){
@@ -86,6 +94,8 @@ public class HomeFragmentPresenter extends BasePresenter implements OnDataListen
         switch (requestCode) {
             case GETDRIVERS:
                 return mUserAction.getDevices();
+            case UNBINDDEVICE:
+                return mUserAction.unBindDevice(deviceId);
         }
         return null;
     }
@@ -119,6 +129,15 @@ public class HomeFragmentPresenter extends BasePresenter implements OnDataListen
                 }
                 NToast.longToast(context,response.getMsg());
                 break;
+            case UNBINDDEVICE:
+                CommonResponse commonResponse = (CommonResponse) result;
+                if (commonResponse.getCode() == XtdConst.SUCCESS) {
+                    list.remove(itemIndex);
+                    dataAdapter.notifyDataSetChanged();
+                    DialogWithYesOrNoUtils.getInstance().showDialog(context,"解绑成功",null,null,new AlertDialogCallback());
+                }
+                NToast.longToast(context,commonResponse.getMsg());
+                break;
         }
     }
 
@@ -141,9 +160,30 @@ public class HomeFragmentPresenter extends BasePresenter implements OnDataListen
         if (mBluetoothService == null) {
             bindService();
         } else {
-            LoadDialog.show(context);
-            mBluetoothService.scanAndConnect5(mac);
+            if(item.getStatus()==2)//如果已连接
+            {
+                DialogWithYesOrNoUtils.getInstance().showDialog(context,"连接成功",null,"去玩游戏",new AlertDialogCallback(){
+                    @Override
+                    public void executeEvent() {
+                        mActivity.getViewPager().setCurrentItem(1, false);
+                    }
+                });
+            }
+            else {
+
+                LoadDialog.show(context);
+                mBluetoothService.closeConnect();
+                mBluetoothService.scanAndConnect5(mac);
+            }
         }
+    }
+
+    @Override
+    public void unBindBtn(int position, MyDevicesResponse.DataBean listItem) {
+        itemIndex=position;
+        deviceId=listItem.getBind_device_id();
+        LoadDialog.show(context);
+        atm.request(UNBINDDEVICE,this);
     }
 
     public void bindService() {
@@ -160,8 +200,16 @@ public class HomeFragmentPresenter extends BasePresenter implements OnDataListen
         public void onServiceConnected(ComponentName name, IBinder service) {
             mBluetoothService = ((BluetoothService.BluetoothBinder) service).getService();
             mBluetoothService.setScanCallback(callback);
+            mBluetoothService.scanDevice();
             LoadDialog.show(context);
             mActivity.mBluetoothService=mBluetoothService;
+
+//            HomeFragmentPresenter.this.swiper.post(new Runnable() {
+//            @Override
+//            public void run() {
+//                HomeFragmentPresenter.this.swiper.setRefreshing(true);
+//            }
+//        });
         }
 
         @Override
@@ -177,6 +225,7 @@ public class HomeFragmentPresenter extends BasePresenter implements OnDataListen
             {
                     bean.setStatus(0);
             }
+            dataAdapter.notifyDataSetChanged();
         }
 
         @Override
@@ -202,10 +251,8 @@ public class HomeFragmentPresenter extends BasePresenter implements OnDataListen
 
             }
 
-            Collections.sort(list);
-            Collections.reverse(list);
+            Collections.sort(list,Collections.<MyDevicesResponse.DataBean>reverseOrder());
             dataAdapter.notifyDataSetChanged();
-
 
         }
 
@@ -228,6 +275,7 @@ public class HomeFragmentPresenter extends BasePresenter implements OnDataListen
         @Override
         public void onDisConnected() {
             NToast.longToast(context, "连接断开");
+            connectMac="";
         }
 
 
@@ -271,4 +319,14 @@ public class HomeFragmentPresenter extends BasePresenter implements OnDataListen
         mBluetoothService.scanDevice();
     }
 
+    public void scanBLE() {
+        this.swiper.post(new Runnable() {
+            @Override
+            public void run() {
+                HomeFragmentPresenter.this.swiper.setRefreshing(true);
+            }
+        });
+        if(mBluetoothService !=null)
+        onRefresh();
+    }
 }

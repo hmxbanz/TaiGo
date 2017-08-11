@@ -1,6 +1,7 @@
 package com.xtdar.app.view.activity;
 
 import android.Manifest;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
@@ -64,13 +65,35 @@ public class Main2Activity extends BaseActivity implements View.OnClickListener{
         }
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main2);
+
+
         initViews();
         initMianViewPager();
         changeTextViewColor();
         changeSelectedTabState(0);
         main2Presenter = new Main2Presenter(this);
         main2Presenter.init();
+
+
+
     }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        Intent intent=getIntent();
+        int pageId = intent.getIntExtra("pageId",0);
+        if(pageId>0)
+            viewPager.setCurrentItem(1);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+
+    }
+
     private void initViews() {
         RelativeLayout homeLayout,shopLayout, discoveryLayout,meLayout;
         homeLayout = (RelativeLayout) findViewById(R.id.tab_layout_home);
@@ -297,5 +320,11 @@ public class Main2Activity extends BaseActivity implements View.OnClickListener{
 //                dialog.setContent("设置>应用管理>Taigo>\n权限管理>打开定位权限");
 //            }
         }
+    }
+
+    public static void StartActivity(Context context, int pageId) {
+        Intent intent = new Intent(context, Main2Activity.class);
+        intent.putExtra("pageId",pageId);
+        context.startActivity(intent);
     }
 }

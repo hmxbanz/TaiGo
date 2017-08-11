@@ -4,16 +4,35 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     >
-
-        <TextView
-            android:background="@color/white"
-            android:id="@+id/txt_device_name"
-            style="@style/AppPlaintTextStyle"
-            android:paddingLeft="10dp"
-            android:gravity="center_vertical"
-            android:text="名称"
+        <LinearLayout
+            android:id="@+id/layout_item"
+            android:orientation="horizontal"
             android:layout_width="match_parent"
-            android:layout_height="50dp" />
+            android:layout_height="match_parent">
+                <TextView
+                    android:background="@color/white"
+                    android:id="@+id/txt_device_name"
+                    style="@style/AppPlaintTextStyle"
+                    android:paddingLeft="10dp"
+                    android:gravity="center_vertical"
+                    android:text="名称"
+                    android:layout_width="0dp"
+                    android:layout_weight="6"
+                    android:layout_height="50dp" />
+                <TextView
+                    android:paddingRight="10dp"
+                    android:background="@color/white"
+                    android:id="@+id/txt_device_state"
+                    style="@style/AppPlaintTextStyle"
+                    android:paddingLeft="10dp"
+                    android:gravity="center_vertical|right"
+                    android:text="状态"
+                    android:layout_weight="6"
+                    android:layout_width="0dp"
+                    android:layout_height="50dp" />
+        </LinearLayout>
+
+
 
         <View
             android:background="@color/grayLine"

@@ -20,8 +20,9 @@ import com.clj.fastble.exception.BleException;
 import com.clj.fastble.scan.ListScanCallback;
 import com.clj.fastble.utils.HexUtil;
 
-public class BluetoothService extends Service {
 
+public class BluetoothService extends Service {
+    private static final long SCANTIME = 5000;
     public BluetoothBinder mBinder = new BluetoothBinder();
     private BleManager bleManager;
     private Handler threadHandler = new Handler(Looper.getMainLooper());
@@ -103,7 +104,7 @@ public class BluetoothService extends Service {
             mCallback.onStartScan();
         }
 
-        boolean b = bleManager.scanDevice(new ListScanCallback(10000) {
+        boolean b = bleManager.scanDevice(new ListScanCallback(SCANTIME) {
 
             @Override
             public void onScanning(final ScanResult result) {

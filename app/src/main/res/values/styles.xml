@@ -77,6 +77,11 @@
         <item name="android:textSize">18dp</item>
     </style>
 
+    <style name="TitleGrayStyle">
+        <item name="android:textColor">@color/plugin_text_light</item>
+        <item name="android:textSize">14dp</item>
+    </style>
+
     <style name="TextStyle">
         <item name="android:paddingLeft">5dp</item>
         <item name="android:paddingRight">5dp</item>

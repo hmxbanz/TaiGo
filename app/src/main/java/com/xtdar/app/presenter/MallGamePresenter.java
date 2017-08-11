@@ -34,6 +34,7 @@ import com.xtdar.app.widget.DialogWithYesOrNoUtils;
 import com.youth.banner.Banner;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -164,34 +165,51 @@ public class MallGamePresenter extends BasePresenter implements  SwipeRefreshLay
                     }
 
                     String connectMac =mActivity.mBluetoothService.getMac();
-
                     for(GameCheckResponse.DataBean bean2: deviceList){
                         if (bean2.getMac_address().equals(connectMac))
                             bean2.setStatus(2);
                     }
 
-                    DialogWithList dialogWithList=DialogWithList.getInstance(context);
-                    dialogWithList.showDialog(new DialogWithList.DialogCallBack(){
-                        @Override
-                        public void executeEvent() {
+                    Iterator<GameCheckResponse.DataBean> stuIter = deviceList.iterator();
+                    while (stuIter.hasNext()) {
+                        GameCheckResponse.DataBean student = stuIter.next();
+                            if (student.getStatus() == 0)
+                            stuIter.remove();//这里要使用Iterator的remove方法移除当前对象，如果使用List的remove方法，则同样会出现ConcurrentModificationException
+                    }
 
-                        }
 
-                        @Override
-                        public void onCancle() {
+                    if(deviceList.size()==0)
+                    {
+                        DialogWithYesOrNoUtils.getInstance().showDialog(context,"请先开启玩具设备",null,null,new AlertDialogCallback());
+                    }
+                    else
+                    {
+                        DialogWithList dialogWithList=DialogWithList.getInstance(context);
+                        dialogWithList.showDialog(new DialogWithList.DialogCallBack(){
+                            @Override
+                            public void executeEvent() {
 
-                        }
-                    });
+                            }
 
-                    dialogWithList.setTitle("请选择设备");
-                    dialogWithList.setConfirmText("更多设备");
-                    this.alertListAdapter.setmList(deviceList);
-                    this.alertListAdapter.setOnItemClick(this);
-                    dialogWithList.getListView().setAdapter(this.alertListAdapter);
+                            @Override
+                            public void onCancle() {
+
+                            }
+                        });
+
+                        dialogWithList.setTitle("请选择设备");
+                        dialogWithList.setConfirmText("更多设备");
+                        this.alertListAdapter.setmList(deviceList);
+                        this.alertListAdapter.setOnItemClick(this);
+                        dialogWithList.getListView().setAdapter(this.alertListAdapter);
+
+                    }
+
 
                 }
                 else
                 {
+                    //无设备可用弹出推荐列表
                     //弹出设备推荐列表
                     DialogWithList dialogWithList=DialogWithList.getInstance(context);
                     dialogWithList.showDialog(new DialogWithList.DialogCallBack(){
@@ -213,6 +231,7 @@ public class MallGamePresenter extends BasePresenter implements  SwipeRefreshLay
                     this.alertListAdapter.setmList(gameCheckResponse.getData());
                     dialogWithList.getListView().setAdapter(this.alertListAdapter);
                 }
+
 
                 break;
         }

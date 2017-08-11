@@ -7,12 +7,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.TextView;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 
 import com.xtdar.app.R;
 import com.xtdar.app.XtdConst;
 import com.xtdar.app.loader.GlideImageLoader;
-import com.xtdar.app.server.response.ClassListResponse;
 import com.xtdar.app.server.response.MyDevicesResponse;
 import com.youth.banner.Banner;
 
@@ -112,19 +112,27 @@ public class MyDevicesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
             glideImageLoader.displayImage(context, XtdConst.IMGURI+listItem.getDevice_img(),dataDolder.imageView);
             //Glide.with(context).load(listItem.getAvator()).asBitmap().into(holder.imageView);
             //holder.imageView.setImageResource(listItem.getImgResource());
+            dataDolder.statueIcon.setVisibility(View.GONE);
+            if(listItem.getStatus()==1){dataDolder.statueIcon.setVisibility(View.VISIBLE);
+            dataDolder.statueIcon.setImageDrawable(context.getResources().getDrawable(R.drawable.icon_not_connected));}
+            else if(listItem.getStatus()==2){dataDolder.statueIcon.setVisibility(View.VISIBLE);
+                dataDolder.statueIcon.setImageDrawable(context.getResources().getDrawable(R.drawable.icon_connected));}
+
+
+
             if(mListener == null) return;
-            dataDolder.itemView.setOnClickListener(new View.OnClickListener() {
+            dataDolder.listLayoutView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     mListener.onItemClick(position,listItem);
                 }
             });
-            if(listItem.getStatus()==1){dataDolder.statueIcon.setVisibility(View.VISIBLE);
-            dataDolder.statueIcon.setImageDrawable(context.getResources().getDrawable(R.drawable.icon_not_connected));}
-            else if(listItem.getStatus()==2){dataDolder.statueIcon.setVisibility(View.VISIBLE);
-                dataDolder.statueIcon.setImageDrawable(context.getResources().getDrawable(R.drawable.icon_connected));}
-            else
-                dataDolder.statueIcon.setVisibility(View.GONE);
+            dataDolder.layoutUnbind.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    mListener.unBindBtn(position,listItem);
+                }
+            });
         }
     }
 
@@ -192,6 +200,8 @@ public class MyDevicesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
 
     public interface ItemClickListener {
         void onItemClick(int position, MyDevicesResponse.DataBean item);
+
+        void unBindBtn(int position, MyDevicesResponse.DataBean listItem);
     }
     class HeaderHolder extends RecyclerView.ViewHolder  {
         private Banner banner;
@@ -205,25 +215,23 @@ public class MyDevicesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
 
     class DataHolder extends RecyclerView.ViewHolder implements View.OnClickListener
     {
-        private TextView title;
-        private TextView className;
         private ImageView imageView;
         private ImageView statueIcon;
-        private View listLayoutView;
+        private RelativeLayout listLayoutView;
+        private LinearLayout layoutUnbind;
 
         public DataHolder(View itemView) {
             super(itemView);
-//            title = (TextView) itemView.findViewById(R.id.txt_title);
-//            className = (TextView) itemView.findViewById(R.id.txt_class_name);
             imageView = (ImageView) itemView.findViewById(R.id.list_item_icon);
             statueIcon = (ImageView) itemView.findViewById(R.id.statue_icon);
-            listLayoutView = itemView.findViewById(R.id.list_item_layout);
+            listLayoutView = (RelativeLayout)itemView.findViewById(R.id.list_item_layout);
+            layoutUnbind= (LinearLayout) itemView.findViewById(R.id.layout_unbind);
         }
 
         public View getListLayoutView() {
             return listLayoutView;
         }
-        public void setListLayoutView(View listLayoutView) {
+        public void setListLayoutView(RelativeLayout listLayoutView) {
             this.listLayoutView = listLayoutView;
         }
         public ImageView getImageView() {
@@ -231,12 +239,6 @@ public class MyDevicesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
         }
         public void setImageView(ImageView imageView) {
             this.imageView = imageView;
-        }
-        public TextView getTitle() {
-            return title;
-        }
-        public void setTitle(TextView title) {
-            this.title = title;
         }
 
         @Override
