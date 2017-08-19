@@ -35,6 +35,7 @@ import com.xtdar.app.view.fragment.AlubmFragment;
 import com.xtdar.app.view.fragment.FriendConditionFragment;
 import com.xtdar.app.view.fragment.InfoFragment;
 import com.xtdar.app.view.fragment.LiftShareFragment;
+import com.xtdar.app.widget.myRecyclerView.RecyclerViewUpRefresh;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -44,7 +45,7 @@ import cn.hugeterry.coordinatortablayout.CoordinatorTabLayout;
 
 public class ShowDetailActivity extends BaseActivity implements RecyclerViewAdapter.ItemClickListener,View.OnClickListener {
     public static List<?> images=new ArrayList<>();
-    private RecyclerView recycleView;
+    private RecyclerViewUpRefresh recycleView;
     public ScrollView scrollView;
     private View view;
 
@@ -79,7 +80,7 @@ public class ShowDetailActivity extends BaseActivity implements RecyclerViewAdap
     private void initViews() {
         //mCoordinatorTabLayout = (CoordinatorTabLayout) findViewById(R.id.coordinatortablayout);
 
-        recycleView= (RecyclerView) findViewById(R.id.recyclerView);
+        recycleView= (RecyclerViewUpRefresh) findViewById(R.id.recyclerView);
 
         AppBarLayout app_bar_layout = (AppBarLayout) findViewById(R.id.app_bar_layout);
         Toolbar mToolbar = (Toolbar) findViewById(R.id.toolbar);

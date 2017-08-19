@@ -64,14 +64,12 @@ public class AlertListAdapter extends BaseAdapter {
             holder.deviceName.setText(entity.getDevice_name());
             holder.deviceState.setTextColor(mContext.getResources().getColor(R.color.titleBlue));
             holder.deviceState.setText("已开启");
-            holder.layout_item.setBackgroundColor(mContext.getResources().getColor(R.color.titleBlue));
         }
         else if(entity.getStatus()==2){
             holder.deviceName.setTextColor(mContext.getResources().getColor(R.color.green));
             holder.deviceName.setText(entity.getDevice_name());
-            holder.deviceState.setTextColor(mContext.getResources().getColor(R.color.titleBlue));
+            holder.deviceState.setTextColor(mContext.getResources().getColor(R.color.green));
             holder.deviceState.setText("已连接");
-            holder.layout_item.setBackgroundColor(mContext.getResources().getColor(R.color.titleBlue));
         }
         else {
             holder.deviceName.setTextColor(mContext.getResources().getColor(R.color.black));

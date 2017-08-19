@@ -118,6 +118,33 @@ public class TaobaoResponse {
                 private String write_uuid;
                 private String device_img;
                 private String taobao_id;
+                private String is_top;
+                private String taobao_img;
+                private String taobao_name;
+
+                public String getIs_top() {
+                    return is_top;
+                }
+
+                public void setIs_top(String is_top) {
+                    this.is_top = is_top;
+                }
+
+                public String getTaobao_img() {
+                    return taobao_img;
+                }
+
+                public void setTaobao_img(String taobao_img) {
+                    this.taobao_img = taobao_img;
+                }
+
+                public String getTaobao_name() {
+                    return taobao_name;
+                }
+
+                public void setTaobao_name(String taobao_name) {
+                    this.taobao_name = taobao_name;
+                }
 
                 public String getDevice_id() {
                     return device_id;

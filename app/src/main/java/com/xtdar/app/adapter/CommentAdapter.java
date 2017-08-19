@@ -22,6 +22,11 @@ import java.util.List;
  */
 
 public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.DataHolder>  {
+
+    public void setListItems(List<CommentResponse.DataBean> listItems) {
+        this.listItems = listItems;
+    }
+
     private List<CommentResponse.DataBean> listItems;
     private LayoutInflater layoutInflater;
     private  final int TYPE_HEADER = 0;
@@ -53,6 +58,12 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.DataHold
 
     public View getHeaderView() {
         return mHeaderView;
+    }
+
+    public CommentAdapter(Context c){
+        this.context=c;
+        this.layoutInflater=LayoutInflater.from(c);
+        glideImageLoader=new GlideImageLoader();
     }
 
     public CommentAdapter(List<CommentResponse.DataBean> l, Context c){

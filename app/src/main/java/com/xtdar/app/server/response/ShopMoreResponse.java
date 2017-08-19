@@ -66,7 +66,7 @@ public class ShopMoreResponse {
         private String write_uuid;
         private String device_img;
         private String tips;
-        private String taobao_url;
+        private String taobao_id;
         private String device_conf;
 
         public String getDevice_id() {
@@ -149,12 +149,12 @@ public class ShopMoreResponse {
             this.tips = tips;
         }
 
-        public String getTaobao_url() {
-            return taobao_url;
+        public String getTaobao_id() {
+            return taobao_id;
         }
 
-        public void setTaobao_url(String taobao_url) {
-            this.taobao_url = taobao_url;
+        public void setTaobao_id(String taobao_id) {
+            this.taobao_id = taobao_id;
         }
 
         public String getDevice_conf() {

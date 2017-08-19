@@ -4,6 +4,7 @@ import android.content.Context;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 
 import com.xtdar.app.XtdConst;
 import com.xtdar.app.adapter.ClassListNuAdapter;
@@ -130,7 +131,7 @@ public class HomeNuPresenter extends BasePresenter implements OnDataListener,Cla
             if(Cache!=null && !("null").equals(Cache))
                 try {
                     List<ClassListResponse.DataBean> listCache = JsonMananger.jsonToList(Cache, ClassListResponse.DataBean.class);
-                    if(!"0".equals(listCache.get(0).getItem_id())) {
+                    if(!TextUtils.isEmpty(listCache.get(0).getResource())) {
                         list.addAll(listCache);
                         dataAdapter.notifyDataSetChanged();
                     }

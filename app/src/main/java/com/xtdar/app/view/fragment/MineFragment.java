@@ -135,6 +135,9 @@ public class MineFragment extends Fragment implements View.OnClickListener {
         mLayoutShopCar.setOnClickListener(this);
         mLayoutOrder = (LinearLayout) mView.findViewById(R.id.layout_order);
         mLayoutOrder.setOnClickListener(this);
+        mLayoutTitle = (LinearLayout) mView.findViewById(R.id.layout_title);
+        mLayoutTitle.setOnClickListener(this);
+
 
     }
 
@@ -152,7 +155,7 @@ public class MineFragment extends Fragment implements View.OnClickListener {
                 startActivity(new Intent(getActivity(), DynamicActivity.class));
                 break;
             case R.id.layout_update:
-            case R.id.img_avator:
+            case R.id.layout_title:
                 startActivity(new Intent(getActivity(), MeActivity.class));
                 break;
             case R.id.layout_message:

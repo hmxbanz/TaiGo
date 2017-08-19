@@ -85,6 +85,7 @@ public class HomeRecommendPresenter extends BasePresenter implements OnDataListe
                     } catch (HttpException e) {
                         e.printStackTrace();
                     }
+                    list.clear();
                     list.addAll(taobaoResponse.getData().getDevice_type_list());
                     dataAdapter.notifyDataSetChanged();
 
@@ -108,10 +109,12 @@ public class HomeRecommendPresenter extends BasePresenter implements OnDataListe
             if(Cache!=null && !("null").equals(Cache))
                 try {
                     TaobaoResponse.DataBean listCache = JsonMananger.jsonToBean(Cache, TaobaoResponse.DataBean.class);
+                    if(listCache.getDevice_type_list()!=null)
                     list.addAll(listCache.getDevice_type_list());
                     dataAdapter.notifyDataSetChanged();
 
                     List<String> images = new ArrayList<>();
+                    if(listCache.getDevice_type_list()!=null)
                     for (String s : listCache.getImg_list()) {
                         s=XtdConst.IMGURI+s;
                         images.add(s);

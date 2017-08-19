@@ -9,7 +9,6 @@ import android.os.IBinder;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.text.TextUtils;
 import android.view.View;
 
 import com.clj.fastble.data.ScanResult;
@@ -19,7 +18,6 @@ import com.xtdar.app.common.NToast;
 import com.xtdar.app.listener.AlertDialogCallback;
 import com.xtdar.app.server.HttpException;
 import com.xtdar.app.server.async.OnDataListener;
-import com.xtdar.app.server.response.CommentResponse;
 import com.xtdar.app.server.response.CommonResponse;
 import com.xtdar.app.server.response.MyDevicesResponse;
 import com.xtdar.app.service.BluetoothService;
@@ -78,8 +76,6 @@ public class HomeFragmentPresenter extends BasePresenter implements OnDataListen
         recyclerView.setLayoutManager(gridLayoutManager);
         if (mBluetoothService == null) {
             bindService();
-        } else {
-            LoadDialog.show(context);
         }
     }
     public void loadData(){
@@ -119,6 +115,7 @@ public class HomeFragmentPresenter extends BasePresenter implements OnDataListen
                         dataAdapter.notifyDataSetChanged();
                         this.swiper.setVisibility(View.VISIBLE);
                     }
+                    scanBLE();
                 }
                 NToast.longToast(context,response.getMsg());
                 break;
@@ -236,25 +233,25 @@ public class HomeFragmentPresenter extends BasePresenter implements OnDataListen
             //LoadDialog.show(context);
             String mac=result.getDevice().getAddress();
 
-            for(MyDevicesResponse.DataBean bean:list)
-            {
-                String mac2=bean.getMac_address();
-                if(mac2.toUpperCase().equals(mac))
-                    bean.setStatus(1);
+            if(list.size()>0) {
+                for (MyDevicesResponse.DataBean bean : list) {
+                    String mac2 = bean.getMac_address();
+                    if (mac2.toUpperCase().equals(mac))
+                        bean.setStatus(1);
 
-               // NToast.shortToast(context,connectMac+"----"+mac2);
+                    // NToast.shortToast(context,connectMac+"----"+mac2);
+                }
+
+                for (MyDevicesResponse.DataBean bean : list) {
+                    String mac2 = bean.getMac_address();
+                    if (mac2.toUpperCase().equals(connectMac))
+                        bean.setStatus(2);
+
+                }
+
+                Collections.sort(list, Collections.<MyDevicesResponse.DataBean>reverseOrder());
+                dataAdapter.notifyDataSetChanged();
             }
-
-            for(MyDevicesResponse.DataBean bean:list)
-            {
-                String mac2=bean.getMac_address();
-                if(mac2.toUpperCase().equals(connectMac))
-                    bean.setStatus(2);
-
-            }
-
-            Collections.sort(list,Collections.<MyDevicesResponse.DataBean>reverseOrder());
-            dataAdapter.notifyDataSetChanged();
 
         }
 
@@ -271,7 +268,7 @@ public class HomeFragmentPresenter extends BasePresenter implements OnDataListen
         @Override
         public void onConnectFail() {
             LoadDialog.dismiss(context);
-            NToast.shortToast(context, "连接失败");
+            NToast.shortToast(context, "连接失败,请确保设备已开启。");
         }
 
         @Override

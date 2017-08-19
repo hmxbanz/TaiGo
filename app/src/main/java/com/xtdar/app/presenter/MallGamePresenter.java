@@ -370,7 +370,6 @@ public class MallGamePresenter extends BasePresenter implements  SwipeRefreshLay
 
         }
         else {
-
             context.startActivity(toUnityPlayerActivityInent);
         }
 

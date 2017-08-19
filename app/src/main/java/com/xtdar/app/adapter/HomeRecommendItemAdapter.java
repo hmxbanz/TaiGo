@@ -83,9 +83,9 @@ public class HomeRecommendItemAdapter extends RecyclerView.Adapter<HomeRecommend
         final int pos = getRealPosition(holder);
         final TaobaoResponse.DataBean.DeviceTypeListBean.DeviceListBean listItem = listItems.get(position);
         if(holder instanceof DataHolder) {
-            holder.title.setText(listItem.getDevice_name());
+            holder.title.setText(listItem.getTaobao_name());
             holder.price.setText("¥"+listItem.getPrice()+"元");
-            glideImageLoader.displayImage(context, XtdConst.IMGURI+listItem.getDevice_img(),holder.imageView);
+            glideImageLoader.displayImage(context, XtdConst.IMGURI+listItem.getTaobao_img(),holder.imageView);
             //Glide.with(context).load(listItem.getAvator()).asBitmap().into(holder.imageView);
             //holder.imageView.setImageResource(listItem.getImgResource());
             if(mListener == null) return;

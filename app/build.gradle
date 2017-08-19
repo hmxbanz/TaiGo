@@ -7,8 +7,8 @@ android {
         applicationId 'com.xtdar.app'
         minSdkVersion 18
         targetSdkVersion 25
-        versionCode 20170810
-        versionName '1.0.1.2'
+        versionCode 20170815
+        versionName '1.0.1.5'
         // dex突破65535的限制
         multiDexEnabled true
         // 默认是umeng的渠道
@@ -89,14 +89,11 @@ android {
 
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
-
+    compile project(':gsyVideoPlayer')    //视频播放
     compile project(':xutils')
     compile project(':pulltorefresh')
     //compile 'com.youth.xframe:xframe:1.0.1'
-
     //最新版本轮播图
-
-    //图片加载工具
 
     //RecyclerView
     compile project(':Common')
@@ -122,18 +119,19 @@ dependencies {
     compile viewDependencies.ndkbitmap_x86
     compile androidDependencies.support_v4
     //debugCompile dataDependencies.leakcanary
-    compile project(':gsyVideoPlayer')
-    //视频播放
+
     compile files('libs/unity-classes.jar')
-    compile 'com.android.support:appcompat-v7:25.1.0'
+    compile 'com.android.support:appcompat-v7:25.3.1'
+    compile 'com.android.support:design:25.3.1'
+    compile 'com.android.support:recyclerview-v7:25.3.1'
     compile 'org.immutables:gson:2.1.8'
     compile 'com.kyleduo.switchbutton:library:1.4.5'
     compile 'com.youth.banner:banner:1.4.9'
-    compile 'com.github.bumptech.glide:glide:3.7.0'
-    compile 'com.android.support:recyclerview-v7:25.1.0'
+    compile 'com.github.bumptech.glide:glide:3.7.0'    //图片加载工具
+
     compile 'com.alibaba:fastjson:1.1.46.android'
     compile 'com.github.florent37:viewanimator:1.0.3'
-    compile 'com.android.support:design:25.1.0'
+
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
     compile project(':okhttputils')
     compile 'com.github.mcxtzhang:SwipeDelMenuLayout:V1.2.5'
@@ -142,7 +140,7 @@ dependencies {
     //设置状态栏
     compile 'cn.yipianfengye.android:zxing-library:2.1'
     //二维码扫描
-    compile 'com.android.support:gridlayout-v7:25.1.0'
+    compile 'com.android.support:gridlayout-v7:25.3.1'
     compile 'com.clj.fastble:FastBleLib:1.2.1'
     //蓝牙
     //阿里百川(开始)

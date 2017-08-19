@@ -57,7 +57,6 @@ private static final int Blue=0x001bb4fb;
     public void onResume() {
         super.onResume();
         presenter.loadData();
-        presenter.scanBLE();
     }
 
     @Override

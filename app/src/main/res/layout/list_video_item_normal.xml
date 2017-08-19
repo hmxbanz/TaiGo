@@ -19,6 +19,8 @@
       android:layout_width="match_parent"
       android:layout_height="@dimen/post_media_height"/>
   <LinearLayout
+      android:paddingLeft="10dp"
+      android:paddingRight="10dp"
       android:gravity="center_vertical"
       android:orientation="horizontal"
       android:layout_width="match_parent"

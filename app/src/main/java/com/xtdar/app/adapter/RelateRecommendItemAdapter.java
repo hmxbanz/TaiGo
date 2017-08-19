@@ -72,7 +72,7 @@ public class RelateRecommendItemAdapter extends RecyclerView.Adapter<RelateRecom
             return new DataHolder(mFooterView);
         }
         else {
-            View v = layoutInflater.inflate(R.layout.listitem_recommend_item, parent, false);
+            View v = layoutInflater.inflate(R.layout.listitem_recommend, parent, false);
             return new DataHolder(v);
         }
     }

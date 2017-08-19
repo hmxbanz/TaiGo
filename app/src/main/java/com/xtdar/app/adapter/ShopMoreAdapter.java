@@ -92,7 +92,8 @@ public class ShopMoreAdapter extends RecyclerView.Adapter<ShopMoreAdapter.DataHo
             holder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    mListener.onItemClick(position,listItem.getDevice_id(),listItem.getPartner_id());
+                    mListener.onItemClick(position,listItem);
+
                 }
             });
         }
@@ -155,7 +156,7 @@ public class ShopMoreAdapter extends RecyclerView.Adapter<ShopMoreAdapter.DataHo
         return mHeaderView == null ? position : position - 1;
     }
     public interface ItemClickListener {
-        void onItemClick(int position, String itemId, String classId);
+        void onItemClick(int position, ShopMoreResponse.DataBean listItem);
     }
     class DataHolder extends RecyclerView.ViewHolder implements View.OnClickListener
     {
