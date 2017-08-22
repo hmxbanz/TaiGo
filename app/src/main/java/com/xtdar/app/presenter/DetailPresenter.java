@@ -3,6 +3,7 @@ package com.xtdar.app.presenter;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
+import android.os.Handler;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -31,6 +32,8 @@ import com.xtdar.app.video.SampleListener;
 import com.xtdar.app.view.activity.DetailActivity;
 import com.xtdar.app.view.widget.LoadDialog;
 import com.xtdar.app.widget.DialogWithYesOrNoUtils;
+import com.xtdar.app.widget.myRecyclerView.LoadMoreListener;
+import com.xtdar.app.widget.myRecyclerView.RecyclerViewUpRefresh;
 
 import java.util.List;
 
@@ -38,13 +41,14 @@ import java.util.List;
  * Created by hmxbanz on 2017/4/5.
  */
 
-public class DetailPresenter extends BasePresenter{
+public class DetailPresenter extends BasePresenter implements LoadMoreListener {
     private static final int GETDETAIL = 1;
     private static final int ADDFAVOR = 2;
     private static final int GETRELATERECOMMEND = 3;
     private static final int GETCOMMENT = 4;
     private static final int ADDCOMMENT = 5;
     private final GlideImageLoader glideImageLoader;
+    private final CommentAdapter dataAdapter;
     private DetailActivity mActivity;
     private String itemId;
     private StandardGSYVideoPlayer videoPlayer;
@@ -52,26 +56,37 @@ public class DetailPresenter extends BasePresenter{
     private OrientationUtils orientationUtils;
     private boolean isPlay;
     private boolean isPause;
-    private RecyclerView recycleView,recycleViewComment;
+    private RecyclerView recyclerView;
+    private RecyclerViewUpRefresh recycleViewComment;
     private String classId;
     private GridLayoutManager gridLayoutManager;
     private EditText comment;
+    private String lastItemId;
 
     public DetailPresenter(Context context){
         super(context);
         this.mActivity= (DetailActivity) context;
         glideImageLoader = new GlideImageLoader();
+
+        gridLayoutManager=new GridLayoutManager(context,1);
+        dataAdapter = new CommentAdapter(context);
+        dataAdapter.setHeaderView(LayoutInflater.from(context).inflate(R.layout.recyclerview_top2,null));
     }
 
-    public void init(StandardGSYVideoPlayer videoPlayer, TextView title, TextView content, RecyclerView recycleView, RecyclerView recycleViewComment) {
+    public void init(StandardGSYVideoPlayer videoPlayer, TextView title, TextView content, RecyclerView recycleView, RecyclerViewUpRefresh recycleViewComment) {
         this.videoPlayer=videoPlayer;
         this.title = title;
         this.content=content;
-        this.recycleView=recycleView;
+        this.recyclerView =recycleView;
         this.recycleViewComment=recycleViewComment;
         Intent intent = mActivity.getIntent();
         itemId = intent.getStringExtra(XtdConst.ITEMID);
         classId = intent.getStringExtra(XtdConst.CLASSID);
+
+        this.recycleViewComment.setAdapter(dataAdapter);
+        this.recycleViewComment.setCanloadMore(true);
+        this.recycleViewComment.setLoadMoreListener(this);
+        this.recycleViewComment.setLayoutManager(gridLayoutManager);
 
         //resolveNormalVideoUI();
 
@@ -190,20 +205,20 @@ public class DetailPresenter extends BasePresenter{
                     List<RelateRecommendResponse.DataBean> entities = relateRecommendResponse.getData();
 
                     gridLayoutManager=new GridLayoutManager(context,2);
-                    recycleView.setLayoutManager(gridLayoutManager);
+                    recyclerView.setLayoutManager(gridLayoutManager);
                     RelateRecommendItemAdapter dataAdapter = new RelateRecommendItemAdapter(entities, context);
                     //dataAdapter.setFooterView(LayoutInflater.from(this).inflate(R.layout.recyclerview_footer,null));
-                    recycleView.setAdapter(dataAdapter);
-                    recycleView.setNestedScrollingEnabled(false);
+                    recyclerView.setAdapter(dataAdapter);
+                    recyclerView.setNestedScrollingEnabled(false);
                     if(Build.VERSION.SDK_INT>=23)
-                        recycleView.setOnScrollChangeListener(new View.OnScrollChangeListener() {
+                        recyclerView.setOnScrollChangeListener(new View.OnScrollChangeListener() {
                             @Override
                             public void onScrollChange(View v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
                                 if (gridLayoutManager.findLastCompletelyVisibleItemPosition()==(UserList.getData().size()-1))
                                 {}
                             }
                         });
-                    //recycleView.addItemDecoration(new DividerItemDecoration(getContext(),DividerItemDecoration.HORIZONTAL));
+                    //recyclerView.addItemDecoration(new DividerItemDecoration(getContext(),DividerItemDecoration.HORIZONTAL));
                     dataAdapter.setOnItemClickListener(new RelateRecommendItemAdapter.ItemClickListener() {
                         @Override
                         public void onItemClick(int position, String itemId, String classId) {
@@ -228,30 +243,10 @@ public class DetailPresenter extends BasePresenter{
                 CommentResponse commentResponse = (CommentResponse) result;
                 if (commentResponse.getCode() == XtdConst.SUCCESS) {
                     List<CommentResponse.DataBean> entities = commentResponse.getData();
+                    lastItemId = entities.get(entities.size() - 1).getCom_id();
 
-                    gridLayoutManager=new GridLayoutManager(context,1);
-                    recycleViewComment.setLayoutManager(gridLayoutManager);
-                    CommentAdapter dataAdapter = new CommentAdapter(entities, context);
-                    dataAdapter.setHeaderView(LayoutInflater.from(context).inflate(R.layout.recyclerview_top2,null));
-                    recycleViewComment.setAdapter(dataAdapter);
-                    recycleViewComment.setNestedScrollingEnabled(false);
-                    if(Build.VERSION.SDK_INT>=23)
-                        recycleViewComment.setOnScrollChangeListener(new View.OnScrollChangeListener() {
-                            @Override
-                            public void onScrollChange(View v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
-                                if (gridLayoutManager.findLastCompletelyVisibleItemPosition()==(UserList.getData().size()-1))
-                                {}
-                            }
-                        });
-                    //recycleView.addItemDecoration(new DividerItemDecoration(getContext(),DividerItemDecoration.HORIZONTAL));
-                    dataAdapter.setOnItemClickListener(new CommentAdapter.ItemClickListener() {
-                        @Override
-                        public void onItemClick(int position, String itemId, String classId) {
-                            //DetailActivity.StartActivity(context,itemId,classId);
-                        }
-
-
-                    });
+                    dataAdapter.setListItems(entities);
+                    dataAdapter.notifyDataSetChanged();
 
                 }
                 NToast.shortToast(context,commentResponse.getMsg());
@@ -260,6 +255,8 @@ public class DetailPresenter extends BasePresenter{
                 CommonResponse CommonResponse = (CommonResponse) result;
                 if (CommonResponse.getCode() == XtdConst.SUCCESS) {
                     DialogWithYesOrNoUtils.getInstance().showDialog(context,"评论成功",null,null,new AlertDialogCallback());
+                    //请求评论
+                    atm.request(GETCOMMENT,this);
                 }
                 NToast.shortToast(context,CommonResponse.getMsg());
                 break;
@@ -281,5 +278,20 @@ public class DetailPresenter extends BasePresenter{
         }
         LoadDialog.show(context);
         atm.request(ADDCOMMENT,this);
+    }
+
+    @Override
+    public void onLoadMore() {
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+//                if(mSwipRefreshLayout.isRefreshing()){
+//                    mSwipRefreshLayout.setRefreshing(false);
+//                }
+//                adapter.addItems(initData());
+                atm.request(GETCOMMENT,DetailPresenter.this);
+                recycleViewComment.loadMoreComplete();
+            }
+        }, 2000);
     }
 }

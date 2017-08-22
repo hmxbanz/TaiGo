@@ -39,11 +39,13 @@ import com.xtdar.app.view.fragment.AlubmFragment;
 import com.xtdar.app.view.fragment.FriendConditionFragment;
 import com.xtdar.app.view.fragment.InfoFragment;
 import com.xtdar.app.view.fragment.LiftShareFragment;
+import com.xtdar.app.widget.myRecyclerView.RecyclerViewUpRefresh;
 
 
 public class DetailActivity extends BaseActivity implements RecyclerViewAdapter.ItemClickListener,View.OnClickListener {
     public static List<?> images=new ArrayList<>();
-    private RecyclerView recycleView,recycleViewComment;
+    private RecyclerView recycleView;
+    private RecyclerViewUpRefresh recycleViewComment;
     public ScrollView scrollView;
     private View view;
 
@@ -79,7 +81,7 @@ public class DetailActivity extends BaseActivity implements RecyclerViewAdapter.
         //mCoordinatorTabLayout = (CoordinatorTabLayout) findViewById(R.id.coordinatortablayout);
 
         recycleView= (RecyclerView) findViewById(R.id.recyclerView);
-        recycleViewComment= (RecyclerView) findViewById(R.id.recyclerView_comment);
+        recycleViewComment= (RecyclerViewUpRefresh) findViewById(R.id.recyclerView_comment);
 
         AppBarLayout app_bar_layout = (AppBarLayout) findViewById(R.id.app_bar_layout);
         Toolbar mToolbar = (Toolbar) findViewById(R.id.toolbar);

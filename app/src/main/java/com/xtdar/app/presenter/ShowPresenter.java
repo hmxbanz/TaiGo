@@ -6,15 +6,14 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 
-import com.xtdar.app.XtdConst;
-import com.xtdar.app.adapter.ClassListNuAdapter;
+import com.xtdar.app.common.NLog;
 import com.xtdar.app.common.json.JsonMananger;
 import com.xtdar.app.listener.GSYVideoPlayerOnScrollListener;
 import com.xtdar.app.server.HttpException;
 import com.xtdar.app.server.async.OnDataListener;
-import com.xtdar.app.server.response.ClassListResponse;
 import com.xtdar.app.server.response.ShowResponse;
-import com.xtdar.app.view.activity.DetailActivity;
+import com.xtdar.app.video.RecyclerNormalAdapter;
+import com.xtdar.app.view.activity.ShowDetailActivity;
 import com.xtdar.app.view.widget.LoadDialog;
 
 import java.util.ArrayList;
@@ -24,49 +23,48 @@ import java.util.List;
  * Created by hmxbanz on 2017/4/5.
  */
 
-public class HomeNuPresenter extends BasePresenter implements OnDataListener,ClassListNuAdapter.ItemClickListener, SwipeRefreshLayout.OnRefreshListener {
-    private static final int GETSHOWFIRSTLIST = 1;
+public class ShowPresenter extends BasePresenter implements OnDataListener,RecyclerNormalAdapter.ItemClickListener, SwipeRefreshLayout.OnRefreshListener {
+    private static final int GETSHOWLIST = 1;
     private final LinearLayoutManager linearLayoutManager;
-    private List<ShowResponse.DataBean> entity;
+    private final RecyclerNormalAdapter recyclerNormalAdapter;
+    private List<ShowResponse.DataBean> list =new ArrayList<>();
     private RecyclerView videoList;
     private String lastItem ="0";
-    private ClassListNuAdapter dataAdapter;
-    List<ClassListResponse.DataBean> list = new ArrayList<>();
     private SwipeRefreshLayout swiper;
     private boolean isFirstLoad=true;
 
     //private ContactsActivity mActivity;
-    public HomeNuPresenter(Context context){
+    public ShowPresenter(Context context){
         super(context);
         //mActivity = (ContactsActivity) context;
         linearLayoutManager = new LinearLayoutManager(context);
-        dataAdapter = new ClassListNuAdapter(context, list);
+        recyclerNormalAdapter = new RecyclerNormalAdapter(context, list);
+        recyclerNormalAdapter.setOnItemClickListener(this);
     }
 
-    public void init(SwipeRefreshLayout swiper,RecyclerView videoList) {
+    public void init(SwipeRefreshLayout swiper, RecyclerView videoList) {
         this.swiper=swiper;
         this.swiper.setOnRefreshListener(this);
         this.videoList=videoList;
-        this.videoList.setAdapter(dataAdapter);
+        this.videoList.setAdapter(recyclerNormalAdapter);
+        this.videoList.setNestedScrollingEnabled(false);
+
         videoList.setLayoutManager(linearLayoutManager);
         videoList.addOnScrollListener(new GSYVideoPlayerOnScrollListener(linearLayoutManager) {
             @Override
             public void onLoadMore(int currentPage) {
                 LoadDialog.show(context);
-                atm.request(GETSHOWFIRSTLIST,HomeNuPresenter.this);
+                atm.request(GETSHOWLIST,ShowPresenter.this);
             }
         });
 
-
-        LoadDialog.show(context);
-        atm.request(GETSHOWFIRSTLIST,this);
     }
 
     @Override
     public Object doInBackground(int requestCode, String parameter) throws HttpException {
         switch (requestCode) {
-            case GETSHOWFIRSTLIST:
-                return mUserAction.getAnimations("1",lastItem,"4");
+            case GETSHOWLIST:
+                return mUserAction.getShowList(lastItem,"4");
         }
         return null;
     }
@@ -76,38 +74,35 @@ public class HomeNuPresenter extends BasePresenter implements OnDataListener,Cla
         LoadDialog.dismiss(context);
         this.swiper.setRefreshing(false);
         switch (requestCode) {
-            case GETSHOWFIRSTLIST:
-                ClassListResponse response = (ClassListResponse) result;
-                if (response.getCode() == XtdConst.SUCCESS) {
-                    list = response.getData();
-                    lastItem= list.get(list.size()-1).getItem_id();
-                    dataAdapter.setOnItemClickListener(this);
-                    dataAdapter.notifyDataSetChanged();
+            case GETSHOWLIST:
+                ShowResponse showResponse=(ShowResponse)result;
+                if (showResponse != null && showResponse.getData() != null) {
+                    List<ShowResponse.DataBean> listTemp = showResponse.getData();
+                    lastItem=listTemp.get(listTemp.size()-1).getShow_id();
 
                     if(isFirstLoad) {
+                        list=showResponse.getData();
                         isFirstLoad=false;
                         try {
                             String cache=JsonMananger.beanToJson(list);
-                            aCache.put("ShowFirstList",cache);
+                            aCache.put("ShowList",cache);
                         } catch (HttpException e) {
                             e.printStackTrace();
                         }
                     }
                     else
-                        list.addAll(response.getData());
+                        list.addAll(showResponse.getData());
 
-                        dataAdapter.setListData(list);
-                        dataAdapter.notifyDataSetChanged();
+                   recyclerNormalAdapter.notifyDataSetChanged();
 
                 }
-
                 break;
         }
     }
 
     @Override
     public void onItemClick(int position, String itemId, String classId) {
-        DetailActivity.StartActivity(context,itemId,classId);
+        ShowDetailActivity.StartActivity(context,itemId,classId);
     }
 
     @Override
@@ -118,30 +113,30 @@ public class HomeNuPresenter extends BasePresenter implements OnDataListener,Cla
             @Override
             public void onLoadMore(int currentPage) {
                 LoadDialog.show(context);
-                atm.request(GETSHOWFIRSTLIST,HomeNuPresenter.this);
+                atm.request(GETSHOWLIST,ShowPresenter.this);
             }
         });
-        atm.request(GETSHOWFIRSTLIST,this);
+        atm.request(GETSHOWLIST,this);
     }
 
     //加载数据
     public void loadData() {
         if(isFirstLoad) {
-            String Cache = aCache.getAsString("ShowFirstList");
+            String Cache = aCache.getAsString("ShowList");
+            NLog.e("CacheString",Cache);
             if(Cache!=null && !("null").equals(Cache))
                 try {
-                    List<ClassListResponse.DataBean> listCache = JsonMananger.jsonToList(Cache, ClassListResponse.DataBean.class);
-                    if(!TextUtils.isEmpty(listCache.get(0).getResource())) {
+                    List<ShowResponse.DataBean> listCache = JsonMananger.jsonToList(Cache, ShowResponse.DataBean.class);
+                    if(!TextUtils.isEmpty(listCache.get(0).getImg_path())) {
                         list.addAll(listCache);
-                        dataAdapter.notifyDataSetChanged();
+                        recyclerNormalAdapter.notifyDataSetChanged();
                     }
-
                 } catch (HttpException e) {
                     e.printStackTrace();
                 }
         }
 
         LoadDialog.show(context);
-        atm.request(GETSHOWFIRSTLIST,this);
+        atm.request(GETSHOWLIST,this);
     }
 }

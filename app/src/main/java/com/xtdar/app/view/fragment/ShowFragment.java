@@ -12,7 +12,7 @@ import android.widget.RelativeLayout;
 
 import com.shuyu.gsyvideoplayer.video.StandardGSYVideoPlayer;
 import com.xtdar.app.R;
-import com.xtdar.app.presenter.HomeShowPresenter;
+import com.xtdar.app.presenter.ShowPresenter;
 import com.xtdar.app.server.response.ShowResponse;
 
 import java.util.ArrayList;
@@ -31,7 +31,7 @@ public class ShowFragment extends Fragment  {
     List<ShowResponse.DataBean> dataList = new ArrayList<>();
 
     private View view;
-    HomeShowPresenter presenter;
+    ShowPresenter presenter;
     public static ShowFragment instance = null;
     private SwipeRefreshLayout swiper;
 
@@ -48,7 +48,7 @@ public class ShowFragment extends Fragment  {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_show, null);
         initViews();
-        presenter = new HomeShowPresenter(getContext());
+        presenter = new ShowPresenter(getContext());
         return view;
 
 

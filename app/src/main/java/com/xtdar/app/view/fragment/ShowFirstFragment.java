@@ -12,7 +12,7 @@ import android.widget.RelativeLayout;
 
 import com.shuyu.gsyvideoplayer.video.StandardGSYVideoPlayer;
 import com.xtdar.app.R;
-import com.xtdar.app.presenter.HomeNuPresenter;
+import com.xtdar.app.presenter.ShowFirstPresenter;
 
 
 /**
@@ -24,7 +24,7 @@ public class ShowFirstFragment extends Fragment  {
     //@BindView(R.id.list_item_recycler)
     RecyclerView videoList;
     private View view;
-    HomeNuPresenter presenter;
+    ShowFirstPresenter presenter;
     public static ShowFirstFragment instance = null;
     private SwipeRefreshLayout swiper;
 
@@ -42,7 +42,7 @@ public class ShowFirstFragment extends Fragment  {
         view = inflater.inflate(R.layout.fragment_show, null);
         initViews();
 
-        presenter = new HomeNuPresenter(getContext());
+        presenter = new ShowFirstPresenter(getContext());
         return view;
     }
     @Override

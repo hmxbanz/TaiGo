@@ -59,7 +59,7 @@ public class HomeSongFragment extends Fragment {
         initViews();
 //        initData();
         homeSongPresenter = new HomeSongPresenter(getContext());
-        homeSongPresenter.init(recycleView);
+        //homeSongPresenter.init(recycleView);
         return view;
     }
 

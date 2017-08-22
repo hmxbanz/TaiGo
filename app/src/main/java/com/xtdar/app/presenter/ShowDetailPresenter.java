@@ -234,14 +234,14 @@ public class ShowDetailPresenter extends BasePresenter implements LoadMoreListen
 //                            }
 //                        });
                     //recyclerView.addItemDecoration(new DividerItemDecoration(getContext(),DividerItemDecoration.HORIZONTAL));
-                    dataAdapter.setOnItemClickListener(new CommentAdapter.ItemClickListener() {
-                        @Override
-                        public void onItemClick(int position, String itemId, String classId) {
-                            //DetailActivity.StartActivity(context,itemId,classId);
-                        }
-
-
-                    });
+//                    dataAdapter.setOnItemClickListener(new CommentAdapter.ItemClickListener() {
+//                        @Override
+//                        public void onItemClick(int position, String itemId, String classId) {
+//                            //DetailActivity.StartActivity(context,itemId,classId);
+//                        }
+//
+//
+//                    });
 
                 }
                 NToast.shortToast(context,commentResponse.getMsg());
