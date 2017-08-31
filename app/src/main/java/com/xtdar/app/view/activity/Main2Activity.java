@@ -24,6 +24,7 @@ import com.clj.fastble.data.ScanResult;
 import com.shuyu.gsyvideoplayer.GSYVideoManager;
 import com.shuyu.gsyvideoplayer.video.StandardGSYVideoPlayer;
 import com.xtdar.app.R;
+import com.xtdar.app.common.NToast;
 import com.xtdar.app.listener.AlertDialogCallback;
 import com.xtdar.app.presenter.Main2Presenter;
 import com.xtdar.app.service.BluetoothService;
@@ -83,6 +84,8 @@ public class Main2Activity extends BaseActivity implements View.OnClickListener{
         super.onStart();
 
     }
+
+
 
     //finsh之后是不执行的
     @Override

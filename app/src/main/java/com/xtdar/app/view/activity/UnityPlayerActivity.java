@@ -75,6 +75,7 @@ public class UnityPlayerActivity extends Activity
         getWindow().setFormat(PixelFormat.RGBX_8888); // <--- This makes xperia play happy
 
         mUnityPlayer = new UnityPlayer(this);
+
         setContentView(mUnityPlayer);
         mUnityPlayer.requestFocus();
         Intent intent = getIntent();
@@ -117,7 +118,6 @@ public class UnityPlayerActivity extends Activity
             mBluetoothService = null;
         }
     };
-
 
     private BluetoothService.Callback callback = new BluetoothService.Callback() {
         @Override
@@ -280,10 +280,9 @@ public class UnityPlayerActivity extends Activity
     }
 
 
-
 //    *
-//            * @param bytes
-//* @return 将二进制转换为十六进制字符输出
+//    * @param bytes
+//    * @return 将二进制转换为十六进制字符输出
 private static String hexStr = "0123456789ABCDEF"; //全局
     public static String BinaryToHexString(byte[] bytes){
         String result = "";
@@ -401,6 +400,23 @@ private static String hexStr = "0123456789ABCDEF"; //全局
 
     public void UnitySceneReady(){
         UnityPlayer.UnitySendMessage("Main Camera","playGame",gameId);     //进入游戏
-    }  //准备好了
+    }
+
+    //正在加载的游戏
+    public void unityGameLoadingList (String gameId){
+
+    }
+
+    //进度
+    public void unitySendLoadValue(float _value,String _gameID){
+        NLog.e("收到进度数："+_value);
+    }
+
+
+    //进度2
+    public void unityStartDownload(){
+        NLog.e("收到进度数：");
+    }
+
 
 }

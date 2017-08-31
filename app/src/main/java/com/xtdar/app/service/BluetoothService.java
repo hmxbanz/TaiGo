@@ -22,7 +22,7 @@ import com.clj.fastble.utils.HexUtil;
 
 
 public class BluetoothService extends Service {
-    private static final long SCANTIME = 5000;
+    private static final long SCANTIME = 3000;
     public BluetoothBinder mBinder = new BluetoothBinder();
     private BleManager bleManager;
     private Handler threadHandler = new Handler(Looper.getMainLooper());

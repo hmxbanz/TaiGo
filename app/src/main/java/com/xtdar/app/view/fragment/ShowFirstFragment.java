@@ -41,7 +41,6 @@ public class ShowFirstFragment extends Fragment  {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_show, null);
         initViews();
-
         presenter = new ShowFirstPresenter(getContext());
         return view;
     }

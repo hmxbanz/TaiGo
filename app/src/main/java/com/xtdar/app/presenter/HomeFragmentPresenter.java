@@ -22,6 +22,7 @@ import com.xtdar.app.server.response.CommonResponse;
 import com.xtdar.app.server.response.MyDevicesResponse;
 import com.xtdar.app.service.BluetoothService;
 import com.xtdar.app.view.activity.BleActivity;
+import com.xtdar.app.view.activity.CarActivity;
 import com.xtdar.app.view.activity.Main2Activity;
 import com.xtdar.app.view.activity.QrCodeActivity;
 import com.xtdar.app.view.widget.LoadDialog;
@@ -55,6 +56,7 @@ public class HomeFragmentPresenter extends BasePresenter implements OnDataListen
     private String connectMac;
     private String deviceId;
     private int itemIndex;
+    private MyDevicesResponse.DataBean itemSelected;
 
 
     public HomeFragmentPresenter(Context context){
@@ -155,6 +157,7 @@ public class HomeFragmentPresenter extends BasePresenter implements OnDataListen
         //Intent startConectServiceIntent = new Intent(context, DeviceConectService.class);
         //startConectServiceIntent.putExtra("deviceName", deviceName);
         //context.startService(startConectServiceIntent);
+        itemSelected =item;
         String mac=item.getMac_address();
 
         if (mBluetoothService == null) {
@@ -165,6 +168,14 @@ public class HomeFragmentPresenter extends BasePresenter implements OnDataListen
                 DialogWithYesOrNoUtils.getInstance().showDialog(context,"连接成功",null,"去玩游戏",new AlertDialogCallback(){
                     @Override
                     public void executeEvent() {
+                        if(connectMac.equals("C8:FD:19:4F:BA:C9"))
+                        {
+                            Intent newInent=new Intent(context,CarActivity.class);
+                            newInent.putExtra("ServiceId", itemSelected.getService_uuid());
+                            newInent.putExtra("WriteId", itemSelected.getWrite_uuid());
+                            mActivity.startActivity(newInent);
+                        }
+                        else
                         mActivity.getViewPager().setCurrentItem(1, false);
                     }
                 });
@@ -294,9 +305,18 @@ public class HomeFragmentPresenter extends BasePresenter implements OnDataListen
             Collections.reverse(list);
             dataAdapter.notifyDataSetChanged();
 
+
             DialogWithYesOrNoUtils.getInstance().showDialog(context,"连接成功",null,"去玩游戏",new AlertDialogCallback(){
                 @Override
                 public void executeEvent() {
+                    if(connectMac.equals("C8:FD:19:4F:BA:C9"))
+                    {
+                        Intent newInent=new Intent(context,CarActivity.class);
+                        newInent.putExtra("ServiceId", itemSelected.getService_uuid());
+                        newInent.putExtra("WriteId", itemSelected.getWrite_uuid());
+                        mActivity.startActivity(newInent);
+                    }
+                    else
                     mActivity.getViewPager().setCurrentItem(1, false);
                 }
             });

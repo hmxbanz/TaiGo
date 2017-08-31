@@ -40,7 +40,7 @@ import java.util.Random;
  */
 public class MePresenter extends BasePresenter implements OnDataListener{
     private static final int UPLOADAVATOR = 1;
-    private static final int GETINFO = 2;
+    private static final int GETINFO = 3;
     public static final String UPDATENICKNAME = "updateNickName";
     MeActivity mActivity;
     private TextView nickName;

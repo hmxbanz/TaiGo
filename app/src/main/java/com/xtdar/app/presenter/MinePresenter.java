@@ -78,9 +78,11 @@ public class MinePresenter extends BasePresenter implements OnDataListener {
         });
 
     }
-    public void initData(){
+    public void getInfo(){
+        if(basePresenter.isLogin){
         LoadDialog.show(context);
         atm.request(GETINFO,this);
+        }
     }
 
     @Override

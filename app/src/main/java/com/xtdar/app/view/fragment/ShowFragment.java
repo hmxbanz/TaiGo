@@ -50,8 +50,6 @@ public class ShowFragment extends Fragment  {
         initViews();
         presenter = new ShowPresenter(getContext());
         return view;
-
-
     }
     @Override
     public void onStart() {

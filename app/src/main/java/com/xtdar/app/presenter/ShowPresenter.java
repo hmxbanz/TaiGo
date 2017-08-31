@@ -1,6 +1,7 @@
 package com.xtdar.app.presenter;
 
 import android.content.Context;
+import android.support.annotation.NonNull;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -50,13 +51,7 @@ public class ShowPresenter extends BasePresenter implements OnDataListener,Recyc
         this.videoList.setNestedScrollingEnabled(false);
 
         videoList.setLayoutManager(linearLayoutManager);
-        videoList.addOnScrollListener(new GSYVideoPlayerOnScrollListener(linearLayoutManager) {
-            @Override
-            public void onLoadMore(int currentPage) {
-                LoadDialog.show(context);
-                atm.request(GETSHOWLIST,ShowPresenter.this);
-            }
-        });
+        videoList.addOnScrollListener(getGsyVideoPlayerOnScrollListener());
 
     }
 
@@ -93,7 +88,7 @@ public class ShowPresenter extends BasePresenter implements OnDataListener,Recyc
                     else
                         list.addAll(showResponse.getData());
 
-                   recyclerNormalAdapter.notifyDataSetChanged();
+                    recyclerNormalAdapter.notifyDataSetChanged();
 
                 }
                 break;
@@ -107,15 +102,10 @@ public class ShowPresenter extends BasePresenter implements OnDataListener,Recyc
 
     @Override
     public void onRefresh() {
+        this.videoList.addOnScrollListener(getGsyVideoPlayerOnScrollListener());
         lastItem ="0";
         list.clear();
-        videoList.addOnScrollListener(new GSYVideoPlayerOnScrollListener(linearLayoutManager) {
-            @Override
-            public void onLoadMore(int currentPage) {
-                LoadDialog.show(context);
-                atm.request(GETSHOWLIST,ShowPresenter.this);
-            }
-        });
+        LoadDialog.show(context);
         atm.request(GETSHOWLIST,this);
     }
 
@@ -135,8 +125,24 @@ public class ShowPresenter extends BasePresenter implements OnDataListener,Recyc
                     e.printStackTrace();
                 }
         }
-
+        lastItem ="0";
+        isFirstLoad=true;
         LoadDialog.show(context);
         atm.request(GETSHOWLIST,this);
+    }
+
+
+    @NonNull
+    private GSYVideoPlayerOnScrollListener getGsyVideoPlayerOnScrollListener() {
+        return new GSYVideoPlayerOnScrollListener(linearLayoutManager) {
+            @Override
+            public void onLoadMore(int currentPage) {
+                if(currentPage>1) {
+                    LoadDialog.show(context);
+                    atm.request(GETSHOWLIST,ShowPresenter.this);
+                }
+
+            }
+        };
     }
 }

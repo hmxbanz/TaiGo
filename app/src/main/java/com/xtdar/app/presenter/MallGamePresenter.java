@@ -2,6 +2,7 @@ package com.xtdar.app.presenter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.support.annotation.NonNull;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
@@ -10,9 +11,11 @@ import android.text.TextUtils;
 import android.view.View;
 
 import com.clj.fastble.data.ScanResult;
+import com.unity3d.player.UnityPlayer;
 import com.xtdar.app.XtdConst;
 import com.xtdar.app.adapter.AlertListAdapter;
 import com.xtdar.app.adapter.ClassListAnimationAdapter;
+import com.xtdar.app.common.NLog;
 import com.xtdar.app.common.NToast;
 import com.xtdar.app.common.json.JsonMananger;
 import com.xtdar.app.listener.AlertDialogCallback;
@@ -62,6 +65,7 @@ public class MallGamePresenter extends BasePresenter implements  SwipeRefreshLay
     private boolean isClickable=false;
     private BasePresenter basePresenter;
     private boolean isFirstLoad=true;
+    private EndlessRecyclerOnScrollListener onScrollListener;
 
 
     public MallGamePresenter(Context context){
@@ -79,23 +83,10 @@ public class MallGamePresenter extends BasePresenter implements  SwipeRefreshLay
         this.swiper.setOnRefreshListener(this);
         this.recyclerView =recyclerView;
         gridLayoutManager=new GridLayoutManager(context,1);
+        onScrollListener= getOnScrollListener();
+        recyclerView.addOnScrollListener(onScrollListener);
         recyclerView.setLayoutManager(gridLayoutManager);
         recyclerView.setAdapter(dataAdapter);
-        recyclerView.addOnScrollListener(new EndlessRecyclerOnScrollListener(gridLayoutManager) {
-            @Override
-            public void onLoadMore(int currentPage) {
-                LoadDialog.show(context);
-                atm.request(GETMALLLIST,MallGamePresenter.this);
-            }
-
-            @Override
-            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
-                super.onScrollStateChanged(recyclerView, newState);
-                if(recyclerView.getLayoutManager() != null) {
-                    getPositionAndOffset();
-                }
-            }
-        });
         recyclerView.setNestedScrollingEnabled(false);
     }
 
@@ -258,7 +249,11 @@ public class MallGamePresenter extends BasePresenter implements  SwipeRefreshLay
         this.gameId =bean.getGame_id();
         /////////////////////////////////////////mActivity.scanResultList.clear();
         mActivity.mBluetoothService.setScanCallback(callback);
-
+//
+//        UnityPlayer mUnityPlayer=new UnityPlayer(mActivity);
+//        //mActivity.setContentView(mUnityPlayer);
+//        mUnityPlayer.requestFocus();
+//        UnityPlayer.UnitySendMessage("Main Camera","playGame",unityGameId);     //进入游戏
         //if(isClickable) {
             //传游戏名查询
             LoadDialog.show(context);
@@ -267,6 +262,9 @@ public class MallGamePresenter extends BasePresenter implements  SwipeRefreshLay
         //else
            // DialogWithYesOrNoUtils.getInstance().showDialog(context,"请稍候，正在扫描",null,null,new AlertDialogCallback());
     }
+
+
+
 
     /**
      * 记录RecyclerView当前位置
@@ -335,23 +333,10 @@ public class MallGamePresenter extends BasePresenter implements  SwipeRefreshLay
 
     @Override
     public void onRefresh() {
+        recyclerView.addOnScrollListener(getOnScrollListener());
         lastItem ="0";
         list.clear();
-        recyclerView.addOnScrollListener(new EndlessRecyclerOnScrollListener(gridLayoutManager) {
-            @Override
-            public void onLoadMore(int currentPage) {
-                LoadDialog.show(context);
-                atm.request(GETMALLLIST,MallGamePresenter.this);
-            }
-
-            @Override
-            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
-                super.onScrollStateChanged(recyclerView, newState);
-                if(recyclerView.getLayoutManager() != null) {
-                    //getPositionAndOffset();
-                }
-            }
-        });
+        LoadDialog.show(context);
         atm.request(GETMALLLIST,this);
     }
 //弹出框蓝牙列表点击事件
@@ -359,12 +344,14 @@ public class MallGamePresenter extends BasePresenter implements  SwipeRefreshLay
     public boolean onClick(int position, View view, GameCheckResponse.DataBean entity) {
         GameCheckResponse.DataBean bean = deviceList.get(position);
         toUnityPlayerActivityInent = new Intent(context, UnityPlayerActivity.class);
+
         toUnityPlayerActivityInent.putExtra("ServiceId", bean.getService_uuid());
         toUnityPlayerActivityInent.putExtra("ReadId", bean.getRead_uuid());
         toUnityPlayerActivityInent.putExtra("WriteId", bean.getWrite_uuid());
         toUnityPlayerActivityInent.putExtra("isHigh", bean.getDeviceConfig().getIsHigh());
         toUnityPlayerActivityInent.putExtra("gameId", unityGameId);
-            String connectMac =mActivity.mBluetoothService.getMac();
+
+        String connectMac =mActivity.mBluetoothService.getMac();
         if(TextUtils.isEmpty(connectMac)) {
             mActivity.mBluetoothService.scanAndConnect5(bean.getMac_address());
 
@@ -372,8 +359,6 @@ public class MallGamePresenter extends BasePresenter implements  SwipeRefreshLay
         else {
             context.startActivity(toUnityPlayerActivityInent);
         }
-
-
         return true;
     }
 //加载数据
@@ -390,8 +375,32 @@ public class MallGamePresenter extends BasePresenter implements  SwipeRefreshLay
                 e.printStackTrace();
             }
         }
-
+        lastItem ="0";
+        list.clear();
         LoadDialog.show(context);
         atm.request(GETMALLLIST,this);
     }
+
+    @NonNull
+    private EndlessRecyclerOnScrollListener getOnScrollListener() {
+        return new EndlessRecyclerOnScrollListener(MallGamePresenter.this.gridLayoutManager) {
+            @Override
+            public void onLoadMore(int currentPage) {
+                NLog.e("currentPage:" + currentPage);
+               if(currentPage>1) {
+                    LoadDialog.show(context);
+                    atm.request(GETMALLLIST,MallGamePresenter.this);
+                }
+            }
+
+            @Override
+            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+                super.onScrollStateChanged(recyclerView, newState);
+                if(recyclerView.getLayoutManager() != null) {
+                    getPositionAndOffset();
+                }
+            }
+        };
+    }
+
 }

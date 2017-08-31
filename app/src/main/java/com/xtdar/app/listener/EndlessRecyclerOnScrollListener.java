@@ -41,6 +41,5 @@ public abstract class EndlessRecyclerOnScrollListener extends RecyclerView.OnScr
             loading = true;
         }
     }
-
     public abstract void onLoadMore(int currentPage);
 }

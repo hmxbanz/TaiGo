@@ -70,4 +70,5 @@ public class MallGameFragment extends Fragment {
     }
 
 
+
 }

@@ -1,6 +1,7 @@
 package com.xtdar.app.presenter;
 
 import android.content.Context;
+import android.support.annotation.NonNull;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -35,6 +36,7 @@ public class ShowFirstPresenter extends BasePresenter implements OnDataListener,
     List<ClassListResponse.DataBean> list = new ArrayList<>();
     private SwipeRefreshLayout swiper;
     private boolean isFirstLoad=true;
+    private GSYVideoPlayerOnScrollListener onScrollListener;
 
     //private ContactsActivity mActivity;
     public ShowFirstPresenter(Context context){
@@ -50,15 +52,12 @@ public class ShowFirstPresenter extends BasePresenter implements OnDataListener,
         this.videoList=videoList;
         this.videoList.setAdapter(dataAdapter);
         this.videoList.setLayoutManager(linearLayoutManager);
-        this.videoList.addOnScrollListener(new GSYVideoPlayerOnScrollListener(linearLayoutManager) {
-            @Override
-            public void onLoadMore(int currentPage) {
-                LoadDialog.show(context);
-                atm.request(GETSHOWFIRSTLIST,ShowFirstPresenter.this);
-            }
-        });
+        this.videoList.addOnScrollListener(getGsyVideoPlayerOnScrollListener());
+        this.videoList.setNestedScrollingEnabled(false);
 
     }
+
+
 
     @Override
     public Object doInBackground(int requestCode, String parameter) throws HttpException {
@@ -110,15 +109,10 @@ public class ShowFirstPresenter extends BasePresenter implements OnDataListener,
 
     @Override
     public void onRefresh() {
+        this.videoList.addOnScrollListener(getGsyVideoPlayerOnScrollListener());
         lastItem ="0";
         list.clear();
-        videoList.addOnScrollListener(new GSYVideoPlayerOnScrollListener(linearLayoutManager) {
-            @Override
-            public void onLoadMore(int currentPage) {
-                LoadDialog.show(context);
-                atm.request(GETSHOWFIRSTLIST,ShowFirstPresenter.this);
-            }
-        });
+        LoadDialog.show(context);
         atm.request(GETSHOWFIRSTLIST,this);
     }
 
@@ -139,8 +133,23 @@ public class ShowFirstPresenter extends BasePresenter implements OnDataListener,
                     e.printStackTrace();
                 }
         }
-
+        lastItem ="0";
+        list.clear();
         LoadDialog.show(context);
         atm.request(GETSHOWFIRSTLIST,this);
+    }
+
+    @NonNull
+    private GSYVideoPlayerOnScrollListener getGsyVideoPlayerOnScrollListener() {
+        return new GSYVideoPlayerOnScrollListener(linearLayoutManager) {
+            @Override
+            public void onLoadMore(int currentPage) {
+                if(currentPage>1) {
+                    LoadDialog.show(context);
+                    atm.request(GETSHOWFIRSTLIST,ShowFirstPresenter.this);
+                }
+
+            }
+        };
     }
 }

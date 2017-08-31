@@ -51,7 +51,7 @@ public class HomeRecommendPresenter extends BasePresenter implements OnDataListe
 
 
         LoadDialog.show(context);
-        atm.request(GETADS,this);
+        //atm.request(GETADS,this);
 
     }
 

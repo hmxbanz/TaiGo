@@ -101,6 +101,7 @@ public class UserAction extends BaseAction {
                     .build()
                     .execute();
             result =response.body().string();
+            NLog.e("login 接收的", result);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -119,7 +120,6 @@ public class UserAction extends BaseAction {
 
     }
 
-
     //微信绑定
     public CommonResponse wxBind(String unionid,String cellPhone, String pwd) throws HttpException
     {
@@ -135,13 +135,12 @@ public class UserAction extends BaseAction {
                     .build()
                     .execute();
             result =response.body().string();
+            NLog.e("wxBind 接收的", result);
         } catch (IOException e) {
             e.printStackTrace();
         }
         CommonResponse commonResponse = null;
         if (!TextUtils.isEmpty(result)) {
-            NLog.e("接收的", result);
-
             try {
                 commonResponse = JsonMananger.jsonToBean(result, CommonResponse.class);
             } catch (JSONException e) {
@@ -166,13 +165,12 @@ public class UserAction extends BaseAction {
                     .build()
                     .execute();
             result =response.body().string();
+            NLog.e("wxOpenId 接收的", result);
         } catch (IOException e) {
             e.printStackTrace();
         }
         WxLoginResponse wxLoginResponse = null;
         if (!TextUtils.isEmpty(result)) {
-            NLog.e("接收的", result);
-
             try {
                 wxLoginResponse = JsonMananger.jsonToBean(result, WxLoginResponse.class);
             } catch (JSONException e) {
@@ -197,13 +195,12 @@ public class UserAction extends BaseAction {
                     .build()
                     .execute();
             result =response.body().string();
+            NLog.e("qqOpenId 接收的", result);
         } catch (IOException e) {
             e.printStackTrace();
         }
         WxLoginResponse wxLoginResponse = null;
         if (!TextUtils.isEmpty(result)) {
-            NLog.e("接收的", result);
-
             try {
                 wxLoginResponse = JsonMananger.jsonToBean(result, WxLoginResponse.class);
             } catch (JSONException e) {
@@ -229,13 +226,12 @@ public class UserAction extends BaseAction {
                     .build()
                     .execute();
             result =response.body().string();
+            NLog.e("qqBind 接收的", result);
         } catch (IOException e) {
             e.printStackTrace();
         }
         CommonResponse commonResponse = null;
         if (!TextUtils.isEmpty(result)) {
-            NLog.e("接收的", result);
-
             try {
                 commonResponse = JsonMananger.jsonToBean(result, CommonResponse.class);
             } catch (JSONException e) {
@@ -259,13 +255,12 @@ public class UserAction extends BaseAction {
                     .build()
                     .execute();
             result =response.body().string();
+            NLog.e("wbOpenId 接收的", result);
         } catch (IOException e) {
             e.printStackTrace();
         }
         WxLoginResponse wxLoginResponse = null;
         if (!TextUtils.isEmpty(result)) {
-            NLog.e("接收的", result);
-
             try {
                 wxLoginResponse = JsonMananger.jsonToBean(result, WxLoginResponse.class);
             } catch (JSONException e) {
@@ -291,14 +286,13 @@ public class UserAction extends BaseAction {
                     .build()
                     .execute();
             result =response.body().string();
+            NLog.e("wbBind 接收的", result);
         } catch (IOException e) {
             e.printStackTrace();
         }
         CommonResponse commonResponse = null;
         if (!TextUtils.isEmpty(result)) {
-            NLog.e("接收的", result);
-
-            try {
+           try {
                 commonResponse = JsonMananger.jsonToBean(result, CommonResponse.class);
             } catch (JSONException e) {
                 NLog.d(TAG, "CommonResponse occurs JSONException e=" + e.toString());
@@ -323,13 +317,12 @@ public class UserAction extends BaseAction {
                     .build()
                     .execute();
             result =response.body().string();
+            NLog.e("upLoadRid 接收的", result);
         } catch (IOException e) {
             e.printStackTrace();
         }
         CommonResponse commonResponse = null;
         if (!TextUtils.isEmpty(result)) {
-            NLog.e("接收的", result);
-
             try {
                 commonResponse = JsonMananger.jsonToBean(result, CommonResponse.class);
             } catch (JSONException e) {
@@ -353,15 +346,12 @@ public class UserAction extends BaseAction {
                     .build()
                     .execute();
             result =response.body().string();
-            Log.w(TAG, "接收的："+ result);
+            NLog.e("getCaptcha 接收的", result);
         } catch (IOException e) {
             e.printStackTrace();
         }
         CaptchaResponse captchaResponse = null;
         if (!TextUtils.isEmpty(result)) {
-            NLog.e("CaptchaResponse", result);
-
-
             try {
                 captchaResponse = JsonMananger.jsonToBean(result, CaptchaResponse.class);
             } catch (JSONException e) {
@@ -385,14 +375,12 @@ public class UserAction extends BaseAction {
                     .build()
                     .execute();
             result =response.body().string();
+            NLog.e("getCaptchaForget 接收的", result);
         } catch (IOException e) {
             e.printStackTrace();
         }
         CommonResponse commonResponse = null;
         if (!TextUtils.isEmpty(result)) {
-            NLog.e("getCaptchaForget", result);
-
-
             try {
                 commonResponse = JsonMananger.jsonToBean(result, CommonResponse.class);
             } catch (JSONException e) {
@@ -418,13 +406,12 @@ public CommonResponse register(String cellPhone, String password, String captcha
                 .build()
                 .execute();
         result =response.body().string();
+        NLog.e("register 接收的", result);
     } catch (IOException e) {
         e.printStackTrace();
     }
     CommonResponse commonResponse = null;
     if (!TextUtils.isEmpty(result)) {
-        NLog.e("resetPassword", result);
-
         try {
             commonResponse = JsonMananger.jsonToBean(result, CommonResponse.class);
         } catch (JSONException e) {
@@ -450,13 +437,12 @@ public CommonResponse register(String cellPhone, String password, String captcha
                     .build()
                     .execute();
             result =response.body().string();
+            NLog.e("resetPassword 接收的", result);
         } catch (IOException e) {
             e.printStackTrace();
         }
         CommonResponse commonResponse = null;
         if (!TextUtils.isEmpty(result)) {
-            NLog.e("resetPassword", result);
-
             try {
                 commonResponse = JsonMananger.jsonToBean(result, CommonResponse.class);
             } catch (JSONException e) {
@@ -479,13 +465,12 @@ public CommonResponse register(String cellPhone, String password, String captcha
                     .build()
                     .execute();
             result =response.body().string();
+            NLog.e("getInfo 接收的", result);
         } catch (IOException e) {
             e.printStackTrace();
         }
         UserInfoResponse userInfoResponse = null;
         if (!TextUtils.isEmpty(result)) {
-            NLog.e("getInfo", result);
-
             try {
                 userInfoResponse = JsonMananger.jsonToBean(result, UserInfoResponse.class);
             } catch (JSONException e) {
@@ -507,13 +492,12 @@ public CommonResponse register(String cellPhone, String password, String captcha
                     .build()
                     .execute();
             result =response.body().string();
+            NLog.e("getUnReadMsg 接收的", result);
         } catch (IOException e) {
             e.printStackTrace();
         }
         UnReadMsgResponse unReadMsgResponse = null;
         if (!TextUtils.isEmpty(result)) {
-            NLog.e("getUnReadMsg", result);
-
             try {
                 unReadMsgResponse = JsonMananger.jsonToBean(result, UnReadMsgResponse.class);
             } catch (JSONException e) {
@@ -535,14 +519,12 @@ public CommonResponse register(String cellPhone, String password, String captcha
                     .build()
                     .execute();
             result =response.body().string();
+            NLog.e("checkVersion 接收的", result);
         } catch (IOException e) {
             e.printStackTrace();
         }
         VersionResponse versionResponse = null;
         if (!TextUtils.isEmpty(result)) {
-            NLog.e("checkVersion", result);
-
-
             try {
                 versionResponse = JsonMananger.jsonToBean(result, VersionResponse.class);
             } catch (JSONException e) {
@@ -563,13 +545,12 @@ public CommonResponse register(String cellPhone, String password, String captcha
                     .build()
                     .execute();
             result =response.body().string();
+            NLog.e("getTags 接收的", result);
         } catch (IOException e) {
             e.printStackTrace();
         }
         TagResponse tagResponse = null;
         if (!TextUtils.isEmpty(result)) {
-            NLog.e("getTags", result);
-
             try {
                 tagResponse = JsonMananger.jsonToBean(result, TagResponse.class);
             } catch (JSONException e) {
@@ -592,13 +573,12 @@ public CommonResponse register(String cellPhone, String password, String captcha
                     .build()
                     .execute();
             result =response.body().string();
+            NLog.e("getAds 接收的", result);
         } catch (IOException e) {
             e.printStackTrace();
         }
         AdResponse adResponse = null;
         if (!TextUtils.isEmpty(result)) {
-            NLog.e("getAds", result);
-
             try {
                 adResponse = JsonMananger.jsonToBean(result, AdResponse.class);
             } catch (JSONException e) {
@@ -620,13 +600,12 @@ public CommonResponse register(String cellPhone, String password, String captcha
                     .build()
                     .execute();
             result =response.body().string();
+            NLog.e("getRecommends 接收的", result);
         } catch (IOException e) {
             e.printStackTrace();
         }
         RecommendResponse recommendResponse = null;
         if (!TextUtils.isEmpty(result)) {
-            NLog.e("getRecommends", result);
-
             try {
                 recommendResponse = JsonMananger.jsonToBean(result, RecommendResponse.class);
             } catch (JSONException e) {
@@ -647,13 +626,12 @@ public CommonResponse register(String cellPhone, String password, String captcha
                     .build()
                     .execute();
             result =response.body().string();
+            NLog.e("getTaobao 接收的", result);
         } catch (IOException e) {
             e.printStackTrace();
         }
         TaobaoResponse taobaoResponse = null;
         if (!TextUtils.isEmpty(result)) {
-            NLog.e("getTaobao", result);
-
             try {
                 taobaoResponse = JsonMananger.jsonToBean(result, TaobaoResponse.class);
             } catch (JSONException e) {
@@ -675,13 +653,12 @@ public CommonResponse register(String cellPhone, String password, String captcha
                     .build()
                     .execute();
             result =response.body().string();
+            NLog.e("getDetail 接收的", result);
         } catch (IOException e) {
             e.printStackTrace();
         }
         DetailResponse detailResponse = null;
         if (!TextUtils.isEmpty(result)) {
-            NLog.e("getDetail", result);
-
             try {
                 detailResponse = JsonMananger.jsonToBean(result, DetailResponse.class);
             } catch (JSONException e) {
@@ -703,12 +680,12 @@ public CommonResponse register(String cellPhone, String password, String captcha
                     .build()
                     .execute();
             result =response.body().string();
+            NLog.e("getShowDetail 接收的", result);
         } catch (IOException e) {
             e.printStackTrace();
         }
         ShowDetailResponse showDetailResponse = null;
         if (!TextUtils.isEmpty(result)) {
-
             try {
                 showDetailResponse = JsonMananger.jsonToBean(result, ShowDetailResponse.class);
             } catch (JSONException e) {
@@ -731,13 +708,12 @@ public CommonResponse register(String cellPhone, String password, String captcha
                         .build()
                         .execute();
                 result =response.body().string();
+                NLog.e("addFavor 接收的", result);
             } catch (IOException e) {
                 e.printStackTrace();
             }
             CommonResponse commonResponse = null;
             if (!TextUtils.isEmpty(result)) {
-                NLog.e("getDetail", result);
-
                 try {
                     commonResponse = JsonMananger.jsonToBean(result, CommonResponse.class);
                 } catch (JSONException e) {
@@ -762,13 +738,12 @@ public CommonResponse register(String cellPhone, String password, String captcha
                     .build()
                     .execute();
             result =response.body().string();
+            NLog.e("addComment 接收的", result);
         } catch (IOException e) {
             e.printStackTrace();
         }
         CommonResponse commonResponse = null;
         if (!TextUtils.isEmpty(result)) {
-            NLog.e("getDetail", result);
-
             try {
                 commonResponse = JsonMananger.jsonToBean(result, CommonResponse.class);
             } catch (JSONException e) {
@@ -791,13 +766,12 @@ public CommonResponse register(String cellPhone, String password, String captcha
                     .build()
                     .execute();
             result =response.body().string();
+            NLog.e("getRelateRecommend 接收的", result);
         } catch (IOException e) {
             e.printStackTrace();
         }
         RelateRecommendResponse relateRecommend = null;
         if (!TextUtils.isEmpty(result)) {
-            NLog.e("getRelateRecommend", result);
-
             try {
                 relateRecommend = JsonMananger.jsonToBean(result, RelateRecommendResponse.class);
             } catch (JSONException e) {
@@ -821,13 +795,12 @@ public CommonResponse register(String cellPhone, String password, String captcha
                     .build()
                     .execute();
             result =response.body().string();
+            NLog.e("getAnimations 接收的", result);
         } catch (IOException e) {
             e.printStackTrace();
         }
         ClassListResponse  classListResponse= null;
         if (!TextUtils.isEmpty(result)) {
-            NLog.e("getAnimations", result);
-
             try {
                 classListResponse = JsonMananger.jsonToBean(result, ClassListResponse.class);
             } catch (JSONException e) {
@@ -849,13 +822,12 @@ public CommonResponse register(String cellPhone, String password, String captcha
                     .build()
                     .execute();
             result =response.body().string();
+            NLog.e("getSongAlbumDetail 接收的", result);
         } catch (IOException e) {
             e.printStackTrace();
         }
         SongDetailResponse detailResponse = null;
         if (!TextUtils.isEmpty(result)) {
-            NLog.e("getSongAlbumDetail", result);
-
             try {
                 detailResponse = JsonMananger.jsonToBean(result, SongDetailResponse.class);
             } catch (JSONException e) {
@@ -878,13 +850,12 @@ public CommonResponse register(String cellPhone, String password, String captcha
                     .build()
                     .execute();
             result =response.body().string();
+            NLog.e("getShowList 接收的", result);
         } catch (IOException e) {
             e.printStackTrace();
         }
         ShowResponse showResponse = null;
         if (!TextUtils.isEmpty(result)) {
-            NLog.e("getShowList", result);
-
             try {
                 showResponse = JsonMananger.jsonToBean(result, ShowResponse.class);
             } catch (JSONException e) {
@@ -906,13 +877,13 @@ public CommonResponse register(String cellPhone, String password, String captcha
                     .build()
                     .execute();
             result =response.body().string();
+            NLog.e("getMyVideo 接收的", result);
+
         } catch (IOException e) {
             e.printStackTrace();
         }
         ShowResponse showResponse = null;
         if (!TextUtils.isEmpty(result)) {
-            NLog.e("getShowList", result);
-
             try {
                 showResponse = JsonMananger.jsonToBean(result, ShowResponse.class);
             } catch (JSONException e) {
@@ -933,7 +904,7 @@ public CommonResponse register(String cellPhone, String password, String captcha
                     .build()
                     .execute();
             result =response.body().string();
-            Log.w(TAG, "接收的："+ result);
+            NLog.e("getProtocol 接收的", result);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -953,7 +924,7 @@ public CommonResponse register(String cellPhone, String password, String captcha
                     .build()
                     .execute();
             result =response.body().string();
-            Log.w(TAG, "接收的："+ result);
+            NLog.e("getHelps 接收的", result);
         } catch (IOException e) {
             e.printStackTrace();
 
@@ -983,7 +954,7 @@ public CommonResponse register(String cellPhone, String password, String captcha
                     .build()
                     .execute();
             result =response.body().string();
-            Log.w(TAG, "接收的："+ result);
+            NLog.e("save 接收的", result);
         } catch (IOException e) {
             e.printStackTrace();
 
@@ -1008,7 +979,7 @@ public CommonResponse register(String cellPhone, String password, String captcha
                     .build()
                     .execute();
             result =response.body().string();
-            Log.w(TAG, "接收的："+ result);
+            NLog.e("bindDevice 接收的", result);
         } catch (IOException e) {
             e.printStackTrace();
 
@@ -1031,7 +1002,7 @@ public CommonResponse register(String cellPhone, String password, String captcha
                     .build()
                     .execute();
             result =response.body().string();
-            Log.w(TAG, "接收的："+ result);
+            NLog.e("getDevices 接收的", result);
         } catch (IOException e) {
             e.printStackTrace();
 
@@ -1057,13 +1028,12 @@ public CommonResponse register(String cellPhone, String password, String captcha
                     .build()
                     .execute();
             result =response.body().string();
+            NLog.e("getShot 接收的", result);
         } catch (IOException e) {
             e.printStackTrace();
         }
         GameListResponse  gameListResponse= null;
         if (!TextUtils.isEmpty(result)) {
-            NLog.e("接收的", result);
-
             try {
                 gameListResponse = JsonMananger.jsonToBean(result, GameListResponse.class);
                 for(GameListResponse.DataBean bean:gameListResponse.getData())
@@ -1094,13 +1064,12 @@ public CommonResponse register(String cellPhone, String password, String captcha
                     .build()
                     .execute();
             result =response.body().string();
+            NLog.e("getComment 接收的", result);
         } catch (IOException e) {
             e.printStackTrace();
         }
         CommentResponse  gameListResponse= null;
         if (!TextUtils.isEmpty(result)) {
-            NLog.e("接收的", result);
-
             try {
                 gameListResponse = JsonMananger.jsonToBean(result, CommentResponse.class);
             } catch (JSONException e) {
@@ -1132,13 +1101,12 @@ public CommonResponse register(String cellPhone, String password, String captcha
                     .build()
                     .execute();
             result =response.body().string();
+            NLog.e("uploadAvatar 接收的", result);
         } catch (IOException e) {
             e.printStackTrace();
         }
         CommonResponse commonResponse = null;
         if (!TextUtils.isEmpty(result)) {
-            NLog.e(TAG, "接收的："+ result);
-
             try {
                 commonResponse = JsonMananger.jsonToBean(result, CommonResponse.class);
             } catch (JSONException e) {
@@ -1171,14 +1139,12 @@ public CommonResponse register(String cellPhone, String password, String captcha
                     .build()
                     .execute();
             result =response.body().string();
-            Log.w(TAG, "接收的："+ result);
+            NLog.e("addDynamic 接收的", result);
         } catch (IOException e) {
             e.printStackTrace();
         }
         CommonResponse commonResponse = null;
         if (!TextUtils.isEmpty(result)) {
-            NLog.e("CommonResponse", result);
-
             try {
                 commonResponse = JsonMananger.jsonToBean(result, CommonResponse.class);
             } catch (JSONException e) {
@@ -1202,6 +1168,7 @@ public CommonResponse register(String cellPhone, String password, String captcha
                     .build()
                     .execute();
             result =response.body().string();
+            NLog.e("getFavorList 接收的", result);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -1229,14 +1196,12 @@ public CommonResponse register(String cellPhone, String password, String captcha
                     .build()
                     .execute();
             result =response.body().string();
-            Log.w(TAG, "接收的："+ result);
+            NLog.e("delFavor 接收的", result);
         } catch (IOException e) {
             e.printStackTrace();
         }
         CommonResponse commonResponse = null;
         if (!TextUtils.isEmpty(result)) {
-            NLog.e("CommonResponse", result);
-
             try {
                 commonResponse = JsonMananger.jsonToBean(result, CommonResponse.class);
             } catch (JSONException e) {
@@ -1260,14 +1225,12 @@ public CommonResponse register(String cellPhone, String password, String captcha
                     .build()
                     .execute();
             result =response.body().string();
-            Log.w(TAG, "接收的："+ result);
+            NLog.e("delMyVideo 接收的", result);
         } catch (IOException e) {
             e.printStackTrace();
         }
         CommonResponse commonResponse = null;
         if (!TextUtils.isEmpty(result)) {
-            NLog.e("CommonResponse", result);
-
             try {
                 commonResponse = JsonMananger.jsonToBean(result, CommonResponse.class);
             } catch (JSONException e) {
@@ -1291,6 +1254,7 @@ public CommonResponse register(String cellPhone, String password, String captcha
                     .build()
                     .execute();
             result =response.body().string();
+            NLog.e("getCommentList 接收的", result);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -1319,6 +1283,7 @@ public CommonResponse register(String cellPhone, String password, String captcha
                     .build()
                     .execute();
             result =response.body().string();
+            NLog.e("getShopMore 接收的", result);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -1348,6 +1313,7 @@ public CommonResponse register(String cellPhone, String password, String captcha
                     .build()
                     .execute();
             result =response.body().string();
+            NLog.e("getSysMsgList 接收的", result);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -1387,6 +1353,7 @@ public CommonResponse register(String cellPhone, String password, String captcha
                     .build()
                     .execute();
             result =response.body().string();
+            NLog.e("getPersonMsgList 接收的", result);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -1426,14 +1393,12 @@ public CommonResponse register(String cellPhone, String password, String captcha
                     .build()
                     .execute();
             result =response.body().string();
-            Log.w(TAG, "接收的："+ result);
+            NLog.e("gameCheck 接收的", result);
         } catch (IOException e) {
             e.printStackTrace();
         }
         GameCheckResponse commonResponse = null;
         if (!TextUtils.isEmpty(result)) {
-            NLog.e("CommonResponse", result);
-
             try {
                 commonResponse = JsonMananger.jsonToBean(result, GameCheckResponse.class);
             } catch (JSONException e) {
@@ -1459,14 +1424,12 @@ public CommonResponse register(String cellPhone, String password, String captcha
                     .build()
                     .execute();
             result =response.body().string();
-            Log.w(TAG, "接收的："+ result);
+            NLog.e("feedback 接收的", result);
         } catch (IOException e) {
             e.printStackTrace();
         }
         CommonResponse commonResponse = null;
         if (!TextUtils.isEmpty(result)) {
-            NLog.e("CommonResponse", result);
-
             try {
                 commonResponse = JsonMananger.jsonToBean(result, CommonResponse.class);
             } catch (JSONException e) {
@@ -1490,14 +1453,12 @@ public CommonResponse register(String cellPhone, String password, String captcha
                     .build()
                     .execute();
             result =response.body().string();
-            Log.w(TAG, "接收的："+ result);
+            NLog.e("unBindDevice 接收的", result);
         } catch (IOException e) {
             e.printStackTrace();
         }
         CommonResponse commonResponse = null;
         if (!TextUtils.isEmpty(result)) {
-            NLog.e("CommonResponse", result);
-
             try {
                 commonResponse = JsonMananger.jsonToBean(result, CommonResponse.class);
             } catch (JSONException e) {

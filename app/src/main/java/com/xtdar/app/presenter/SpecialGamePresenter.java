@@ -1,6 +1,7 @@
 package com.xtdar.app.presenter;
 
 import android.content.Context;
+import android.support.annotation.NonNull;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
@@ -37,6 +38,7 @@ public class SpecialGamePresenter extends BasePresenter implements SwipeRefreshL
     private SwipeRefreshLayout swiper;
 
     private boolean isFirstLoad=true;
+    private EndlessRecyclerOnScrollListener onScrollListener;
 
     public SpecialGamePresenter(Context context){
         super(context);
@@ -52,28 +54,11 @@ public class SpecialGamePresenter extends BasePresenter implements SwipeRefreshL
         this.swiper.setOnRefreshListener(this);
         this.recyclerView =recyclerView;
         gridLayoutManager=new GridLayoutManager(context,1);
+        onScrollListener= getOnScrollListener();
         recyclerView.setLayoutManager(gridLayoutManager);
         recyclerView.setAdapter(dataAdapter);
-        recyclerView.addOnScrollListener(new EndlessRecyclerOnScrollListener(gridLayoutManager) {
-            @Override
-            public void onLoadMore(int currentPage) {
-                LoadDialog.show(context);
-                atm.request(GETSPECIALlIST,SpecialGamePresenter.this);
-            }
-
-            @Override
-            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
-                super.onScrollStateChanged(recyclerView, newState);
-                if(recyclerView.getLayoutManager() != null) {
-                    getPositionAndOffset();
-                }
-            }
-        });
+        recyclerView.addOnScrollListener(onScrollListener);
         recyclerView.setNestedScrollingEnabled(false);
-
-        LoadDialog.show(context);
-        atm.request(GETSPECIALlIST,this);
-
     }
 
     @Override
@@ -145,23 +130,9 @@ public class SpecialGamePresenter extends BasePresenter implements SwipeRefreshL
 
     @Override
     public void onRefresh() {
+        recyclerView.addOnScrollListener(getOnScrollListener());
         lastItem ="0";
         list.clear();
-        recyclerView.addOnScrollListener(new EndlessRecyclerOnScrollListener(gridLayoutManager) {
-            @Override
-            public void onLoadMore(int currentPage) {
-                LoadDialog.show(context);
-                atm.request(GETSPECIALlIST,SpecialGamePresenter.this);
-            }
-
-            @Override
-            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
-                super.onScrollStateChanged(recyclerView, newState);
-                if(recyclerView.getLayoutManager() != null) {
-                    //getPositionAndOffset();
-                }
-            }
-        });
         LoadDialog.show(context);
         atm.request(GETSPECIALlIST,this);
     }
@@ -173,6 +144,7 @@ public class SpecialGamePresenter extends BasePresenter implements SwipeRefreshL
 
     //加载数据
     public void loadData() {
+
         if(isFirstLoad) {
             String Cache = aCache.getAsString("SpecialGameList");
             if(Cache!=null && !("null").equals(Cache))
@@ -185,9 +157,33 @@ public class SpecialGamePresenter extends BasePresenter implements SwipeRefreshL
                     e.printStackTrace();
                 }
         }
-
+        lastItem ="0";
+        list.clear();
         LoadDialog.show(context);
         atm.request(GETSPECIALlIST,this);
     }
+
+
+    @NonNull
+    private EndlessRecyclerOnScrollListener getOnScrollListener() {
+        return new EndlessRecyclerOnScrollListener(SpecialGamePresenter.this.gridLayoutManager) {
+            @Override
+            public void onLoadMore(int currentPage) {
+                if(currentPage>1) {
+                    LoadDialog.show(context);
+                    atm.request(GETSPECIALlIST, SpecialGamePresenter.this);
+                }
+            }
+
+            @Override
+            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+                super.onScrollStateChanged(recyclerView, newState);
+                if(recyclerView.getLayoutManager() != null) {
+                    getPositionAndOffset();
+                }
+            }
+        };
+    }
+
 
 }

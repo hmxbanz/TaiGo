@@ -13,15 +13,6 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.alibaba.baichuan.android.trade.AlibcTrade;
-import com.alibaba.baichuan.android.trade.callback.AlibcTradeCallback;
-import com.alibaba.baichuan.android.trade.constants.AlibcConstants;
-import com.alibaba.baichuan.android.trade.model.AlibcShowParams;
-import com.alibaba.baichuan.android.trade.model.OpenType;
-import com.alibaba.baichuan.android.trade.model.TradeResult;
-import com.alibaba.baichuan.android.trade.page.AlibcBasePage;
-import com.alibaba.baichuan.android.trade.page.AlibcMyCartsPage;
-import com.alibaba.baichuan.android.trade.page.AlibcMyOrdersPage;
 import com.xtdar.app.common.NLog;
 import com.xtdar.app.common.PhotoUtils;
 import com.xtdar.app.presenter.MinePresenter;
@@ -39,9 +30,6 @@ import com.xtdar.app.view.widget.SelectableRoundedImageView;
 import com.xtdar.app.widget.progressBar.MaterialProgressBar;
 
 import com.xtdar.app.R;
-
-import java.util.HashMap;
-import java.util.Map;
 
 
 /**
@@ -93,7 +81,7 @@ public class MineFragment extends Fragment implements View.OnClickListener {
     @Override
     public void onStart() {
         super.onStart();
-        presenter.initData();
+        presenter.getInfo();
         NLog.e("fragment-----","onStart");
     }
 

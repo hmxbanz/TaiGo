@@ -21,9 +21,12 @@ public class XtdConst {
     public static final String DYNAMICID = "dynamicId";
     public static final String IMGURI="http://dyz.173csw.com/";
     public static final String SERVERURI="http://dyz.173csw.com/";
+//    public static final String IMGURI="http://data.xtaigo.com/";
+//    public static final String SERVERURI="http://data.xtaigo.com/";
     public static final String ISLOGIN = "isLogin";
     public static final String ITEMID = "item_id";
     public static final String CLASSID = "class_id";
     public static final String ALBUMID = "albumId";
     public static final String SONGID = "songId";
+
 }
