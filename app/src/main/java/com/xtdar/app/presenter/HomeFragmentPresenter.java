@@ -186,10 +186,8 @@ public class HomeFragmentPresenter extends BasePresenter implements OnDataListen
                 });
             }
             else {
-                mActivity.getViewPager().setCurrentItem(1, false);
-                //LoadDialog.show(context);
-                //mBluetoothService.closeConnect();
-                //mBluetoothService.scanAndConnect5(mac);
+                LoadDialog.show(context);
+                mBluetoothService.scanAndConnect5(mac);
             }
         }
     }
@@ -239,6 +237,7 @@ public class HomeFragmentPresenter extends BasePresenter implements OnDataListen
         public void onStartScan() {
             for(MyDevicesResponse.DataBean bean:list)
             {
+                if(!bean.getMac_address().equals(connectMac))
                     bean.setStatus(0);
             }
             dataAdapter.notifyDataSetChanged();
@@ -293,7 +292,7 @@ public class HomeFragmentPresenter extends BasePresenter implements OnDataListen
         @Override
         public void onDisConnected() {
             NToast.longToast(context, "连接断开");
-            connectMac="";
+            mActivity.scanResultList.clear();
         }
 
 
@@ -301,7 +300,6 @@ public class HomeFragmentPresenter extends BasePresenter implements OnDataListen
         @Override
         public void onServicesDiscovered() {
             LoadDialog.dismiss(context);
-            MainApplication.MacAddr =mBluetoothService.getMac();
             connectMac =mBluetoothService.getMac();
                 for(MyDevicesResponse.DataBean bean:list)
                 {

@@ -110,7 +110,7 @@ public class UnityPlayerActivity extends Activity
 
     private void unbindService() {
         this.unbindService(mFhrSCon);
-        mBluetoothService.closeConnect();
+        //mBluetoothService.closeConnect();
     }
 
     private ServiceConnection mFhrSCon = new ServiceConnection() {

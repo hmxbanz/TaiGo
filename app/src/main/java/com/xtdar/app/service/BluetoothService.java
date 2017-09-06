@@ -98,7 +98,7 @@ public class BluetoothService extends Service {
     }
 
     public void scanDevice() {
-        resetInfo();
+        //resetInfo();
 
         if (mCallback != null) {
             mCallback.onStartScan();
@@ -542,7 +542,7 @@ public class BluetoothService extends Service {
     }
 
     public void scanAndConnect5(String mac) {
-        resetInfo();
+        //resetInfo();
 
         if (mCallback != null) {
             mCallback.onStartScan();
@@ -596,6 +596,7 @@ public class BluetoothService extends Service {
 
             @Override
             public void onDisConnected(BluetoothGatt gatt, int status, BleException exception) {
+                resetInfo();
                 runOnMainThread(new Runnable() {
                     @Override
                     public void run() {

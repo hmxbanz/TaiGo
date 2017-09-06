@@ -155,7 +155,7 @@ public class MallGamePresenter extends BasePresenter implements  SwipeRefreshLay
 
                     }
                     //对比
-                    String connectMac = MainApplication.MacAddr;
+                    String connectMac = mActivity.mBluetoothService.getMac();
                     for(GameCheckResponse.DataBean bean: deviceList){
                         for(ScanResult result1:mActivity.scanResultList)
                         {
@@ -341,14 +341,14 @@ public class MallGamePresenter extends BasePresenter implements  SwipeRefreshLay
         toUnityPlayerActivityInent.putExtra("gameId", unityGameId);
 
         String connectMac = mActivity.mBluetoothService.getMac();
-       // if(TextUtils.isEmpty(connectMac)) {
+        NLog.w("connectMac:::::::",connectMac);
+        if(TextUtils.isEmpty(connectMac)) {
             LoadDialog.show(context);
             mActivity.mBluetoothService.scanAndConnect5(bean.getMac_address());
-
-//        }
-//        else {
-//            context.startActivity(toUnityPlayerActivityInent);
-//        }
+        }
+        else {
+            context.startActivity(toUnityPlayerActivityInent);
+        }
         return true;
     }
 //加载数据
