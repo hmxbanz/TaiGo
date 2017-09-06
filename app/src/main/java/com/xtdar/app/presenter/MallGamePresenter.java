@@ -12,6 +12,7 @@ import android.view.View;
 
 import com.clj.fastble.data.ScanResult;
 import com.unity3d.player.UnityPlayer;
+import com.xtdar.app.MainApplication;
 import com.xtdar.app.XtdConst;
 import com.xtdar.app.adapter.AlertListAdapter;
 import com.xtdar.app.adapter.ClassListAnimationAdapter;
@@ -66,6 +67,7 @@ public class MallGamePresenter extends BasePresenter implements  SwipeRefreshLay
     private BasePresenter basePresenter;
     private boolean isFirstLoad=true;
     private EndlessRecyclerOnScrollListener onScrollListener;
+    private DialogWithList dialogWithList;
 
 
     public MallGamePresenter(Context context){
@@ -137,8 +139,8 @@ public class MallGamePresenter extends BasePresenter implements  SwipeRefreshLay
                 GameCheckResponse gameCheckResponse = (GameCheckResponse) result;
                 if (gameCheckResponse.getCode() == 1) {
                         //可以玩弹出选择设备列表
-                    //弹出设备推荐列表
-//找高低配设备属性
+                        //弹出设备推荐列表
+                        //找高低配设备属性
                     deviceList=gameCheckResponse.getData();
                     for(GameCheckResponse.DataBean bean:deviceList)
                     {
@@ -152,9 +154,8 @@ public class MallGamePresenter extends BasePresenter implements  SwipeRefreshLay
 
 
                     }
-//对比
-
-                    String connectMac =mActivity.mBluetoothService.getMac();
+                    //对比
+                    String connectMac = MainApplication.MacAddr;
                     for(GameCheckResponse.DataBean bean: deviceList){
                         for(ScanResult result1:mActivity.scanResultList)
                         {
@@ -180,7 +181,7 @@ public class MallGamePresenter extends BasePresenter implements  SwipeRefreshLay
                     }
                     else
                     {
-                        DialogWithList dialogWithList=DialogWithList.getInstance(context);
+                        dialogWithList=DialogWithList.getInstance(context);
                         dialogWithList.showDialog(new DialogWithList.DialogCallBack(){
                             @Override
                             public void executeEvent() {
@@ -207,7 +208,7 @@ public class MallGamePresenter extends BasePresenter implements  SwipeRefreshLay
                 {
                     //无设备可用弹出推荐列表
                     //弹出设备推荐列表
-                    DialogWithList dialogWithList=DialogWithList.getInstance(context);
+                    dialogWithList=DialogWithList.getInstance(context);
                     dialogWithList.showDialog(new DialogWithList.DialogCallBack(){
                         @Override
                         public void executeEvent() {
@@ -248,11 +249,10 @@ public class MallGamePresenter extends BasePresenter implements  SwipeRefreshLay
         this.unityGameId =String.valueOf(bean.getGameConfig().getUnity_game_id());
         this.gameId =bean.getGame_id();
         /////////////////////////////////////////mActivity.scanResultList.clear();
-        mActivity.mBluetoothService.setScanCallback(callback);
-//
-//        UnityPlayer mUnityPlayer=new UnityPlayer(mActivity);
-//        //mActivity.setContentView(mUnityPlayer);
-//        mUnityPlayer.requestFocus();
+        //mActivity.mBluetoothService.setScanCallback(callback);
+        mActivity.mBluetoothService.scanDevice();
+
+
 //        UnityPlayer.UnitySendMessage("Main Camera","playGame",unityGameId);     //进入游戏
         //if(isClickable) {
             //传游戏名查询
@@ -293,35 +293,22 @@ public class MallGamePresenter extends BasePresenter implements  SwipeRefreshLay
 
     private BluetoothService.Callback callback = new BluetoothService.Callback() {
         @Override
-        public void onStartScan() {
-        }
+        public void onStartScan() {        }
 
         @Override
-        public void onScanning(ScanResult result) {
-
-            //NToast.shortToast(context, "name:::::"+result.getDevice().getAddress());
-        }
+        public void onScanning(ScanResult result) {        }
 
         @Override
-        public void onScanComplete() {
-            isClickable=true;
-        }
+        public void onScanComplete() {   isClickable=true;       }
 
         @Override
-        public void onConnecting() {
-            LoadDialog.show(context);
-        }
+        public void onConnecting() {        }
 
         @Override
-        public void onConnectFail() {
-            LoadDialog.dismiss(context);
-            NToast.shortToast(context, "连接失败,请检查设备是否开启");
-        }
+        public void onConnectFail() {        }
 
         @Override
-        public void onDisConnected() {
-            NToast.longToast(context, "连接断开");
-        }
+        public void onDisConnected() {       }
 
         @Override
         public void onServicesDiscovered() {
@@ -342,6 +329,8 @@ public class MallGamePresenter extends BasePresenter implements  SwipeRefreshLay
 //弹出框蓝牙列表点击事件
     @Override
     public boolean onClick(int position, View view, GameCheckResponse.DataBean entity) {
+        dialogWithList.cancleAlterDialog();
+        mActivity.mBluetoothService.setScanCallback(callback);
         GameCheckResponse.DataBean bean = deviceList.get(position);
         toUnityPlayerActivityInent = new Intent(context, UnityPlayerActivity.class);
 
@@ -351,14 +340,15 @@ public class MallGamePresenter extends BasePresenter implements  SwipeRefreshLay
         toUnityPlayerActivityInent.putExtra("isHigh", bean.getDeviceConfig().getIsHigh());
         toUnityPlayerActivityInent.putExtra("gameId", unityGameId);
 
-        String connectMac =mActivity.mBluetoothService.getMac();
-        if(TextUtils.isEmpty(connectMac)) {
+        String connectMac = mActivity.mBluetoothService.getMac();
+       // if(TextUtils.isEmpty(connectMac)) {
+            LoadDialog.show(context);
             mActivity.mBluetoothService.scanAndConnect5(bean.getMac_address());
 
-        }
-        else {
-            context.startActivity(toUnityPlayerActivityInent);
-        }
+//        }
+//        else {
+//            context.startActivity(toUnityPlayerActivityInent);
+//        }
         return true;
     }
 //加载数据
@@ -383,10 +373,10 @@ public class MallGamePresenter extends BasePresenter implements  SwipeRefreshLay
 
     @NonNull
     private EndlessRecyclerOnScrollListener getOnScrollListener() {
-        return new EndlessRecyclerOnScrollListener(MallGamePresenter.this.gridLayoutManager) {
+        return new EndlessRecyclerOnScrollListener(gridLayoutManager) {
             @Override
             public void onLoadMore(int currentPage) {
-                NLog.e("currentPage:" + currentPage);
+                NLog.e("currentPage:", currentPage);
                if(currentPage>1) {
                     LoadDialog.show(context);
                     atm.request(GETMALLLIST,MallGamePresenter.this);

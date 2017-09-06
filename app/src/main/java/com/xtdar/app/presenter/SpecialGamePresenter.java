@@ -171,7 +171,7 @@ public class SpecialGamePresenter extends BasePresenter implements SwipeRefreshL
             public void onLoadMore(int currentPage) {
                 if(currentPage>1) {
                     LoadDialog.show(context);
-                    atm.request(GETSPECIALlIST, SpecialGamePresenter.this);
+                    //atm.request(GETSPECIALlIST, SpecialGamePresenter.this);
                 }
             }
 

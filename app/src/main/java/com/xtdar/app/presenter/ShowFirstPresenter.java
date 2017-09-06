@@ -10,6 +10,7 @@ import android.text.TextUtils;
 import com.xtdar.app.XtdConst;
 import com.xtdar.app.adapter.ClassListNuAdapter;
 import com.xtdar.app.common.NLog;
+import com.xtdar.app.common.NToast;
 import com.xtdar.app.common.json.JsonMananger;
 import com.xtdar.app.listener.GSYVideoPlayerOnScrollListener;
 import com.xtdar.app.server.HttpException;
@@ -77,6 +78,7 @@ public class ShowFirstPresenter extends BasePresenter implements OnDataListener,
                 ClassListResponse response = (ClassListResponse) result;
                 if (response.getCode() == XtdConst.SUCCESS) {
                     List<ClassListResponse.DataBean> listTemp = response.getData();
+                    NLog.e("ShowFirstCacheString>>>>",listTemp);
                     lastItem=listTemp.get(listTemp.size()-1).getItem_id();
 
                     if(isFirstLoad) {
@@ -118,12 +120,16 @@ public class ShowFirstPresenter extends BasePresenter implements OnDataListener,
 
     //加载数据
     public void loadData() {
+
         if(isFirstLoad) {
             String Cache = aCache.getAsString("ShowFirstList");
-            NLog.e("CacheString",Cache);
+            NLog.e("ShowFirstCacheString",Cache);
+
             if(Cache!=null && !("null").equals(Cache))
                 try {
                     List<ClassListResponse.DataBean> listCache = JsonMananger.jsonToList(Cache, ClassListResponse.DataBean.class);
+                    NLog.e("ShowFirstCacheString",listCache);
+
                     if(!TextUtils.isEmpty(listCache.get(0).getResource())) {
                         list.addAll(listCache);
                         dataAdapter.notifyDataSetChanged();
@@ -131,6 +137,9 @@ public class ShowFirstPresenter extends BasePresenter implements OnDataListener,
 
                 } catch (HttpException e) {
                     e.printStackTrace();
+                    NToast.longToast(context,"ShowFirstCacheString:"+Cache);
+                    NToast.longToast(context,"ShowFirstCacheString:"+Cache);
+                    NToast.longToast(context,"ShowFirstCacheString:"+Cache);
                 }
         }
         lastItem ="0";

@@ -31,11 +31,13 @@ import java.util.List;
  * Created by hmxbanz on 2017/4/5.
  */
 
-public class CarPresenter extends BasePresenter implements OnDataListener,View.OnClickListener {
+public class CarPresenter extends BasePresenter implements OnDataListener,View.OnClickListener,View.OnTouchListener {
     private static final String TAG = "蓝牙发送";
     //private CarActivity mActivity;
     private BluetoothService mBluetoothService;
     private String serviceId,writeId;
+    private String serviceUuid,writeUuid;
+    private ImageButton btnControlTop,btnControlRight,btnControlBottom,btnControlLeft;
 
     public CarPresenter(Context context){
         super(context);
@@ -44,8 +46,15 @@ public class CarPresenter extends BasePresenter implements OnDataListener,View.O
 
     public void init(RockerView rockerView1, final ImageButton btnControlTop, final ImageButton btnControlLeft, final ImageButton btnControlBottom, final ImageButton btnControlRight, Button btnTurnLeft, Button btnTurnRight, Button btnGet, Button btnLeftGo,String serviceId, String writeId) {
         LoadDialog.show(context);
+        btnControlTop.setOnClickListener(this);
+        btnControlLeft.setOnClickListener(this);
+        btnControlBottom.setOnClickListener(this);
+        btnControlRight.setOnClickListener(this);
 
         btnGet.setOnClickListener(this);
+        btnLeftGo.setOnClickListener(this);
+        btnTurnLeft.setOnClickListener(this);
+        btnTurnRight.setOnClickListener(this);
         rockerView1.setRockerChangeListener(new RockerView.RockerChangeListener() {
             @Override
             public void report(float x, float y) {
@@ -57,57 +66,11 @@ public class CarPresenter extends BasePresenter implements OnDataListener,View.O
             }
         });
 
-        btnControlTop.setOnTouchListener(new View.OnTouchListener(){
-            public boolean onTouch(View v, MotionEvent event) {
-                if(event.getAction() == MotionEvent.ACTION_DOWN){
-                    //重新设置按下时的背景图片
-                    btnControlTop.setImageResource(R.drawable.car_control_top2);
-                }else if(event.getAction() == MotionEvent.ACTION_UP){
-                    //再修改为抬起时的正常图片
-                    btnControlTop.setImageResource(R.drawable.car_control_top);
-                }
-                return false;
-            }
-        });
+        this.btnControlTop=btnControlTop;
+        this.btnControlRight=btnControlRight;
+        this.btnControlBottom=btnControlBottom;
+        this.btnControlLeft=btnControlLeft;
 
-        btnControlBottom.setOnTouchListener(new View.OnTouchListener(){
-            public boolean onTouch(View v, MotionEvent event) {
-                if(event.getAction() == MotionEvent.ACTION_DOWN){
-                    //重新设置按下时的背景图片
-                    btnControlBottom.setImageResource(R.drawable.car_control_bottom2);
-                }else if(event.getAction() == MotionEvent.ACTION_UP){
-                    //再修改为抬起时的正常图片
-                    btnControlBottom.setImageResource(R.drawable.car_control_bottom);
-                }
-                return false;
-            }
-        });
-
-        btnControlLeft.setOnTouchListener(new View.OnTouchListener(){
-            public boolean onTouch(View v, MotionEvent event) {
-                if(event.getAction() == MotionEvent.ACTION_DOWN){
-                    //重新设置按下时的背景图片
-                    btnControlLeft.setImageResource(R.drawable.car_control_left2);
-                }else if(event.getAction() == MotionEvent.ACTION_UP){
-                    //再修改为抬起时的正常图片
-                    btnControlLeft.setImageResource(R.drawable.car_control_left);
-                }
-                return false;
-            }
-        });
-
-        btnControlRight.setOnTouchListener(new View.OnTouchListener(){
-            public boolean onTouch(View v, MotionEvent event) {
-                if(event.getAction() == MotionEvent.ACTION_DOWN){
-                    //重新设置按下时的背景图片
-                    btnControlRight.setImageResource(R.drawable.car_control_right2);
-                }else if(event.getAction() == MotionEvent.ACTION_UP){
-                    //再修改为抬起时的正常图片
-                    btnControlRight.setImageResource(R.drawable.car_control_right);
-                }
-                return false;
-            }
-        });
 
         this.serviceId=serviceId;
         this.writeId=writeId;
@@ -206,6 +169,9 @@ public class CarPresenter extends BasePresenter implements OnDataListener,View.O
             }
         }
 //        final BluetoothGattCharacteristic characteristic = mBluetoothService.getCharacteristic();
+
+        serviceUuid=mBluetoothService.getService().getUuid().toString();
+        writeUuid=mBluetoothService.getCharacteristic().getUuid().toString();
     }
 
 
@@ -235,45 +201,80 @@ public class CarPresenter extends BasePresenter implements OnDataListener,View.O
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.turn_left:
+                sendCommand("left");
                 break;
             case R.id.turn_right:
+                sendCommand("right");
                 break;
             case R.id.btn_get:
-                mBluetoothService.write(mBluetoothService.getService().getUuid().toString(), mBluetoothService.getCharacteristic().getUuid().toString(), "catch", new BleCharacterCallback() {
-                    @Override
-                    public void onSuccess(BluetoothGattCharacteristic characteristic) {
-
-                    }
-
-                    @Override
-                    public void onFailure(BleException exception) {
-
-                    }
-
-                    @Override
-                    public void onInitiatedResult(boolean result) {
-
-                    }
-                });
+                sendCommand("catch");
                 break;
             case R.id.btn_left_go:
-                mBluetoothService.write(mBluetoothService.getService().getUuid().toString(), mBluetoothService.getCharacteristic().getUuid().toString(),"release", new BleCharacterCallback() {
-                    @Override
-                    public void onSuccess(BluetoothGattCharacteristic characteristic) {
-
-                    }
-
-                    @Override
-                    public void onFailure(BleException exception) {
-
-                    }
-
-                    @Override
-                    public void onInitiatedResult(boolean result) {
-
-                    }
-                });
+                sendCommand("release");
                 break;
         }
+    }
+
+    private void sendCommand(String command) {
+        mBluetoothService.write(serviceUuid, writeUuid, command, new BleCharacterCallback() {
+            @Override
+            public void onSuccess(BluetoothGattCharacteristic characteristic) {
+
+            }
+
+            @Override
+            public void onFailure(BleException exception) {
+
+            }
+
+            @Override
+            public void onInitiatedResult(boolean result) {
+
+            }
+        });
+    }
+
+    @Override
+    public boolean onTouch(View v, MotionEvent event) {
+        switch (v.getId()) {
+            case R.id.car_control_top:
+                if(event.getAction() == MotionEvent.ACTION_DOWN){
+                    //重新设置按下时的背景图片
+                    btnControlTop.setImageResource(R.drawable.car_control_top2);
+                }else if(event.getAction() == MotionEvent.ACTION_UP){
+                    //再修改为抬起时的正常图片
+                    btnControlTop.setImageResource(R.drawable.car_control_top);
+                }
+                break;
+            case R.id.car_control_right:
+                if(event.getAction() == MotionEvent.ACTION_DOWN){
+                    //重新设置按下时的背景图片
+                    btnControlRight.setImageResource(R.drawable.car_control_right2);
+                }else if(event.getAction() == MotionEvent.ACTION_UP){
+                    //再修改为抬起时的正常图片
+                    btnControlRight.setImageResource(R.drawable.car_control_right);
+                }
+                break;
+            case R.id.car_control_bottom:
+                if(event.getAction() == MotionEvent.ACTION_DOWN){
+                    //重新设置按下时的背景图片
+                    btnControlBottom.setImageResource(R.drawable.car_control_bottom2);
+                }else if(event.getAction() == MotionEvent.ACTION_UP){
+                    //再修改为抬起时的正常图片
+                    btnControlBottom.setImageResource(R.drawable.car_control_bottom);
+                }
+                break;
+            case R.id.car_control_left:
+                if(event.getAction() == MotionEvent.ACTION_DOWN){
+                    //重新设置按下时的背景图片
+                    btnControlLeft.setImageResource(R.drawable.car_control_left2);
+                }else if(event.getAction() == MotionEvent.ACTION_UP){
+                    //再修改为抬起时的正常图片
+                    btnControlLeft.setImageResource(R.drawable.car_control_left);
+                }
+                break;
+
+        }
+        return true;
     }
 }

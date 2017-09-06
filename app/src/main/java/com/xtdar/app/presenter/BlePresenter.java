@@ -235,7 +235,7 @@ public class BlePresenter extends BasePresenter implements OnDataListener, BleAd
         if (response != null && response.getCode() == XtdConst.SUCCESS) {
             Intent intent = new Intent(context, HelpDetailActivity.class);
             intent.putExtra("title","设备绑定成功");
-            intent.putExtra("url","http://120.24.231.219/kp_dyz/cli-dgc-devicehelp.php?device_id="+response.getData().getDevice_id());
+            intent.putExtra("url",XtdConst.SERVERURI+"cli-dgc-devicehelp.php?device_id="+response.getData().getDevice_id());
             context.startActivity(intent);
         }
         NToast.shortToast(context,response.getMsg());

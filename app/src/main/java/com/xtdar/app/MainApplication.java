@@ -19,6 +19,7 @@ import com.xtdar.app.common.NLog;
  */
 
 public class MainApplication extends Application {
+    public static String MacAddr;
     @Override
     public void onCreate() {
         super.onCreate();

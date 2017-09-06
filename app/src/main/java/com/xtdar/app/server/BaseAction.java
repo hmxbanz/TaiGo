@@ -2,6 +2,7 @@ package com.xtdar.app.server;
 
 import android.content.Context;
 
+import com.xtdar.app.XtdConst;
 import com.xtdar.app.common.json.JsonMananger;
 
 import java.util.List;
@@ -14,7 +15,7 @@ import okhttp3.OkHttpClient;
  * Company RongCloud
  */
 public class BaseAction {
-    private static final String DOMAIN = "http://dyz.173csw.com/";
+    private static final String DOMAIN = XtdConst.SERVERURI;
     protected Context mContext;
     protected OkHttpClient httpManager;
 

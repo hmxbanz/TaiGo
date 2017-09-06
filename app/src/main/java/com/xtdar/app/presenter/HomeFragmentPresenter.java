@@ -12,8 +12,10 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
 import com.clj.fastble.data.ScanResult;
+import com.xtdar.app.MainApplication;
 import com.xtdar.app.XtdConst;
 import com.xtdar.app.adapter.MyDevicesAdapter;
+import com.xtdar.app.common.NLog;
 import com.xtdar.app.common.NToast;
 import com.xtdar.app.listener.AlertDialogCallback;
 import com.xtdar.app.server.HttpException;
@@ -116,8 +118,9 @@ public class HomeFragmentPresenter extends BasePresenter implements OnDataListen
                         //dataAdapter.setHeaderView(LayoutInflater.from(context).inflate(R.layout.recyclerview_header,null));
                         dataAdapter.notifyDataSetChanged();
                         this.swiper.setVisibility(View.VISIBLE);
+                        scanBLE();
                     }
-                    scanBLE();
+
                 }
                 NToast.longToast(context,response.getMsg());
                 break;
@@ -162,7 +165,9 @@ public class HomeFragmentPresenter extends BasePresenter implements OnDataListen
 
         if (mBluetoothService == null) {
             bindService();
-        } else {
+            }
+        else
+            {
             if(item.getStatus()==2)//如果已连接
             {
                 DialogWithYesOrNoUtils.getInstance().showDialog(context,"连接成功",null,"去玩游戏",new AlertDialogCallback(){
@@ -181,9 +186,10 @@ public class HomeFragmentPresenter extends BasePresenter implements OnDataListen
                 });
             }
             else {
-                LoadDialog.show(context);
-                mBluetoothService.closeConnect();
-                mBluetoothService.scanAndConnect5(mac);
+                mActivity.getViewPager().setCurrentItem(1, false);
+                //LoadDialog.show(context);
+                //mBluetoothService.closeConnect();
+                //mBluetoothService.scanAndConnect5(mac);
             }
         }
     }
@@ -241,11 +247,13 @@ public class HomeFragmentPresenter extends BasePresenter implements OnDataListen
         @Override
         public void onScanning(ScanResult result) {
             mActivity.scanResultList.add(result);
-            //LoadDialog.show(context);
             String mac=result.getDevice().getAddress();
 
             if(list.size()>0) {
+
                 for (MyDevicesResponse.DataBean bean : list) {
+                    NLog.e("onScanning",list.toString());
+                    NLog.e("onScanning",bean.getMac_address());
                     String mac2 = bean.getMac_address();
                     if (mac2.toUpperCase().equals(mac))
                         bean.setStatus(1);
@@ -293,6 +301,7 @@ public class HomeFragmentPresenter extends BasePresenter implements OnDataListen
         @Override
         public void onServicesDiscovered() {
             LoadDialog.dismiss(context);
+            MainApplication.MacAddr =mBluetoothService.getMac();
             connectMac =mBluetoothService.getMac();
                 for(MyDevicesResponse.DataBean bean:list)
                 {

@@ -65,6 +65,7 @@ public class UnityPlayerActivity extends Activity
     private String isExisted="0";
     private int firstTime=0;
     private String ServiceId,ReadId,WriteId,isHigh,gameId;
+    private BluetoothGattCharacteristic writecharacteristic;
 
     // Setup activity layout
     @Override protected void onCreate (Bundle savedInstanceState)
@@ -74,7 +75,7 @@ public class UnityPlayerActivity extends Activity
 
         getWindow().setFormat(PixelFormat.RGBX_8888); // <--- This makes xperia play happy
 
-        mUnityPlayer = new UnityPlayer(this);
+        mUnityPlayer = new UnityPlayerForMe(this);
 
         setContentView(mUnityPlayer);
         mUnityPlayer.requestFocus();
@@ -84,11 +85,18 @@ public class UnityPlayerActivity extends Activity
         WriteId=intent.getStringExtra("WriteId");
         isHigh=intent.getStringExtra("isHigh");
         gameId=intent.getStringExtra("gameId");
+        NLog.d("id:", gameId);
         //firstTime=1;
         //UnityPlayer.UnitySendMessage("Main Camera","ChooseGame","");     //第二次进入调用
 
-        bindService();
 
+
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        bindService();
     }
 
     public BluetoothService getBluetoothService() {
@@ -102,6 +110,7 @@ public class UnityPlayerActivity extends Activity
 
     private void unbindService() {
         this.unbindService(mFhrSCon);
+        mBluetoothService.closeConnect();
     }
 
     private ServiceConnection mFhrSCon = new ServiceConnection() {
@@ -143,6 +152,7 @@ public class UnityPlayerActivity extends Activity
 
         @Override
         public void onDisConnected() {
+
         }
 
         @Override
@@ -175,6 +185,14 @@ public class UnityPlayerActivity extends Activity
                 mBluetoothService.setService(servicess);
                 List<BluetoothGattCharacteristic> characteristics = servicess.getCharacteristics();
                 for (BluetoothGattCharacteristic characteristic : characteristics) {
+
+                    if (characteristic.getUuid().toString().startsWith("0000"+WriteId)) {
+                        writecharacteristic=characteristic;
+
+                    }
+
+
+
                     Log.w(TAG, "================== find characteristics count: " + characteristics.size());
 //                            BluetoothGattCharacteristic characteristic = characteristics.get(0);
                     Log.w(TAG, "================== find characteristic: " + characteristic.getUuid().toString());
@@ -187,6 +205,12 @@ public class UnityPlayerActivity extends Activity
                     }
                 }
             }
+
+
+
+
+
+
         }
         final BluetoothGattCharacteristic characteristic = mBluetoothService.getCharacteristic();
         mBluetoothService.notify(
@@ -226,13 +250,32 @@ public class UnityPlayerActivity extends Activity
 
                                 String x = s.substring(14, 18);
                                 String y = s.substring(18, 22);
-                                if(!"0000".equals(x) && !"0000".equals(y)){
-                                    UnityPlayer.UnitySendMessage("Main Camera","eee",x+","+y);
+
+                                NLog.e("BLEBLE>>>>",x+"-"+y);
+
+                                int xx=Integer.parseInt(x,16);
+                                int yy=Integer.parseInt(y,16);
+
+                                NLog.d("xxxx+yyyy:",x+"-"+y);
+
+                                NLog.d("xxxxyyyy:",xx+"-"+yy);
+
+                                if((xx>460 && xx<530) && (yy>460 && yy<530))
+                                    UnityPlayer.UnitySendMessage("Main Camera","eee","op");
+                                else
+                                    UnityPlayer.UnitySendMessage("Main Camera","eee",xx+","+yy);
+                                //if(!"0000".equals(x) && !"0000".equals(y)){
+                                    //UnityPlayer.UnitySendMessage("Main Camera","eee",xx+","+yy);
+                                //}
+
+                                if((int)command==1) {
+                                    UnityPlayer.UnitySendMessage("Main Camera", "eee", "j");
                                 }
 
-                                if((int)command==1)
-                                    UnityPlayer.UnitySendMessage("Main Camera","eee","a");
-                                else if ((int)command==2)
+                                if((int)command==0)
+                                {UnityPlayer.UnitySendMessage("Main Camera", "eee", "a");}
+
+                                if ((int)command==2)
                                     UnityPlayer.UnitySendMessage("Main Camera","eee","b");
                                 else if ((int)command==3)
                                 {
@@ -321,6 +364,9 @@ private static String hexStr = "0123456789ABCDEF"; //全局
     {
         super.onPause();
         mUnityPlayer.pause();
+
+        startActivity(new Intent(this,Main2Activity.class));
+
     }
 
     // Resume Unity
@@ -378,6 +424,24 @@ private static String hexStr = "0123456789ABCDEF"; //全局
     @Override public boolean onTouchEvent(MotionEvent event)          { return mUnityPlayer.injectEvent(event); }
     /*API12*/ public boolean onGenericMotionEvent(MotionEvent event)  { return mUnityPlayer.injectEvent(event); }
     public void Move(String s){
+        String serviceUuid=mBluetoothService.getService().getUuid().toString();
+        String writeUuid=writecharacteristic.getUuid().toString();
+        mBluetoothService.write(serviceUuid, writeUuid, s, new BleCharacterCallback() {
+            @Override
+            public void onSuccess(BluetoothGattCharacteristic characteristic) {
+
+            }
+
+            @Override
+            public void onFailure(BleException exception) {
+
+            }
+
+            @Override
+            public void onInitiatedResult(boolean result) {
+
+            }
+        });
         //connector.sendMsg(s);
     }//接收Unity发来
 

@@ -12,6 +12,7 @@
         <LinearLayout
             android:orientation="vertical"
             android:layout_width="50dp"
+            android:layout_marginLeft="5dp"
             android:layout_height="match_parent">
                 <com.xtdar.app.view.widget.SelectableRoundedImageView
                     android:scaleType="centerCrop"

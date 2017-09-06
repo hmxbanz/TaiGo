@@ -22,7 +22,7 @@
             android:layout_marginLeft="10dp"
             style="@style/AppTitleStyle2"
             android:gravity="center_vertical"
-            android:text="头像"
+            android:text="用户头像"
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="match_parent" />
@@ -59,7 +59,7 @@
         <TextView
             style="@style/AppTitleStyle2"
             android:gravity="center_vertical"
-            android:text="昵称"
+            android:text="用户昵称"
             android:layout_width="0dp"
             android:layout_weight="5"
             android:layout_height="match_parent" />

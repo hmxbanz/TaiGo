@@ -100,4 +100,5 @@ public class DialogWithList {
         return this.listView;
     }
 
+    public void cancleAlterDialog(){alterDialog.dismiss();}
 }

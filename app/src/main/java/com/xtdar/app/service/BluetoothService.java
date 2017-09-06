@@ -191,6 +191,7 @@ public class BluetoothService extends Service {
 
             @Override
             public void onDisConnected(BluetoothGatt gatt, int status, BleException exception) {
+                BluetoothService.this.mac="";
                 runOnMainThread(new Runnable() {
                     @Override
                     public void run() {

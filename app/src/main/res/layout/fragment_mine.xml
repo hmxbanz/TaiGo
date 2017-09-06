@@ -10,7 +10,7 @@
     <include layout="@layout/layout_title_top2" />
 
     <LinearLayout
-        android:layout_marginTop="10dp"
+    android:layout_marginTop="10dp"
     android:id="@+id/layout_title"
     android:layout_width="match_parent"
     android:layout_height="100dp"
@@ -38,7 +38,8 @@
         <LinearLayout
             android:orientation="vertical"
             android:gravity="center_vertical"
-            android:layout_width="match_parent"
+            android:layout_weight="1"
+            android:layout_width="0dp"
             android:layout_height="match_parent">
             <TextView
                 android:id="@+id/nick_name"
@@ -49,9 +50,18 @@
                 android:layout_height="wrap_content" />
 
         </LinearLayout>
-
+        <ImageView
+            android:src="@drawable/icon_arrow_right"
+            android:layout_width="50dp"
+            android:layout_height="20dp"
+            android:tint="@color/grayLine"
+            />
 </LinearLayout>
+
+    <!--<View android:layout_marginLeft="10dp" android:layout_marginRight="10dp" android:background="@color/grayLine" android:layout_width="match_parent"  android:layout_height="1dp" />-->
+
 <RelativeLayout
+    android:layout_marginTop="1dp"
     android:background="@color/white"
     android:layout_width="match_parent"
     android:layout_height="75dp">

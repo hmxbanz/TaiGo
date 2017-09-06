@@ -8,6 +8,7 @@ import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 
 import com.xtdar.app.common.NLog;
+import com.xtdar.app.common.NToast;
 import com.xtdar.app.common.json.JsonMananger;
 import com.xtdar.app.listener.GSYVideoPlayerOnScrollListener;
 import com.xtdar.app.server.HttpException;
@@ -113,7 +114,8 @@ public class ShowPresenter extends BasePresenter implements OnDataListener,Recyc
     public void loadData() {
         if(isFirstLoad) {
             String Cache = aCache.getAsString("ShowList");
-            NLog.e("CacheString",Cache);
+            NLog.e("ShowCacheString",Cache);
+
             if(Cache!=null && !("null").equals(Cache))
                 try {
                     List<ShowResponse.DataBean> listCache = JsonMananger.jsonToList(Cache, ShowResponse.DataBean.class);
@@ -123,6 +125,9 @@ public class ShowPresenter extends BasePresenter implements OnDataListener,Recyc
                     }
                 } catch (HttpException e) {
                     e.printStackTrace();
+                    NToast.longToast(context,"ShowCacheString:"+Cache);
+                    NToast.longToast(context,"ShowCacheString:"+Cache);
+                    NToast.longToast(context,"ShowCacheString:"+Cache);
                 }
         }
         lastItem ="0";

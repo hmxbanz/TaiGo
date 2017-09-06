@@ -50,7 +50,7 @@
     <TextView
         android:layout_marginRight="10dp"
     android:background="@drawable/btn_game"
-    android:text="玩一玩"
+    android:text="进 入"
     android:textSize="14dp"
     android:textColor="@color/titleBlue"
     android:layout_width="wrap_content"
