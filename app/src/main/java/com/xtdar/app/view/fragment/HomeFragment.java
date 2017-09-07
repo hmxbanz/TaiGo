@@ -79,12 +79,11 @@ private static final int Blue=0x001bb4fb;
     @Override
     public void onPause() {
         super.onPause();
-        presenter.unbindService();
     }
 
     @Override
     public void onDestroy() {
-        super.onDestroy();
+        super.onDestroy();presenter.unbindService();
     }
 
     @Override

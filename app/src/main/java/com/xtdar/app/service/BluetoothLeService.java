@@ -176,14 +176,14 @@ public class BluetoothLeService extends Service {
         if (mBluetoothManager == null) {
             mBluetoothManager = (BluetoothManager) getSystemService(Context.BLUETOOTH_SERVICE);
             if (mBluetoothManager == null) {
-                NLog.e(TAG, "Unable to initialize BluetoothManager.");
+                NLog.d(TAG, "Unable to initialize BluetoothManager.");
                 return false;
             }
         }
 
         mBluetoothAdapter = mBluetoothManager.getAdapter();
         if (mBluetoothAdapter == null) {
-            NLog.e(TAG, "Unable to obtain a BluetoothAdapter.");
+            NLog.d(TAG, "Unable to obtain a BluetoothAdapter.");
             return false;
         }
 

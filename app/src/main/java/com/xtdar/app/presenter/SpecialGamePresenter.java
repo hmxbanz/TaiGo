@@ -65,7 +65,7 @@ public class SpecialGamePresenter extends BasePresenter implements SwipeRefreshL
     public Object doInBackground(int requestCode, String parameter) throws HttpException {
         switch (requestCode) {
             case GETSPECIALlIST:
-                return mUserAction.getShot("-1",lastItem,"4");
+                return mUserAction.getShot("-1",lastItem,"10");
         }
         return null;
     }
@@ -79,7 +79,6 @@ public class SpecialGamePresenter extends BasePresenter implements SwipeRefreshL
                 GameListResponse response = (GameListResponse) result;
                 if (response.getCode() == XtdConst.SUCCESS) {
                     final List<GameListResponse.DataBean> datas = response.getData();
-                    lastItem=datas.get(datas.size()-1).getGame_id();
                     if(isFirstLoad) {
                         list = response.getData();
                         isFirstLoad=false;
@@ -91,7 +90,7 @@ public class SpecialGamePresenter extends BasePresenter implements SwipeRefreshL
                         }
                     }
                     else
-                    list.addAll(response.getData());
+                        list.addAll(response.getData());
 
                     dataAdapter.setListItems(list);
                     dataAdapter.notifyDataSetChanged();
@@ -169,6 +168,7 @@ public class SpecialGamePresenter extends BasePresenter implements SwipeRefreshL
         return new EndlessRecyclerOnScrollListener(SpecialGamePresenter.this.gridLayoutManager) {
             @Override
             public void onLoadMore(int currentPage) {
+                lastItem = String.valueOf(currentPage);
                 if(currentPage>1) {
                     LoadDialog.show(context);
                     //atm.request(GETSPECIALlIST, SpecialGamePresenter.this);

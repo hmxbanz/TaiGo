@@ -114,7 +114,7 @@ public class ShowPresenter extends BasePresenter implements OnDataListener,Recyc
     public void loadData() {
         if(isFirstLoad) {
             String Cache = aCache.getAsString("ShowList");
-            NLog.e("ShowCacheString",Cache);
+            NLog.d("ShowCacheString",Cache);
 
             if(Cache!=null && !("null").equals(Cache))
                 try {

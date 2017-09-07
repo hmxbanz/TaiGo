@@ -102,7 +102,7 @@ public class MyReceiver extends BroadcastReceiver {
 								myKey + " - " +json.optString(myKey) + "]");
 					}
 				} catch (JSONException e) {
-					NLog.e(TAG, "Get message extra JSON error!");
+					NLog.d(TAG, "Get message extra JSON error!");
 				}
 
 			} else {

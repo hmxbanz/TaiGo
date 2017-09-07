@@ -98,7 +98,7 @@ public class MallGamePresenter extends BasePresenter implements  SwipeRefreshLay
     public Object doInBackground(int requestCode, String parameter) throws HttpException {
         switch (requestCode) {
             case GETMALLLIST:
-                return mUserAction.getShot("0",lastItem,"4");
+                return mUserAction.getShot("0",lastItem,"10");
             case GAMECHECK:
                 return mUserAction.gameCheck(gameId);
         }
@@ -114,7 +114,6 @@ public class MallGamePresenter extends BasePresenter implements  SwipeRefreshLay
                 GameListResponse response = (GameListResponse) result;
                 if (response !=null && response.getCode() == XtdConst.SUCCESS) {
                     final List<GameListResponse.DataBean> datas = response.getData();
-                    lastItem=datas.get(datas.size()-1).getGame_id();
                     if(isFirstLoad) {
                         list = response.getData();
                         isFirstLoad=false;
@@ -126,7 +125,7 @@ public class MallGamePresenter extends BasePresenter implements  SwipeRefreshLay
                         }
                     }
                     else
-                    list.addAll(datas);
+                        list.addAll(datas);
 
                     dataAdapter.setListItems(list);
                     dataAdapter.notifyDataSetChanged();
@@ -134,13 +133,13 @@ public class MallGamePresenter extends BasePresenter implements  SwipeRefreshLay
                 }
                 break;
             case GAMECHECK :
-                    //取得设备信息，做后续工作
-                    //通过intent 信息
+                //取得设备信息，做后续工作
+                //通过intent 信息
                 GameCheckResponse gameCheckResponse = (GameCheckResponse) result;
                 if (gameCheckResponse.getCode() == 1) {
-                        //可以玩弹出选择设备列表
-                        //弹出设备推荐列表
-                        //找高低配设备属性
+                    //可以玩弹出选择设备列表
+                    //弹出设备推荐列表
+                    //找高低配设备属性
                     deviceList=gameCheckResponse.getData();
                     for(GameCheckResponse.DataBean bean:deviceList)
                     {
@@ -170,8 +169,8 @@ public class MallGamePresenter extends BasePresenter implements  SwipeRefreshLay
                     Iterator<GameCheckResponse.DataBean> iterator = deviceList.iterator();
                     while (iterator.hasNext()) {
                         GameCheckResponse.DataBean student = iterator.next();
-                            if (student.getStatus() == 0)
-                                iterator.remove();//这里要使用Iterator的remove方法移除当前对象，如果使用List的remove方法，则同样会出现ConcurrentModificationException
+                        if (student.getStatus() == 0)
+                            iterator.remove();//这里要使用Iterator的remove方法移除当前对象，如果使用List的remove方法，则同样会出现ConcurrentModificationException
                     }
 
 
@@ -252,15 +251,10 @@ public class MallGamePresenter extends BasePresenter implements  SwipeRefreshLay
         //mActivity.mBluetoothService.setScanCallback(callback);
         mActivity.mBluetoothService.scanDevice();
 
+        //传游戏名查询
+        LoadDialog.show(context);
+        atm.request(GAMECHECK,this);
 
-//        UnityPlayer.UnitySendMessage("Main Camera","playGame",unityGameId);     //进入游戏
-        //if(isClickable) {
-            //传游戏名查询
-            LoadDialog.show(context);
-            atm.request(GAMECHECK,this);
-        //}
-        //else
-           // DialogWithYesOrNoUtils.getInstance().showDialog(context,"请稍候，正在扫描",null,null,new AlertDialogCallback());
     }
 
 
@@ -299,13 +293,15 @@ public class MallGamePresenter extends BasePresenter implements  SwipeRefreshLay
         public void onScanning(ScanResult result) {        }
 
         @Override
-        public void onScanComplete() {   isClickable=true;       }
+        public void onScanComplete() {    }
 
         @Override
-        public void onConnecting() {        }
+        public void onConnecting() {      }
 
         @Override
-        public void onConnectFail() {        }
+        public void onConnectFail() {
+            LoadDialog.dismiss(context);
+            NToast.shortToast(context, "连接失败,请确保设备已开启。");       }
 
         @Override
         public void onDisConnected() {       }
@@ -326,7 +322,7 @@ public class MallGamePresenter extends BasePresenter implements  SwipeRefreshLay
         LoadDialog.show(context);
         atm.request(GETMALLLIST,this);
     }
-//弹出框蓝牙列表点击事件
+    //弹出框蓝牙列表点击事件
     @Override
     public boolean onClick(int position, View view, GameCheckResponse.DataBean entity) {
         dialogWithList.cancleAlterDialog();
@@ -351,19 +347,19 @@ public class MallGamePresenter extends BasePresenter implements  SwipeRefreshLay
         }
         return true;
     }
-//加载数据
+    //加载数据
     public void loadData() {
         if(isFirstLoad) {
-        String Cache = aCache.getAsString("MallGameList");
-        if(Cache!=null && !("null").equals(Cache))
-            try {
+            String Cache = aCache.getAsString("MallGameList");
+            if(Cache!=null && !("null").equals(Cache))
+                try {
                     List<GameListResponse.DataBean> gameListCache = JsonMananger.jsonToList(Cache, GameListResponse.DataBean.class);
                     list.addAll(gameListCache);
                     dataAdapter.notifyDataSetChanged();
 
-            } catch (HttpException e) {
-                e.printStackTrace();
-            }
+                } catch (HttpException e) {
+                    e.printStackTrace();
+                }
         }
         lastItem ="0";
         list.clear();
@@ -376,8 +372,9 @@ public class MallGamePresenter extends BasePresenter implements  SwipeRefreshLay
         return new EndlessRecyclerOnScrollListener(gridLayoutManager) {
             @Override
             public void onLoadMore(int currentPage) {
-                NLog.e("currentPage:", currentPage);
-               if(currentPage>1) {
+                NLog.d("currentPage:", currentPage);
+                lastItem = String.valueOf(currentPage);
+                if(currentPage>1) {
                     LoadDialog.show(context);
                     atm.request(GETMALLLIST,MallGamePresenter.this);
                 }

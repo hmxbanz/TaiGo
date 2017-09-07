@@ -87,7 +87,7 @@ public class UserAction extends BaseAction {
         return instance;
     }
 
-//登录
+    //登录
     public LoginResponse login(String userName, String password) throws HttpException
     {
         String uri = getURL("cli-comm-login.php");
@@ -101,13 +101,13 @@ public class UserAction extends BaseAction {
                     .build()
                     .execute();
             result =response.body().string();
-            NLog.e("login 接收的", result);
+            NLog.d("login 接收的", result);
         } catch (IOException e) {
             e.printStackTrace();
         }
         LoginResponse loginResponse = null;
         if (!TextUtils.isEmpty(result)) {
-            NLog.e("接收的", result);
+            NLog.d("接收的", result);
 
             try {
                 loginResponse = JsonMananger.jsonToBean(result, LoginResponse.class);
@@ -135,7 +135,7 @@ public class UserAction extends BaseAction {
                     .build()
                     .execute();
             result =response.body().string();
-            NLog.e("wxBind 接收的", result);
+            NLog.d("wxBind 接收的", result);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -165,7 +165,7 @@ public class UserAction extends BaseAction {
                     .build()
                     .execute();
             result =response.body().string();
-            NLog.e("wxOpenId 接收的", result);
+            NLog.d("wxOpenId 接收的", result);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -195,7 +195,7 @@ public class UserAction extends BaseAction {
                     .build()
                     .execute();
             result =response.body().string();
-            NLog.e("qqOpenId 接收的", result);
+            NLog.d("qqOpenId 接收的", result);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -226,7 +226,7 @@ public class UserAction extends BaseAction {
                     .build()
                     .execute();
             result =response.body().string();
-            NLog.e("qqBind 接收的", result);
+            NLog.d("qqBind 接收的", result);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -255,7 +255,7 @@ public class UserAction extends BaseAction {
                     .build()
                     .execute();
             result =response.body().string();
-            NLog.e("wbOpenId 接收的", result);
+            NLog.d("wbOpenId 接收的", result);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -286,13 +286,13 @@ public class UserAction extends BaseAction {
                     .build()
                     .execute();
             result =response.body().string();
-            NLog.e("wbBind 接收的", result);
+            NLog.d("wbBind 接收的", result);
         } catch (IOException e) {
             e.printStackTrace();
         }
         CommonResponse commonResponse = null;
         if (!TextUtils.isEmpty(result)) {
-           try {
+            try {
                 commonResponse = JsonMananger.jsonToBean(result, CommonResponse.class);
             } catch (JSONException e) {
                 NLog.d(TAG, "CommonResponse occurs JSONException e=" + e.toString());
@@ -317,7 +317,7 @@ public class UserAction extends BaseAction {
                     .build()
                     .execute();
             result =response.body().string();
-            NLog.e("upLoadRid 接收的", result);
+            NLog.d("upLoadRid 接收的", result);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -333,7 +333,7 @@ public class UserAction extends BaseAction {
         return commonResponse;
 
     }
-//获取验证码
+    //获取验证码
     public CaptchaResponse getCaptcha(String cellPhone) throws HttpException
     {
         String uri = getURL("cli-comm-sendregmsg.php");
@@ -346,7 +346,7 @@ public class UserAction extends BaseAction {
                     .build()
                     .execute();
             result =response.body().string();
-            NLog.e("getCaptcha 接收的", result);
+            NLog.d("getCaptcha 接收的", result);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -362,7 +362,7 @@ public class UserAction extends BaseAction {
         return captchaResponse;
 
     }
-//获取验证码(取回密码)
+    //获取验证码(取回密码)
     public CommonResponse getCaptchaForget(String cellPhone) throws HttpException
     {
         String uri = getURL("cli-comm-sendpwdmsg.php");
@@ -375,7 +375,7 @@ public class UserAction extends BaseAction {
                     .build()
                     .execute();
             result =response.body().string();
-            NLog.e("getCaptchaForget 接收的", result);
+            NLog.d("getCaptchaForget 接收的", result);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -391,53 +391,22 @@ public class UserAction extends BaseAction {
         return commonResponse;
 
     }
-//注册
-public CommonResponse register(String cellPhone, String password, String captcha) throws HttpException
-{
-    String uri = getURL("cli-comm-register.php");
-    Response response=null;
-    try {
-        response=OkHttpUtils
-                .get()
-                .addParams("nick_name",cellPhone)
-                .addParams("pwd",password)
-                .addParams("rand_code",captcha)
-                .url(uri)
-                .build()
-                .execute();
-        result =response.body().string();
-        NLog.e("register 接收的", result);
-    } catch (IOException e) {
-        e.printStackTrace();
-    }
-    CommonResponse commonResponse = null;
-    if (!TextUtils.isEmpty(result)) {
-        try {
-            commonResponse = JsonMananger.jsonToBean(result, CommonResponse.class);
-        } catch (JSONException e) {
-            NLog.d(TAG, "CommonResponse occurs JSONException e=" + e.toString());
-            return null;
-        }
-    }
-    return commonResponse;
-
-}
-//重置密码
-    public CommonResponse resetPassword(String cellPhone, String password, String captcha) throws HttpException
+    //注册
+    public CommonResponse register(String cellPhone, String password, String captcha) throws HttpException
     {
-        String uri = getURL("cli-comm-setpwd.php");
+        String uri = getURL("cli-comm-register.php");
         Response response=null;
         try {
             response=OkHttpUtils
                     .get()
                     .addParams("nick_name",cellPhone)
-                    .addParams("new_pwd",password)
+                    .addParams("pwd",password)
                     .addParams("rand_code",captcha)
                     .url(uri)
                     .build()
                     .execute();
             result =response.body().string();
-            NLog.e("resetPassword 接收的", result);
+            NLog.d("register 接收的", result);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -453,7 +422,38 @@ public CommonResponse register(String cellPhone, String password, String captcha
         return commonResponse;
 
     }
-//取个人资料
+    //重置密码
+    public CommonResponse resetPassword(String cellPhone, String password, String captcha) throws HttpException
+    {
+        String uri = getURL("cli-comm-setpwd.php");
+        Response response=null;
+        try {
+            response=OkHttpUtils
+                    .get()
+                    .addParams("nick_name",cellPhone)
+                    .addParams("new_pwd",password)
+                    .addParams("rand_code",captcha)
+                    .url(uri)
+                    .build()
+                    .execute();
+            result =response.body().string();
+            NLog.d("resetPassword 接收的", result);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        CommonResponse commonResponse = null;
+        if (!TextUtils.isEmpty(result)) {
+            try {
+                commonResponse = JsonMananger.jsonToBean(result, CommonResponse.class);
+            } catch (JSONException e) {
+                NLog.d(TAG, "CommonResponse occurs JSONException e=" + e.toString());
+                return null;
+            }
+        }
+        return commonResponse;
+
+    }
+    //取个人资料
     public UserInfoResponse getInfo() throws HttpException {
         String uri = getURL("cli-api-userinfo.php");
         Response response=null;
@@ -465,7 +465,7 @@ public CommonResponse register(String cellPhone, String password, String captcha
                     .build()
                     .execute();
             result =response.body().string();
-            NLog.e("getInfo 接收的", result);
+            NLog.d("getInfo 接收的", result);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -480,7 +480,7 @@ public CommonResponse register(String cellPhone, String password, String captcha
         }
         return userInfoResponse;
     }
-//取消息未读数
+    //取消息未读数
     public UnReadMsgResponse getUnReadMsg() throws HttpException {
         String uri = getURL("cli-api-needreadcount.php");
         Response response=null;
@@ -492,7 +492,7 @@ public CommonResponse register(String cellPhone, String password, String captcha
                     .build()
                     .execute();
             result =response.body().string();
-            NLog.e("getUnReadMsg 接收的", result);
+            NLog.d("getUnReadMsg 接收的", result);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -508,7 +508,7 @@ public CommonResponse register(String cellPhone, String password, String captcha
         return unReadMsgResponse;
     }
 
-//版本检查
+    //版本检查
     public VersionResponse checkVersion() throws HttpException {
         String uri =getURL("app_source/dl/version.txt");
         Response response=null;
@@ -519,7 +519,7 @@ public CommonResponse register(String cellPhone, String password, String captcha
                     .build()
                     .execute();
             result =response.body().string();
-            NLog.e("checkVersion 接收的", result);
+            NLog.d("checkVersion 接收的", result);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -545,7 +545,7 @@ public CommonResponse register(String cellPhone, String password, String captcha
                     .build()
                     .execute();
             result =response.body().string();
-            NLog.e("getTags 接收的", result);
+            NLog.d("getTags 接收的", result);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -573,7 +573,7 @@ public CommonResponse register(String cellPhone, String password, String captcha
                     .build()
                     .execute();
             result =response.body().string();
-            NLog.e("getAds 接收的", result);
+            NLog.d("getAds 接收的", result);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -589,7 +589,7 @@ public CommonResponse register(String cellPhone, String password, String captcha
         return adResponse;
 
     }
-//获取推荐
+    //获取推荐
     public RecommendResponse getRecommends()throws HttpException {
         String uri = getURL("cli-comm-recommend.php");
         Response response=null;
@@ -600,7 +600,7 @@ public CommonResponse register(String cellPhone, String password, String captcha
                     .build()
                     .execute();
             result =response.body().string();
-            NLog.e("getRecommends 接收的", result);
+            NLog.d("getRecommends 接收的", result);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -626,7 +626,7 @@ public CommonResponse register(String cellPhone, String password, String captcha
                     .build()
                     .execute();
             result =response.body().string();
-            NLog.e("getTaobao 接收的", result);
+            NLog.d("getTaobao 接收的", result);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -641,7 +641,7 @@ public CommonResponse register(String cellPhone, String password, String captcha
         }
         return taobaoResponse;
     }
-//项详情(图文、视频、音频)
+    //项详情(图文、视频、音频)
     public DetailResponse getDetail(String itemId) throws HttpException{
         String uri = getURL("cli-comm-itemdetail.php");
         Response response=null;
@@ -653,7 +653,7 @@ public CommonResponse register(String cellPhone, String password, String captcha
                     .build()
                     .execute();
             result =response.body().string();
-            NLog.e("getDetail 接收的", result);
+            NLog.d("getDetail 接收的", result);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -668,7 +668,7 @@ public CommonResponse register(String cellPhone, String password, String captcha
         }
         return detailResponse;
     }
-//秀场项详情
+    //秀场项详情
     public ShowDetailResponse getShowDetail(String itemId) throws HttpException{
         String uri = getURL("cli-comm-showdetail.php");
         Response response=null;
@@ -680,7 +680,7 @@ public CommonResponse register(String cellPhone, String password, String captcha
                     .build()
                     .execute();
             result =response.body().string();
-            NLog.e("getShowDetail 接收的", result);
+            NLog.d("getShowDetail 接收的", result);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -695,35 +695,35 @@ public CommonResponse register(String cellPhone, String password, String captcha
         }
         return showDetailResponse;
     }
-//收藏
-        public CommonResponse addFavor(String itemId) throws HttpException{
-            String uri = getURL("cli-api-setcollect.php");
-            Response response=null;
+    //收藏
+    public CommonResponse addFavor(String itemId) throws HttpException{
+        String uri = getURL("cli-api-setcollect.php");
+        Response response=null;
+        try {
+            response=OkHttpUtils
+                    .get()
+                    .addParams(XtdConst.ITEMID,itemId)
+                    .addParams(XtdConst.ACCESS_TOKEN,token)
+                    .url(uri)
+                    .build()
+                    .execute();
+            result =response.body().string();
+            NLog.d("addFavor 接收的", result);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        CommonResponse commonResponse = null;
+        if (!TextUtils.isEmpty(result)) {
             try {
-                response=OkHttpUtils
-                        .get()
-                        .addParams(XtdConst.ITEMID,itemId)
-                        .addParams(XtdConst.ACCESS_TOKEN,token)
-                        .url(uri)
-                        .build()
-                        .execute();
-                result =response.body().string();
-                NLog.e("addFavor 接收的", result);
-            } catch (IOException e) {
-                e.printStackTrace();
+                commonResponse = JsonMananger.jsonToBean(result, CommonResponse.class);
+            } catch (JSONException e) {
+                NLog.d(TAG, "DetailResponse occurs JSONException e=" + e.toString());
+                return null;
             }
-            CommonResponse commonResponse = null;
-            if (!TextUtils.isEmpty(result)) {
-                try {
-                    commonResponse = JsonMananger.jsonToBean(result, CommonResponse.class);
-                } catch (JSONException e) {
-                    NLog.d(TAG, "DetailResponse occurs JSONException e=" + e.toString());
-                    return null;
-                }
-            }
-            return commonResponse;
+        }
+        return commonResponse;
     }
-//评论
+    //评论
     public CommonResponse addComment(String itemId,String comment_tag,String comment) throws HttpException{
         String uri = getURL("cli-api-postcomment.php");
         Response response=null;
@@ -738,7 +738,7 @@ public CommonResponse register(String cellPhone, String password, String captcha
                     .build()
                     .execute();
             result =response.body().string();
-            NLog.e("addComment 接收的", result);
+            NLog.d("addComment 接收的", result);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -766,7 +766,7 @@ public CommonResponse register(String cellPhone, String password, String captcha
                     .build()
                     .execute();
             result =response.body().string();
-            NLog.e("getRelateRecommend 接收的", result);
+            NLog.d("getRelateRecommend 接收的", result);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -795,7 +795,7 @@ public CommonResponse register(String cellPhone, String password, String captcha
                     .build()
                     .execute();
             result =response.body().string();
-            NLog.e("getAnimations 接收的", result);
+            NLog.d("getAnimations 接收的", result);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -822,7 +822,7 @@ public CommonResponse register(String cellPhone, String password, String captcha
                     .build()
                     .execute();
             result =response.body().string();
-            NLog.e("getSongAlbumDetail 接收的", result);
+            NLog.d("getSongAlbumDetail 接收的", result);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -850,7 +850,7 @@ public CommonResponse register(String cellPhone, String password, String captcha
                     .build()
                     .execute();
             result =response.body().string();
-            NLog.e("getShowList 接收的", result);
+            NLog.d("getShowList 接收的", result);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -865,7 +865,7 @@ public CommonResponse register(String cellPhone, String password, String captcha
         }
         return showResponse;
     }
-//我的视频
+    //我的视频
     public ShowResponse getMyVideo() throws HttpException {
         String uri = getURL("cli-api-myshowlist.php");
         Response response=null;
@@ -877,7 +877,7 @@ public CommonResponse register(String cellPhone, String password, String captcha
                     .build()
                     .execute();
             result =response.body().string();
-            NLog.e("getMyVideo 接收的", result);
+            NLog.d("getMyVideo 接收的", result);
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -904,7 +904,7 @@ public CommonResponse register(String cellPhone, String password, String captcha
                     .build()
                     .execute();
             result =response.body().string();
-            NLog.e("getProtocol 接收的", result);
+            NLog.d("getProtocol 接收的", result);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -924,7 +924,7 @@ public CommonResponse register(String cellPhone, String password, String captcha
                     .build()
                     .execute();
             result =response.body().string();
-            NLog.e("getHelps 接收的", result);
+            NLog.d("getHelps 接收的", result);
         } catch (IOException e) {
             e.printStackTrace();
 
@@ -954,7 +954,7 @@ public CommonResponse register(String cellPhone, String password, String captcha
                     .build()
                     .execute();
             result =response.body().string();
-            NLog.e("save 接收的", result);
+            NLog.d("save 接收的", result);
         } catch (IOException e) {
             e.printStackTrace();
 
@@ -979,7 +979,7 @@ public CommonResponse register(String cellPhone, String password, String captcha
                     .build()
                     .execute();
             result =response.body().string();
-            NLog.e("bindDevice 接收的", result);
+            NLog.d("bindDevice 接收的", result);
         } catch (IOException e) {
             e.printStackTrace();
 
@@ -1002,7 +1002,7 @@ public CommonResponse register(String cellPhone, String password, String captcha
                     .build()
                     .execute();
             result =response.body().string();
-            NLog.e("getDevices 接收的", result);
+            NLog.d("getDevices 接收的", result);
         } catch (IOException e) {
             e.printStackTrace();
 
@@ -1015,20 +1015,21 @@ public CommonResponse register(String cellPhone, String password, String captcha
     }
 
     //获取游戏列表（射击）
-    public GameListResponse getShot(String game_type_id, String last_item_id, String item_count) throws HttpException{
+    public GameListResponse getShot(String game_type_id, String page_index, String item_count) throws HttpException{
+
         String uri = getURL("cli-dgc-gamelist.php");
         Response response=null;
         try {
             response=OkHttpUtils
                     .get()
                     .addParams("game_type_id",game_type_id)
-                    .addParams("last_game_id",last_item_id)
+                    .addParams("page_index",page_index)
                     .addParams("item_count",item_count)
                     .url(uri)
                     .build()
                     .execute();
             result =response.body().string();
-            NLog.e("getShot 接收的", result);
+            NLog.d("getShot 接收的", result);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -1039,7 +1040,7 @@ public CommonResponse register(String cellPhone, String password, String captcha
                 for(GameListResponse.DataBean bean:gameListResponse.getData())
                 {
                     GameListResponse.DataBean.GameConfig gameConfig = JsonMananger.jsonToBean(bean.getGame_config(), GameListResponse.DataBean.GameConfig.class);
-                        bean.setGameConfig(gameConfig);
+                    bean.setGameConfig(gameConfig);
                 }
 
             } catch (JSONException e) {
@@ -1064,7 +1065,7 @@ public CommonResponse register(String cellPhone, String password, String captcha
                     .build()
                     .execute();
             result =response.body().string();
-            NLog.e("getComment 接收的", result);
+            NLog.d("getComment 接收的", result);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -1101,7 +1102,7 @@ public CommonResponse register(String cellPhone, String password, String captcha
                     .build()
                     .execute();
             result =response.body().string();
-            NLog.e("uploadAvatar 接收的", result);
+            NLog.d("uploadAvatar 接收的", result);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -1139,7 +1140,7 @@ public CommonResponse register(String cellPhone, String password, String captcha
                     .build()
                     .execute();
             result =response.body().string();
-            NLog.e("addDynamic 接收的", result);
+            NLog.d("addDynamic 接收的", result);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -1154,7 +1155,7 @@ public CommonResponse register(String cellPhone, String password, String captcha
         }
         return commonResponse;
     }
-//获取收藏
+    //获取收藏
     public FavorResponse getFavorList(String list_count,String last_collect_id) throws HttpException {
         String uri = getURL("cli-api-collectmp4list.php");
         Response response=null;
@@ -1168,7 +1169,7 @@ public CommonResponse register(String cellPhone, String password, String captcha
                     .build()
                     .execute();
             result =response.body().string();
-            NLog.e("getFavorList 接收的", result);
+            NLog.d("getFavorList 接收的", result);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -1183,7 +1184,7 @@ public CommonResponse register(String cellPhone, String password, String captcha
         }
         return favorResponse;
     }
-//删除收藏
+    //删除收藏
     public Object delFavor(String delFavorId) throws HttpException {
         String uri = getURL("cli-api-cancelcollect.php");
         Response response=null;
@@ -1196,7 +1197,7 @@ public CommonResponse register(String cellPhone, String password, String captcha
                     .build()
                     .execute();
             result =response.body().string();
-            NLog.e("delFavor 接收的", result);
+            NLog.d("delFavor 接收的", result);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -1225,7 +1226,7 @@ public CommonResponse register(String cellPhone, String password, String captcha
                     .build()
                     .execute();
             result =response.body().string();
-            NLog.e("delMyVideo 接收的", result);
+            NLog.d("delMyVideo 接收的", result);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -1240,7 +1241,7 @@ public CommonResponse register(String cellPhone, String password, String captcha
         }
         return commonResponse;
     }
-//获取我的评论
+    //获取我的评论
     public MyCommentResponse getCommentList(String list_count, String last_com_id) throws HttpException {
         String uri = getURL("cli-api-mycommentlist.php");
         Response response=null;
@@ -1254,7 +1255,7 @@ public CommonResponse register(String cellPhone, String password, String captcha
                     .build()
                     .execute();
             result =response.body().string();
-            NLog.e("getCommentList 接收的", result);
+            NLog.d("getCommentList 接收的", result);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -1269,7 +1270,7 @@ public CommonResponse register(String cellPhone, String password, String captcha
         }
         return myCommentResponse;
     }
-//获取更多设备
+    //获取更多设备
     public ShopMoreResponse getShopMore(String device_type_id, String item_count, String last_device_id) throws HttpException {
         String uri = getURL("cli-dgc-devicelist.php");
         Response response=null;
@@ -1283,7 +1284,7 @@ public CommonResponse register(String cellPhone, String password, String captcha
                     .build()
                     .execute();
             result =response.body().string();
-            NLog.e("getShopMore 接收的", result);
+            NLog.d("getShopMore 接收的", result);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -1299,7 +1300,7 @@ public CommonResponse register(String cellPhone, String password, String captcha
         return shopMoreResponse;
     }
 
-//获取系统消息
+    //获取系统消息
     public SysMsgResponse getSysMsgList(String list_count, String last_msg_id) throws HttpException {
         String uri = getURL("cli-api-sysmsglist.php");
         Response response=null;
@@ -1313,7 +1314,7 @@ public CommonResponse register(String cellPhone, String password, String captcha
                     .build()
                     .execute();
             result =response.body().string();
-            NLog.e("getSysMsgList 接收的", result);
+            NLog.d("getSysMsgList 接收的", result);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -1339,7 +1340,7 @@ public CommonResponse register(String cellPhone, String password, String captcha
         }
         return sysMsgResponse;
     }
-//获取个人消息
+    //获取个人消息
     public PersonMsgResponse getPersonMsgList(String list_count, String last_msg_id) throws HttpException {
         String uri = getURL("cli-api-mymsglist.php");
         Response response=null;
@@ -1353,7 +1354,7 @@ public CommonResponse register(String cellPhone, String password, String captcha
                     .build()
                     .execute();
             result =response.body().string();
-            NLog.e("getPersonMsgList 接收的", result);
+            NLog.d("getPersonMsgList 接收的", result);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -1379,7 +1380,7 @@ public CommonResponse register(String cellPhone, String password, String captcha
         }
         return personMsgResponse;
     }
-//检查游戏是否可玩
+    //检查游戏是否可玩
     public GameCheckResponse gameCheck(String gameName) throws HttpException{
         String uri = getURL("cli-dg-checkdevicegame.php");
 
@@ -1393,7 +1394,7 @@ public CommonResponse register(String cellPhone, String password, String captcha
                     .build()
                     .execute();
             result =response.body().string();
-            NLog.e("gameCheck 接收的", result);
+            NLog.d("gameCheck 接收的", result);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -1409,7 +1410,7 @@ public CommonResponse register(String cellPhone, String password, String captcha
         return commonResponse;
     }
 
-//用户反馈
+    //用户反馈
     public CommonResponse feedback(String reportContent, String cellphone) throws HttpException {
         String uri = getURL("cli-api-postfeedback.php");
 
@@ -1424,7 +1425,7 @@ public CommonResponse register(String cellPhone, String password, String captcha
                     .build()
                     .execute();
             result =response.body().string();
-            NLog.e("feedback 接收的", result);
+            NLog.d("feedback 接收的", result);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -1453,7 +1454,7 @@ public CommonResponse register(String cellPhone, String password, String captcha
                     .build()
                     .execute();
             result =response.body().string();
-            NLog.e("unBindDevice 接收的", result);
+            NLog.d("unBindDevice 接收的", result);
         } catch (IOException e) {
             e.printStackTrace();
         }

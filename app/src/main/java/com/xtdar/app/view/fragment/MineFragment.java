@@ -74,7 +74,7 @@ public class MineFragment extends Fragment implements View.OnClickListener {
         presenter.init(mImageView,nickName,unreadNumView);
         //initData();
 //        compareVersion();
-        NLog.e("fragment-----","onCreateView");
+        NLog.d("fragment-----","onCreateView");
         return mView;
     }
 
@@ -82,13 +82,13 @@ public class MineFragment extends Fragment implements View.OnClickListener {
     public void onStart() {
         super.onStart();
         presenter.getInfo();
-        NLog.e("fragment-----","onStart");
+        NLog.d("fragment-----","onStart");
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        NLog.e("fragment-----","onResume");
+        NLog.d("fragment-----","onResume");
     }
 
     private void initViews() {

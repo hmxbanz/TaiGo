@@ -89,8 +89,6 @@ public class UnityPlayerActivity extends Activity
         //firstTime=1;
         //UnityPlayer.UnitySendMessage("Main Camera","ChooseGame","");     //第二次进入调用
 
-
-
     }
 
     @Override
@@ -135,7 +133,6 @@ public class UnityPlayerActivity extends Activity
 
         @Override
         public void onScanning(ScanResult result) {
-            LoadDialog.show(UnityPlayerActivity.this);
         }
 
         @Override
@@ -225,7 +222,7 @@ public class UnityPlayerActivity extends Activity
                             public void run() {
                                 String s=String.valueOf(HexUtil.encodeHex(characteristic.getValue()));
                                //String s10=NumberUtils.print10(s);
-                                //NLog.e("BLEBLE",s+"-----");
+                                //NLog.d("BLEBLE",s+"-----");
                                 //UnityPlayer.UnitySendMessage("Main Camera","eee",s10);
 
                                 // For all other profiles, writes the data formatted in HEX.对于所有的文件，写入十六进制格式的文件
@@ -241,17 +238,17 @@ public class UnityPlayerActivity extends Activity
                                         stringBuilder.append(String.format("%02x ", byteChar));
                                     // intent.putExtra(EXTRA_DATA, new String(data) + "\n" + stringBuilder.toString());
                                     //intent.putExtra(EXTRA_DATA, new String(data));
-                                    NLog.e("BLEBLE",stringBuilder.toString());
+                                    NLog.d("BLEBLE",stringBuilder.toString());
                                 }
                                 //Integer.toHexString(10)
                                 byte command=data[6];
                                 int aaaaa=command & 0x01;
-                                NLog.e("BLEBLE",aaaaa);
+                                NLog.d("BLEBLE",aaaaa);
 
                                 String x = s.substring(14, 18);
                                 String y = s.substring(18, 22);
 
-                                NLog.e("BLEBLE>>>>",x+"-"+y);
+                                NLog.d("BLEBLE>>>>",x+"-"+y);
 
                                 int xx=Integer.parseInt(x,16);
                                 int yy=Integer.parseInt(y,16);
@@ -473,13 +470,13 @@ private static String hexStr = "0123456789ABCDEF"; //全局
 
     //进度
     public void unitySendLoadValue(float _value,String _gameID){
-        NLog.e("收到进度数："+_value);
+        NLog.d("收到进度数："+_value);
     }
 
 
     //进度2
     public void unityStartDownload(){
-        NLog.e("收到进度数：");
+        NLog.d("收到进度数：");
     }
 
 

@@ -62,17 +62,17 @@ public abstract class BaseFragment extends Fragment {
 
     private void lazyLoadData() {
         if (isFirstLoad) {
-            NLog.e("第一次加载 " + " isInitView  " + isInitView + "  isVisible  " + isVisible + "   " + this.getClass().getSimpleName());
+            NLog.d("第一次加载 " + " isInitView  " + isInitView + "  isVisible  " + isVisible + "   " + this.getClass().getSimpleName());
         } else {
-            NLog.e("不是第一次加载" + " isInitView  " + isInitView + "  isVisible  " + isVisible + "   " + this.getClass().getSimpleName());
+            NLog.d("不是第一次加载" + " isInitView  " + isInitView + "  isVisible  " + isVisible + "   " + this.getClass().getSimpleName());
         }
 
         if (!isFirstLoad || !isVisible || !isInitView) {
-            NLog.e("不加载" + "   " + this.getClass().getSimpleName());
+            NLog.d("不加载" + "   " + this.getClass().getSimpleName());
             return;
         }
 
-            NLog.e("完成数据第一次加载"+ "   " + this.getClass().getSimpleName());
+            NLog.d("完成数据第一次加载"+ "   " + this.getClass().getSimpleName());
         initData();
         isFirstLoad = false;
     }

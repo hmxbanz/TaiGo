@@ -78,7 +78,7 @@ public class ShowFirstPresenter extends BasePresenter implements OnDataListener,
                 ClassListResponse response = (ClassListResponse) result;
                 if (response.getCode() == XtdConst.SUCCESS) {
                     List<ClassListResponse.DataBean> listTemp = response.getData();
-                    NLog.e("ShowFirstCacheString>>>>",listTemp);
+                    NLog.d("ShowFirstCacheString>>>>",listTemp);
                     lastItem=listTemp.get(listTemp.size()-1).getItem_id();
 
                     if(isFirstLoad) {
@@ -123,12 +123,12 @@ public class ShowFirstPresenter extends BasePresenter implements OnDataListener,
 
         if(isFirstLoad) {
             String Cache = aCache.getAsString("ShowFirstList");
-            NLog.e("ShowFirstCacheString",Cache);
+            NLog.d("ShowFirstCacheString",Cache);
 
             if(Cache!=null && !("null").equals(Cache))
                 try {
                     List<ClassListResponse.DataBean> listCache = JsonMananger.jsonToList(Cache, ClassListResponse.DataBean.class);
-                    NLog.e("ShowFirstCacheString",listCache);
+                    NLog.d("ShowFirstCacheString",listCache);
 
                     if(!TextUtils.isEmpty(listCache.get(0).getResource())) {
                         list.addAll(listCache);

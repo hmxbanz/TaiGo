@@ -206,7 +206,10 @@ public class HomeFragmentPresenter extends BasePresenter implements OnDataListen
     }
 
     public void unbindService() {
-        //context.unbindService(mFhrSCon);
+        if(mFhrSCon!=null) {
+            context.unbindService(mFhrSCon);
+            mFhrSCon=null;
+        }
     }
 
     private ServiceConnection mFhrSCon = new ServiceConnection() {
@@ -251,8 +254,8 @@ public class HomeFragmentPresenter extends BasePresenter implements OnDataListen
             if(list.size()>0) {
 
                 for (MyDevicesResponse.DataBean bean : list) {
-                    NLog.e("onScanning",list.toString());
-                    NLog.e("onScanning",bean.getMac_address());
+                    NLog.d("onScanning",list.toString());
+                    NLog.d("onScanning",bean.getMac_address());
                     String mac2 = bean.getMac_address();
                     if (mac2.toUpperCase().equals(mac))
                         bean.setStatus(1);
@@ -291,6 +294,7 @@ public class HomeFragmentPresenter extends BasePresenter implements OnDataListen
 
         @Override
         public void onDisConnected() {
+            connectMac = "";
             NToast.longToast(context, "连接断开");
             mActivity.scanResultList.clear();
         }

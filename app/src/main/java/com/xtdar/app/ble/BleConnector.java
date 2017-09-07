@@ -118,7 +118,7 @@ public class BleConnector extends BluetoothGattCallback {
     public void onCharacteristicChanged(BluetoothGatt gatt, BluetoothGattCharacteristic characteristic) {
         int sign = byte2int(characteristic.getValue());
         String strSign=new String(characteristic.getValue());
-        NLog.e("888888",strSign);
+        NLog.d("888888",strSign);
 
 //        if (sign == 0x02403003) {//heart beat
 //             byte[]ECHO = {0x02, 0x40, 0x31, 0x03};
@@ -176,7 +176,7 @@ public class BleConnector extends BluetoothGattCallback {
     @Override
     public void onCharacteristicRead(BluetoothGatt gatt, BluetoothGattCharacteristic characteristic, int status) {
         String strSign=new String(characteristic.getValue());
-        NLog.e("9999999",strSign);
+        NLog.d("9999999",strSign);
     }
 
     public static byte[] int2byte(int sign) {
