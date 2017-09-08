@@ -10,6 +10,7 @@ import android.view.View;
 
 import com.xtdar.app.XtdConst;
 import com.xtdar.app.adapter.ClassListAnimationAdapter;
+import com.xtdar.app.common.NToast;
 import com.xtdar.app.common.json.JsonMananger;
 import com.xtdar.app.listener.EndlessRecyclerOnScrollListener;
 import com.xtdar.app.server.HttpException;
@@ -96,6 +97,10 @@ public class SpecialGamePresenter extends BasePresenter implements SwipeRefreshL
                     dataAdapter.notifyDataSetChanged();
 
 
+                }
+                else {
+                    if(response !=null)
+                    NToast.shortToast(context, "专区游戏："+response.getMsg());
                 }
                 break;
         }

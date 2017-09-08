@@ -1029,6 +1029,7 @@ public class UserAction extends BaseAction {
                     .build()
                     .execute();
             result =response.body().string();
+            NLog.d("getShot 接收的", game_type_id+" "+page_index+" "+item_count);
             NLog.d("getShot 接收的", result);
         } catch (IOException e) {
             e.printStackTrace();

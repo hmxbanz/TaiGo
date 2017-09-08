@@ -92,6 +92,10 @@ public class ShowPresenter extends BasePresenter implements OnDataListener,Recyc
                     recyclerNormalAdapter.notifyDataSetChanged();
 
                 }
+                else {
+                    if (showResponse != null)
+                    NToast.shortToast(context, "牛人秀："+showResponse.getMsg());
+                }
                 break;
         }
     }

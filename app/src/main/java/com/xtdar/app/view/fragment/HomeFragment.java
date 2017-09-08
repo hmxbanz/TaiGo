@@ -17,6 +17,7 @@ import com.uuzuche.lib_zxing.activity.CodeUtils;
 import com.xtdar.app.R;
 import com.xtdar.app.common.NToast;
 import com.xtdar.app.presenter.HomeFragmentPresenter;
+import com.xtdar.app.server.broadcast.BroadcastManager;
 
 /**
  * Created by AMing on 16/6/21.
@@ -48,6 +49,7 @@ private static final int Blue=0x001bb4fb;
 
 //        initData();
         presenter = new HomeFragmentPresenter(getContext());
+        presenter.init(swiper,recycleView);
         //StatusBarUtil.setTranslucent(getActivity(), StatusBarUtil.);
         StatusBarUtil.setColor(getActivity(), Blue,0);
         return view;
@@ -56,13 +58,12 @@ private static final int Blue=0x001bb4fb;
     @Override
     public void onResume() {
         super.onResume();
-        presenter.loadData();
     }
 
     @Override
     public void onStart() {
         super.onStart();
-        presenter.init(swiper,recycleView);
+        presenter.loadData();
     }
 
     private void initViews() {
@@ -83,9 +84,10 @@ private static final int Blue=0x001bb4fb;
 
     @Override
     public void onDestroy() {
-        super.onDestroy();presenter.unbindService();
+        super.onDestroy();
+        BroadcastManager.getInstance(getActivity()).destroy(HomeFragmentPresenter.LOADDEVICE);
+        presenter.unbindService();
     }
-
     @Override
     public void onClick(View v) {
         switch (v.getId()) {

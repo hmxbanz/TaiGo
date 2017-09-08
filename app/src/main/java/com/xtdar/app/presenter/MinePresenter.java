@@ -64,10 +64,14 @@ public class MinePresenter extends BasePresenter implements OnDataListener {
             public void onReceive(Context context, Intent intent) {
                 String command = intent.getAction();
                 String s=intent.getStringExtra("String");
+                //NToast.shortToast(context, "收到广播："+s);
                 if (!TextUtils.isEmpty(command)) {
                     switch (s){
                         case "updateUnread":
                             reloadMsgCount();
+                            break;
+                        case "loadAvator":
+                            getInfo();
                             break;
                         default:
 
@@ -108,8 +112,9 @@ public class MinePresenter extends BasePresenter implements OnDataListener {
                     Glide.with(context).load(XtdConst.IMGURI+entity.getImg_path()).skipMemoryCache(true).diskCacheStrategy( DiskCacheStrategy.NONE ).into(this.avator);
                     this.nickName.setText(entity.getNick_name());
                     reloadMsgCount();
+                }else {
+                    NToast.shortToast(context, "获取个人资料："+userInfoResponse.getMsg());
                 }
-                NToast.shortToast(context, userInfoResponse.getMsg());
                 break;
             case GETMSGCOUNT:
                 UnReadMsgResponse unReadMsgResponse = (UnReadMsgResponse) result;
@@ -123,8 +128,9 @@ public class MinePresenter extends BasePresenter implements OnDataListener {
                     {
                         this.unreadNumView.setVisibility(View.GONE);
                     }
+                }else {
+                    NToast.shortToast(context, "获取未读数："+unReadMsgResponse.getMsg());
                 }
-                NToast.shortToast(context, unReadMsgResponse.getMsg());
                 break;
 
         }

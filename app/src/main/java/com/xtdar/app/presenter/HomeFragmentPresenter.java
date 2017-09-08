@@ -1,6 +1,7 @@
 package com.xtdar.app.presenter;
 
 import android.app.Activity;
+import android.content.BroadcastReceiver;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
@@ -9,6 +10,7 @@ import android.os.IBinder;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.View;
 
 import com.clj.fastble.data.ScanResult;
@@ -20,6 +22,7 @@ import com.xtdar.app.common.NToast;
 import com.xtdar.app.listener.AlertDialogCallback;
 import com.xtdar.app.server.HttpException;
 import com.xtdar.app.server.async.OnDataListener;
+import com.xtdar.app.server.broadcast.BroadcastManager;
 import com.xtdar.app.server.response.CommonResponse;
 import com.xtdar.app.server.response.MyDevicesResponse;
 import com.xtdar.app.service.BluetoothService;
@@ -42,6 +45,7 @@ public class HomeFragmentPresenter extends BasePresenter implements OnDataListen
     private static final int GETDRIVERS = 1;
     public static final int REQUEST_CODE = 1;
     public static final int UNBINDDEVICE = 2;
+    public static final String LOADDEVICE = "loadDevice";
     private final BasePresenter basePresenter;
     private List<MyDevicesResponse.DataBean> list=new ArrayList<>();
     private RecyclerView recyclerView;
@@ -81,6 +85,25 @@ public class HomeFragmentPresenter extends BasePresenter implements OnDataListen
         if (mBluetoothService == null) {
             bindService();
         }
+
+        BroadcastManager.getInstance(context).addAction(LOADDEVICE, new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                String command = intent.getAction();
+                String s=intent.getStringExtra("String");
+
+                if (!TextUtils.isEmpty(command)) {
+                    switch (s){
+                        case "loadDevice":
+                            loadData();
+                            break;
+                        default:
+
+                    }
+
+                }
+            }
+        });
     }
     public void loadData(){
         if(basePresenter.isLogin){
@@ -121,8 +144,9 @@ public class HomeFragmentPresenter extends BasePresenter implements OnDataListen
                         scanBLE();
                     }
 
+                }else {
+                    NToast.shortToast(context, "获取设备列表："+response.getMsg());
                 }
-                NToast.longToast(context,response.getMsg());
                 break;
             case UNBINDDEVICE:
                 CommonResponse commonResponse = (CommonResponse) result;
@@ -140,8 +164,9 @@ public class HomeFragmentPresenter extends BasePresenter implements OnDataListen
                     dataAdapter.notifyDataSetChanged();
                     DialogWithYesOrNoUtils.getInstance().showDialog(context,"解绑成功",null,null,new AlertDialogCallback());
 
+                } else {
+                    NToast.shortToast(context, "解绑："+commonResponse.getMsg());
                 }
-                NToast.longToast(context,commonResponse.getMsg());
                 break;
         }
     }

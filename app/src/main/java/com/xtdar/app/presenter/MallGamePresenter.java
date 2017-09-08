@@ -131,12 +131,16 @@ public class MallGamePresenter extends BasePresenter implements  SwipeRefreshLay
                     dataAdapter.notifyDataSetChanged();
 
                 }
+                else {
+                    if(response !=null)
+                    NToast.shortToast(context, "大厅游戏："+response.getMsg());
+                }
                 break;
             case GAMECHECK :
                 //取得设备信息，做后续工作
                 //通过intent 信息
                 GameCheckResponse gameCheckResponse = (GameCheckResponse) result;
-                if (gameCheckResponse.getCode() == 1) {
+                if (gameCheckResponse.getCode() == XtdConst.SUCCESS) {
                     //可以玩弹出选择设备列表
                     //弹出设备推荐列表
                     //找高低配设备属性

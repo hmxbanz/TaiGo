@@ -7,6 +7,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 
+import com.orhanobut.logger.Logger;
 import com.xtdar.app.XtdConst;
 import com.xtdar.app.adapter.ClassListNuAdapter;
 import com.xtdar.app.common.NLog;
@@ -76,7 +77,7 @@ public class ShowFirstPresenter extends BasePresenter implements OnDataListener,
         switch (requestCode) {
             case GETSHOWFIRSTLIST:
                 ClassListResponse response = (ClassListResponse) result;
-                if (response.getCode() == XtdConst.SUCCESS) {
+                if (response!=null && response.getCode() == XtdConst.SUCCESS) {
                     List<ClassListResponse.DataBean> listTemp = response.getData();
                     NLog.d("ShowFirstCacheString>>>>",listTemp);
                     lastItem=listTemp.get(listTemp.size()-1).getItem_id();
@@ -98,6 +99,10 @@ public class ShowFirstPresenter extends BasePresenter implements OnDataListener,
                     dataAdapter.setListData(list);
                     dataAdapter.notifyDataSetChanged();
 
+                }
+                else {
+                    if (response!=null)
+                    NToast.shortToast(context, "抢先看："+response.getMsg());
                 }
 
                 break;
@@ -123,7 +128,7 @@ public class ShowFirstPresenter extends BasePresenter implements OnDataListener,
 
         if(isFirstLoad) {
             String Cache = aCache.getAsString("ShowFirstList");
-            NLog.d("ShowFirstCacheString",Cache);
+            Logger.d("ShowFirstCacheString",Cache);
 
             if(Cache!=null && !("null").equals(Cache))
                 try {
@@ -137,8 +142,6 @@ public class ShowFirstPresenter extends BasePresenter implements OnDataListener,
 
                 } catch (HttpException e) {
                     e.printStackTrace();
-                    NToast.longToast(context,"ShowFirstCacheString:"+Cache);
-                    NToast.longToast(context,"ShowFirstCacheString:"+Cache);
                     NToast.longToast(context,"ShowFirstCacheString:"+Cache);
                 }
         }

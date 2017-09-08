@@ -4,6 +4,8 @@ import android.app.Application;
 
 import com.alibaba.baichuan.android.trade.AlibcTradeSDK;
 import com.alibaba.baichuan.android.trade.callback.AlibcTradeInitCallback;
+import com.orhanobut.logger.LogLevel;
+import com.orhanobut.logger.Logger;
 import com.uuzuche.lib_zxing.activity.ZXingLibrary;
 import com.xtdar.app.common.CommonTools;
 
@@ -23,6 +25,11 @@ public class MainApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
+        if(BuildConfig.DEBUG){
+            Logger.init("hmx").setLogLevel(LogLevel.FULL);
+        }
+        else{ Logger.init("hmx").setLogLevel(LogLevel.NONE);}
+
         //阿里百川商城
         AlibcTradeSDK.asyncInit(this, new AlibcTradeInitCallback() {
             @Override

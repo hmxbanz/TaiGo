@@ -8,11 +8,13 @@ import android.text.TextUtils;
 import android.widget.Toast;
 
 
+import com.orhanobut.logger.Logger;
 import com.xtdar.app.R;
 import com.xtdar.app.XtdConst;
 import com.xtdar.app.common.NToast;
 import com.xtdar.app.listener.AlertDialogCallback;
 import com.xtdar.app.server.HttpException;
+import com.xtdar.app.server.broadcast.BroadcastManager;
 import com.xtdar.app.server.response.LoginResponse;
 import com.xtdar.app.server.response.VersionResponse;
 import com.xtdar.app.view.activity.LoginActivity;
@@ -90,8 +92,8 @@ public class Main2Presenter extends BasePresenter {
                         loginWork(entity.getAccess_key());
                         LoadDialog.dismiss(activity);
                         NToast.shortToast(activity, "登录成功");
-                    } else if (loginResponse.getCode() == XtdConst.FAILURE) {
-
+                    } else {
+                        NToast.shortToast(activity, "登录："+loginResponse.getMsg());
                     }
                     break;
                 case CHECKVERSION:
@@ -115,8 +117,8 @@ public class Main2Presenter extends BasePresenter {
                         }
                         LoadDialog.dismiss(activity);
                         NToast.shortToast(activity, "版本检测成功");
-                    } else if (versionResponse.getState() == XtdConst.FAILURE) {
-
+                    }else {
+                        NToast.shortToast(activity, "版本检测："+versionResponse.getMsg());
                     }
                     break;
             }
@@ -136,6 +138,7 @@ public class Main2Presenter extends BasePresenter {
     public void onDestroy() {
         activity.editor.putBoolean(XtdConst.ISLOGIN, false);//退出改登录标记
         activity.editor.commit();
+        basePresenter.initData();
     }
 
     private void goToDownload(final String apkUrl) {
@@ -162,7 +165,8 @@ public class Main2Presenter extends BasePresenter {
         editor.putBoolean(XtdConst.ISLOGIN, true);
         editor.apply();
         basePresenter.initData();
-
+        BroadcastManager.getInstance(context).sendBroadcast(MinePresenter.UPDATEUNREAD, "loadAvator");
+        BroadcastManager.getInstance(context).sendBroadcast(HomeFragmentPresenter.LOADDEVICE, "loadDevice");
     }
 
 }

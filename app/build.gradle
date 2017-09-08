@@ -164,4 +164,5 @@ dependencies {
     //支付宝SDK
     compile 'com.alibaba.alipay:alipaySingle:20160825@jar'
     //阿里百川(结束)
+    compile 'com.orhanobut:logger:1.8'//日志打印
 }

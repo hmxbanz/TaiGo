@@ -9,6 +9,7 @@ import android.util.Log;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.util.TypeUtils;
+import com.xtdar.app.common.NLog;
 import com.xtdar.app.server.HttpException;
 
 import java.util.List;
@@ -53,11 +54,10 @@ public class JsonMananger {
      * 将bean对象转化成json字符串
      * @param obj
      * @return
-     * @throws HttpException
+     * @throws HttpExceptiond
      */
     public static String beanToJson(Object obj) throws HttpException {
-        String result = JSON.toJSONString(obj);
-        Log.e(tag, "beanToJson: " + result);
+        String result =JSON.toJSONString(obj);
         return result;
     }
 
