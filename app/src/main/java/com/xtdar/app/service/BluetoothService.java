@@ -19,6 +19,7 @@ import com.clj.fastble.data.ScanResult;
 import com.clj.fastble.exception.BleException;
 import com.clj.fastble.scan.ListScanCallback;
 import com.clj.fastble.utils.HexUtil;
+import com.orhanobut.logger.Logger;
 
 
 public class BluetoothService extends Service {
@@ -40,6 +41,8 @@ public class BluetoothService extends Service {
     public void onCreate() {
         bleManager = new BleManager(this);
         bleManager.enableBluetooth();
+
+
     }
 
     @Override
@@ -52,7 +55,16 @@ public class BluetoothService extends Service {
 
     @Override
     public IBinder onBind(Intent intent) {
+        Logger.d("绑定服务成功：");
+       final String s = intent.getStringExtra("HomeFragment");
         return mBinder;
+    }
+
+    @Override
+    public void onRebind(Intent intent) {
+        super.onRebind(intent);
+        String s = intent.getStringExtra("HomeFragment");
+        Logger.d(s+"重新绑定服务打印："+s);
     }
 
     @Override

@@ -11,6 +11,7 @@ import android.text.TextUtils;
 import android.view.View;
 
 import com.clj.fastble.data.ScanResult;
+import com.orhanobut.logger.Logger;
 import com.unity3d.player.UnityPlayer;
 import com.xtdar.app.MainApplication;
 import com.xtdar.app.XtdConst;
@@ -98,7 +99,7 @@ public class MallGamePresenter extends BasePresenter implements  SwipeRefreshLay
     public Object doInBackground(int requestCode, String parameter) throws HttpException {
         switch (requestCode) {
             case GETMALLLIST:
-                return mUserAction.getShot("0",lastItem,"10");
+                return mUserAction.getShot("0",lastItem,"4");
             case GAMECHECK:
                 return mUserAction.gameCheck(gameId);
         }
@@ -108,6 +109,7 @@ public class MallGamePresenter extends BasePresenter implements  SwipeRefreshLay
     @Override
     public void onSuccess(int requestCode, Object result) {
         LoadDialog.dismiss(context);
+        if(result ==null) return;
         this.swiper.setRefreshing(false);
         switch (requestCode) {
             case GETMALLLIST:
@@ -132,7 +134,6 @@ public class MallGamePresenter extends BasePresenter implements  SwipeRefreshLay
 
                 }
                 else {
-                    if(response !=null)
                     NToast.shortToast(context, "大厅游戏："+response.getMsg());
                 }
                 break;
@@ -248,21 +249,16 @@ public class MallGamePresenter extends BasePresenter implements  SwipeRefreshLay
                 }
 
             });
+            return;
         }
         this.unityGameId =String.valueOf(bean.getGameConfig().getUnity_game_id());
         this.gameId =bean.getGame_id();
-        /////////////////////////////////////////mActivity.scanResultList.clear();
-        //mActivity.mBluetoothService.setScanCallback(callback);
         mActivity.mBluetoothService.scanDevice();
-
         //传游戏名查询
         LoadDialog.show(context);
         atm.request(GAMECHECK,this);
 
     }
-
-
-
 
     /**
      * 记录RecyclerView当前位置
@@ -323,7 +319,6 @@ public class MallGamePresenter extends BasePresenter implements  SwipeRefreshLay
         recyclerView.addOnScrollListener(getOnScrollListener());
         lastItem ="0";
         list.clear();
-        LoadDialog.show(context);
         atm.request(GETMALLLIST,this);
     }
     //弹出框蓝牙列表点击事件
@@ -376,18 +371,16 @@ public class MallGamePresenter extends BasePresenter implements  SwipeRefreshLay
         return new EndlessRecyclerOnScrollListener(gridLayoutManager) {
             @Override
             public void onLoadMore(int currentPage) {
-                NLog.d("currentPage:", currentPage);
-                lastItem = String.valueOf(currentPage);
-                if(currentPage>1) {
-                    LoadDialog.show(context);
-                    atm.request(GETMALLLIST,MallGamePresenter.this);
-                }
+                Logger.d("getShot currentPage:%s", currentPage);
+                lastItem = String.valueOf(currentPage - 1);
+                LoadDialog.show(context);
+                atm.request(GETMALLLIST, MallGamePresenter.this);
             }
 
             @Override
             public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
                 super.onScrollStateChanged(recyclerView, newState);
-                if(recyclerView.getLayoutManager() != null) {
+                if (recyclerView.getLayoutManager() != null) {
                     getPositionAndOffset();
                 }
             }

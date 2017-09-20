@@ -95,8 +95,8 @@ public class BlePresenter extends BasePresenter implements OnDataListener, BleAd
 
 
         // 为了确保设备上蓝牙能使用, 如果当前蓝牙设备没启用,弹出对话框向用户要求授予权限来启用
-        Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
-        ((Activity)context).startActivityForResult(enableBtIntent, 100);
+        //Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
+        //((Activity)context).startActivityForResult(enableBtIntent, 100);
 
         checkPermissions();
 

@@ -120,12 +120,12 @@
         "source": "C:\\Users\\Administrator\\Desktop\\work\\TaiGo\\IMKit\\src\\main\\res\\layout\\rc_picsel_catalog_listview.xml"
     },
     {
-        "merged": "C:\\Users\\Administrator\\Desktop\\work\\TaiGo\\IMKit\\build\\intermediates\\res\\merged\\release\\layout\\rc_ext_root_menu_item.xml",
-        "source": "C:\\Users\\Administrator\\Desktop\\work\\TaiGo\\IMKit\\src\\main\\res\\layout\\rc_ext_root_menu_item.xml"
-    },
-    {
         "merged": "C:\\Users\\Administrator\\Desktop\\work\\TaiGo\\IMKit\\build\\intermediates\\res\\merged\\release\\layout\\rc_item_text_message_evaluate.xml",
         "source": "C:\\Users\\Administrator\\Desktop\\work\\TaiGo\\IMKit\\src\\main\\res\\layout\\rc_item_text_message_evaluate.xml"
+    },
+    {
+        "merged": "C:\\Users\\Administrator\\Desktop\\work\\TaiGo\\IMKit\\build\\intermediates\\res\\merged\\release\\layout\\rc_ext_root_menu_item.xml",
+        "source": "C:\\Users\\Administrator\\Desktop\\work\\TaiGo\\IMKit\\src\\main\\res\\layout\\rc_ext_root_menu_item.xml"
     },
     {
         "merged": "C:\\Users\\Administrator\\Desktop\\work\\TaiGo\\IMKit\\build\\intermediates\\res\\merged\\release\\layout\\rc_fr_messagelist.xml",

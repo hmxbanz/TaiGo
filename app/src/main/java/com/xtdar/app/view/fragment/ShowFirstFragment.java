@@ -19,7 +19,7 @@ import com.xtdar.app.presenter.ShowFirstPresenter;
  * Created by AMing on 16/6/21.
  * Company RongCloud
  */
-public class ShowFirstFragment extends Fragment  {
+public class ShowFirstFragment extends BaseFragment  {
     RelativeLayout layoutBack,layoutRight;
     //@BindView(R.id.list_item_recycler)
     RecyclerView videoList;
@@ -28,7 +28,6 @@ public class ShowFirstFragment extends Fragment  {
     public static ShowFirstFragment instance = null;
     private SwipeRefreshLayout swiper;
 
-
     public static ShowFirstFragment getInstance() {
         if (instance == null) {
             instance = new ShowFirstFragment();
@@ -36,29 +35,28 @@ public class ShowFirstFragment extends Fragment  {
         return instance;
     }
 
-    @Nullable
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        view = inflater.inflate(R.layout.fragment_show, null);
-        initViews();
-        presenter = new ShowFirstPresenter(getContext());
-        return view;
-    }
     @Override
     public void onStart() {
         super.onStart();
-        presenter.init(swiper,videoList);
-        presenter.loadData();
-    }
-    private void initViews() {
-        swiper=(SwipeRefreshLayout)view.findViewById(R.id.swiper);
-        videoList= (RecyclerView) view.findViewById(R.id.list_item_recycler);
     }
 
-    public boolean onBackPressed() {
-        if (StandardGSYVideoPlayer.backFromWindowFull(getActivity())) {
-            return true;
-        }
-        return false;
+    @Override
+    protected int getLayoutId() {
+        return R.layout.fragment_show;
     }
+
+    @Override
+    protected void initView() {
+        swiper=findView(R.id.swiper);
+        videoList= findView(R.id.list_item_recycler);
+        presenter = new ShowFirstPresenter(getContext());
+        presenter.init(swiper,videoList);
+    }
+
+    @Override
+    protected void initData() {
+        presenter.loadData();
+    }
+
+
 }

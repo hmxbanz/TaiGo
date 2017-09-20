@@ -6,6 +6,7 @@ import android.util.Log;
 import android.widget.EditText;
 
 import com.alibaba.fastjson.JSONException;
+import com.orhanobut.logger.Logger;
 import com.xtdar.app.XtdConst;
 import com.xtdar.app.common.NLog;
 import com.xtdar.app.common.json.JsonMananger;
@@ -60,7 +61,7 @@ import okhttp3.Response;
  */
 @SuppressWarnings("deprecation")
 public class UserAction extends BaseAction {
-    private final String TAG="USERACTION";
+    private final String TAG=UserAction.class.getSimpleName();
     private final String CONTENT_TYPE = "application/json";
     private final String ENCODING = "utf-8";
     private String result;
@@ -101,21 +102,17 @@ public class UserAction extends BaseAction {
                     .build()
                     .execute();
             result =response.body().string();
-            NLog.d("login 接收的", result);
+            Logger.d(TAG, result);
         } catch (IOException e) {
             e.printStackTrace();
         }
         LoginResponse loginResponse = null;
-        if (!TextUtils.isEmpty(result)) {
-            NLog.d("接收的", result);
-
             try {
                 loginResponse = JsonMananger.jsonToBean(result, LoginResponse.class);
             } catch (JSONException e) {
-                NLog.d(TAG, "LoginResponse occurs JSONException e=" + e.toString());
+                Logger.e(TAG, "LoginResponse occurs JSONException e=" + e.toString());
                 return null;
             }
-        }
         return loginResponse;
 
     }
@@ -135,19 +132,18 @@ public class UserAction extends BaseAction {
                     .build()
                     .execute();
             result =response.body().string();
-            NLog.d("wxBind 接收的", result);
+            Logger.d(TAG, result);
         } catch (IOException e) {
             e.printStackTrace();
         }
         CommonResponse commonResponse = null;
-        if (!TextUtils.isEmpty(result)) {
             try {
                 commonResponse = JsonMananger.jsonToBean(result, CommonResponse.class);
             } catch (JSONException e) {
-                NLog.d(TAG, "CommonResponse occurs JSONException e=" + e.toString());
+                Logger.e(TAG, "CommonResponse occurs JSONException e=" + e.toString());
                 return null;
             }
-        }
+
         return commonResponse;
 
     }
@@ -165,19 +161,17 @@ public class UserAction extends BaseAction {
                     .build()
                     .execute();
             result =response.body().string();
-            NLog.d("wxOpenId 接收的", result);
+            Logger.d(TAG, result);
         } catch (IOException e) {
             e.printStackTrace();
         }
         WxLoginResponse wxLoginResponse = null;
-        if (!TextUtils.isEmpty(result)) {
             try {
                 wxLoginResponse = JsonMananger.jsonToBean(result, WxLoginResponse.class);
             } catch (JSONException e) {
-                NLog.d(TAG, "wxLoginResponse occurs JSONException e=" + e.toString());
+                Logger.e(TAG, "wxLoginResponse occurs JSONException e=" + e.toString());
                 return null;
             }
-        }
         return wxLoginResponse;
 
     }
@@ -195,19 +189,17 @@ public class UserAction extends BaseAction {
                     .build()
                     .execute();
             result =response.body().string();
-            NLog.d("qqOpenId 接收的", result);
+            Logger.d(TAG, result);
         } catch (IOException e) {
             e.printStackTrace();
         }
         WxLoginResponse wxLoginResponse = null;
-        if (!TextUtils.isEmpty(result)) {
             try {
                 wxLoginResponse = JsonMananger.jsonToBean(result, WxLoginResponse.class);
             } catch (JSONException e) {
-                NLog.d(TAG, "wxLoginResponse occurs JSONException e=" + e.toString());
+                Logger.e(TAG, "wxLoginResponse occurs JSONException e=" + e.toString());
                 return null;
             }
-        }
         return wxLoginResponse;
 
     }
@@ -226,19 +218,17 @@ public class UserAction extends BaseAction {
                     .build()
                     .execute();
             result =response.body().string();
-            NLog.d("qqBind 接收的", result);
+            Logger.d(TAG, result);
         } catch (IOException e) {
             e.printStackTrace();
         }
         CommonResponse commonResponse = null;
-        if (!TextUtils.isEmpty(result)) {
             try {
                 commonResponse = JsonMananger.jsonToBean(result, CommonResponse.class);
             } catch (JSONException e) {
-                NLog.d(TAG, "CommonResponse occurs JSONException e=" + e.toString());
+                Logger.e(TAG, "qqBind occurs JSONException e=" + e.toString());
                 return null;
             }
-        }
         return commonResponse;
 
     }
@@ -255,19 +245,17 @@ public class UserAction extends BaseAction {
                     .build()
                     .execute();
             result =response.body().string();
-            NLog.d("wbOpenId 接收的", result);
+            Logger.d(TAG, result);
         } catch (IOException e) {
             e.printStackTrace();
         }
         WxLoginResponse wxLoginResponse = null;
-        if (!TextUtils.isEmpty(result)) {
             try {
                 wxLoginResponse = JsonMananger.jsonToBean(result, WxLoginResponse.class);
             } catch (JSONException e) {
-                NLog.d(TAG, "wbLoginResponse occurs JSONException e=" + e.toString());
+                Logger.e(TAG, "wbLoginResponse occurs JSONException e=" + e.toString());
                 return null;
             }
-        }
         return wxLoginResponse;
 
     }
@@ -286,19 +274,17 @@ public class UserAction extends BaseAction {
                     .build()
                     .execute();
             result =response.body().string();
-            NLog.d("wbBind 接收的", result);
+            Logger.d(TAG, result);
         } catch (IOException e) {
             e.printStackTrace();
         }
         CommonResponse commonResponse = null;
-        if (!TextUtils.isEmpty(result)) {
             try {
                 commonResponse = JsonMananger.jsonToBean(result, CommonResponse.class);
             } catch (JSONException e) {
-                NLog.d(TAG, "CommonResponse occurs JSONException e=" + e.toString());
+                Logger.e(TAG, "wbBind occurs JSONException e=" + e.toString());
                 return null;
             }
-        }
         return commonResponse;
 
     }
@@ -317,19 +303,17 @@ public class UserAction extends BaseAction {
                     .build()
                     .execute();
             result =response.body().string();
-            NLog.d("upLoadRid 接收的", result);
+            Logger.d(TAG, result);
         } catch (IOException e) {
             e.printStackTrace();
         }
         CommonResponse commonResponse = null;
-        if (!TextUtils.isEmpty(result)) {
             try {
                 commonResponse = JsonMananger.jsonToBean(result, CommonResponse.class);
             } catch (JSONException e) {
-                NLog.d(TAG, "CommonResponse occurs JSONException e=" + e.toString());
+                Logger.e(TAG, "upLoadRid occurs JSONException e=" + e.toString());
                 return null;
             }
-        }
         return commonResponse;
 
     }
@@ -346,19 +330,17 @@ public class UserAction extends BaseAction {
                     .build()
                     .execute();
             result =response.body().string();
-            NLog.d("getCaptcha 接收的", result);
+            Logger.d(TAG, result);
         } catch (IOException e) {
             e.printStackTrace();
         }
         CaptchaResponse captchaResponse = null;
-        if (!TextUtils.isEmpty(result)) {
             try {
                 captchaResponse = JsonMananger.jsonToBean(result, CaptchaResponse.class);
             } catch (JSONException e) {
-                NLog.d(TAG, "Get Captcha occurs JSONException e=" + e.toString());
+                Logger.e(TAG, "CaptchaResponse occurs JSONException e=" + e.toString());
                 return null;
             }
-        }
         return captchaResponse;
 
     }
@@ -375,50 +357,47 @@ public class UserAction extends BaseAction {
                     .build()
                     .execute();
             result =response.body().string();
-            NLog.d("getCaptchaForget 接收的", result);
+            Logger.d(TAG, result);
         } catch (IOException e) {
             e.printStackTrace();
         }
         CommonResponse commonResponse = null;
-        if (!TextUtils.isEmpty(result)) {
             try {
                 commonResponse = JsonMananger.jsonToBean(result, CommonResponse.class);
             } catch (JSONException e) {
-                NLog.d(TAG, "getCaptchaForget occurs JSONException e=" + e.toString());
+                Logger.e(TAG, "getCaptchaForget occurs JSONException e=" + e.toString());
                 return null;
             }
-        }
         return commonResponse;
 
     }
     //注册
-    public CommonResponse register(String cellPhone, String password, String captcha) throws HttpException
+    public CommonResponse register(String headimgurl,String nickname, String password, String captcha) throws HttpException
     {
         String uri = getURL("cli-comm-register.php");
         Response response=null;
         try {
             response=OkHttpUtils
                     .get()
-                    .addParams("nick_name",cellPhone)
+                    .addParams("nick_name",nickname)
+                    .addParams("head_img",headimgurl)
                     .addParams("pwd",password)
                     .addParams("rand_code",captcha)
                     .url(uri)
                     .build()
                     .execute();
             result =response.body().string();
-            NLog.d("register 接收的", result);
+            Logger.d(TAG, result);
         } catch (IOException e) {
             e.printStackTrace();
         }
         CommonResponse commonResponse = null;
-        if (!TextUtils.isEmpty(result)) {
             try {
                 commonResponse = JsonMananger.jsonToBean(result, CommonResponse.class);
             } catch (JSONException e) {
-                NLog.d(TAG, "CommonResponse occurs JSONException e=" + e.toString());
+                Logger.e(TAG, "register occurs JSONException e=" + e.toString());
                 return null;
             }
-        }
         return commonResponse;
 
     }
@@ -437,19 +416,17 @@ public class UserAction extends BaseAction {
                     .build()
                     .execute();
             result =response.body().string();
-            NLog.d("resetPassword 接收的", result);
+            Logger.d(TAG, result);
         } catch (IOException e) {
             e.printStackTrace();
         }
         CommonResponse commonResponse = null;
-        if (!TextUtils.isEmpty(result)) {
             try {
                 commonResponse = JsonMananger.jsonToBean(result, CommonResponse.class);
             } catch (JSONException e) {
-                NLog.d(TAG, "CommonResponse occurs JSONException e=" + e.toString());
+                Logger.e(TAG, "CommonResponse occurs JSONException e=" + e.toString());
                 return null;
             }
-        }
         return commonResponse;
 
     }
@@ -465,19 +442,17 @@ public class UserAction extends BaseAction {
                     .build()
                     .execute();
             result =response.body().string();
-            NLog.d("getInfo 接收的", result);
+            Logger.d(TAG, result);
         } catch (IOException e) {
             e.printStackTrace();
         }
         UserInfoResponse userInfoResponse = null;
-        if (!TextUtils.isEmpty(result)) {
             try {
                 userInfoResponse = JsonMananger.jsonToBean(result, UserInfoResponse.class);
             } catch (JSONException e) {
-                NLog.d(TAG, "UserInfoResponse occurs JSONException e=" + e.toString());
+                Logger.e(TAG, "UserInfoResponse occurs JSONException e=" + e.toString());
                 return null;
             }
-        }
         return userInfoResponse;
     }
     //取消息未读数
@@ -492,19 +467,17 @@ public class UserAction extends BaseAction {
                     .build()
                     .execute();
             result =response.body().string();
-            NLog.d("getUnReadMsg 接收的", result);
+            Logger.d(TAG, result);
         } catch (IOException e) {
             e.printStackTrace();
         }
         UnReadMsgResponse unReadMsgResponse = null;
-        if (!TextUtils.isEmpty(result)) {
             try {
                 unReadMsgResponse = JsonMananger.jsonToBean(result, UnReadMsgResponse.class);
             } catch (JSONException e) {
-                NLog.d(TAG, "UnReadMsgResponse occurs JSONException e=" + e.toString());
+                Logger.e(TAG, "UnReadMsgResponse occurs JSONException e=" + e.toString());
                 return null;
             }
-        }
         return unReadMsgResponse;
     }
 
@@ -519,19 +492,17 @@ public class UserAction extends BaseAction {
                     .build()
                     .execute();
             result =response.body().string();
-            NLog.d("checkVersion 接收的", result);
+            Logger.d(TAG, result);
         } catch (IOException e) {
             e.printStackTrace();
         }
         VersionResponse versionResponse = null;
-        if (!TextUtils.isEmpty(result)) {
             try {
                 versionResponse = JsonMananger.jsonToBean(result, VersionResponse.class);
             } catch (JSONException e) {
-                NLog.d(TAG, "Get VersionResponse occurs JSONException e=" + e.toString());
+                Logger.e(TAG, "Get VersionResponse occurs JSONException e=" + e.toString());
                 return null;
             }
-        }
         return versionResponse;
     }
 
@@ -545,19 +516,17 @@ public class UserAction extends BaseAction {
                     .build()
                     .execute();
             result =response.body().string();
-            NLog.d("getTags 接收的", result);
+            Logger.d(TAG, result);
         } catch (IOException e) {
             e.printStackTrace();
         }
         TagResponse tagResponse = null;
-        if (!TextUtils.isEmpty(result)) {
             try {
                 tagResponse = JsonMananger.jsonToBean(result, TagResponse.class);
             } catch (JSONException e) {
-                NLog.d(TAG, "TagResponse occurs JSONException e=" + e.toString());
+                Logger.e(TAG, "TagResponse occurs JSONException e=" + e.toString());
                 return null;
             }
-        }
         return tagResponse;
 
     }
@@ -573,19 +542,17 @@ public class UserAction extends BaseAction {
                     .build()
                     .execute();
             result =response.body().string();
-            NLog.d("getAds 接收的", result);
+            Logger.d(TAG, result);
         } catch (IOException e) {
             e.printStackTrace();
         }
         AdResponse adResponse = null;
-        if (!TextUtils.isEmpty(result)) {
             try {
                 adResponse = JsonMananger.jsonToBean(result, AdResponse.class);
             } catch (JSONException e) {
-                NLog.d(TAG, "AdResponse occurs JSONException e=" + e.toString());
+                Logger.e(TAG, "AdResponse occurs JSONException e=" + e.toString());
                 return null;
             }
-        }
         return adResponse;
 
     }
@@ -600,19 +567,17 @@ public class UserAction extends BaseAction {
                     .build()
                     .execute();
             result =response.body().string();
-            NLog.d("getRecommends 接收的", result);
+            Logger.d(TAG, result);
         } catch (IOException e) {
             e.printStackTrace();
         }
         RecommendResponse recommendResponse = null;
-        if (!TextUtils.isEmpty(result)) {
             try {
                 recommendResponse = JsonMananger.jsonToBean(result, RecommendResponse.class);
             } catch (JSONException e) {
-                NLog.d(TAG, "RecommendResponse occurs JSONException e=" + e.toString());
+                Logger.e(TAG, "RecommendResponse occurs JSONException e=" + e.toString());
                 return null;
             }
-        }
         return recommendResponse;
     }
     //获取淘设备
@@ -626,19 +591,17 @@ public class UserAction extends BaseAction {
                     .build()
                     .execute();
             result =response.body().string();
-            NLog.d("getTaobao 接收的", result);
+            Logger.d(TAG, result);
         } catch (IOException e) {
             e.printStackTrace();
         }
         TaobaoResponse taobaoResponse = null;
-        if (!TextUtils.isEmpty(result)) {
             try {
                 taobaoResponse = JsonMananger.jsonToBean(result, TaobaoResponse.class);
             } catch (JSONException e) {
-                NLog.d(TAG, "TaobaoResponse occurs JSONException e=" + e.toString());
+                Logger.e(TAG, "TaobaoResponse occurs JSONException e=" + e.toString());
                 return null;
             }
-        }
         return taobaoResponse;
     }
     //项详情(图文、视频、音频)
@@ -653,19 +616,17 @@ public class UserAction extends BaseAction {
                     .build()
                     .execute();
             result =response.body().string();
-            NLog.d("getDetail 接收的", result);
+            Logger.d(TAG, result);
         } catch (IOException e) {
             e.printStackTrace();
         }
         DetailResponse detailResponse = null;
-        if (!TextUtils.isEmpty(result)) {
             try {
                 detailResponse = JsonMananger.jsonToBean(result, DetailResponse.class);
             } catch (JSONException e) {
-                NLog.d(TAG, "DetailResponse occurs JSONException e=" + e.toString());
+                Logger.e(TAG, "DetailResponse occurs JSONException e=" + e.toString());
                 return null;
             }
-        }
         return detailResponse;
     }
     //秀场项详情
@@ -680,19 +641,17 @@ public class UserAction extends BaseAction {
                     .build()
                     .execute();
             result =response.body().string();
-            NLog.d("getShowDetail 接收的", result);
+            Logger.d(TAG, result);
         } catch (IOException e) {
             e.printStackTrace();
         }
         ShowDetailResponse showDetailResponse = null;
-        if (!TextUtils.isEmpty(result)) {
             try {
                 showDetailResponse = JsonMananger.jsonToBean(result, ShowDetailResponse.class);
             } catch (JSONException e) {
-                NLog.d(TAG, "ShowDetailResponse occurs JSONException e=" + e.toString());
+                Logger.e(TAG, "ShowDetailResponse occurs JSONException e=" + e.toString());
                 return null;
             }
-        }
         return showDetailResponse;
     }
     //收藏
@@ -708,19 +667,17 @@ public class UserAction extends BaseAction {
                     .build()
                     .execute();
             result =response.body().string();
-            NLog.d("addFavor 接收的", result);
+            Logger.d(TAG, result);
         } catch (IOException e) {
             e.printStackTrace();
         }
         CommonResponse commonResponse = null;
-        if (!TextUtils.isEmpty(result)) {
             try {
                 commonResponse = JsonMananger.jsonToBean(result, CommonResponse.class);
             } catch (JSONException e) {
-                NLog.d(TAG, "DetailResponse occurs JSONException e=" + e.toString());
+                Logger.e(TAG, "addFavor occurs JSONException e=" + e.toString());
                 return null;
             }
-        }
         return commonResponse;
     }
     //评论
@@ -738,19 +695,17 @@ public class UserAction extends BaseAction {
                     .build()
                     .execute();
             result =response.body().string();
-            NLog.d("addComment 接收的", result);
+            Logger.d(TAG, result);
         } catch (IOException e) {
             e.printStackTrace();
         }
         CommonResponse commonResponse = null;
-        if (!TextUtils.isEmpty(result)) {
             try {
                 commonResponse = JsonMananger.jsonToBean(result, CommonResponse.class);
             } catch (JSONException e) {
-                NLog.d(TAG, "DetailResponse occurs JSONException e=" + e.toString());
+                Logger.e(TAG, "addComment occurs JSONException e=" + e.toString());
                 return null;
             }
-        }
         return commonResponse;
     }
 
@@ -766,19 +721,17 @@ public class UserAction extends BaseAction {
                     .build()
                     .execute();
             result =response.body().string();
-            NLog.d("getRelateRecommend 接收的", result);
+            Logger.d(TAG, result);
         } catch (IOException e) {
             e.printStackTrace();
         }
         RelateRecommendResponse relateRecommend = null;
-        if (!TextUtils.isEmpty(result)) {
             try {
                 relateRecommend = JsonMananger.jsonToBean(result, RelateRecommendResponse.class);
             } catch (JSONException e) {
-                NLog.d(TAG, "RelateRecommendResponse occurs JSONException e=" + e.toString());
+                Logger.e(TAG, "RelateRecommendResponse occurs JSONException e=" + e.toString());
                 return null;
             }
-        }
         return relateRecommend;
     }
     //获取分类项列表（动画）
@@ -795,19 +748,18 @@ public class UserAction extends BaseAction {
                     .build()
                     .execute();
             result =response.body().string();
-            NLog.d("getAnimations 接收的", result);
+            Logger.d("getAnimations class_id:%s last_item_id:%s item_count:%s", class_id,last_item_id,item_count);
+            Logger.d("getAnimations %s", result);
         } catch (IOException e) {
             e.printStackTrace();
         }
         ClassListResponse  classListResponse= null;
-        if (!TextUtils.isEmpty(result)) {
             try {
                 classListResponse = JsonMananger.jsonToBean(result, ClassListResponse.class);
             } catch (JSONException e) {
-                NLog.d(TAG, "ClassListResponse occurs JSONException e=" + e.toString());
+                Logger.e(TAG, "ClassListResponse occurs JSONException e=" + e.toString());
                 return null;
             }
-        }
         return classListResponse;
     }
 
@@ -822,19 +774,17 @@ public class UserAction extends BaseAction {
                     .build()
                     .execute();
             result =response.body().string();
-            NLog.d("getSongAlbumDetail 接收的", result);
+            Logger.d(TAG, result);
         } catch (IOException e) {
             e.printStackTrace();
         }
         SongDetailResponse detailResponse = null;
-        if (!TextUtils.isEmpty(result)) {
             try {
                 detailResponse = JsonMananger.jsonToBean(result, SongDetailResponse.class);
             } catch (JSONException e) {
-                NLog.d(TAG, "DetailResponse occurs JSONException e=" + e.toString());
+                Logger.e(TAG, "DetailResponse occurs JSONException e=" + e.toString());
                 return null;
             }
-        }
         return detailResponse;
     }
 
@@ -850,19 +800,17 @@ public class UserAction extends BaseAction {
                     .build()
                     .execute();
             result =response.body().string();
-            NLog.d("getShowList 接收的", result);
+            Logger.d("getShowList %s", result);
         } catch (IOException e) {
             e.printStackTrace();
         }
         ShowResponse showResponse = null;
-        if (!TextUtils.isEmpty(result)) {
             try {
                 showResponse = JsonMananger.jsonToBean(result, ShowResponse.class);
             } catch (JSONException e) {
-                NLog.d(TAG, "ShowResponse occurs JSONException e=" + e.toString());
+                Logger.e(TAG, "ShowResponse occurs JSONException e=" + e.toString());
                 return null;
             }
-        }
         return showResponse;
     }
     //我的视频
@@ -877,20 +825,18 @@ public class UserAction extends BaseAction {
                     .build()
                     .execute();
             result =response.body().string();
-            NLog.d("getMyVideo 接收的", result);
+            Logger.d(TAG, result);
 
         } catch (IOException e) {
             e.printStackTrace();
         }
         ShowResponse showResponse = null;
-        if (!TextUtils.isEmpty(result)) {
             try {
                 showResponse = JsonMananger.jsonToBean(result, ShowResponse.class);
             } catch (JSONException e) {
-                NLog.d(TAG, "ShowResponse occurs JSONException e=" + e.toString());
+                Logger.e(TAG, "ShowResponse occurs JSONException e=" + e.toString());
                 return null;
             }
-        }
         return showResponse;
     }
 
@@ -904,7 +850,7 @@ public class UserAction extends BaseAction {
                     .build()
                     .execute();
             result =response.body().string();
-            NLog.d("getProtocol 接收的", result);
+            Logger.d(TAG, result);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -924,15 +870,19 @@ public class UserAction extends BaseAction {
                     .build()
                     .execute();
             result =response.body().string();
-            NLog.d("getHelps 接收的", result);
+            Logger.d(TAG, result);
         } catch (IOException e) {
             e.printStackTrace();
 
         }
         HelpResponse helpResponse = null;
-        if (!TextUtils.isEmpty(result)) {
-            helpResponse = JsonMananger.jsonToBean(result, HelpResponse.class);
-        }
+            try {
+                helpResponse = JsonMananger.jsonToBean(result, HelpResponse.class);
+            } catch (JSONException e) {
+                Logger.e(TAG, "HelpResponse occurs JSONException e=" + e.toString());
+                return null;
+            }
+
         return helpResponse;
     }
 
@@ -954,14 +904,17 @@ public class UserAction extends BaseAction {
                     .build()
                     .execute();
             result =response.body().string();
-            NLog.d("save 接收的", result);
+            Logger.d(TAG, result);
         } catch (IOException e) {
             e.printStackTrace();
 
         }
         CommonResponse commonResponse = null;
-        if (!TextUtils.isEmpty(result)) {
+        try {
             commonResponse = JsonMananger.jsonToBean(result, CommonResponse.class);
+        } catch (JSONException e) {
+            Logger.e(TAG, "CommonResponse occurs JSONException e=" + e.toString());
+            return null;
         }
         return commonResponse;
 
@@ -979,15 +932,19 @@ public class UserAction extends BaseAction {
                     .build()
                     .execute();
             result =response.body().string();
-            NLog.d("bindDevice 接收的", result);
+            Logger.d(TAG, result);
         } catch (IOException e) {
             e.printStackTrace();
 
         }
         BindResponse bindResponse = null;
-        if (!TextUtils.isEmpty(result)) {
+        try {
             bindResponse = JsonMananger.jsonToBean(result, BindResponse.class);
+        } catch (JSONException e) {
+            Logger.e(TAG, "BindResponse occurs JSONException e=" + e.toString());
+            return null;
         }
+
         return bindResponse;
     }
 
@@ -1002,21 +959,24 @@ public class UserAction extends BaseAction {
                     .build()
                     .execute();
             result =response.body().string();
-            NLog.d("getDevices 接收的", result);
+            Logger.d("getDevices %s", result);
         } catch (IOException e) {
             e.printStackTrace();
 
         }
-        MyDevicesResponse commonResponse = null;
-        if (!TextUtils.isEmpty(result)) {
-            commonResponse = JsonMananger.jsonToBean(result, MyDevicesResponse.class);
+        MyDevicesResponse myDevicesResponse = null;
+        try {
+            myDevicesResponse = JsonMananger.jsonToBean(result, MyDevicesResponse.class);
+        } catch (JSONException e) {
+            Logger.e(TAG, "MyDevicesResponse occurs JSONException e=" + e.toString());
+            return null;
         }
-        return commonResponse;
+
+        return myDevicesResponse;
     }
 
     //获取游戏列表（射击）
     public GameListResponse getShot(String game_type_id, String page_index, String item_count) throws HttpException{
-
         String uri = getURL("cli-dgc-gamelist.php");
         Response response=null;
         try {
@@ -1029,25 +989,26 @@ public class UserAction extends BaseAction {
                     .build()
                     .execute();
             result =response.body().string();
-            NLog.d("getShot 接收的", game_type_id+" "+page_index+" "+item_count);
-            NLog.d("getShot 接收的", result);
+            if(game_type_id.equals("0")) {
+                Logger.d("getShot (game_type_id:%s page_index:%s item_count:%s)", game_type_id, page_index, item_count);
+                Logger.d("getShot %s", result);
+            }
         } catch (IOException e) {
             e.printStackTrace();
         }
         GameListResponse  gameListResponse= null;
-        if (!TextUtils.isEmpty(result)) {
             try {
                 gameListResponse = JsonMananger.jsonToBean(result, GameListResponse.class);
-                for(GameListResponse.DataBean bean:gameListResponse.getData())
-                {
-                    GameListResponse.DataBean.GameConfig gameConfig = JsonMananger.jsonToBean(bean.getGame_config(), GameListResponse.DataBean.GameConfig.class);
-                    bean.setGameConfig(gameConfig);
-                }
 
             } catch (JSONException e) {
-                NLog.d(TAG, "ClassListResponse occurs JSONException e=" + e.toString());
+                Logger.e(TAG, "ClassListResponse occurs JSONException e=" + e.toString());
                 return null;
             }
+
+        for(GameListResponse.DataBean bean:gameListResponse.getData())
+        {
+            GameListResponse.DataBean.GameConfig gameConfig = JsonMananger.jsonToBean(bean.getGame_config(), GameListResponse.DataBean.GameConfig.class);
+            bean.setGameConfig(gameConfig);
         }
         return gameListResponse;
     }
@@ -1066,20 +1027,20 @@ public class UserAction extends BaseAction {
                     .build()
                     .execute();
             result =response.body().string();
-            NLog.d("getComment 接收的", result);
+            Logger.d(TAG, result);
         } catch (IOException e) {
             e.printStackTrace();
         }
-        CommentResponse  gameListResponse= null;
-        if (!TextUtils.isEmpty(result)) {
+        CommentResponse  commentResponse= null;
+
             try {
-                gameListResponse = JsonMananger.jsonToBean(result, CommentResponse.class);
+                commentResponse = JsonMananger.jsonToBean(result, CommentResponse.class);
             } catch (JSONException e) {
-                NLog.d(TAG, "ClassListResponse occurs JSONException e=" + e.toString());
+                Logger.e(TAG, "CommentResponse occurs JSONException e=" + e.toString());
                 return null;
             }
-        }
-        return gameListResponse;
+
+        return commentResponse;
 
     }
 
@@ -1103,7 +1064,7 @@ public class UserAction extends BaseAction {
                     .build()
                     .execute();
             result =response.body().string();
-            NLog.d("uploadAvatar 接收的", result);
+            Logger.d(TAG, result);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -1112,7 +1073,7 @@ public class UserAction extends BaseAction {
             try {
                 commonResponse = JsonMananger.jsonToBean(result, CommonResponse.class);
             } catch (JSONException e) {
-                NLog.d(TAG, "uploadAvatar occurs JSONException e=" + e.toString());
+                Logger.e(TAG, "uploadAvatar occurs JSONException e=" + e.toString());
                 return null;
             }
         }
@@ -1141,7 +1102,7 @@ public class UserAction extends BaseAction {
                     .build()
                     .execute();
             result =response.body().string();
-            NLog.d("addDynamic 接收的", result);
+            Logger.d(TAG, result);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -1150,7 +1111,7 @@ public class UserAction extends BaseAction {
             try {
                 commonResponse = JsonMananger.jsonToBean(result, CommonResponse.class);
             } catch (JSONException e) {
-                NLog.d(TAG, "addDynamic occurs JSONException e=" + e.toString());
+                Logger.e(TAG, "addDynamic occurs JSONException e=" + e.toString());
                 return null;
             }
         }
@@ -1170,19 +1131,18 @@ public class UserAction extends BaseAction {
                     .build()
                     .execute();
             result =response.body().string();
-            NLog.d("getFavorList 接收的", result);
+            Logger.d(TAG, result);
         } catch (IOException e) {
             e.printStackTrace();
         }
         FavorResponse  favorResponse= null;
-        if (!TextUtils.isEmpty(result)) {
             try {
                 favorResponse = JsonMananger.jsonToBean(result, FavorResponse.class);
             } catch (JSONException e) {
-                NLog.d(TAG, "FavorResponse occurs JSONException e=" + e.toString());
+                Logger.e(TAG, "FavorResponse occurs JSONException e=" + e.toString());
                 return null;
             }
-        }
+
         return favorResponse;
     }
     //删除收藏
@@ -1198,19 +1158,17 @@ public class UserAction extends BaseAction {
                     .build()
                     .execute();
             result =response.body().string();
-            NLog.d("delFavor 接收的", result);
+            Logger.d(TAG, result);
         } catch (IOException e) {
             e.printStackTrace();
         }
         CommonResponse commonResponse = null;
-        if (!TextUtils.isEmpty(result)) {
             try {
                 commonResponse = JsonMananger.jsonToBean(result, CommonResponse.class);
             } catch (JSONException e) {
-                NLog.d(TAG, "delFavor occurs JSONException e=" + e.toString());
+                Logger.e(TAG, "delFavor occurs JSONException e=" + e.toString());
                 return null;
             }
-        }
         return commonResponse;
     }
 
@@ -1227,19 +1185,18 @@ public class UserAction extends BaseAction {
                     .build()
                     .execute();
             result =response.body().string();
-            NLog.d("delMyVideo 接收的", result);
+            Logger.d(TAG, result);
         } catch (IOException e) {
             e.printStackTrace();
         }
         CommonResponse commonResponse = null;
-        if (!TextUtils.isEmpty(result)) {
             try {
                 commonResponse = JsonMananger.jsonToBean(result, CommonResponse.class);
             } catch (JSONException e) {
-                NLog.d(TAG, "delMyVideo occurs JSONException e=" + e.toString());
+                Logger.e(TAG, "delMyVideo occurs JSONException e=" + e.toString());
                 return null;
             }
-        }
+
         return commonResponse;
     }
     //获取我的评论
@@ -1256,19 +1213,17 @@ public class UserAction extends BaseAction {
                     .build()
                     .execute();
             result =response.body().string();
-            NLog.d("getCommentList 接收的", result);
+            Logger.d(TAG, result);
         } catch (IOException e) {
             e.printStackTrace();
         }
         MyCommentResponse  myCommentResponse= null;
-        if (!TextUtils.isEmpty(result)) {
             try {
                 myCommentResponse = JsonMananger.jsonToBean(result, MyCommentResponse.class);
             } catch (JSONException e) {
-                NLog.d(TAG, "CommentResponse occurs JSONException e=" + e.toString());
+                Logger.e(TAG, "MyCommentResponse occurs JSONException e=" + e.toString());
                 return null;
             }
-        }
         return myCommentResponse;
     }
     //获取更多设备
@@ -1285,19 +1240,17 @@ public class UserAction extends BaseAction {
                     .build()
                     .execute();
             result =response.body().string();
-            NLog.d("getShopMore 接收的", result);
+            Logger.d(TAG, result);
         } catch (IOException e) {
             e.printStackTrace();
         }
         ShopMoreResponse  shopMoreResponse= null;
-        if (!TextUtils.isEmpty(result)) {
             try {
                 shopMoreResponse = JsonMananger.jsonToBean(result, ShopMoreResponse.class);
             } catch (JSONException e) {
-                NLog.d(TAG, "CommentResponse occurs JSONException e=" + e.toString());
+                Logger.e(TAG, "ShopMoreResponse occurs JSONException e=" + e.toString());
                 return null;
             }
-        }
         return shopMoreResponse;
     }
 
@@ -1315,12 +1268,11 @@ public class UserAction extends BaseAction {
                     .build()
                     .execute();
             result =response.body().string();
-            NLog.d("getSysMsgList 接收的", result);
+            Logger.d(TAG, result);
         } catch (IOException e) {
             e.printStackTrace();
         }
         SysMsgResponse  sysMsgResponse= null;
-        if (!TextUtils.isEmpty(result)) {
             try {
                 sysMsgResponse = JsonMananger.jsonToBean(result, SysMsgResponse.class);
 
@@ -1335,10 +1287,9 @@ public class UserAction extends BaseAction {
                     bean.setLinkObj(linkObj);
                 }
             } catch (JSONException e) {
-                NLog.d(TAG, "SysMsgResponse occurs JSONException e=" + e.toString());
+                Logger.e(TAG, "SysMsgResponse occurs JSONException e=" + e.toString());
                 return null;
             }
-        }
         return sysMsgResponse;
     }
     //获取个人消息
@@ -1355,12 +1306,11 @@ public class UserAction extends BaseAction {
                     .build()
                     .execute();
             result =response.body().string();
-            NLog.d("getPersonMsgList 接收的", result);
+            Logger.d(TAG, result);
         } catch (IOException e) {
             e.printStackTrace();
         }
         PersonMsgResponse  personMsgResponse= null;
-        if (!TextUtils.isEmpty(result)) {
             try {
                 personMsgResponse = JsonMananger.jsonToBean(result, PersonMsgResponse.class);
 
@@ -1375,10 +1325,10 @@ public class UserAction extends BaseAction {
                     bean.setLinkObj(linkObj);
                 }
             } catch (JSONException e) {
-                NLog.d(TAG, "PersonMsgResponse occurs JSONException e=" + e.toString());
+                Logger.e(TAG, "PersonMsgResponse occurs JSONException e=" + e.toString());
                 return null;
             }
-        }
+
         return personMsgResponse;
     }
     //检查游戏是否可玩
@@ -1395,19 +1345,18 @@ public class UserAction extends BaseAction {
                     .build()
                     .execute();
             result =response.body().string();
-            NLog.d("gameCheck 接收的", result);
+            Logger.d(TAG, result);
         } catch (IOException e) {
             e.printStackTrace();
         }
         GameCheckResponse commonResponse = null;
-        if (!TextUtils.isEmpty(result)) {
             try {
                 commonResponse = JsonMananger.jsonToBean(result, GameCheckResponse.class);
             } catch (JSONException e) {
-                NLog.d(TAG, "feedback occurs JSONException e=" + e.toString());
+                Logger.e(TAG, "GameCheckResponse occurs JSONException e=" + e.toString());
                 return null;
             }
-        }
+
         return commonResponse;
     }
 
@@ -1426,19 +1375,17 @@ public class UserAction extends BaseAction {
                     .build()
                     .execute();
             result =response.body().string();
-            NLog.d("feedback 接收的", result);
+            Logger.d(TAG, result);
         } catch (IOException e) {
             e.printStackTrace();
         }
         CommonResponse commonResponse = null;
-        if (!TextUtils.isEmpty(result)) {
             try {
                 commonResponse = JsonMananger.jsonToBean(result, CommonResponse.class);
             } catch (JSONException e) {
-                NLog.d(TAG, "feedback occurs JSONException e=" + e.toString());
+                Logger.e(TAG, "feedback occurs JSONException e=" + e.toString());
                 return null;
             }
-        }
         return commonResponse;
     }
 
@@ -1455,19 +1402,17 @@ public class UserAction extends BaseAction {
                     .build()
                     .execute();
             result =response.body().string();
-            NLog.d("unBindDevice 接收的", result);
+            Logger.d(TAG, result);
         } catch (IOException e) {
             e.printStackTrace();
         }
         CommonResponse commonResponse = null;
-        if (!TextUtils.isEmpty(result)) {
             try {
                 commonResponse = JsonMananger.jsonToBean(result, CommonResponse.class);
             } catch (JSONException e) {
-                NLog.d(TAG, "unBindDevice occurs JSONException e=" + e.toString());
+                Logger.e(TAG, "unBindDevice occurs JSONException e=" + e.toString());
                 return null;
             }
-        }
         return commonResponse;
     }
 }

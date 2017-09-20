@@ -8,6 +8,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
+import com.orhanobut.logger.Logger;
 import com.xtdar.app.XtdConst;
 import com.xtdar.app.adapter.ClassListAnimationAdapter;
 import com.xtdar.app.common.NToast;
@@ -74,6 +75,7 @@ public class SpecialGamePresenter extends BasePresenter implements SwipeRefreshL
     @Override
     public void onSuccess(int requestCode, Object result) {
         LoadDialog.dismiss(context);
+        if (result==null)return;
         this.swiper.setRefreshing(false);
         switch (requestCode) {
             case GETSPECIALlIST:
@@ -95,11 +97,9 @@ public class SpecialGamePresenter extends BasePresenter implements SwipeRefreshL
 
                     dataAdapter.setListItems(list);
                     dataAdapter.notifyDataSetChanged();
-
-
+                    //Logger.e("SpecialGame",response);
                 }
                 else {
-                    if(response !=null)
                     NToast.shortToast(context, "专区游戏："+response.getMsg());
                 }
                 break;
@@ -137,7 +137,6 @@ public class SpecialGamePresenter extends BasePresenter implements SwipeRefreshL
         recyclerView.addOnScrollListener(getOnScrollListener());
         lastItem ="0";
         list.clear();
-        LoadDialog.show(context);
         atm.request(GETSPECIALlIST,this);
     }
 
@@ -173,11 +172,9 @@ public class SpecialGamePresenter extends BasePresenter implements SwipeRefreshL
         return new EndlessRecyclerOnScrollListener(SpecialGamePresenter.this.gridLayoutManager) {
             @Override
             public void onLoadMore(int currentPage) {
-                lastItem = String.valueOf(currentPage);
-                if(currentPage>1) {
+                lastItem = String.valueOf(currentPage-1);
                     LoadDialog.show(context);
-                    //atm.request(GETSPECIALlIST, SpecialGamePresenter.this);
-                }
+                    atm.request(GETSPECIALlIST, SpecialGamePresenter.this);
             }
 
             @Override

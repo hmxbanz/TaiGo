@@ -6,6 +6,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.orhanobut.logger.Logger;
 import com.shuyu.gsyvideoplayer.GSYVideoManager;
 import com.shuyu.gsyvideoplayer.utils.Debuger;
 import com.shuyu.gsyvideoplayer.video.StandardGSYVideoPlayer;
@@ -82,6 +83,9 @@ public class RecyclerItemNormalHolder2 extends RecyclerItemBaseHolder {
         final String url = XtdConst.IMGURI+videoModel.getResource();
 
         //默认缓存路径
+
+        Logger.e("StandardGSYVideoPlayer %s",videoModel.getItem_title());
+        if(videoModel.getItem_title()!=null)
         gsyVideoPlayer.setUp(url, true , null, videoModel.getItem_title());
 
         //增加title

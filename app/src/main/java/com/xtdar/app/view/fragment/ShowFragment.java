@@ -23,7 +23,7 @@ import java.util.List;
  * Created by AMing on 16/6/21.
  * Company RongCloud
  */
-public class ShowFragment extends Fragment  {
+public class ShowFragment extends BaseFragment  {
     RelativeLayout layoutBack,layoutRight;
     //@BindView(R.id.list_item_recycler)
     RecyclerView videoList;
@@ -43,30 +43,31 @@ public class ShowFragment extends Fragment  {
         return instance;
     }
 
-    @Nullable
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        view = inflater.inflate(R.layout.fragment_show, null);
-        initViews();
-        presenter = new ShowPresenter(getContext());
-        return view;
-    }
     @Override
     public void onStart() {
         super.onStart();
+    }
+
+
+
+    @Override
+    protected int getLayoutId() {
+        return R.layout.fragment_show;
+    }
+
+    @Override
+    protected void initView() {
+        swiper=findView(R.id.swiper);
+        videoList= findView(R.id.list_item_recycler);
+        presenter = new ShowPresenter(getContext());
         presenter.init(swiper,videoList);
+    }
+
+    @Override
+    protected void initData() {
         presenter.loadData();
     }
 
-    private void initViews() {
-        swiper=(SwipeRefreshLayout)view.findViewById(R.id.swiper);
-        videoList= (RecyclerView) view.findViewById(R.id.list_item_recycler);
-    }
 
-    public boolean onBackPressed() {
-        if (StandardGSYVideoPlayer.backFromWindowFull(getActivity())) {
-            return true;
-        }
-        return false;
-    }
 }
+

@@ -53,9 +53,7 @@ import java.util.List;
         @Override
         public void onBindViewHolder(final RecyclerView.ViewHolder holder,  final int position) {
             NLog.d("ClassNuListAdapterdata",itemDataList);
-            NLog.d("ClassNuListAdapterdata000",itemDataList.get(0).getContent().toString());
             NLog.d("ClassNuListAdapterdata",itemDataList.get(position).toString());
-            NLog.d("ClassNuListAdapterdata",itemDataList.get(position).getContent().toString());
             RecyclerItemNormalHolder2 recyclerItemViewHolder = (RecyclerItemNormalHolder2) holder;
             recyclerItemViewHolder.setRecyclerBaseAdapter(this);
             recyclerItemViewHolder.onBind(position, itemDataList.get(position));

@@ -32,6 +32,7 @@ import com.xtdar.app.view.fragment.DiscoveryFragment;
 import com.xtdar.app.view.fragment.GameFragment;
 import com.xtdar.app.view.fragment.HomeFragment;
 import com.xtdar.app.view.fragment.MineFragment;
+import com.xtdar.app.view.fragment.ShowFragment;
 import com.xtdar.app.view.widget.DragPointView;
 import com.xtdar.app.widget.DialogWithYesOrNoUtils;
 
@@ -74,9 +75,6 @@ public class Main2Activity extends BaseActivity implements View.OnClickListener{
         changeSelectedTabState(0);
         main2Presenter = new Main2Presenter(this);
         main2Presenter.init();
-
-
-
     }
 
     @Override
@@ -286,13 +284,10 @@ public class Main2Activity extends BaseActivity implements View.OnClickListener{
 
     @Override
     public void onBackPressed() {
-//        if (ShowFragment.getInstance().onBackPressed()) {
-//            return;
-//        }
         if (StandardGSYVideoPlayer.backFromWindowFull(this)) {
              return;
             }
-        finish();
+            finish();
     }
     @Override
     protected void onDestroy() {

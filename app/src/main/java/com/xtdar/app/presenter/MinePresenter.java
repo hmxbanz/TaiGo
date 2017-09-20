@@ -103,6 +103,7 @@ public class MinePresenter extends BasePresenter implements OnDataListener {
     @Override
     public void onSuccess(int requestCode, Object result) {
         LoadDialog.dismiss(context);
+        if (result==null)return;
         switch (requestCode) {
             case GETINFO:
                 UserInfoResponse userInfoResponse = (UserInfoResponse) result;

@@ -31,8 +31,6 @@ public class DiscoveryPresenter extends BasePresenter implements OnDataListener 
         tabLayout.getTabAt(0).setText("淘设备");
         tabLayout.getTabAt(1).setText("牛人秀");
         tabLayout.getTabAt(2).setText("抢先看");
-        //LoadDialog.show(context);
-        //atm.request(GETTAGS,this);
     }
 
     @Override
@@ -47,6 +45,7 @@ public class DiscoveryPresenter extends BasePresenter implements OnDataListener 
     @Override
     public void onSuccess(int requestCode, Object result) {
         LoadDialog.dismiss(context);
+        if (result==null)return;
         switch (requestCode) {
             case GETTAGS:
                 TagResponse tagResponse = (TagResponse) result;

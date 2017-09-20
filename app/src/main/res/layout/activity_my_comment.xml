@@ -9,6 +9,7 @@
     <include layout="@layout/layout_title_top" />
 
         <ListView
+            android:visibility="gone"
             android:id="@+id/listview_comment"
             android:layout_width="match_parent"
             android:layout_height="match_parent"></ListView>

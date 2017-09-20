@@ -128,6 +128,7 @@ public class HomeFragmentPresenter extends BasePresenter implements OnDataListen
     @Override
     public void onSuccess(int requestCode, Object result) {
         LoadDialog.dismiss(context);
+        if (result==null)return;
         switch (requestCode) {
             case GETDRIVERS:
                 MyDevicesResponse response = (MyDevicesResponse) result;
@@ -188,11 +189,6 @@ public class HomeFragmentPresenter extends BasePresenter implements OnDataListen
         itemSelected =item;
         String mac=item.getMac_address();
 
-        if (mBluetoothService == null) {
-            bindService();
-            }
-        else
-            {
             if(item.getStatus()==2)//如果已连接
             {
                 DialogWithYesOrNoUtils.getInstance().showDialog(context,"连接成功",null,"去玩游戏",new AlertDialogCallback(){
@@ -214,7 +210,7 @@ public class HomeFragmentPresenter extends BasePresenter implements OnDataListen
                 LoadDialog.show(context);
                 mBluetoothService.scanAndConnect5(mac);
             }
-        }
+
     }
 
     @Override
@@ -227,6 +223,7 @@ public class HomeFragmentPresenter extends BasePresenter implements OnDataListen
 
     public void bindService() {
         Intent bindIntent = new Intent(context, BluetoothService.class);
+        bindIntent.putExtra("HomeFragment","从HomeFragment");
         context.bindService(bindIntent, mFhrSCon, Context.BIND_AUTO_CREATE);
     }
 
@@ -241,17 +238,9 @@ public class HomeFragmentPresenter extends BasePresenter implements OnDataListen
         @Override
         public void onServiceConnected(ComponentName name, IBinder service) {
             mBluetoothService = ((BluetoothService.BluetoothBinder) service).getService();
-            mBluetoothService.setScanCallback(callback);
-            mBluetoothService.scanDevice();
-            LoadDialog.show(context);
+//            mBluetoothService.setScanCallback(callback);
+//            mBluetoothService.scanDevice();
             mActivity.mBluetoothService=mBluetoothService;
-
-//            HomeFragmentPresenter.this.swiper.post(new Runnable() {
-//            @Override
-//            public void run() {
-//                HomeFragmentPresenter.this.swiper.setRefreshing(true);
-//            }
-//        });
         }
 
         @Override
@@ -263,12 +252,13 @@ public class HomeFragmentPresenter extends BasePresenter implements OnDataListen
     private BluetoothService.Callback callback = new BluetoothService.Callback() {
         @Override
         public void onStartScan() {
-            for(MyDevicesResponse.DataBean bean:list)
-            {
-                if(!bean.getMac_address().equals(connectMac))
-                    bean.setStatus(0);
+            if(list.size()>0) {
+                for (MyDevicesResponse.DataBean bean : list) {
+                    if (!bean.getMac_address().equals(connectMac))
+                        bean.setStatus(0);
+                }
+                dataAdapter.notifyDataSetChanged();
             }
-            dataAdapter.notifyDataSetChanged();
         }
 
         @Override
@@ -303,6 +293,7 @@ public class HomeFragmentPresenter extends BasePresenter implements OnDataListen
 
         @Override
         public void onScanComplete() {
+            NLog.d("onScanComplete","onScanComplete");
             HomeFragmentPresenter.this.swiper.setRefreshing(false);
         }
 
@@ -324,8 +315,6 @@ public class HomeFragmentPresenter extends BasePresenter implements OnDataListen
             mActivity.scanResultList.clear();
         }
 
-
-
         @Override
         public void onServicesDiscovered() {
             LoadDialog.dismiss(context);
@@ -335,7 +324,6 @@ public class HomeFragmentPresenter extends BasePresenter implements OnDataListen
                     String mac2=bean.getMac_address();
                     if(mac2.toUpperCase().equals(connectMac))
                         bean.setStatus(2);
-
                 }
             Collections.sort(list);
             Collections.reverse(list);
@@ -356,14 +344,6 @@ public class HomeFragmentPresenter extends BasePresenter implements OnDataListen
                     mActivity.getViewPager().setCurrentItem(1, false);
                 }
             });
-
-//
-
-//            LoadDialog.dismiss(context);
-//            NToast.longToast(context, "连接成功，请选择游戏开始玩。");
-//            ((Main2Activity)context).getViewPager().setCurrentItem(1, false);
-//            Intent intent = new Intent(context, UnityPlayerActivity.class);
-//            context.startActivity(intent);
 
         }
     };

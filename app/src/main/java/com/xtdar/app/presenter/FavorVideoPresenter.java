@@ -59,10 +59,11 @@ public class FavorVideoPresenter extends BasePresenter implements OnDataListener
     @Override
     public void onSuccess(int requestCode, Object result) {
         LoadDialog.dismiss(context);
+        if(result ==null) return;
         switch (requestCode) {
             case GETLIST:
                 FavorResponse favorResponse=(FavorResponse)result;
-                if (favorResponse !=null &&favorResponse.getCode() == XtdConst.SUCCESS ) {
+                if (favorResponse.getCode() == XtdConst.SUCCESS ) {
                     if(favorResponse.getData().size()>0){
                         this.listView.setVisibility(View.VISIBLE);
                         list.addAll(favorResponse.getData());

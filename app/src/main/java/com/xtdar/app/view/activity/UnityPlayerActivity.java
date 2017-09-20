@@ -41,26 +41,8 @@ package com.xtdar.app.view.activity;
 public class UnityPlayerActivity extends Activity
 {
     protected UnityPlayer mUnityPlayer; // don't change the name of this variable; referenced from native code
-    private BluetoothDevice device;
-    private BleConnector connector;
 
     private String TAG=UnityPlayerActivity.class.getSimpleName();
-
-
-    private Handler handle = new Handler(Looper.getMainLooper()) {
-        @Override
-        public void handleMessage(Message msg) {
-            switch (msg.what) {
-                case BleConnector.CONNECTED:
-                    break;
-                case BleConnector.NOTIFY:
-                    //UnityPlayer.UnitySendMessage("Main Camera","eee",String.valueOf(msg.obj));
-                    break;
-                case BleConnector.DISCONNECTED:
-                    break;
-            }
-        }
-    };
     private BluetoothService mBluetoothService;
     private String isExisted="0";
     private int firstTime=0;
@@ -88,7 +70,6 @@ public class UnityPlayerActivity extends Activity
         NLog.d("id:", gameId);
         //firstTime=1;
         //UnityPlayer.UnitySendMessage("Main Camera","ChooseGame","");     //第二次进入调用
-
     }
 
     @Override
@@ -97,25 +78,23 @@ public class UnityPlayerActivity extends Activity
         bindService();
     }
 
-    public BluetoothService getBluetoothService() {
-        return mBluetoothService;
-    }
-
     private void bindService() {
         Intent bindIntent = new Intent(this, BluetoothService.class);
         this.bindService(bindIntent, mFhrSCon, Context.BIND_AUTO_CREATE);
     }
 
     private void unbindService() {
-        this.unbindService(mFhrSCon);
-        //mBluetoothService.closeConnect();
+        if(mFhrSCon!=null) {
+            unbindService(mFhrSCon);
+            mFhrSCon=null;
+        }
     }
 
     private ServiceConnection mFhrSCon = new ServiceConnection() {
         @Override
         public void onServiceConnected(ComponentName name, IBinder service) {
             mBluetoothService = ((BluetoothService.BluetoothBinder) service).getService();
-            mBluetoothService.setScanCallback(callback);
+            //mBluetoothService.setScanCallback(callback);
             mBluetoothService.setConnectCallback(callback2);
             showData();
         }
@@ -126,38 +105,7 @@ public class UnityPlayerActivity extends Activity
         }
     };
 
-    private BluetoothService.Callback callback = new BluetoothService.Callback() {
-        @Override
-        public void onStartScan() {
-        }
 
-        @Override
-        public void onScanning(ScanResult result) {
-        }
-
-        @Override
-        public void onScanComplete() {
-        }
-
-        @Override
-        public void onConnecting() {
-        }
-
-        @Override
-        public void onConnectFail() {
-        }
-
-        @Override
-        public void onDisConnected() {
-
-        }
-
-        @Override
-        public void onServicesDiscovered() {
-            LoadDialog.dismiss(UnityPlayerActivity.this);
-            showData();
-        }
-    };
 
     private BluetoothService.Callback2 callback2 = new BluetoothService.Callback2() {
 
@@ -352,7 +300,6 @@ private static String hexStr = "0123456789ABCDEF"; //全局
         mUnityPlayer.quit();
         super.onDestroy();
 
-        if (mBluetoothService != null)
             unbindService();
     }
 
@@ -439,15 +386,12 @@ private static String hexStr = "0123456789ABCDEF"; //全局
 
             }
         });
-        //connector.sendMsg(s);
     }//接收Unity发来
 
 //    public void eee(String s){
 //        connector.sendMsg(s);
 //    }//发送给Unity
     //UnityPlayer.UnitySendMessage("Main Camera","eee",s10);
-
-
     public void unityGetEnterOrExit()  {
         UnityPlayer.UnitySendMessage("Main Camera","SendEnterOrExit",isExisted+","+isHigh);     //设置进入或退出
     }
@@ -462,7 +406,6 @@ private static String hexStr = "0123456789ABCDEF"; //全局
     public void UnitySceneReady(){
         UnityPlayer.UnitySendMessage("Main Camera","playGame",gameId);     //进入游戏
     }
-
     //正在加载的游戏
     public void unityGameLoadingList (String gameId){
 

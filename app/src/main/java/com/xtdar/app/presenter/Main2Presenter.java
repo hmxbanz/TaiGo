@@ -49,10 +49,7 @@ public class Main2Presenter extends BasePresenter {
     public void init() {
         userName = activity.sp.getString(XtdConst.LOGIN_USERNAME, "");
         password = activity.sp.getString(XtdConst.LOGING_PASSWORD, "");
-        if(!TextUtils.isEmpty(userName) && !isLogin){
-            LoadDialog.show(activity);
-            atm.request(AUTOLOGIN,this);
-        }
+        LoadDialog.show(activity);
         atm.request(CHECKVERSION,this);
     }
 
@@ -83,14 +80,14 @@ public class Main2Presenter extends BasePresenter {
     }
     @Override
     public void onSuccess(int requestCode, Object result) {
-        if (result != null) {
+        LoadDialog.dismiss(context);
+        if (result==null)return;
             switch (requestCode) {
                 case AUTOLOGIN:
                     LoginResponse loginResponse = (LoginResponse) result;
                     if (loginResponse.getCode() == XtdConst.SUCCESS) {
                         LoginResponse.ResultEntity entity=loginResponse.getData();
                         loginWork(entity.getAccess_key());
-                        LoadDialog.dismiss(activity);
                         NToast.shortToast(activity, "登录成功");
                     } else {
                         NToast.shortToast(activity, "登录："+loginResponse.getMsg());
@@ -115,21 +112,23 @@ public class Main2Presenter extends BasePresenter {
                             });
                             dialog.setContent(entity.getVersionInfo());
                         }
-                        LoadDialog.dismiss(activity);
                         NToast.shortToast(activity, "版本检测成功");
+                        if(!TextUtils.isEmpty(userName) && !isLogin){
+                            LoadDialog.show(activity);
+                            atm.request(AUTOLOGIN,this);
+                        }
                     }else {
                         NToast.shortToast(activity, "版本检测："+versionResponse.getMsg());
                     }
                     break;
             }
-        }
+
     }
     @Override
     public void onFailure(int requestCode, int state, Object result) {
         super.onFailure(requestCode, state, result);
         switch (requestCode) {
             case AUTOLOGIN:
-                LoadDialog.dismiss(activity);
                 NToast.shortToast(activity, activity.getString(R.string.login_api_fail));
                 break;
         }

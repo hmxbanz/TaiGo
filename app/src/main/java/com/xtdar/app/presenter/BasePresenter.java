@@ -72,7 +72,6 @@ public class BasePresenter implements OnDataListener {
 
     @Override
     public void onSuccess(int requestCode, Object result) {
-
     }
 
     @Override

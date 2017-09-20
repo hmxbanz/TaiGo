@@ -1,29 +1,15 @@
 package com.xtdar.app.view.fragment;
 
-import android.content.Intent;
-import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.design.widget.TabLayout;
-import android.support.v4.app.Fragment;
 import android.support.v7.widget.RecyclerView;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ScrollView;
-import android.widget.TextView;
-import android.widget.Toast;
 
-import com.xtdar.app.adapter.ShopRecommendAdapter;
+import com.xtdar.app.R;
 import com.xtdar.app.loader.GlideImageLoader;
 import com.xtdar.app.presenter.HomeRecommendPresenter;
-import com.xtdar.app.view.activity.DetailActivity;
 import com.youth.banner.Banner;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import com.xtdar.app.R;
-import com.xtdar.app.adapter.RecyclerViewAdapter;
 
 /**
  * Created by AMing on 16/6/21.
@@ -62,7 +48,6 @@ public class HomeRecommendFragment extends BaseFragment  {
         banner = findView(R.id.banner);
         banner.setImageLoader(new GlideImageLoader());//设置图片加载器
         //banner.setOnBannerListener(this);
-
         recycleView= findView(R.id.recyclerView);
 
         //        TypedArray typedArray = context.obtainStyledAttributes(attrs
@@ -75,12 +60,10 @@ public class HomeRecommendFragment extends BaseFragment  {
 //        mTabLayout.setTabTextColors(ColorStateList.valueOf(tabTextColor));
 
 
-
         //String[] urls = getResources().getStringArray(R.array.url);
         //String[] tips = getResources().getStringArray(R.array.title);
 //        List list = Arrays.asList(urls);
 //        images = new ArrayList(list);
-
 
         //if(Build.VERSION.SDK_INT>=23)
 //        recycleView.setOnScrollChangeListener(new View.OnScrollChangeListener() {
@@ -91,20 +74,17 @@ public class HomeRecommendFragment extends BaseFragment  {
 //            }
 //        });
         //recycleView.addItemDecoration(new DividerItemDecoration(getContext(),DividerItemDecoration.HORIZONTAL));
-        //dataAdapter.setOnItemClickListener(this);
-
+        presenter.init(banner,recycleView);
     }
 
     @Override
     protected void initData() {
-        presenter.init(banner,recycleView);
         presenter.loadData();
     }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
-        //BroadcastManager.getInstance(getActivity()).destroy(SealConst.CHANGEINFO);
     }
 
 }

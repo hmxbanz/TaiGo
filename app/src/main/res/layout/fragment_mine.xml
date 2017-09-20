@@ -179,8 +179,6 @@
             android:paddingLeft="10dp"
             android:text="我的收藏" />
 
-
-
         <ImageView
             android:src="@drawable/icon_arrow_right"
             android:layout_width="20dp"

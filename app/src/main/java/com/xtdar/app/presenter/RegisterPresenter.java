@@ -1,8 +1,11 @@
 package com.xtdar.app.presenter;
 
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import android.content.ServiceConnection;
 import android.os.CountDownTimer;
+import android.os.IBinder;
 import android.text.TextUtils;
 import android.widget.CheckBox;
 import android.widget.EditText;
@@ -13,6 +16,7 @@ import com.xtdar.app.XtdConst;
 import com.xtdar.app.common.NToast;
 import com.xtdar.app.server.HttpException;
 import com.xtdar.app.server.response.CommonResponse;
+import com.xtdar.app.service.BluetoothService;
 import com.xtdar.app.view.activity.Main2Activity;
 import com.xtdar.app.view.activity.RegisterActivity;
 import com.xtdar.app.view.widget.LoadDialog;
@@ -22,6 +26,8 @@ import com.xtdar.app.widget.DialogWithYesOrNoUtils;
 public class RegisterPresenter extends BasePresenter {
     private static final int GETCAPTCHA = 1;
     private static final int REGISTER = 2;
+    private final String nickname;
+    private final String headimgurl;
     private RegisterActivity mActivity;
     private TextView mBtnCaptcha;
     private String userName;
@@ -31,6 +37,9 @@ public class RegisterPresenter extends BasePresenter {
     public RegisterPresenter(Context context){
         super(context);
         mActivity = (RegisterActivity) context;
+        Intent fromIntent=((RegisterActivity) context).getIntent();
+        nickname = fromIntent.getStringExtra("nickname");
+        headimgurl = fromIntent.getStringExtra("headimgurl");
     }
 
     public void init() {
@@ -88,7 +97,7 @@ public class RegisterPresenter extends BasePresenter {
             case GETCAPTCHA:
                 return mUserAction.getCaptcha(this.userName);
             case REGISTER:
-                return mUserAction.register(this.userName,this.password,this.captcha);
+                return mUserAction.register(headimgurl,nickname,this.password,this.captcha);
         }
         return null;
     }

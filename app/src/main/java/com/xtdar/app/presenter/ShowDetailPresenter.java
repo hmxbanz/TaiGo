@@ -174,6 +174,7 @@ public class ShowDetailPresenter extends BasePresenter implements LoadMoreListen
     @Override
     public void onSuccess(int requestCode, Object result) {
         LoadDialog.dismiss(context);
+        if(result==null)return;
         switch (requestCode) {
             case GETDETAIL:
                 ShowDetailResponse de = (ShowDetailResponse) result;

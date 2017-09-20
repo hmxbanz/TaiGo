@@ -5,10 +5,7 @@
     android:layout_height="match_parent"
     android:background="@color/appbg"
     android:orientation="vertical">
-    <android.support.v7.widget.RecyclerView
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        />
+
     <ScrollView
             android:id="@+id/scrollview"
             android:layout_width="match_parent"
@@ -17,50 +14,16 @@
                 android:orientation="vertical"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
-
+                <!--导航-->
                 <com.youth.banner.Banner
                     android:id="@+id/banner"
                     android:layout_width="match_parent"
                     android:layout_height="150dp"
                     />
-                <!--导航-->
-                <!--<LinearLayout-->
-                    <!--android:paddingTop="5dp"-->
-                    <!--android:paddingBottom="5dp"-->
-                    <!--android:id="@+id/layout_nav"-->
-                    <!--android:orientation="horizontal"-->
-                    <!--android:layout_width="match_parent"-->
-                    <!--android:layout_height="wrap_content"-->
-                    <!--&gt;-->
-                    <!--<RelativeLayout-->
-                        <!--android:layout_width="0dp"-->
-                        <!--android:layout_height="match_parent"-->
-                        <!--android:layout_weight="1">-->
-                        <!--<TextView-->
-                            <!--android:layout_below="@+id/nav_img_new"-->
-                            <!--android:gravity="center"-->
-                            <!--android:textSize="16dp"-->
-                            <!--android:textColor="@color/black"-->
-                            <!--android:text="@string/nav_text_new"-->
-                            <!--android:layout_width="match_parent"-->
-                            <!--android:layout_height="match_parent" />-->
-                        <!--<TextView-->
-                            <!--android:layout_below="@+id/nav_img_new"-->
-                            <!--android:gravity="center"-->
-                            <!--android:text=""-->
-                            <!--android:layout_width="wrap_content"-->
-                            <!--android:layout_height="match_parent"-->
-                            <!--android:layout_alignParentRight="true"-->
-                            <!--android:layout_marginRight="10dp"-->
-                            <!--/>-->
-                    <!--</RelativeLayout>-->
-
-                <!--</LinearLayout>-->
                 <android.support.v7.widget.RecyclerView
                         android:id="@+id/recyclerView"
                         android:layout_width="match_parent"
-                        android:layout_height="680dp"
-                    >
+                        android:layout_height="680dp"   >
                     </android.support.v7.widget.RecyclerView>
             </LinearLayout>
         </ScrollView>

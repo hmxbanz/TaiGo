@@ -10,7 +10,6 @@ import com.xtdar.app.common.json.JsonMananger;
 import com.xtdar.app.server.HttpException;
 import com.xtdar.app.server.async.OnDataListener;
 import com.xtdar.app.server.response.AdResponse;
-import com.xtdar.app.server.response.RecommendResponse;
 import com.xtdar.app.server.response.TaobaoResponse;
 import com.xtdar.app.view.widget.LoadDialog;
 import com.youth.banner.Banner;
@@ -25,7 +24,7 @@ import java.util.List;
 public class HomeRecommendPresenter extends BasePresenter implements OnDataListener {
     private static final int GETADS = 1;
     private static final int GETRECOMMEND = 2;
-    private Banner Banner;
+    private Banner banner;
     private RecyclerView recycleView;
     private GridLayoutManager gridLayoutManager;
     private HomeRecommendAdapter dataAdapter;
@@ -37,7 +36,7 @@ public class HomeRecommendPresenter extends BasePresenter implements OnDataListe
     }
 
     public void init(Banner banner, RecyclerView recycleView) {
-        this.Banner=banner;
+        this.banner =banner;
         this.recycleView=recycleView;
 
         gridLayoutManager=new GridLayoutManager(context,1);
@@ -69,11 +68,11 @@ public class HomeRecommendPresenter extends BasePresenter implements OnDataListe
     @Override
     public void onSuccess(int requestCode, Object result) {
         LoadDialog.dismiss(context);
+        if (result==null)return;
         switch (requestCode) {
             case GETADS:
                 AdResponse adResponse = (AdResponse) result;
                 if (adResponse.getCode() == XtdConst.SUCCESS) {
-                    //atm.request(GETRECOMMEND,this);
                 }
                 break;
             case GETRECOMMEND:
@@ -95,8 +94,8 @@ public class HomeRecommendPresenter extends BasePresenter implements OnDataListe
                         images.add(s);
                     }
 
-                    Banner.setImages(images);//设置图片集合
-                    Banner.start();
+                    banner.setImages(images);//设置图片集合
+                    banner.start();
                 }
                 break;
         }
@@ -119,8 +118,8 @@ public class HomeRecommendPresenter extends BasePresenter implements OnDataListe
                         s=XtdConst.IMGURI+s;
                         images.add(s);
                     }
-                    Banner.setImages(images);//设置图片集合
-                    Banner.start();
+                    banner.setImages(images);//设置图片集合
+                    banner.start();
 
                 } catch (HttpException e) {
                     e.printStackTrace();

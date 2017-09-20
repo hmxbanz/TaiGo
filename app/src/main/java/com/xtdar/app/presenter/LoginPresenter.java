@@ -1,11 +1,15 @@
 package com.xtdar.app.presenter;
 
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import android.content.ServiceConnection;
+import android.os.IBinder;
 import android.text.TextUtils;
 import android.util.Log;
 import android.widget.EditText;
 
+import com.orhanobut.logger.Logger;
 import com.xtdar.app.R;
 import com.xtdar.app.XtdConst;
 import com.xtdar.app.common.NToast;
@@ -14,6 +18,7 @@ import com.xtdar.app.server.HttpException;
 import com.xtdar.app.server.response.CommonResponse;
 import com.xtdar.app.server.response.LoginResponse;
 import com.xtdar.app.server.response.WxLoginResponse;
+import com.xtdar.app.service.BluetoothService;
 import com.xtdar.app.view.activity.LoginActivity;
 import com.xtdar.app.view.activity.Main2Activity;
 import com.xtdar.app.view.activity.RegisterActivity;
@@ -37,9 +42,9 @@ import cn.sharesdk.wechat.friends.Wechat;
  */
 
 public class LoginPresenter extends BasePresenter  {
+    private static final String TAG = LoginPresenter.class.getSimpleName();
     private static final int LOGIN = 1;
     private static final int GET_TOKEN = 2;
-    private static final String TAG = "WWWWWWWW";
     private static final int UPLOADWXOPENID = 3;
     private static final int WXLOGIN = 4;
     private static final int WXBIND = 5;
@@ -55,6 +60,8 @@ public class LoginPresenter extends BasePresenter  {
     public String openId,loginType;
     private String access_key;
     private String rid;
+    private String headimgurl;
+    private String nickname;
 
     public LoginPresenter(Context context){
         super(context);
@@ -65,8 +72,11 @@ public class LoginPresenter extends BasePresenter  {
     public void init(EditText username, EditText password) {
         this.mUsername=username;
         this.mPassword=password;
+        Logger.d("aaaaaaaaaaaaaaaaaaaaaaaaaaaaa","bbbbbbbbbbbb");
     }
+
     public void login(String type) {
+
         if(TextUtils.isEmpty(mUsername.getText().toString()))
         {
             NToast.shortToast(context, R.string.phone_number_be_null);
@@ -126,7 +136,7 @@ public class LoginPresenter extends BasePresenter  {
     @Override
     public void onSuccess(final int requestCode, Object result) {
         LoadDialog.dismiss(context);
-        if (result != null) {
+        if (result==null)return;
             switch (requestCode) {
                 case LOGIN:
                     LoginResponse loginResponse = (LoginResponse) result;
@@ -163,7 +173,10 @@ public class LoginPresenter extends BasePresenter  {
 
                             @Override
                             public void onCancle() {
-                                context.startActivity(new Intent(context,RegisterActivity.class));
+                                Intent toRegisterIntent=new Intent(context,RegisterActivity.class);
+                                toRegisterIntent.putExtra("nickname", nickname);
+                                toRegisterIntent.putExtra("headimgurl", headimgurl);
+                                context.startActivity(toRegisterIntent);
 
                             }
                         });
@@ -192,17 +205,16 @@ public class LoginPresenter extends BasePresenter  {
                     if (commonResponse2 != null && commonResponse2.getCode() == XtdConst.SUCCESS) {
                         context.startActivity(new Intent(context,Main2Activity.class));
                     }
-                    NToast.shortToast(context, commonResponse2.getMsg());
                     break;
 
             }
-        }
     }
 
     public void wxLogin() {
         LoadDialog.show(context);
         final Platform weixin = ShareSDK.getPlatform(Wechat.NAME);
         String name = weixin.getName();
+
 
         //设置监听回调
         weixin.setPlatformActionListener(new PlatformActionListener() {
@@ -241,17 +253,17 @@ public class LoginPresenter extends BasePresenter  {
 //        } else {
 //            NToast.shortToast(context,"bbbbbbbbbbbbb");
 //        }
-
-
-
     }
     private void showUser_WeiXin(HashMap<String, Object> hashMap) {
-        String name = (String) hashMap.get("nickname");
+        String avator =  (String) hashMap.get("nickname");
+        Logger.d(hashMap.toString());
+        nickname = (String) hashMap.get("nickname");
         openId =(String)hashMap.get("openid");
         atm.request(UPLOADWXOPENID,this);
-        NToast.shortToast(context,name);
-
-        String url = (String) hashMap.get("headimgurl");
+        NToast.shortToast(context,nickname);
+        headimgurl = (String) hashMap.get("headimgurl");
+        Logger.d("nickname:"+nickname);
+        Logger.d("headimgurl:"+headimgurl);
 //        Glide.with(ShareLogin.this)
 //                .load(url)
 //                .placeholder(R.mipmap.ic_launcher)
@@ -260,6 +272,7 @@ public class LoginPresenter extends BasePresenter  {
     }
 
     public void qqLogin() {
+
         LoadDialog.show(context);
         //获取QQ平台手动授权
         final Platform qq = ShareSDK.getPlatform(QQ.NAME);
@@ -309,12 +322,17 @@ public class LoginPresenter extends BasePresenter  {
 
     }
     private void showUser_QQ(PlatformDb platDB, HashMap<String, Object> hashMap) {
-        String name = (String) hashMap.get("nickname");
+        nickname = (String) hashMap.get("nickname");
         openId =platDB.getUserId();
+        headimgurl=platDB.getUserIcon();
+        headimgurl=headimgurl.substring(0,headimgurl.lastIndexOf('/'))+"/100";
         atm.request(UPLOADQQOPENID,this);
-        NToast.shortToast(context,name);
+        NToast.shortToast(context,nickname);
 
         String url = (String) hashMap.get("figureurl_qq_1");
+
+        Logger.d("nickname:"+nickname);
+        Logger.d("headimgurl:"+headimgurl);
 
     }
 
@@ -338,7 +356,7 @@ public class LoginPresenter extends BasePresenter  {
                 mActivity.runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        showUser_XinLang(hashMap,weibo.getDb().getToken());
+                        showUser_XinLang(hashMap,weibo);
                     }
                 });
             }
@@ -362,15 +380,14 @@ public class LoginPresenter extends BasePresenter  {
         //移除授权
         /*weibo.removeAccount(true);*/
     }
-    public void showUser_XinLang(HashMap<String, Object> params, String token) {
-        openId =token;
+    public void showUser_XinLang(HashMap<String, Object> params, Platform weibo) {
+        openId =weibo.getDb().getToken();
         LoadDialog.show(context);
         atm.request(UPLOADWBOPENID,this);
-//        Glide.with(ShareLogin.this)
-//                .load(url)
-//                .placeholder(R.mipmap.ic_launcher)
-//                .error(R.mipmap.ic_launcher)
-//                .into(ivPortrait);
+        nickname=weibo.getDb().getUserName();
+        headimgurl=weibo.getDb().getUserIcon();
+        Logger.d("nickname:"+nickname);
+        Logger.d("headimgurl:"+headimgurl);
     }
 
     private void loginWork(String access_key)

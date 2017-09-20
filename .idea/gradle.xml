@@ -9,14 +9,13 @@
         <option name="modules">
           <set>
             <option value="$PROJECT_DIR$" />
-            <option value="$PROJECT_DIR$/CallKit" />
-            <option value="$PROJECT_DIR$/CallLib" />
             <option value="$PROJECT_DIR$/Common" />
             <option value="$PROJECT_DIR$/IMKit" />
             <option value="$PROJECT_DIR$/IMLib" />
             <option value="$PROJECT_DIR$/WheelPicker" />
             <option value="$PROJECT_DIR$/app" />
             <option value="$PROJECT_DIR$/coordinatortablayout" />
+            <option value="$PROJECT_DIR$/greendao" />
             <option value="$PROJECT_DIR$/gsyVideoPlayer" />
             <option value="$PROJECT_DIR$/ninegridview" />
             <option value="$PROJECT_DIR$/okhttputils" />

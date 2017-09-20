@@ -76,12 +76,12 @@
         "source": "C:\\Users\\Administrator\\Desktop\\work\\TaiGo\\IMKit\\src\\main\\res\\layout\\rc_item_public_service_message.xml"
     },
     {
-        "merged": "C:\\Users\\Administrator\\Desktop\\work\\TaiGo\\IMKit\\build\\intermediates\\res\\merged\\debug\\layout\\rc_item_public_service_conversation.xml",
-        "source": "C:\\Users\\Administrator\\Desktop\\work\\TaiGo\\IMKit\\src\\main\\res\\layout\\rc_item_public_service_conversation.xml"
-    },
-    {
         "merged": "C:\\Users\\Administrator\\Desktop\\work\\TaiGo\\IMKit\\build\\intermediates\\res\\merged\\debug\\layout\\rc_fr_messagelist.xml",
         "source": "C:\\Users\\Administrator\\Desktop\\work\\TaiGo\\IMKit\\src\\main\\res\\layout\\rc_fr_messagelist.xml"
+    },
+    {
+        "merged": "C:\\Users\\Administrator\\Desktop\\work\\TaiGo\\IMKit\\build\\intermediates\\res\\merged\\debug\\layout\\rc_item_public_service_conversation.xml",
+        "source": "C:\\Users\\Administrator\\Desktop\\work\\TaiGo\\IMKit\\src\\main\\res\\layout\\rc_item_public_service_conversation.xml"
     },
     {
         "merged": "C:\\Users\\Administrator\\Desktop\\work\\TaiGo\\IMKit\\build\\intermediates\\res\\merged\\debug\\layout\\rc_picsel_preview.xml",
@@ -144,12 +144,12 @@
         "source": "C:\\Users\\Administrator\\Desktop\\work\\TaiGo\\IMKit\\src\\main\\res\\layout\\rc_base_activity_layout.xml"
     },
     {
-        "merged": "C:\\Users\\Administrator\\Desktop\\work\\TaiGo\\IMKit\\build\\intermediates\\res\\merged\\debug\\layout\\rc_mention_members.xml",
-        "source": "C:\\Users\\Administrator\\Desktop\\work\\TaiGo\\IMKit\\src\\main\\res\\layout\\rc_mention_members.xml"
-    },
-    {
         "merged": "C:\\Users\\Administrator\\Desktop\\work\\TaiGo\\IMKit\\build\\intermediates\\res\\merged\\debug\\layout\\rc_pic_popup_window.xml",
         "source": "C:\\Users\\Administrator\\Desktop\\work\\TaiGo\\IMKit\\src\\main\\res\\layout\\rc_pic_popup_window.xml"
+    },
+    {
+        "merged": "C:\\Users\\Administrator\\Desktop\\work\\TaiGo\\IMKit\\build\\intermediates\\res\\merged\\debug\\layout\\rc_mention_members.xml",
+        "source": "C:\\Users\\Administrator\\Desktop\\work\\TaiGo\\IMKit\\src\\main\\res\\layout\\rc_mention_members.xml"
     },
     {
         "merged": "C:\\Users\\Administrator\\Desktop\\work\\TaiGo\\IMKit\\build\\intermediates\\res\\merged\\debug\\layout\\rc_ext_emoticon_tab_item.xml",
@@ -172,12 +172,12 @@
         "source": "C:\\Users\\Administrator\\Desktop\\work\\TaiGo\\IMKit\\src\\main\\res\\layout\\rc_wi_block.xml"
     },
     {
-        "merged": "C:\\Users\\Administrator\\Desktop\\work\\TaiGo\\IMKit\\build\\intermediates\\res\\merged\\debug\\layout\\rc_item_text_message.xml",
-        "source": "C:\\Users\\Administrator\\Desktop\\work\\TaiGo\\IMKit\\src\\main\\res\\layout\\rc_item_text_message.xml"
-    },
-    {
         "merged": "C:\\Users\\Administrator\\Desktop\\work\\TaiGo\\IMKit\\build\\intermediates\\res\\merged\\debug\\layout\\rc_camera.xml",
         "source": "C:\\Users\\Administrator\\Desktop\\work\\TaiGo\\IMKit\\src\\main\\res\\layout\\rc_camera.xml"
+    },
+    {
+        "merged": "C:\\Users\\Administrator\\Desktop\\work\\TaiGo\\IMKit\\build\\intermediates\\res\\merged\\debug\\layout\\rc_item_text_message.xml",
+        "source": "C:\\Users\\Administrator\\Desktop\\work\\TaiGo\\IMKit\\src\\main\\res\\layout\\rc_item_text_message.xml"
     },
     {
         "merged": "C:\\Users\\Administrator\\Desktop\\work\\TaiGo\\IMKit\\build\\intermediates\\res\\merged\\debug\\layout\\rc_ext_root_menu_item.xml",

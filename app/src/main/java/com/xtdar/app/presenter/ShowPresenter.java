@@ -68,11 +68,12 @@ public class ShowPresenter extends BasePresenter implements OnDataListener,Recyc
     @Override
     public void onSuccess(int requestCode, Object result) {
         LoadDialog.dismiss(context);
+        if (result==null)return;
         this.swiper.setRefreshing(false);
         switch (requestCode) {
             case GETSHOWLIST:
                 ShowResponse showResponse=(ShowResponse)result;
-                if (showResponse != null && showResponse.getData() != null) {
+                if (showResponse.getData() != null) {
                     List<ShowResponse.DataBean> listTemp = showResponse.getData();
                     lastItem=listTemp.get(listTemp.size()-1).getShow_id();
 
@@ -110,7 +111,6 @@ public class ShowPresenter extends BasePresenter implements OnDataListener,Recyc
         this.videoList.addOnScrollListener(getGsyVideoPlayerOnScrollListener());
         lastItem ="0";
         list.clear();
-        LoadDialog.show(context);
         atm.request(GETSHOWLIST,this);
     }
 
@@ -120,7 +120,7 @@ public class ShowPresenter extends BasePresenter implements OnDataListener,Recyc
             String Cache = aCache.getAsString("ShowList");
             NLog.d("ShowCacheString",Cache);
 
-            if(Cache!=null && !("null").equals(Cache))
+            if(Cache!=null && !("null").equals(Cache)){
                 try {
                     List<ShowResponse.DataBean> listCache = JsonMananger.jsonToList(Cache, ShowResponse.DataBean.class);
                     if(!TextUtils.isEmpty(listCache.get(0).getImg_path())) {
@@ -130,9 +130,9 @@ public class ShowPresenter extends BasePresenter implements OnDataListener,Recyc
                 } catch (HttpException e) {
                     e.printStackTrace();
                     NToast.longToast(context,"ShowCacheString:"+Cache);
-                    NToast.longToast(context,"ShowCacheString:"+Cache);
-                    NToast.longToast(context,"ShowCacheString:"+Cache);
                 }
+            }
+
         }
         lastItem ="0";
         isFirstLoad=true;

@@ -49,25 +49,8 @@ android {
     }
     compileOptions {
     }
-//    productFlavors {
-//        xiaomi {
-//            manifestPlaceholders = [UMENG_CHANNEL_VALUE: "xiaomi"]
-//        }
-//        _360 {
-//            manifestPlaceholders = [UMENG_CHANNEL_VALUE: "_360"]
-//        }
-//        baidu {
-//            manifestPlaceholders = [UMENG_CHANNEL_VALUE: "baidu"]
-//        }
-//        wandoujia {
-//            manifestPlaceholders = [UMENG_CHANNEL_VALUE: "wandoujia"]
-//        }
-//    }
     productFlavors {
-//        xiaomi {}
-//        _360 {}
         baidu {}
-//        wandoujia {}
     }
 
     productFlavors.all {
@@ -89,10 +72,12 @@ android {
 
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
-    compile project(':gsyVideoPlayer')    //视频播放
+    compile project(':gsyVideoPlayer')
+    //视频播放
     compile project(':xutils')
     compile project(':pulltorefresh')
     //compile 'com.youth.xframe:xframe:1.0.1'
+
     //最新版本轮播图
 
     //RecyclerView
@@ -104,8 +89,8 @@ dependencies {
     compile project(':ucrop')
     compile project(':picture_library')
     compile project(':IMKit')
-    compile project(':CallKit')
     //compile ('me.shaohui.shareutil:shareutil:1.3.8'){force = true,exclude module: 'shared'}//第三方分享，登录
+
     //视频播放
     def viewDependencies = rootProject.ext.viewDependencies
     def androidDependencies = rootProject.ext.androidDependencies
@@ -119,7 +104,6 @@ dependencies {
     compile viewDependencies.ndkbitmap_x86
     compile androidDependencies.support_v4
     //debugCompile dataDependencies.leakcanary
-
     compile files('libs/unity-classes.jar')
     compile 'com.android.support:appcompat-v7:25.3.1'
     compile 'com.android.support:design:25.3.1'
@@ -127,11 +111,10 @@ dependencies {
     compile 'org.immutables:gson:2.1.8'
     compile 'com.kyleduo.switchbutton:library:1.4.5'
     compile 'com.youth.banner:banner:1.4.9'
-    compile 'com.github.bumptech.glide:glide:3.7.0'    //图片加载工具
-
+    compile 'com.github.bumptech.glide:glide:3.7.0'
+    //图片加载工具
     compile 'com.alibaba:fastjson:1.1.46.android'
     compile 'com.github.florent37:viewanimator:1.0.3'
-
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
     compile project(':okhttputils')
     compile 'com.github.mcxtzhang:SwipeDelMenuLayout:V1.2.5'
@@ -143,7 +126,9 @@ dependencies {
     compile 'com.android.support:gridlayout-v7:25.3.1'
     compile 'com.clj.fastble:FastBleLib:1.2.1'
     //蓝牙
+
     //阿里百川(开始)
+
     //安全黑匣子（无线保镖）
     compile 'com.taobao.android:securityguardaar3:5.1.81@aar'
     //deviceID，主要用于计算设备的uttid， 设备唯一标识 （67kb）
@@ -164,5 +149,9 @@ dependencies {
     //支付宝SDK
     compile 'com.alibaba.alipay:alipaySingle:20160825@jar'
     //阿里百川(结束)
-    compile 'com.orhanobut:logger:1.8'//日志打印
+    compile 'com.orhanobut:logger:1.8'
+    //日志打印
+    compile 'com.lzy.net:okhttpserver:+'//自动引用最新版本
+    //okhttp下载扩展
+    compile 'de.greenrobot:greendao:1.3.7'
 }

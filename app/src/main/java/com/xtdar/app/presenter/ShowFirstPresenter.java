@@ -40,10 +40,8 @@ public class ShowFirstPresenter extends BasePresenter implements OnDataListener,
     private boolean isFirstLoad=true;
     private GSYVideoPlayerOnScrollListener onScrollListener;
 
-    //private ContactsActivity mActivity;
     public ShowFirstPresenter(Context context){
         super(context);
-        //mActivity = (ContactsActivity) context;
         linearLayoutManager = new LinearLayoutManager(context);
         dataAdapter = new ClassListNuAdapter(context, list);
     }
@@ -56,7 +54,6 @@ public class ShowFirstPresenter extends BasePresenter implements OnDataListener,
         this.videoList.setLayoutManager(linearLayoutManager);
         this.videoList.addOnScrollListener(getGsyVideoPlayerOnScrollListener());
         this.videoList.setNestedScrollingEnabled(false);
-
     }
 
 
@@ -73,6 +70,7 @@ public class ShowFirstPresenter extends BasePresenter implements OnDataListener,
     @Override
     public void onSuccess(int requestCode, Object result) {
         LoadDialog.dismiss(context);
+        if(result==null)return;
         this.swiper.setRefreshing(false);
         switch (requestCode) {
             case GETSHOWFIRSTLIST:
@@ -101,7 +99,6 @@ public class ShowFirstPresenter extends BasePresenter implements OnDataListener,
 
                 }
                 else {
-                    if (response!=null)
                     NToast.shortToast(context, "抢先看："+response.getMsg());
                 }
 
@@ -119,36 +116,31 @@ public class ShowFirstPresenter extends BasePresenter implements OnDataListener,
         this.videoList.addOnScrollListener(getGsyVideoPlayerOnScrollListener());
         lastItem ="0";
         list.clear();
-        LoadDialog.show(context);
         atm.request(GETSHOWFIRSTLIST,this);
     }
 
     //加载数据
     public void loadData() {
-
-        if(isFirstLoad) {
+        if (isFirstLoad) {
             String Cache = aCache.getAsString("ShowFirstList");
-            Logger.d("ShowFirstCacheString",Cache);
+            Logger.d("ShowFirstList %s", Cache);
 
-            if(Cache!=null && !("null").equals(Cache))
+            if (Cache != null && !("null").equals(Cache)){
                 try {
                     List<ClassListResponse.DataBean> listCache = JsonMananger.jsonToList(Cache, ClassListResponse.DataBean.class);
-                    NLog.d("ShowFirstCacheString",listCache);
-
-                    if(!TextUtils.isEmpty(listCache.get(0).getResource())) {
-                        list.addAll(listCache);
-                        dataAdapter.notifyDataSetChanged();
-                    }
-
+                    Logger.d("ShowFirstList>>> %s", listCache);
+                    list=listCache;
+                    dataAdapter.notifyDataSetChanged();
                 } catch (HttpException e) {
                     e.printStackTrace();
-                    NToast.longToast(context,"ShowFirstCacheString:"+Cache);
+                    NToast.longToast(context, "ShowFirstCacheString:" + Cache);
                 }
+            }
         }
-        lastItem ="0";
+        lastItem = "0";
         list.clear();
         LoadDialog.show(context);
-        atm.request(GETSHOWFIRSTLIST,this);
+        atm.request(GETSHOWFIRSTLIST, this);
     }
 
     @NonNull
@@ -156,11 +148,8 @@ public class ShowFirstPresenter extends BasePresenter implements OnDataListener,
         return new GSYVideoPlayerOnScrollListener(linearLayoutManager) {
             @Override
             public void onLoadMore(int currentPage) {
-                if(currentPage>1) {
                     LoadDialog.show(context);
                     atm.request(GETSHOWFIRSTLIST,ShowFirstPresenter.this);
-                }
-
             }
         };
     }

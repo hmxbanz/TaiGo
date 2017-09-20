@@ -10,6 +10,7 @@ import android.widget.EditText;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.orhanobut.logger.Logger;
 import com.xtdar.app.presenter.LoginPresenter;
 
 import com.xtdar.app.R;
@@ -110,5 +111,11 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                 break;
 
         }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        //presenter.unbindService();
     }
 }

@@ -28,12 +28,12 @@
         "source": "C:\\Users\\Administrator\\Desktop\\work\\TaiGo\\IMKit\\src\\main\\res\\drawable-xhdpi\\rc_file_icon_file.png"
     },
     {
-        "merged": "C:\\Users\\Administrator\\Desktop\\work\\TaiGo\\IMKit\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi-v4\\u1f33b.png",
-        "source": "C:\\Users\\Administrator\\Desktop\\work\\TaiGo\\IMKit\\src\\main\\res\\drawable-xhdpi\\u1f33b.png"
-    },
-    {
         "merged": "C:\\Users\\Administrator\\Desktop\\work\\TaiGo\\IMKit\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi-v4\\rc_menu_trangle.png",
         "source": "C:\\Users\\Administrator\\Desktop\\work\\TaiGo\\IMKit\\src\\main\\res\\drawable-xhdpi\\rc_menu_trangle.png"
+    },
+    {
+        "merged": "C:\\Users\\Administrator\\Desktop\\work\\TaiGo\\IMKit\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi-v4\\u1f33b.png",
+        "source": "C:\\Users\\Administrator\\Desktop\\work\\TaiGo\\IMKit\\src\\main\\res\\drawable-xhdpi\\u1f33b.png"
     },
     {
         "merged": "C:\\Users\\Administrator\\Desktop\\work\\TaiGo\\IMKit\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi-v4\\u1f46b.png",
