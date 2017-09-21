@@ -41,7 +41,7 @@ public class DownloadGameDao extends AbstractDao<DownloadGame, Long> {
     public static void createTable(SQLiteDatabase db, boolean ifNotExists) {
         String constraint = ifNotExists? "IF NOT EXISTS ": "";
         db.execSQL("CREATE TABLE " + constraint + "'DOWNLOAD_GAME' (" + //
-                "'_id' INTEGER PRIMARY KEY ," + // 0: id
+                "'_id' INTEGER PRIMARY KEY AUTOINCREMENT ," + // 0: id
                 "'GAME_ID' INTEGER NOT NULL ," + // 1: GameId
                 "'GAME_NAME' TEXT);"); // 2: GameName
     }

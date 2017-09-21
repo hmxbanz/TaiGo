@@ -22,7 +22,7 @@ public class ExampleDaoGenerator {
 
         // 最后我们将使用 DAOGenerator 类的 generateAll() 方法自动生成代码，此处你需要根据自己的情况更改输出目录（既之前创建的 java-gen)。
         // 其实，输出目录的路径可以在 build.gradle 中设置，有兴趣的朋友可以自行搜索，这里就不再详解。
-        new DaoGenerator().generateAll(schema, "/Users/Administrator/Desktop/work/TaiGo/app/src/main/java/com/xtdar/app/db");
+        new DaoGenerator().generateAll(schema, "/Users/Administrator/Desktop/work/TaiGo/app/src/main/java");
     }
 
     /**
@@ -36,7 +36,7 @@ public class ExampleDaoGenerator {
 
         // greenDAO 会自动根据实体类的属性值来创建表字段，并赋予默认值
         // 接下来你便可以设置表中的字段：
-        note.addIdProperty().primaryKey();
+        note.addIdProperty().primaryKey().autoincrement();
         note.addIntProperty("GameId").notNull();
         // 与在 Java 中使用驼峰命名法不同，默认数据库中的命名是使用大写和下划线来分割单词的。
         // For example, a property called “creationDate” will become a database column “CREATION_DATE”.

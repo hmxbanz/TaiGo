@@ -150,7 +150,7 @@ public class BlePresenter extends BasePresenter implements OnDataListener, BleAd
         public void onScanning(ScanResult result) {
 
             if(result.getDevice().getName() !=null && (result.getDevice().getName().contains("taigo")
-                    || result.getDevice().getName().contains("TAv22u"))) {
+                    || result.getDevice().getName().contains("BLE"))) {
                 listView.setVisibility(View.VISIBLE);
                 emptyView.setVisibility(View.GONE);
                 adapter.addResult(result);
