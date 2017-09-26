@@ -1,7 +1,10 @@
 package com.xtdar.app.presenter;
 
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import android.content.ServiceConnection;
+import android.os.IBinder;
 import android.support.annotation.NonNull;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.GridLayoutManager;
@@ -9,17 +12,20 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.View;
+import android.widget.TextView;
 
 import com.clj.fastble.data.ScanResult;
 import com.orhanobut.logger.Logger;
-import com.unity3d.player.UnityPlayer;
-import com.xtdar.app.MainApplication;
+import com.xtdar.app.R;
 import com.xtdar.app.XtdConst;
 import com.xtdar.app.adapter.AlertListAdapter;
 import com.xtdar.app.adapter.ClassListAnimationAdapter;
 import com.xtdar.app.common.NLog;
 import com.xtdar.app.common.NToast;
 import com.xtdar.app.common.json.JsonMananger;
+import com.xtdar.app.db.DBManager;
+import com.xtdar.app.db.DownloadGame;
+import com.xtdar.app.db.DownloadGameDao;
 import com.xtdar.app.listener.AlertDialogCallback;
 import com.xtdar.app.listener.EndlessRecyclerOnScrollListener;
 import com.xtdar.app.server.HttpException;
@@ -27,6 +33,7 @@ import com.xtdar.app.server.async.OnDataListener;
 import com.xtdar.app.server.response.GameCheckResponse;
 import com.xtdar.app.server.response.GameListResponse;
 import com.xtdar.app.service.BluetoothService;
+import com.xtdar.app.service.DownloadGameService;
 import com.xtdar.app.view.activity.LoginActivity;
 import com.xtdar.app.view.activity.Main2Activity;
 import com.xtdar.app.view.activity.UnityPlayerActivity;
@@ -38,6 +45,9 @@ import com.youth.banner.Banner;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+
+import de.greenrobot.dao.query.Query;
+import de.greenrobot.dao.query.QueryBuilder;
 
 /**
  * Created by hmxbanz on 2017/4/5.
@@ -69,7 +79,12 @@ public class MallGamePresenter extends BasePresenter implements  SwipeRefreshLay
     private boolean isFirstLoad=true;
     private EndlessRecyclerOnScrollListener onScrollListener;
     private DialogWithList dialogWithList;
+    private DownloadGameDao downloadGameDao;
 
+    private DownloadGameService downloadService;
+    private TextView btnStartGame;
+    public boolean isDownloading;
+    private String gameName;
 
     public MallGamePresenter(Context context){
         super(context);
@@ -79,6 +94,7 @@ public class MallGamePresenter extends BasePresenter implements  SwipeRefreshLay
         alertListAdapter= new AlertListAdapter(context);
         dataAdapter.setListItems(list);
         dataAdapter.setOnItemClickListener(this);
+        downloadGameDao= DBManager.getInstance().getDaoSession().getDownloadGameDao();
     }
 
     public void init(SwipeRefreshLayout swiper, RecyclerView recyclerView) {
@@ -116,6 +132,26 @@ public class MallGamePresenter extends BasePresenter implements  SwipeRefreshLay
                 GameListResponse response = (GameListResponse) result;
                 if (response !=null && response.getCode() == XtdConst.SUCCESS) {
                     final List<GameListResponse.DataBean> datas = response.getData();
+
+                    for (GameListResponse.DataBean bean : datas) {
+                        List<DownloadGame> listDb = downloadGameDao.loadAll();
+
+                        for(DownloadGame a:listDb) {
+                            NLog.e("DBdata",a.getGameId()+"---"+a.getGameName() );
+                        }
+                        //查询本地数据库是否有下载
+                        Query<DownloadGame> query = downloadGameDao.queryBuilder().where(DownloadGameDao.Properties.GameId.eq(bean.getGame_id()))
+                                .orderDesc(DownloadGameDao.Properties.GameId).build();
+                        int count=query.list().size();
+
+                        NLog.e("DBdata",count+"---数量");
+
+                        if (count > 0) {
+                            bean.setIs_download(true);
+                        }
+
+                    }
+
                     if(isFirstLoad) {
                         list = response.getData();
                         isFirstLoad=false;
@@ -128,6 +164,7 @@ public class MallGamePresenter extends BasePresenter implements  SwipeRefreshLay
                     }
                     else
                         list.addAll(datas);
+
 
                     dataAdapter.setListItems(list);
                     dataAdapter.notifyDataSetChanged();
@@ -240,7 +277,13 @@ public class MallGamePresenter extends BasePresenter implements  SwipeRefreshLay
 
 
     @Override
-    public void onItemClick(int position, GameListResponse.DataBean bean) {
+    public void onItemClick(View v, int position, GameListResponse.DataBean bean) {
+        if(isDownloading){
+            if(!bean.getGame_id().equals(this.gameId))
+            DialogWithYesOrNoUtils.getInstance().showDialog(context, "游戏正在下载，请稍候", null,null, new AlertDialogCallback() {   });
+
+            return;
+        }
         if(!basePresenter.isLogin){
             DialogWithYesOrNoUtils.getInstance().showDialog(context, "请先登录", null,"前住登录", new AlertDialogCallback() {
                 @Override
@@ -251,14 +294,86 @@ public class MallGamePresenter extends BasePresenter implements  SwipeRefreshLay
             });
             return;
         }
+        btnStartGame = (TextView)v.findViewById(R.id.btn_start_game);
         this.unityGameId =String.valueOf(bean.getGameConfig().getUnity_game_id());
         this.gameId =bean.getGame_id();
-        mActivity.mBluetoothService.scanDevice();
-        //传游戏名查询
-        LoadDialog.show(context);
-        atm.request(GAMECHECK,this);
+        this.gameName =bean.getGame_name();
+
+        //查询本地数据库是否有下载
+        Query<DownloadGame> query =downloadGameDao.queryBuilder().where(DownloadGameDao.Properties.GameId.eq(bean.getGame_id()))
+                                                  .orderDesc(DownloadGameDao.Properties.GameId).build();
+
+        int game=query.list().size();
+        NLog.e("DBdata",game );
+
+        if (game == 0) {
+            List<DownloadGame> listDb = downloadGameDao.loadAll();
+
+            for(DownloadGame a:listDb) {
+                NLog.e("DBdata",a.getGameName() );
+            }
+
+            //启动下载服务
+            if(downloadService==null)  bindService();
+            else downloadService.startDownload("");
+
+
+        }
+        else
+        {
+            LoadDialog.show(context);
+            mActivity.mBluetoothService.setScanCallback(callback);
+            mActivity.mBluetoothService.scanDevice();
+        }
+
 
     }
+
+    public void bindService() {
+        Intent bindIntent = new Intent(context, DownloadGameService.class);
+        context.bindService(bindIntent, serviceConnection, Context.BIND_AUTO_CREATE);
+    }
+
+    public void unbindService() {
+        if(serviceConnection !=null) {
+            context.unbindService(serviceConnection);
+            serviceConnection =null;
+        }
+    }
+
+    private ServiceConnection serviceConnection = new ServiceConnection() {
+        @Override
+        public void onServiceConnected(ComponentName name, IBinder service) {
+            downloadService = ((DownloadGameService.DownloadGameBinder) service).getService();
+            downloadService.setDownloadCallback(new DownloadGameService.DownloadCallback() {
+                @Override
+                public void onProgessUpdate(float progress) {
+                    isDownloading=true;
+                    if(progress==1)
+                        btnStartGame.setText("玩一玩");
+                    else
+                        btnStartGame.setText("下载中"+String.valueOf((int)(progress*100))+"%");
+                }
+
+                @Override
+                public void onDownloadDone() {
+                    isDownloading=!isDownloading;
+                    //插入本地数据库
+                    DownloadGame newDownloadGame = new DownloadGame();
+                    newDownloadGame.setGameId(Integer.parseInt(MallGamePresenter.this.gameId));
+                    newDownloadGame.setGameName(MallGamePresenter.this.gameName);
+                    downloadGameDao.insert(newDownloadGame);
+
+                }
+            });
+            downloadService.startDownload("");
+        }
+
+        @Override
+        public void onServiceDisconnected(ComponentName name) {
+            downloadService = null;
+        }
+    };
 
     /**
      * 记录RecyclerView当前位置
@@ -287,13 +402,15 @@ public class MallGamePresenter extends BasePresenter implements  SwipeRefreshLay
 
     private BluetoothService.Callback callback = new BluetoothService.Callback() {
         @Override
-        public void onStartScan() {        }
+        public void onStartScan() {                mActivity.scanResultList.clear();    }
 
         @Override
-        public void onScanning(ScanResult result) {        }
+        public void onScanning(ScanResult result) {     mActivity.scanResultList.add(result);    }
 
         @Override
-        public void onScanComplete() {    }
+        public void onScanComplete() {
+            //传游戏名查询
+            atm.request(GAMECHECK,MallGamePresenter.this);  }
 
         @Override
         public void onConnecting() {      }
@@ -325,7 +442,6 @@ public class MallGamePresenter extends BasePresenter implements  SwipeRefreshLay
     @Override
     public boolean onClick(int position, View view, GameCheckResponse.DataBean entity) {
         dialogWithList.cancleAlterDialog();
-        mActivity.mBluetoothService.setScanCallback(callback);
         GameCheckResponse.DataBean bean = deviceList.get(position);
         toUnityPlayerActivityInent = new Intent(context, UnityPlayerActivity.class);
 
@@ -334,6 +450,7 @@ public class MallGamePresenter extends BasePresenter implements  SwipeRefreshLay
         toUnityPlayerActivityInent.putExtra("WriteId", bean.getWrite_uuid());
         toUnityPlayerActivityInent.putExtra("isHigh", bean.getDeviceConfig().getIsHigh());
         toUnityPlayerActivityInent.putExtra("gameId", unityGameId);
+        toUnityPlayerActivityInent.putExtra("BleName", bean.getDevice_name());
 
         String connectMac = mActivity.mBluetoothService.getMac();
         NLog.w("connectMac:::::::",connectMac);

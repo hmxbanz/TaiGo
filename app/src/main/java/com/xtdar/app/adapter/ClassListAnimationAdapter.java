@@ -6,6 +6,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -119,9 +120,14 @@ public class ClassListAnimationAdapter extends RecyclerView.Adapter<RecyclerView
             dataDolder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    mListener.onItemClick(position,listItem);
+                    mListener.onItemClick(v,position,listItem);
                 }
             });
+            if(listItem.is_download())
+                dataDolder.btnStartGame.setText("玩一玩");
+            else
+                dataDolder.btnStartGame.setText("进 入");
+
         }
     }
 
@@ -188,7 +194,7 @@ public class ClassListAnimationAdapter extends RecyclerView.Adapter<RecyclerView
     }
 
     public interface ItemClickListener {
-        void onItemClick(int position,GameListResponse.DataBean bean );
+        void onItemClick(View v, int position, GameListResponse.DataBean bean);
     }
     class HeaderHolder extends RecyclerView.ViewHolder  {
         private Banner banner;
@@ -206,6 +212,7 @@ public class ClassListAnimationAdapter extends RecyclerView.Adapter<RecyclerView
         private TextView className;
         private ImageView imageView;
         private View listLayoutView;
+        private TextView btnStartGame;
 
         public DataHolder(View itemView) {
             super(itemView);
@@ -213,6 +220,7 @@ public class ClassListAnimationAdapter extends RecyclerView.Adapter<RecyclerView
             className = (TextView) itemView.findViewById(R.id.txt_class_name);
             imageView = (ImageView) itemView.findViewById(R.id.list_item_icon);
             listLayoutView = itemView.findViewById(R.id.list_item_layout);
+            btnStartGame = (TextView) itemView.findViewById(R.id.btn_start_game);
         }
 
         public View getListLayoutView() {

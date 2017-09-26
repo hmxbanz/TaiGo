@@ -68,6 +68,24 @@ public class ShopMoreResponse {
         private String tips;
         private String taobao_id;
         private String device_conf;
+        private String taobao_img;
+        private String taobao_name;
+
+        public String getTaobao_img() {
+            return taobao_img;
+        }
+
+        public void setTaobao_img(String taobao_img) {
+            this.taobao_img = taobao_img;
+        }
+
+        public String getTaobao_name() {
+            return taobao_name;
+        }
+
+        public void setTaobao_name(String taobao_name) {
+            this.taobao_name = taobao_name;
+        }
 
         public String getDevice_id() {
             return device_id;

@@ -15,6 +15,7 @@ import io.rong.imkit.RongIM;
 import io.rong.imlib.RongIMClient;
 import com.unity3d.player.UnityPlayer;
 import com.xtdar.app.common.NLog;
+import com.xtdar.app.db.DBManager;
 
 /**
  * Created by hmx on 2016/4/19.
@@ -22,13 +23,15 @@ import com.xtdar.app.common.NLog;
 
 public class MainApplication extends Application {
     public static String MacAddr;
+
     @Override
     public void onCreate() {
         super.onCreate();
-        if(BuildConfig.DEBUG){
+        if (BuildConfig.DEBUG) {
             Logger.init("hmx").setLogLevel(LogLevel.FULL);
+        } else {
+            Logger.init("hmx").setLogLevel(LogLevel.NONE);
         }
-        else{ Logger.init("hmx").setLogLevel(LogLevel.NONE);}
 
         //阿里百川商城
         AlibcTradeSDK.asyncInit(this, new AlibcTradeInitCallback() {
@@ -85,7 +88,7 @@ public class MainApplication extends Application {
         //x.Ext.setDebug(BuildConfig.DEBUG);
 
 //        RongIM.init(this);//融云
-          NLog.setDebug(true);//开log日志
+        NLog.setDebug(true);//开log日志
 //        String token="InrWpf704p8lSDS501hoQqUqI4Ur9skzl/M2DxXHGV5UMrXAr4mmC/3UPlxI7qzKnpJ0AvGEB3LFDHqaV6ZdGh3JXdyMvD0s";
 //        connect(token);
 
@@ -98,7 +101,11 @@ public class MainApplication extends Application {
 //                .weiboRedirectUrl(REDIRECT_URL)
 //                .wxSecret(WX_ID);
 //        ShareManager.init(config);
+
+        //二维码工具类的初始化操作
         ZXingLibrary.initDisplayOpinion(this);
+        //初始化数据库
+        DBManager.init(this);
     }
 
     /**
@@ -147,5 +154,7 @@ public class MainApplication extends Application {
             });
         }
     }
+
+
 }
 

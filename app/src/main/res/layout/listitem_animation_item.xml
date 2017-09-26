@@ -48,6 +48,7 @@
             android:layout_weight="1.5"
             android:layout_height="match_parent">
     <TextView
+        android:id="@+id/btn_start_game"
         android:layout_marginRight="10dp"
     android:background="@drawable/btn_game"
     android:text="进 入"

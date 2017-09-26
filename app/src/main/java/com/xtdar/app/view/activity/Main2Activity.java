@@ -123,8 +123,8 @@ public class Main2Activity extends BaseActivity implements View.OnClickListener{
         discoveryLayout.setOnClickListener(this);
         meLayout.setOnClickListener(this);
         viewMainTop = findViewById(R.id.main_top);
-//请求权限
-        checkPermissions();
+        //请求权限
+        //checkPermissions();
 
     }
     private void initMianViewPager() {

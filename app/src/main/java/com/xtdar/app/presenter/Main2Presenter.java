@@ -51,6 +51,25 @@ public class Main2Presenter extends BasePresenter {
         password = activity.sp.getString(XtdConst.LOGING_PASSWORD, "");
         LoadDialog.show(activity);
         atm.request(CHECKVERSION,this);
+        String[] Permissions=new String[]{Manifest.permission.CAMERA,
+                Manifest.permission.ACCESS_FINE_LOCATION,
+                Manifest.permission.READ_PHONE_STATE,
+                Manifest.permission.READ_EXTERNAL_STORAGE,
+                Manifest.permission.WRITE_EXTERNAL_STORAGE};
+        //权限申请
+        PermissionsManager.getInstance().requestPermissionsIfNecessaryForResult(activity,
+                Permissions,
+                new PermissionsResultAction() {
+                    @Override
+                    public void onGranted() {
+
+                    }
+
+                    @Override
+                    public void onDenied(String permission) {
+                        Toast.makeText(context, "获取权限失败，请点击后允许获取", Toast.LENGTH_SHORT).show();
+                    }
+                }, true);
     }
 
     public void onMeClick(final ViewPager viewPager) {
@@ -82,56 +101,47 @@ public class Main2Presenter extends BasePresenter {
     public void onSuccess(int requestCode, Object result) {
         LoadDialog.dismiss(context);
         if (result==null)return;
-            switch (requestCode) {
-                case AUTOLOGIN:
-                    LoginResponse loginResponse = (LoginResponse) result;
-                    if (loginResponse.getCode() == XtdConst.SUCCESS) {
-                        LoginResponse.ResultEntity entity=loginResponse.getData();
-                        loginWork(entity.getAccess_key());
-                        NToast.shortToast(activity, "登录成功");
-                    } else {
-                        NToast.shortToast(activity, "登录："+loginResponse.getMsg());
-                    }
-                    break;
-                case CHECKVERSION:
-                    VersionResponse versionResponse = (VersionResponse) result;
-                    if (versionResponse.getState() == XtdConst.SUCCESS) {
-                        final VersionResponse.ResultEntity entity=versionResponse.getAndroid();
-                        String[] versionInfo = getVersionInfo(activity);
-                        int versionCode = Integer.parseInt(versionInfo[0]);
-                        if(entity.getVersionCode()>versionCode)
-                        {
-                            DialogWithYesOrNoUtils dialog=DialogWithYesOrNoUtils.getInstance();
-                            dialog.showDialog(activity, "发现新版本:"+entity.getVersionName(), null,"立即更新",new AlertDialogCallback() {
-                                @Override
-                                public void executeEvent() {
-                                    goToDownload(entity.getDownloadUrl());
-                                }
-
-
-                            });
-                            dialog.setContent(entity.getVersionInfo());
-                        }
-                        NToast.shortToast(activity, "版本检测成功");
-                        if(!TextUtils.isEmpty(userName) && !isLogin){
-                            LoadDialog.show(activity);
-                            atm.request(AUTOLOGIN,this);
-                        }
-                    }else {
-                        NToast.shortToast(activity, "版本检测："+versionResponse.getMsg());
-                    }
-                    break;
-            }
-
-    }
-    @Override
-    public void onFailure(int requestCode, int state, Object result) {
-        super.onFailure(requestCode, state, result);
         switch (requestCode) {
             case AUTOLOGIN:
-                NToast.shortToast(activity, activity.getString(R.string.login_api_fail));
+                LoginResponse loginResponse = (LoginResponse) result;
+                if (loginResponse.getCode() == XtdConst.SUCCESS) {
+                    LoginResponse.ResultEntity entity=loginResponse.getData();
+                    loginWork(entity.getAccess_key());
+                    NToast.shortToast(activity, "登录成功");
+                } else {
+                    NToast.shortToast(activity, "登录："+loginResponse.getMsg());
+                }
+                break;
+            case CHECKVERSION:
+                VersionResponse versionResponse = (VersionResponse) result;
+                if (versionResponse.getState() == XtdConst.SUCCESS) {
+                    final VersionResponse.ResultEntity entity=versionResponse.getAndroid();
+                    String[] versionInfo = getVersionInfo(activity);
+                    int versionCode = Integer.parseInt(versionInfo[0]);
+                    if(entity.getVersionCode()>versionCode)
+                    {
+                        DialogWithYesOrNoUtils dialog=DialogWithYesOrNoUtils.getInstance();
+                        dialog.showDialog(activity, "发现新版本:"+entity.getVersionName(), null,"立即更新",new AlertDialogCallback() {
+                            @Override
+                            public void executeEvent() {
+                                goToDownload(entity.getDownloadUrl());
+                            }
+
+
+                        });
+                        dialog.setContent(entity.getVersionInfo());
+                    }
+                    NToast.shortToast(activity, "版本检测成功");
+                    if(!TextUtils.isEmpty(userName) && !isLogin){
+                        LoadDialog.show(activity);
+                        atm.request(AUTOLOGIN,this);
+                    }
+                }else {
+                    NToast.shortToast(activity, "版本检测："+versionResponse.getMsg());
+                }
                 break;
         }
+
     }
 
     public void onDestroy() {

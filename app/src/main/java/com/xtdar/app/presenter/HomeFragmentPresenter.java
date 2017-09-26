@@ -98,21 +98,19 @@ public class HomeFragmentPresenter extends BasePresenter implements OnDataListen
                             loadData();
                             break;
                         default:
-
                     }
-
                 }
             }
         });
     }
     public void loadData(){
         if(basePresenter.isLogin){
-        LoadDialog.show(context);
-        atm.request(GETDRIVERS,this);
-    }
-    else
-        {this.swiper.setVisibility(View.GONE);}
+            LoadDialog.show(context);
+            atm.request(GETDRIVERS,this);
         }
+        else
+        {this.swiper.setVisibility(View.GONE);}
+    }
 
     @Override
     public Object doInBackground(int requestCode, String parameter) throws HttpException {
@@ -142,7 +140,8 @@ public class HomeFragmentPresenter extends BasePresenter implements OnDataListen
                         //dataAdapter.setHeaderView(LayoutInflater.from(context).inflate(R.layout.recyclerview_header,null));
                         dataAdapter.notifyDataSetChanged();
                         this.swiper.setVisibility(View.VISIBLE);
-                        scanBLE();
+
+                        if (mBluetoothService != null)  scanBLE();
                     }
 
                 }else {
@@ -173,12 +172,12 @@ public class HomeFragmentPresenter extends BasePresenter implements OnDataListen
     }
 
     public void onScanClick() {
-            context.startActivity(new Intent(context, BleActivity.class));
+        context.startActivity(new Intent(context, BleActivity.class));
     }
 
     public void onQrClick() {
-            Intent intent = new Intent(context, QrCodeActivity.class);
-            ((Activity)context).startActivityForResult(intent, REQUEST_CODE);
+        Intent intent = new Intent(context, QrCodeActivity.class);
+        ((Activity)context).startActivityForResult(intent, REQUEST_CODE);
     }
 
     @Override
@@ -189,27 +188,27 @@ public class HomeFragmentPresenter extends BasePresenter implements OnDataListen
         itemSelected =item;
         String mac=item.getMac_address();
 
-            if(item.getStatus()==2)//如果已连接
-            {
-                DialogWithYesOrNoUtils.getInstance().showDialog(context,"连接成功",null,"去玩游戏",new AlertDialogCallback(){
-                    @Override
-                    public void executeEvent() {
-                        if(connectMac.equals("C8:FD:19:4F:BA:C9"))
-                        {
-                            Intent newInent=new Intent(context,CarActivity.class);
-                            newInent.putExtra("ServiceId", itemSelected.getService_uuid());
-                            newInent.putExtra("WriteId", itemSelected.getWrite_uuid());
-                            mActivity.startActivity(newInent);
-                        }
-                        else
-                        mActivity.getViewPager().setCurrentItem(1, false);
+        if(item.getStatus()==2)//如果已连接
+        {
+            DialogWithYesOrNoUtils.getInstance().showDialog(context,"连接成功",null,"去玩游戏",new AlertDialogCallback(){
+                @Override
+                public void executeEvent() {
+                    if(connectMac.equals("C8:FD:19:4F:BA:C9"))
+                    {
+                        Intent newInent=new Intent(context,CarActivity.class);
+                        newInent.putExtra("ServiceId", itemSelected.getService_uuid());
+                        newInent.putExtra("WriteId", itemSelected.getWrite_uuid());
+                        mActivity.startActivity(newInent);
                     }
-                });
-            }
-            else {
-                LoadDialog.show(context);
-                mBluetoothService.scanAndConnect5(mac);
-            }
+                    else
+                        mActivity.getViewPager().setCurrentItem(1, false);
+                }
+            });
+        }
+        else {
+            LoadDialog.show(context);
+            mBluetoothService.scanAndConnect5(mac);
+        }
 
     }
 
@@ -252,9 +251,10 @@ public class HomeFragmentPresenter extends BasePresenter implements OnDataListen
     private BluetoothService.Callback callback = new BluetoothService.Callback() {
         @Override
         public void onStartScan() {
+            mActivity.scanResultList.clear();
             if(list.size()>0) {
                 for (MyDevicesResponse.DataBean bean : list) {
-                    if (!bean.getMac_address().equals(connectMac))
+                    if (bean.getMac_address() !=null && !bean.getMac_address().equals(connectMac))
                         bean.setStatus(0);
                 }
                 dataAdapter.notifyDataSetChanged();
@@ -282,7 +282,6 @@ public class HomeFragmentPresenter extends BasePresenter implements OnDataListen
                     String mac2 = bean.getMac_address();
                     if (mac2.toUpperCase().equals(connectMac))
                         bean.setStatus(2);
-
                 }
 
                 Collections.sort(list, Collections.<MyDevicesResponse.DataBean>reverseOrder());
@@ -310,6 +309,7 @@ public class HomeFragmentPresenter extends BasePresenter implements OnDataListen
 
         @Override
         public void onDisConnected() {
+            LoadDialog.dismiss(context);
             connectMac = "";
             NToast.longToast(context, "连接断开");
             mActivity.scanResultList.clear();
@@ -319,12 +319,12 @@ public class HomeFragmentPresenter extends BasePresenter implements OnDataListen
         public void onServicesDiscovered() {
             LoadDialog.dismiss(context);
             connectMac =mBluetoothService.getMac();
-                for(MyDevicesResponse.DataBean bean:list)
-                {
-                    String mac2=bean.getMac_address();
-                    if(mac2.toUpperCase().equals(connectMac))
-                        bean.setStatus(2);
-                }
+            for(MyDevicesResponse.DataBean bean:list)
+            {
+                String mac2=bean.getMac_address();
+                if(mac2.toUpperCase().equals(connectMac))
+                    bean.setStatus(2);
+            }
             Collections.sort(list);
             Collections.reverse(list);
             dataAdapter.notifyDataSetChanged();
@@ -341,7 +341,7 @@ public class HomeFragmentPresenter extends BasePresenter implements OnDataListen
                         mActivity.startActivity(newInent);
                     }
                     else
-                    mActivity.getViewPager().setCurrentItem(1, false);
+                        mActivity.getViewPager().setCurrentItem(1, false);
                 }
             });
 
@@ -362,6 +362,6 @@ public class HomeFragmentPresenter extends BasePresenter implements OnDataListen
             }
         });
         if(mBluetoothService !=null)
-        onRefresh();
+            onRefresh();
     }
 }

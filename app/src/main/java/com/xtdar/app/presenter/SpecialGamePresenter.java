@@ -8,7 +8,6 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
-import com.orhanobut.logger.Logger;
 import com.xtdar.app.XtdConst;
 import com.xtdar.app.adapter.ClassListAnimationAdapter;
 import com.xtdar.app.common.NToast;
@@ -141,7 +140,7 @@ public class SpecialGamePresenter extends BasePresenter implements SwipeRefreshL
     }
 
     @Override
-    public void onItemClick(int position, GameListResponse.DataBean bean) {
+    public void onItemClick(View v, int position, GameListResponse.DataBean bean) {
 
     }
 

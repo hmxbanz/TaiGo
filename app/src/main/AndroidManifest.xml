@@ -284,6 +284,7 @@
         <service android:name=".widget.downloadService.DownloadService" />
         <service android:name=".service.DeviceConectService" />
         <service android:name=".service.BluetoothService" />
+        <service android:name=".service.DownloadGameService" />
     </application>
 
 </manifest>

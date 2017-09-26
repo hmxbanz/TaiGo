@@ -83,9 +83,9 @@ public class ShopMoreAdapter extends RecyclerView.Adapter<ShopMoreAdapter.DataHo
         final int pos = getRealPosition(holder);
         final ShopMoreResponse.DataBean listItem = listItems.get(position);
         if(holder instanceof DataHolder) {
-            holder.title.setText(listItem.getDevice_name());
-            //holder.className.setText(listItem.getChapter_name());
-            glideImageLoader.displayImage(context, XtdConst.IMGURI+listItem.getDevice_img(),holder.imageView);
+            holder.title.setText(listItem.getTaobao_name());
+            holder.price.setText("¥"+listItem.getPrice()+"元");
+            glideImageLoader.displayImage(context, XtdConst.IMGURI+listItem.getTaobao_img(),holder.imageView);
             //Glide.with(context).load(listItem.getAvator()).asBitmap().into(holder.imageView);
             //holder.imageView.setImageResource(listItem.getImgResource());
             if(mListener == null) return;
@@ -161,14 +161,14 @@ public class ShopMoreAdapter extends RecyclerView.Adapter<ShopMoreAdapter.DataHo
     class DataHolder extends RecyclerView.ViewHolder implements View.OnClickListener
     {
         private TextView title;
-        private TextView className;
+        private TextView price;
         private ImageView imageView;
         private View listLayoutView;
 
         public DataHolder(View itemView) {
             super(itemView);
             title = (TextView) itemView.findViewById(R.id.title);
-            className = (TextView) itemView.findViewById(R.id.price);
+            price = (TextView) itemView.findViewById(R.id.price);
             imageView = (ImageView) itemView.findViewById(R.id.list_item_icon);
             listLayoutView = itemView.findViewById(R.id.list_item_layout);
         }

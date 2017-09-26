@@ -98,7 +98,7 @@ public class BlePresenter extends BasePresenter implements OnDataListener, BleAd
         //Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
         //((Activity)context).startActivityForResult(enableBtIntent, 100);
 
-        checkPermissions();
+        //checkPermissions();
 
     }
 

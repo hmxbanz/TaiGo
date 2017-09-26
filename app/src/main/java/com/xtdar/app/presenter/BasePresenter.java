@@ -33,6 +33,7 @@ public class BasePresenter implements OnDataListener {
     public ACache aCache;
     protected String userName;
     protected String password;
+
     public BasePresenter(Context context)
     {
         this.context =context;

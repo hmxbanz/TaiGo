@@ -61,6 +61,16 @@ public class GameListResponse {
         private String min_an_ver;
         private String min_ios_ver;
 
+        public boolean is_download() {
+            return is_download;
+        }
+
+        public void setIs_download(boolean is_download) {
+            this.is_download = is_download;
+        }
+
+        private boolean is_download;
+
         public GameConfig getGameConfig() {
             return gameConfig;
         }
