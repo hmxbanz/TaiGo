@@ -8,6 +8,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
+import com.orhanobut.logger.Logger;
 import com.xtdar.app.XtdConst;
 import com.xtdar.app.adapter.ClassListAnimationAdapter;
 import com.xtdar.app.common.NToast;
@@ -55,7 +56,16 @@ public class SpecialGamePresenter extends BasePresenter implements SwipeRefreshL
         this.swiper.setOnRefreshListener(this);
         this.recyclerView =recyclerView;
         gridLayoutManager=new GridLayoutManager(context,1);
-        onScrollListener= getOnScrollListener();
+        onScrollListener=new EndlessRecyclerOnScrollListener(gridLayoutManager) {
+            @Override
+            public void onLoadMore(int currentPage) {
+                Logger.d("getShot currentPage:%s", currentPage);
+                lastItem = String.valueOf(currentPage - 1);
+                setCanloadMore(false);
+                LoadDialog.show(context);
+                atm.request(GETSPECIALlIST, SpecialGamePresenter.this);
+            }
+        };
         recyclerView.setLayoutManager(gridLayoutManager);
         recyclerView.setAdapter(dataAdapter);
         recyclerView.addOnScrollListener(onScrollListener);
@@ -66,7 +76,7 @@ public class SpecialGamePresenter extends BasePresenter implements SwipeRefreshL
     public Object doInBackground(int requestCode, String parameter) throws HttpException {
         switch (requestCode) {
             case GETSPECIALlIST:
-                return mUserAction.getShot("-1",lastItem,"10");
+                return mUserAction.getShot("-1",lastItem,"5");
         }
         return null;
     }
@@ -93,6 +103,8 @@ public class SpecialGamePresenter extends BasePresenter implements SwipeRefreshL
                     }
                     else
                         list.addAll(response.getData());
+
+                    onScrollListener.setCanloadMore(true);
 
                     dataAdapter.setListItems(list);
                     dataAdapter.notifyDataSetChanged();
@@ -133,7 +145,8 @@ public class SpecialGamePresenter extends BasePresenter implements SwipeRefreshL
 
     @Override
     public void onRefresh() {
-        recyclerView.addOnScrollListener(getOnScrollListener());
+        onScrollListener.reset();
+        onScrollListener.setCanloadMore(true);
         lastItem ="0";
         list.clear();
         atm.request(GETSPECIALlIST,this);
@@ -146,7 +159,8 @@ public class SpecialGamePresenter extends BasePresenter implements SwipeRefreshL
 
     //加载数据
     public void loadData() {
-
+        onScrollListener.reset();
+        onScrollListener.setCanloadMore(true);
         if(isFirstLoad) {
             String Cache = aCache.getAsString("SpecialGameList");
             if(Cache!=null && !("null").equals(Cache))
@@ -164,27 +178,5 @@ public class SpecialGamePresenter extends BasePresenter implements SwipeRefreshL
         LoadDialog.show(context);
         atm.request(GETSPECIALlIST,this);
     }
-
-
-    @NonNull
-    private EndlessRecyclerOnScrollListener getOnScrollListener() {
-        return new EndlessRecyclerOnScrollListener(SpecialGamePresenter.this.gridLayoutManager) {
-            @Override
-            public void onLoadMore(int currentPage) {
-                lastItem = String.valueOf(currentPage-1);
-                    LoadDialog.show(context);
-                    atm.request(GETSPECIALlIST, SpecialGamePresenter.this);
-            }
-
-            @Override
-            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
-                super.onScrollStateChanged(recyclerView, newState);
-                if(recyclerView.getLayoutManager() != null) {
-                    getPositionAndOffset();
-                }
-            }
-        };
-    }
-
 
 }

@@ -13,6 +13,7 @@ import com.xtdar.app.adapter.ClassListNuAdapter;
 import com.xtdar.app.common.NLog;
 import com.xtdar.app.common.NToast;
 import com.xtdar.app.common.json.JsonMananger;
+import com.xtdar.app.listener.EndlessRecyclerOnScrollListener;
 import com.xtdar.app.listener.GSYVideoPlayerOnScrollListener;
 import com.xtdar.app.server.HttpException;
 import com.xtdar.app.server.async.OnDataListener;
@@ -38,7 +39,7 @@ public class ShowFirstPresenter extends BasePresenter implements OnDataListener,
     List<ClassListResponse.DataBean> list = new ArrayList<>();
     private SwipeRefreshLayout swiper;
     private boolean isFirstLoad=true;
-    private GSYVideoPlayerOnScrollListener onScrollListener;
+    private EndlessRecyclerOnScrollListener onScrollListener;
 
     public ShowFirstPresenter(Context context){
         super(context);
@@ -47,13 +48,25 @@ public class ShowFirstPresenter extends BasePresenter implements OnDataListener,
     }
 
     public void init(SwipeRefreshLayout swiper,RecyclerView videoList) {
+
+        onScrollListener=new EndlessRecyclerOnScrollListener(linearLayoutManager) {
+            @Override
+            public void onLoadMore(int currentPage) {
+                Logger.d("getShot currentPage:%s", currentPage);
+                //lastItem = String.valueOf(currentPage - 1);
+                LoadDialog.show(context);
+                atm.request(GETSHOWFIRSTLIST, ShowFirstPresenter.this);
+                setCanloadMore(false);
+            }
+        };
         this.swiper=swiper;
         this.swiper.setOnRefreshListener(this);
         this.videoList=videoList;
         this.videoList.setAdapter(dataAdapter);
         this.videoList.setLayoutManager(linearLayoutManager);
-        this.videoList.addOnScrollListener(getGsyVideoPlayerOnScrollListener());
+        this.videoList.addOnScrollListener(onScrollListener);
         this.videoList.setNestedScrollingEnabled(false);
+
     }
 
 
@@ -62,7 +75,7 @@ public class ShowFirstPresenter extends BasePresenter implements OnDataListener,
     public Object doInBackground(int requestCode, String parameter) throws HttpException {
         switch (requestCode) {
             case GETSHOWFIRSTLIST:
-                return mUserAction.getAnimations("1",lastItem,"4");
+                return mUserAction.getAnimations("1",lastItem,"5");
         }
         return null;
     }
@@ -97,6 +110,8 @@ public class ShowFirstPresenter extends BasePresenter implements OnDataListener,
                     dataAdapter.setListData(list);
                     dataAdapter.notifyDataSetChanged();
 
+                    onScrollListener.setCanloadMore(true);
+
                 }
                 else {
                     NToast.shortToast(context, "抢先看："+response.getMsg());
@@ -113,7 +128,8 @@ public class ShowFirstPresenter extends BasePresenter implements OnDataListener,
 
     @Override
     public void onRefresh() {
-        this.videoList.addOnScrollListener(getGsyVideoPlayerOnScrollListener());
+        onScrollListener.reset();
+        onScrollListener.setCanloadMore(true);
         lastItem ="0";
         list.clear();
         atm.request(GETSHOWFIRSTLIST,this);
@@ -143,14 +159,4 @@ public class ShowFirstPresenter extends BasePresenter implements OnDataListener,
         atm.request(GETSHOWFIRSTLIST, this);
     }
 
-    @NonNull
-    private GSYVideoPlayerOnScrollListener getGsyVideoPlayerOnScrollListener() {
-        return new GSYVideoPlayerOnScrollListener(linearLayoutManager) {
-            @Override
-            public void onLoadMore(int currentPage) {
-                    LoadDialog.show(context);
-                    atm.request(GETSHOWFIRSTLIST,ShowFirstPresenter.this);
-            }
-        };
-    }
 }

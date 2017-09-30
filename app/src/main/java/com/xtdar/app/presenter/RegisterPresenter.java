@@ -26,7 +26,7 @@ import com.xtdar.app.widget.DialogWithYesOrNoUtils;
 public class RegisterPresenter extends BasePresenter {
     private static final int GETCAPTCHA = 1;
     private static final int REGISTER = 2;
-    private final String nickname;
+    private String nickname;
     private final String headimgurl;
     private RegisterActivity mActivity;
     private TextView mBtnCaptcha;
@@ -64,6 +64,8 @@ public class RegisterPresenter extends BasePresenter {
         this.userName = cellphone.getText().toString();
         this.password = password.getText().toString();
         this.captcha = captcha.getText().toString();
+        if(this.nickname==null)
+            this.nickname=this.userName;
         if(!check)
         {
             NToast.shortToast(context, R.string.protocol_not_checked);

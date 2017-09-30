@@ -7,6 +7,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
 import android.os.IBinder;
+import android.support.design.widget.TabLayout;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -46,6 +47,7 @@ public class HomeFragmentPresenter extends BasePresenter implements OnDataListen
     public static final int REQUEST_CODE = 1;
     public static final int UNBINDDEVICE = 2;
     public static final String LOADDEVICE = "loadDevice";
+    private static final String TAG = HomeFragmentPresenter.class.getSimpleName();
     private final BasePresenter basePresenter;
     private List<MyDevicesResponse.DataBean> list=new ArrayList<>();
     private RecyclerView recyclerView;
@@ -95,7 +97,8 @@ public class HomeFragmentPresenter extends BasePresenter implements OnDataListen
                 if (!TextUtils.isEmpty(command)) {
                     switch (s){
                         case "loadDevice":
-                            loadData();
+                            NLog.d(TAG,"收到加载设备广播");
+                            atm.request(GETDRIVERS,HomeFragmentPresenter.this);
                             break;
                         default:
                     }
@@ -105,8 +108,7 @@ public class HomeFragmentPresenter extends BasePresenter implements OnDataListen
     }
     public void loadData(){
         if(basePresenter.isLogin){
-            LoadDialog.show(context);
-            atm.request(GETDRIVERS,this);
+
         }
         else
         {this.swiper.setVisibility(View.GONE);}
@@ -227,6 +229,8 @@ public class HomeFragmentPresenter extends BasePresenter implements OnDataListen
     }
 
     public void unbindService() {
+        NLog.d(TAG,"卸载加载设备广播");
+        BroadcastManager.getInstance(context).destroy(HomeFragmentPresenter.LOADDEVICE);
         if(mFhrSCon!=null) {
             context.unbindService(mFhrSCon);
             mFhrSCon=null;

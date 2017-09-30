@@ -111,6 +111,9 @@ public class UnityPlayerActivity extends Activity
 
         @Override
         public void onDisConnected() {
+            NToast.longToast(UnityPlayerActivity.this,"蓝牙已断开，请重新进入游戏！");
+            NToast.longToast(UnityPlayerActivity.this,"蓝牙已断开，请重新进入游戏！");
+            NToast.longToast(UnityPlayerActivity.this,"蓝牙已断开，请重新进入游戏！");
             finish();
         }
     };
@@ -135,8 +138,6 @@ public class UnityPlayerActivity extends Activity
                         writecharacteristic=characteristic;
 
                     }
-
-
 
                     Log.w(TAG, "================== find characteristics count: " + characteristics.size());
 //                            BluetoothGattCharacteristic characteristic = characteristics.get(0);
@@ -177,7 +178,7 @@ public class UnityPlayerActivity extends Activity
                                 //这里读取到数据
                                 final byte[] data = characteristic.getValue();
                                 for (int i = 0; i < data.length; i++) {
-                                    System.out.println("BLEBLE---data......" + (int)data[i]);
+                                    //System.out.println("BLEBLE---原始byte" + (int)data[i]);
                                 }
                                 if (data != null && data.length > 0) {
                                     final StringBuilder stringBuilder = new StringBuilder(data.length);
@@ -186,24 +187,26 @@ public class UnityPlayerActivity extends Activity
                                         stringBuilder.append(String.format("%02x ", byteChar));
                                     // intent.putExtra(EXTRA_DATA, new String(data) + "\n" + stringBuilder.toString());
                                     //intent.putExtra(EXTRA_DATA, new String(data));
-                                    NLog.d("BLEBLE",stringBuilder.toString());
+                                    NLog.d("BLEBLE---转换成16进制",stringBuilder.toString());
                                 }
                                 //Integer.toHexString(10)
                                 byte command=data[6];
-                                int aaaaa=command & 0x01;
-                                NLog.d("BLEBLE",aaaaa);
+//                                int aaaaa=command & 0x01;
+//                                NLog.d("BLEBLE",aaaaa);
 
+
+                                NLog.d("BLEBLE---未知",s);
                                 String x = s.substring(14, 18);
                                 String y = s.substring(18, 22);
 
-                                NLog.d("BLEBLE>>>>",x+"-"+y);
+                                //NLog.d("BLEBLE>>>>",x+"-"+y);
 
                                 int xx=Integer.parseInt(x,16);
                                 int yy=Integer.parseInt(y,16);
 
-                                NLog.d("xxxx+yyyy:",x+"-"+y);
+                                //NLog.d("xxxx+yyyy:",x+"-"+y);
 
-                                NLog.d("xxxxyyyy:",xx+"-"+yy);
+                                //NLog.d("xxxxyyyy:",xx+"-"+yy);
 
                                 if((xx>460 && xx<530) && (yy>460 && yy<530))
                                     UnityPlayer.UnitySendMessage("Main Camera","eee","op");
@@ -214,14 +217,14 @@ public class UnityPlayerActivity extends Activity
                                 //}
 
                                 if((int)command==1) {
-                                    UnityPlayer.UnitySendMessage("Main Camera", "eee", "j");
+                                    UnityPlayer.UnitySendMessage("Main Camera", "eee", "a");//射击
                                 }
-
                                 if((int)command==0)
-                                {UnityPlayer.UnitySendMessage("Main Camera", "eee", "a");}
+                                {UnityPlayer.UnitySendMessage("Main Camera", "eee", "j");}//松开
+
 
                                 if ((int)command==2)
-                                    UnityPlayer.UnitySendMessage("Main Camera","eee","b");
+                                    UnityPlayer.UnitySendMessage("Main Camera","eee","b");//上弹
                                 else if ((int)command==3)
                                 {
                                     UnityPlayer.UnitySendMessage("Main Camera","eee","a");
@@ -229,19 +232,19 @@ public class UnityPlayerActivity extends Activity
                                 }
                                 else if ((int)command==4)
                                 {
-                                    UnityPlayer.UnitySendMessage("Main Camera","eee","e");
+                                    UnityPlayer.UnitySendMessage("Main Camera","eee","e");//换枪
                                 }
                                 else if ((int)command==8)
                                 {
-                                    UnityPlayer.UnitySendMessage("Main Camera","eee","c");
+                                    UnityPlayer.UnitySendMessage("Main Camera","eee","c");//补血
                                 }
                                 else if ((int)command==10)
                                 {
-                                    UnityPlayer.UnitySendMessage("Main Camera","eee","h");
+                                    UnityPlayer.UnitySendMessage("Main Camera","eee","h");//换枪
                                 }
                                 else if ((int)command==20)
                                 {
-                                    UnityPlayer.UnitySendMessage("Main Camera","eee","d");
+                                    UnityPlayer.UnitySendMessage("Main Camera","eee","d");//无用
                                 }
 
 

@@ -106,11 +106,16 @@ public class DownloadGameService extends Service {
         public void onSuccess(File file, Call call, Response response) {
             NLog.d(TAG, file.getAbsolutePath());
             ZipExtractorTask zip = new ZipExtractorTask(file.getAbsolutePath(), "/sdcard/download/aaaaaaaaa", DownloadGameService.this,true);
+            zip.setUnZipCallback(new ZipExtractorTask.UnZipCallback() {
+                @Override
+                public void onDone() {
+                    if (mCallback != null) {
+                        mCallback.onDownloadDone();
+                    }
+                }
+            });
             zip.execute();
 
-            if (mCallback != null) {
-                mCallback.onDownloadDone();
-            }
         }
 
         @Override

@@ -36,7 +36,7 @@ public abstract class GSYVideoPlayerOnScrollListener extends RecyclerView.OnScro
                 previousTotal = totalItemCount;
             }
         }
-        if (!loading   && (totalItemCount - visibleItemCount) <= firstVisibleItem) {
+        if (!loading   && ((totalItemCount - visibleItemCount) <= firstVisibleItem)) {
             currentPage++;
             onLoadMore(currentPage);
             loading = true;

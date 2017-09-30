@@ -81,7 +81,7 @@ public class MineFragment extends Fragment implements View.OnClickListener {
     @Override
     public void onStart() {
         super.onStart();
-        presenter.getInfo();
+        //presenter.getInfo();
         NLog.d("fragment-----","onStart");
     }
 

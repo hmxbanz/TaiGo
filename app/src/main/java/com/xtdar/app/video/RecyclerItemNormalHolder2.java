@@ -84,7 +84,7 @@ public class RecyclerItemNormalHolder2 extends RecyclerItemBaseHolder {
 
         //默认缓存路径
 
-        Logger.e("StandardGSYVideoPlayer %s",videoModel.getItem_title());
+        Logger.d("StandardGSYVideoPlayer %s",videoModel.getItem_title());
         if(videoModel.getItem_title()!=null)
         gsyVideoPlayer.setUp(url, true , null, videoModel.getItem_title());
 

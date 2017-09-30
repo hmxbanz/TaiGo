@@ -85,7 +85,6 @@ private static final int Blue=0x001bb4fb;
     @Override
     public void onDestroy() {
         super.onDestroy();
-        BroadcastManager.getInstance(getActivity()).destroy(HomeFragmentPresenter.LOADDEVICE);
         presenter.unbindService();
     }
     @Override

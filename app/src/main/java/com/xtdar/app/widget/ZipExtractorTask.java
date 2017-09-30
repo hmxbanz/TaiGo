@@ -36,6 +36,16 @@ public class ZipExtractorTask extends AsyncTask<Void, Integer, Long> {
     private boolean mReplaceAll;
     WebView mWebView;
 
+    public void setUnZipCallback(UnZipCallback unZipCallback) {
+        this.unZipCallback = unZipCallback;
+    }
+
+    private UnZipCallback unZipCallback;
+
+    public interface UnZipCallback{
+        void onDone();
+    }
+
     public ZipExtractorTask(String in, String out, Context context, boolean replaceAll){
         super();
         mInput = new File(in);
@@ -66,6 +76,7 @@ public class ZipExtractorTask extends AsyncTask<Void, Integer, Long> {
         Intent intent = new Intent();
         intent.setAction("com.sl.unzip");
         mContext.sendBroadcast(intent);
+        this.unZipCallback.onDone();
     }
     @Override
     protected void onPreExecute() {

@@ -80,7 +80,7 @@ public class Main2Activity extends BaseActivity implements View.OnClickListener{
     @Override
     protected void onStart() {
         super.onStart();
-
+        main2Presenter.autoLogin();
     }
 
 

@@ -15,6 +15,7 @@ import com.xtdar.app.XtdConst;
 import com.xtdar.app.common.NToast;
 import com.xtdar.app.listener.AlertDialogCallback;
 import com.xtdar.app.server.HttpException;
+import com.xtdar.app.server.broadcast.BroadcastManager;
 import com.xtdar.app.server.response.CommonResponse;
 import com.xtdar.app.server.response.LoginResponse;
 import com.xtdar.app.server.response.WxLoginResponse;
@@ -142,7 +143,7 @@ public class LoginPresenter extends BasePresenter  {
                     LoginResponse loginResponse = (LoginResponse) result;
                     if (loginResponse.getCode() == XtdConst.SUCCESS) {
                         LoginResponse.ResultEntity entity=loginResponse.getData();
-                        loginWork(entity.getAccess_key());
+                        loginWork2(entity.getAccess_key());
                         LoadDialog.show(context);
                         atm.request(UPLOADRID,LoginPresenter.this);
                     } else if (loginResponse.getCode() == XtdConst.FAILURE) {
@@ -390,7 +391,7 @@ public class LoginPresenter extends BasePresenter  {
         Logger.d("headimgurl:"+headimgurl);
     }
 
-    private void loginWork(String access_key)
+    private void loginWork2(String access_key)
     {
         editor.putString(XtdConst.ACCESS_TOKEN, access_key);
         editor.putString(XtdConst.LOGIN_USERNAME, mUsername.getText().toString());
@@ -399,6 +400,8 @@ public class LoginPresenter extends BasePresenter  {
         editor.apply();
         basePresenter.initData();
         rid = JPushInterface.getRegistrationID(context.getApplicationContext());
+        BroadcastManager.getInstance(context).sendBroadcast(MinePresenter.UPDATEUNREAD, "loadAvator");
+        BroadcastManager.getInstance(context).sendBroadcast(HomeFragmentPresenter.LOADDEVICE, "loadDevice");
 
     }
 
