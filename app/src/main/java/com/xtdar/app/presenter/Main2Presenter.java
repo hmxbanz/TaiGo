@@ -33,12 +33,10 @@ import static com.xtdar.app.common.CommonTools.getVersionInfo;
  * Created by hmxbanz on 2017/4/5.
  */
 public class Main2Presenter extends BasePresenter {
-    private static final int AUTOLOGIN = 1;
+    public static final int AUTOLOGIN = 1;
     private static final int CHECKVERSION = 2;
     private final BasePresenter basePresenter;
     private Main2Activity activity;
-    private String userName;
-    private String password;
 
     public Main2Presenter(Context context){
         super(context);
@@ -47,8 +45,6 @@ public class Main2Presenter extends BasePresenter {
     }
 
     public void init() {
-        userName = activity.sp.getString(XtdConst.LOGIN_USERNAME, "");
-        password = activity.sp.getString(XtdConst.LOGING_PASSWORD, "");
         LoadDialog.show(activity);
         atm.request(CHECKVERSION,this);
         String[] Permissions=new String[]{Manifest.permission.CAMERA,
@@ -73,6 +69,7 @@ public class Main2Presenter extends BasePresenter {
     }
 
     public void onMeClick(final ViewPager viewPager) {
+        basePresenter.initData();
         if(!basePresenter.isLogin){
             DialogWithYesOrNoUtils.getInstance().showDialog(context, "请先登录", null,"前住登录", new AlertDialogCallback() {
                 @Override
@@ -132,16 +129,21 @@ public class Main2Presenter extends BasePresenter {
                         dialog.setContent(entity.getVersionInfo());
                     }
                     NToast.shortToast(activity, "版本检测成功");
-                    if(!TextUtils.isEmpty(userName) && !isLogin){
-                        LoadDialog.show(activity);
-                        atm.request(AUTOLOGIN,this);
-                    }
+
                 }else {
                     NToast.shortToast(activity, "版本检测："+versionResponse.getMsg());
                 }
                 break;
         }
 
+    }
+
+    public void autoLogin()
+    {
+        if(!TextUtils.isEmpty(userName)){
+            LoadDialog.show(activity);
+            atm.request(AUTOLOGIN,this);
+        }
     }
 
     public void onDestroy() {
@@ -167,15 +169,6 @@ public class Main2Presenter extends BasePresenter {
                     }
                 }, true);
 
-    }
-    private void loginWork(String access_key)
-    {
-        editor.putString(XtdConst.ACCESS_TOKEN, access_key);
-        editor.putBoolean(XtdConst.ISLOGIN, true);
-        editor.apply();
-        basePresenter.initData();
-        BroadcastManager.getInstance(context).sendBroadcast(MinePresenter.UPDATEUNREAD, "loadAvator");
-        BroadcastManager.getInstance(context).sendBroadcast(HomeFragmentPresenter.LOADDEVICE, "loadDevice");
     }
 
 }

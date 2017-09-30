@@ -24,6 +24,7 @@ import com.xtdar.app.loader.GlideImageLoader;
 import com.xtdar.app.server.HttpException;
 import com.xtdar.app.server.async.OnDataListener;
 import com.xtdar.app.server.broadcast.BroadcastManager;
+import com.xtdar.app.server.response.LoginResponse;
 import com.xtdar.app.server.response.UnReadMsgResponse;
 import com.xtdar.app.server.response.UserInfoResponse;
 import com.xtdar.app.view.activity.Main2Activity;
@@ -34,6 +35,8 @@ import com.xtdar.app.view.widget.SelectableRoundedImageView;
 import java.util.HashMap;
 import java.util.Map;
 
+import static com.xtdar.app.presenter.Main2Presenter.AUTOLOGIN;
+
 /**
  * Created by hmxbanz on 2017/4/5.
  */
@@ -42,6 +45,7 @@ public class MinePresenter extends BasePresenter implements OnDataListener {
     private static final int GETINFO = 2;
     private static final int GETMSGCOUNT = 3;
     public static final String UPDATEUNREAD = "updateUnread";
+    private final Main2Activity activity;
     private GlideImageLoader glideImageLoader;
     private final BasePresenter basePresenter;
     private SelectableRoundedImageView avator;
@@ -52,6 +56,7 @@ public class MinePresenter extends BasePresenter implements OnDataListener {
         super(context);
         basePresenter = BasePresenter.getInstance(context);
         glideImageLoader = new GlideImageLoader();
+        activity=(Main2Activity)context;
     }
 
     public void init(SelectableRoundedImageView selectableRoundedImageView, TextView nickName, DragPointView unreadNumView) {
@@ -83,6 +88,7 @@ public class MinePresenter extends BasePresenter implements OnDataListener {
 
     }
     public void getInfo(){
+        basePresenter.initData();
         if(basePresenter.isLogin){
         LoadDialog.show(context);
         atm.request(GETINFO,this);
@@ -105,6 +111,16 @@ public class MinePresenter extends BasePresenter implements OnDataListener {
         LoadDialog.dismiss(context);
         if (result==null)return;
         switch (requestCode) {
+            case AUTOLOGIN:
+                LoginResponse loginResponse = (LoginResponse) result;
+                if (loginResponse.getCode() == XtdConst.SUCCESS) {
+                    LoginResponse.ResultEntity entity=loginResponse.getData();
+                    loginWork(entity.getAccess_key());
+                    NToast.shortToast(activity, "登录成功");
+                } else {
+                    NToast.shortToast(activity, "登录："+loginResponse.getMsg());
+                }
+                break;
             case GETINFO:
                 UserInfoResponse userInfoResponse = (UserInfoResponse) result;
                 if (userInfoResponse.getCode() == XtdConst.SUCCESS) {
@@ -117,6 +133,7 @@ public class MinePresenter extends BasePresenter implements OnDataListener {
                     NToast.shortToast(context, "获取个人资料："+userInfoResponse.getMsg());
                 }
                 break;
+
             case GETMSGCOUNT:
                 UnReadMsgResponse unReadMsgResponse = (UnReadMsgResponse) result;
                 if (unReadMsgResponse.getCode() == XtdConst.SUCCESS) {

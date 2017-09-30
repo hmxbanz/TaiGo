@@ -102,20 +102,27 @@ public class MallGamePresenter extends BasePresenter implements  SwipeRefreshLay
         this.swiper.setOnRefreshListener(this);
         this.recyclerView =recyclerView;
         gridLayoutManager=new GridLayoutManager(context,1);
-        onScrollListener= getOnScrollListener();
+        onScrollListener=new EndlessRecyclerOnScrollListener(gridLayoutManager) {
+            @Override
+            public void onLoadMore(int currentPage) {
+                Logger.d("getShot currentPage:%s", currentPage);
+                lastItem = String.valueOf(currentPage - 1);
+                LoadDialog.show(context);
+                atm.request(GETMALLLIST, MallGamePresenter.this);
+                setCanloadMore(false);
+            }
+        };
         recyclerView.addOnScrollListener(onScrollListener);
         recyclerView.setLayoutManager(gridLayoutManager);
         recyclerView.setAdapter(dataAdapter);
         recyclerView.setNestedScrollingEnabled(false);
     }
 
-
-
     @Override
     public Object doInBackground(int requestCode, String parameter) throws HttpException {
         switch (requestCode) {
             case GETMALLLIST:
-                return mUserAction.getShot("0",lastItem,"4");
+                return mUserAction.getShot("0",lastItem,"5");
             case GAMECHECK:
                 return mUserAction.gameCheck(gameId);
         }
@@ -130,26 +137,18 @@ public class MallGamePresenter extends BasePresenter implements  SwipeRefreshLay
         switch (requestCode) {
             case GETMALLLIST:
                 GameListResponse response = (GameListResponse) result;
-                if (response !=null && response.getCode() == XtdConst.SUCCESS) {
+                if (response !=null && response.getCode() == XtdConst.SUCCESS ) {
                     final List<GameListResponse.DataBean> datas = response.getData();
 
                     for (GameListResponse.DataBean bean : datas) {
                         List<DownloadGame> listDb = downloadGameDao.loadAll();
-
-                        for(DownloadGame a:listDb) {
-                            NLog.e("DBdata",a.getGameId()+"---"+a.getGameName() );
-                        }
                         //查询本地数据库是否有下载
                         Query<DownloadGame> query = downloadGameDao.queryBuilder().where(DownloadGameDao.Properties.GameId.eq(bean.getGame_id()))
                                 .orderDesc(DownloadGameDao.Properties.GameId).build();
                         int count=query.list().size();
 
-                        NLog.e("DBdata",count+"---数量");
-
-                        if (count > 0) {
+                        if (count > 0)
                             bean.setIs_download(true);
-                        }
-
                     }
 
                     if(isFirstLoad) {
@@ -165,10 +164,16 @@ public class MallGamePresenter extends BasePresenter implements  SwipeRefreshLay
                     else
                         list.addAll(datas);
 
+                    onScrollListener.setCanloadMore(true);
+
+                    int wwwwww=0;
+                    for (GameListResponse.DataBean oo : list) {
+                        Logger.d("游戏索引:"+wwwwww+++"  游戏ID:%s  游戏名:%s", oo.getGame_id(),oo.getGame_name());
+                    }
+                    Logger.d("数量:%s=列表:%s", list.size(),list);
 
                     dataAdapter.setListItems(list);
                     dataAdapter.notifyDataSetChanged();
-
                 }
                 else {
                     NToast.shortToast(context, "大厅游戏："+response.getMsg());
@@ -306,7 +311,7 @@ public class MallGamePresenter extends BasePresenter implements  SwipeRefreshLay
         int game=query.list().size();
         NLog.e("DBdata",game );
 
-        if (game == 0) {
+        if (game+1== 0) {
             List<DownloadGame> listDb = downloadGameDao.loadAll();
 
             for(DownloadGame a:listDb) {
@@ -433,7 +438,8 @@ public class MallGamePresenter extends BasePresenter implements  SwipeRefreshLay
 
     @Override
     public void onRefresh() {
-        recyclerView.addOnScrollListener(getOnScrollListener());
+        onScrollListener.reset();
+        onScrollListener.setCanloadMore(true);
         lastItem ="0";
         list.clear();
         atm.request(GETMALLLIST,this);
@@ -465,6 +471,8 @@ public class MallGamePresenter extends BasePresenter implements  SwipeRefreshLay
     }
     //加载数据
     public void loadData() {
+        onScrollListener.reset();
+        onScrollListener.setCanloadMore(true);
         if(isFirstLoad) {
             String Cache = aCache.getAsString("MallGameList");
             if(Cache!=null && !("null").equals(Cache))
@@ -483,25 +491,5 @@ public class MallGamePresenter extends BasePresenter implements  SwipeRefreshLay
         atm.request(GETMALLLIST,this);
     }
 
-    @NonNull
-    private EndlessRecyclerOnScrollListener getOnScrollListener() {
-        return new EndlessRecyclerOnScrollListener(gridLayoutManager) {
-            @Override
-            public void onLoadMore(int currentPage) {
-                Logger.d("getShot currentPage:%s", currentPage);
-                lastItem = String.valueOf(currentPage - 1);
-                LoadDialog.show(context);
-                atm.request(GETMALLLIST, MallGamePresenter.this);
-            }
-
-            @Override
-            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
-                super.onScrollStateChanged(recyclerView, newState);
-                if (recyclerView.getLayoutManager() != null) {
-                    getPositionAndOffset();
-                }
-            }
-        };
-    }
 
 }

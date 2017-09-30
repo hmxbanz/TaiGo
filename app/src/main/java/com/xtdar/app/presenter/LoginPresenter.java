@@ -142,7 +142,7 @@ public class LoginPresenter extends BasePresenter  {
                     LoginResponse loginResponse = (LoginResponse) result;
                     if (loginResponse.getCode() == XtdConst.SUCCESS) {
                         LoginResponse.ResultEntity entity=loginResponse.getData();
-                        loginWork(entity.getAccess_key());
+                        loginWork2(entity.getAccess_key());
                         LoadDialog.show(context);
                         atm.request(UPLOADRID,LoginPresenter.this);
                     } else if (loginResponse.getCode() == XtdConst.FAILURE) {
@@ -390,7 +390,7 @@ public class LoginPresenter extends BasePresenter  {
         Logger.d("headimgurl:"+headimgurl);
     }
 
-    private void loginWork(String access_key)
+    private void loginWork2(String access_key)
     {
         editor.putString(XtdConst.ACCESS_TOKEN, access_key);
         editor.putString(XtdConst.LOGIN_USERNAME, mUsername.getText().toString());

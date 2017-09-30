@@ -11,6 +11,7 @@ import com.xtdar.app.server.HttpException;
 import com.xtdar.app.server.UserAction;
 import com.xtdar.app.server.async.AsyncTaskManager;
 import com.xtdar.app.server.async.OnDataListener;
+import com.xtdar.app.server.broadcast.BroadcastManager;
 import com.xtdar.app.view.activity.BaseActivity;
 import com.xtdar.app.view.widget.LoadDialog;
 import com.xtdar.app.widget.ACache;
@@ -56,12 +57,9 @@ public class BasePresenter implements OnDataListener {
         }
         return instance;
     }
-    protected String GetToken(){
-        return sp.getString(XtdConst.ACCESS_TOKEN,"");
-    }
     protected void initData()
     {
-        mUserAction.token = GetToken();
+        mUserAction.token = sp.getString(XtdConst.ACCESS_TOKEN,"");
         isLogin = sp.getBoolean(XtdConst.ISLOGIN, false);
         userName=sp.getString(XtdConst.LOGIN_USERNAME,"");
         password=sp.getString(XtdConst.LOGING_PASSWORD,"");
@@ -84,4 +82,15 @@ public class BasePresenter implements OnDataListener {
         }
 
     }
+
+    public void loginWork(String access_key)
+    {
+        editor.putString(XtdConst.ACCESS_TOKEN, access_key);
+        editor.putBoolean(XtdConst.ISLOGIN, true);
+        editor.apply();
+        initData();
+        BroadcastManager.getInstance(context).sendBroadcast(MinePresenter.UPDATEUNREAD, "loadAvator");
+        BroadcastManager.getInstance(context).sendBroadcast(HomeFragmentPresenter.LOADDEVICE, "loadDevice");
+    }
+
 }

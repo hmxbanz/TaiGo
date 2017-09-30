@@ -64,7 +64,6 @@ public class UserAction extends BaseAction {
     private final String TAG=UserAction.class.getSimpleName();
     private final String CONTENT_TYPE = "application/json";
     private final String ENCODING = "utf-8";
-    private String result;
     public String token;
     public static UserAction instance;
     private Object relateRecommend;
@@ -91,6 +90,7 @@ public class UserAction extends BaseAction {
     //登录
     public LoginResponse login(String userName, String password) throws HttpException
     {
+        String result = "";
         String uri = getURL("cli-comm-login.php");
         Response response=null;
         try {
@@ -102,7 +102,7 @@ public class UserAction extends BaseAction {
                     .build()
                     .execute();
             result =response.body().string();
-            Logger.d(TAG, result);
+            Logger.d(TAG+"::::AAAA::%s", result);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -110,7 +110,7 @@ public class UserAction extends BaseAction {
             try {
                 loginResponse = JsonMananger.jsonToBean(result, LoginResponse.class);
             } catch (JSONException e) {
-                Logger.e(TAG, "LoginResponse occurs JSONException e=" + e.toString());
+                Logger.e(TAG+"::::::%s", "LoginResponse occurs JSONException e=" + e.toString());
                 return null;
             }
         return loginResponse;
@@ -120,6 +120,7 @@ public class UserAction extends BaseAction {
     //微信绑定
     public CommonResponse wxBind(String unionid,String cellPhone, String pwd) throws HttpException
     {
+        String result = "";
         String uri = getURL("cli-tplogin-bindwx.php");
         Response response=null;
         try {
@@ -132,7 +133,7 @@ public class UserAction extends BaseAction {
                     .build()
                     .execute();
             result =response.body().string();
-            Logger.d(TAG, result);
+            Logger.d(TAG+"::::::%s", result);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -140,7 +141,7 @@ public class UserAction extends BaseAction {
             try {
                 commonResponse = JsonMananger.jsonToBean(result, CommonResponse.class);
             } catch (JSONException e) {
-                Logger.e(TAG, "CommonResponse occurs JSONException e=" + e.toString());
+                Logger.e(TAG+"::::::%s", "CommonResponse occurs JSONException e=" + e.toString());
                 return null;
             }
 
@@ -151,6 +152,7 @@ public class UserAction extends BaseAction {
     //微信登录请求
     public WxLoginResponse wxOpenId(String unionid) throws HttpException
     {
+        String result = "";
         String uri = getURL("cli-tplogin-wxlogin.php");
         Response response=null;
         try {
@@ -161,7 +163,7 @@ public class UserAction extends BaseAction {
                     .build()
                     .execute();
             result =response.body().string();
-            Logger.d(TAG, result);
+            Logger.d(TAG+"::::::%s", result);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -169,7 +171,7 @@ public class UserAction extends BaseAction {
             try {
                 wxLoginResponse = JsonMananger.jsonToBean(result, WxLoginResponse.class);
             } catch (JSONException e) {
-                Logger.e(TAG, "wxLoginResponse occurs JSONException e=" + e.toString());
+                Logger.e(TAG+"::::::%s", "wxLoginResponse occurs JSONException e=" + e.toString());
                 return null;
             }
         return wxLoginResponse;
@@ -179,6 +181,7 @@ public class UserAction extends BaseAction {
     //QQ登录请求
     public WxLoginResponse qqOpenId(String unionid) throws HttpException
     {
+        String result = "";
         String uri = getURL("cli-tplogin-qqlogin.php");
         Response response=null;
         try {
@@ -189,7 +192,7 @@ public class UserAction extends BaseAction {
                     .build()
                     .execute();
             result =response.body().string();
-            Logger.d(TAG, result);
+            Logger.d(TAG+"::::::%s", result);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -197,7 +200,7 @@ public class UserAction extends BaseAction {
             try {
                 wxLoginResponse = JsonMananger.jsonToBean(result, WxLoginResponse.class);
             } catch (JSONException e) {
-                Logger.e(TAG, "wxLoginResponse occurs JSONException e=" + e.toString());
+                Logger.e(TAG+"::::::%s", "wxLoginResponse occurs JSONException e=" + e.toString());
                 return null;
             }
         return wxLoginResponse;
@@ -206,6 +209,7 @@ public class UserAction extends BaseAction {
     //QQ绑定
     public CommonResponse qqBind(String unionid,String cellPhone, String pwd) throws HttpException
     {
+        String result = "";
         String uri = getURL("cli-tplogin-bindqq.php");
         Response response=null;
         try {
@@ -218,7 +222,7 @@ public class UserAction extends BaseAction {
                     .build()
                     .execute();
             result =response.body().string();
-            Logger.d(TAG, result);
+            Logger.d(TAG+"::::::%s", result);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -226,7 +230,7 @@ public class UserAction extends BaseAction {
             try {
                 commonResponse = JsonMananger.jsonToBean(result, CommonResponse.class);
             } catch (JSONException e) {
-                Logger.e(TAG, "qqBind occurs JSONException e=" + e.toString());
+                Logger.e(TAG+"::::::%s", "qqBind occurs JSONException e=" + e.toString());
                 return null;
             }
         return commonResponse;
@@ -235,6 +239,7 @@ public class UserAction extends BaseAction {
     //微博登录请求
     public WxLoginResponse wbOpenId(String unionid) throws HttpException
     {
+        String result = "";
         String uri = getURL("cli-tplogin-wblogin.php");
         Response response=null;
         try {
@@ -245,7 +250,7 @@ public class UserAction extends BaseAction {
                     .build()
                     .execute();
             result =response.body().string();
-            Logger.d(TAG, result);
+            Logger.d(TAG+"::::::%s", result);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -253,7 +258,7 @@ public class UserAction extends BaseAction {
             try {
                 wxLoginResponse = JsonMananger.jsonToBean(result, WxLoginResponse.class);
             } catch (JSONException e) {
-                Logger.e(TAG, "wbLoginResponse occurs JSONException e=" + e.toString());
+                Logger.e(TAG+"::::::%s", "wbLoginResponse occurs JSONException e=" + e.toString());
                 return null;
             }
         return wxLoginResponse;
@@ -262,6 +267,7 @@ public class UserAction extends BaseAction {
     //微博绑定
     public CommonResponse wbBind(String unionid,String cellPhone, String pwd) throws HttpException
     {
+        String result = "";
         String uri = getURL("cli-tplogin-bindwb.php");
         Response response=null;
         try {
@@ -274,7 +280,7 @@ public class UserAction extends BaseAction {
                     .build()
                     .execute();
             result =response.body().string();
-            Logger.d(TAG, result);
+            Logger.d(TAG+"::::::%s", result);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -282,7 +288,7 @@ public class UserAction extends BaseAction {
             try {
                 commonResponse = JsonMananger.jsonToBean(result, CommonResponse.class);
             } catch (JSONException e) {
-                Logger.e(TAG, "wbBind occurs JSONException e=" + e.toString());
+                Logger.e(TAG+"::::::%s", "wbBind occurs JSONException e=" + e.toString());
                 return null;
             }
         return commonResponse;
@@ -292,6 +298,7 @@ public class UserAction extends BaseAction {
     //上传极光注册ID
     public CommonResponse upLoadRid(String rid) throws HttpException
     {
+        String result = "";
         String uri = getURL("cli-api-bindregistrationid.php");
         Response response=null;
         try {
@@ -303,7 +310,7 @@ public class UserAction extends BaseAction {
                     .build()
                     .execute();
             result =response.body().string();
-            Logger.d(TAG, result);
+            Logger.d(TAG+"::::::%s", result);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -311,7 +318,7 @@ public class UserAction extends BaseAction {
             try {
                 commonResponse = JsonMananger.jsonToBean(result, CommonResponse.class);
             } catch (JSONException e) {
-                Logger.e(TAG, "upLoadRid occurs JSONException e=" + e.toString());
+                Logger.e(TAG+"::::::%s", "upLoadRid occurs JSONException e=" + e.toString());
                 return null;
             }
         return commonResponse;
@@ -320,6 +327,7 @@ public class UserAction extends BaseAction {
     //获取验证码
     public CaptchaResponse getCaptcha(String cellPhone) throws HttpException
     {
+        String result = "";
         String uri = getURL("cli-comm-sendregmsg.php");
         Response response=null;
         try {
@@ -330,7 +338,7 @@ public class UserAction extends BaseAction {
                     .build()
                     .execute();
             result =response.body().string();
-            Logger.d(TAG, result);
+            Logger.d(TAG+"::::::%s", result);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -338,7 +346,7 @@ public class UserAction extends BaseAction {
             try {
                 captchaResponse = JsonMananger.jsonToBean(result, CaptchaResponse.class);
             } catch (JSONException e) {
-                Logger.e(TAG, "CaptchaResponse occurs JSONException e=" + e.toString());
+                Logger.e(TAG+"::::::%s", "CaptchaResponse occurs JSONException e=" + e.toString());
                 return null;
             }
         return captchaResponse;
@@ -347,6 +355,7 @@ public class UserAction extends BaseAction {
     //获取验证码(取回密码)
     public CommonResponse getCaptchaForget(String cellPhone) throws HttpException
     {
+        String result = "";
         String uri = getURL("cli-comm-sendpwdmsg.php");
         Response response=null;
         try {
@@ -357,7 +366,7 @@ public class UserAction extends BaseAction {
                     .build()
                     .execute();
             result =response.body().string();
-            Logger.d(TAG, result);
+            Logger.d(TAG+"::::::%s", result);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -365,7 +374,7 @@ public class UserAction extends BaseAction {
             try {
                 commonResponse = JsonMananger.jsonToBean(result, CommonResponse.class);
             } catch (JSONException e) {
-                Logger.e(TAG, "getCaptchaForget occurs JSONException e=" + e.toString());
+                Logger.e(TAG+"::::::%s", "getCaptchaForget occurs JSONException e=" + e.toString());
                 return null;
             }
         return commonResponse;
@@ -374,6 +383,7 @@ public class UserAction extends BaseAction {
     //注册
     public CommonResponse register(String headimgurl,String nickname, String password, String captcha) throws HttpException
     {
+        String result = "";
         String uri = getURL("cli-comm-register.php");
         Response response=null;
         try {
@@ -387,7 +397,7 @@ public class UserAction extends BaseAction {
                     .build()
                     .execute();
             result =response.body().string();
-            Logger.d(TAG, result);
+            Logger.d(TAG+"::::::%s", result);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -395,7 +405,7 @@ public class UserAction extends BaseAction {
             try {
                 commonResponse = JsonMananger.jsonToBean(result, CommonResponse.class);
             } catch (JSONException e) {
-                Logger.e(TAG, "register occurs JSONException e=" + e.toString());
+                Logger.e(TAG+"::::::%s", "register occurs JSONException e=" + e.toString());
                 return null;
             }
         return commonResponse;
@@ -404,6 +414,7 @@ public class UserAction extends BaseAction {
     //重置密码
     public CommonResponse resetPassword(String cellPhone, String password, String captcha) throws HttpException
     {
+        String result = "";
         String uri = getURL("cli-comm-setpwd.php");
         Response response=null;
         try {
@@ -416,7 +427,7 @@ public class UserAction extends BaseAction {
                     .build()
                     .execute();
             result =response.body().string();
-            Logger.d(TAG, result);
+            Logger.d(TAG+"::::::%s", result);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -424,7 +435,7 @@ public class UserAction extends BaseAction {
             try {
                 commonResponse = JsonMananger.jsonToBean(result, CommonResponse.class);
             } catch (JSONException e) {
-                Logger.e(TAG, "CommonResponse occurs JSONException e=" + e.toString());
+                Logger.e(TAG+"::::::%s", "CommonResponse occurs JSONException e=" + e.toString());
                 return null;
             }
         return commonResponse;
@@ -432,6 +443,7 @@ public class UserAction extends BaseAction {
     }
     //取个人资料
     public UserInfoResponse getInfo() throws HttpException {
+        String result = "";
         String uri = getURL("cli-api-userinfo.php");
         Response response=null;
         try {
@@ -442,7 +454,7 @@ public class UserAction extends BaseAction {
                     .build()
                     .execute();
             result =response.body().string();
-            Logger.d(TAG, result);
+            Logger.d(TAG+"::::::%s", result);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -450,13 +462,14 @@ public class UserAction extends BaseAction {
             try {
                 userInfoResponse = JsonMananger.jsonToBean(result, UserInfoResponse.class);
             } catch (JSONException e) {
-                Logger.e(TAG, "UserInfoResponse occurs JSONException e=" + e.toString());
+                Logger.e(TAG+"::::::%s", "UserInfoResponse occurs JSONException e=" + e.toString());
                 return null;
             }
         return userInfoResponse;
     }
     //取消息未读数
     public UnReadMsgResponse getUnReadMsg() throws HttpException {
+        String result = "";
         String uri = getURL("cli-api-needreadcount.php");
         Response response=null;
         try {
@@ -467,7 +480,7 @@ public class UserAction extends BaseAction {
                     .build()
                     .execute();
             result =response.body().string();
-            Logger.d(TAG, result);
+            Logger.d(TAG+"::::::%s", result);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -475,7 +488,7 @@ public class UserAction extends BaseAction {
             try {
                 unReadMsgResponse = JsonMananger.jsonToBean(result, UnReadMsgResponse.class);
             } catch (JSONException e) {
-                Logger.e(TAG, "UnReadMsgResponse occurs JSONException e=" + e.toString());
+                Logger.e(TAG+"::::::%s", "UnReadMsgResponse occurs JSONException e=" + e.toString());
                 return null;
             }
         return unReadMsgResponse;
@@ -483,6 +496,7 @@ public class UserAction extends BaseAction {
 
     //版本检查
     public VersionResponse checkVersion() throws HttpException {
+        String result = "";
         String uri =getURL("app_source/dl/version.txt");
         Response response=null;
         try {
@@ -492,7 +506,7 @@ public class UserAction extends BaseAction {
                     .build()
                     .execute();
             result =response.body().string();
-            Logger.d(TAG, result);
+            Logger.d(TAG+"::::::%s", result);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -500,13 +514,14 @@ public class UserAction extends BaseAction {
             try {
                 versionResponse = JsonMananger.jsonToBean(result, VersionResponse.class);
             } catch (JSONException e) {
-                Logger.e(TAG, "Get VersionResponse occurs JSONException e=" + e.toString());
+                Logger.e(TAG+"::::::%s", "Get VersionResponse occurs JSONException e=" + e.toString());
                 return null;
             }
         return versionResponse;
     }
 
     public TagResponse getTags() throws HttpException {
+        String result = "";
         String uri = getURL("cli-comm-classtag.php");
         Response response=null;
         try {
@@ -516,7 +531,7 @@ public class UserAction extends BaseAction {
                     .build()
                     .execute();
             result =response.body().string();
-            Logger.d(TAG, result);
+            Logger.d(TAG+"::::::%s", result);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -524,7 +539,7 @@ public class UserAction extends BaseAction {
             try {
                 tagResponse = JsonMananger.jsonToBean(result, TagResponse.class);
             } catch (JSONException e) {
-                Logger.e(TAG, "TagResponse occurs JSONException e=" + e.toString());
+                Logger.e(TAG+"::::::%s", "TagResponse occurs JSONException e=" + e.toString());
                 return null;
             }
         return tagResponse;
@@ -532,6 +547,7 @@ public class UserAction extends BaseAction {
     }
 
     public AdResponse getAds() throws HttpException{
+        String result = "";
         String uri = getURL("cli-comm-classslideimg.php");
         Response response=null;
         try {
@@ -542,7 +558,7 @@ public class UserAction extends BaseAction {
                     .build()
                     .execute();
             result =response.body().string();
-            Logger.d(TAG, result);
+            Logger.d(TAG+"::::::%s", result);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -550,7 +566,7 @@ public class UserAction extends BaseAction {
             try {
                 adResponse = JsonMananger.jsonToBean(result, AdResponse.class);
             } catch (JSONException e) {
-                Logger.e(TAG, "AdResponse occurs JSONException e=" + e.toString());
+                Logger.e(TAG+"::::::%s", "AdResponse occurs JSONException e=" + e.toString());
                 return null;
             }
         return adResponse;
@@ -558,6 +574,7 @@ public class UserAction extends BaseAction {
     }
     //获取推荐
     public RecommendResponse getRecommends()throws HttpException {
+        String result = "";
         String uri = getURL("cli-comm-recommend.php");
         Response response=null;
         try {
@@ -567,7 +584,7 @@ public class UserAction extends BaseAction {
                     .build()
                     .execute();
             result =response.body().string();
-            Logger.d(TAG, result);
+            Logger.d(TAG+"::::::%s", result);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -575,13 +592,14 @@ public class UserAction extends BaseAction {
             try {
                 recommendResponse = JsonMananger.jsonToBean(result, RecommendResponse.class);
             } catch (JSONException e) {
-                Logger.e(TAG, "RecommendResponse occurs JSONException e=" + e.toString());
+                Logger.e(TAG+"::::::%s", "RecommendResponse occurs JSONException e=" + e.toString());
                 return null;
             }
         return recommendResponse;
     }
     //获取淘设备
     public TaobaoResponse getTaobao()throws HttpException {
+        String result = "";
         String uri = getURL("cli-dgc-devicemain.php");
         Response response=null;
         try {
@@ -591,7 +609,7 @@ public class UserAction extends BaseAction {
                     .build()
                     .execute();
             result =response.body().string();
-            Logger.d(TAG, result);
+            Logger.d(TAG+"::::::%s", result);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -599,13 +617,14 @@ public class UserAction extends BaseAction {
             try {
                 taobaoResponse = JsonMananger.jsonToBean(result, TaobaoResponse.class);
             } catch (JSONException e) {
-                Logger.e(TAG, "TaobaoResponse occurs JSONException e=" + e.toString());
+                Logger.e(TAG+"::::::%s", "TaobaoResponse occurs JSONException e=" + e.toString());
                 return null;
             }
         return taobaoResponse;
     }
     //项详情(图文、视频、音频)
     public DetailResponse getDetail(String itemId) throws HttpException{
+        String result = "";
         String uri = getURL("cli-comm-itemdetail.php");
         Response response=null;
         try {
@@ -616,7 +635,7 @@ public class UserAction extends BaseAction {
                     .build()
                     .execute();
             result =response.body().string();
-            Logger.d(TAG, result);
+            Logger.d(TAG+"::::::%s", result);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -624,13 +643,14 @@ public class UserAction extends BaseAction {
             try {
                 detailResponse = JsonMananger.jsonToBean(result, DetailResponse.class);
             } catch (JSONException e) {
-                Logger.e(TAG, "DetailResponse occurs JSONException e=" + e.toString());
+                Logger.e(TAG+"::::::%s", "DetailResponse occurs JSONException e=" + e.toString());
                 return null;
             }
         return detailResponse;
     }
     //秀场项详情
     public ShowDetailResponse getShowDetail(String itemId) throws HttpException{
+        String result = "";
         String uri = getURL("cli-comm-showdetail.php");
         Response response=null;
         try {
@@ -641,7 +661,7 @@ public class UserAction extends BaseAction {
                     .build()
                     .execute();
             result =response.body().string();
-            Logger.d(TAG, result);
+            Logger.d(TAG+"::::::%s", result);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -649,13 +669,14 @@ public class UserAction extends BaseAction {
             try {
                 showDetailResponse = JsonMananger.jsonToBean(result, ShowDetailResponse.class);
             } catch (JSONException e) {
-                Logger.e(TAG, "ShowDetailResponse occurs JSONException e=" + e.toString());
+                Logger.e(TAG+"::::::%s", "ShowDetailResponse occurs JSONException e=" + e.toString());
                 return null;
             }
         return showDetailResponse;
     }
     //收藏
     public CommonResponse addFavor(String itemId) throws HttpException{
+        String result = "";
         String uri = getURL("cli-api-setcollect.php");
         Response response=null;
         try {
@@ -667,7 +688,7 @@ public class UserAction extends BaseAction {
                     .build()
                     .execute();
             result =response.body().string();
-            Logger.d(TAG, result);
+            Logger.d(TAG+"::::::%s", result);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -675,13 +696,14 @@ public class UserAction extends BaseAction {
             try {
                 commonResponse = JsonMananger.jsonToBean(result, CommonResponse.class);
             } catch (JSONException e) {
-                Logger.e(TAG, "addFavor occurs JSONException e=" + e.toString());
+                Logger.e(TAG+"::::::%s", "addFavor occurs JSONException e=" + e.toString());
                 return null;
             }
         return commonResponse;
     }
     //评论
     public CommonResponse addComment(String itemId,String comment_tag,String comment) throws HttpException{
+        String result = "";
         String uri = getURL("cli-api-postcomment.php");
         Response response=null;
         try {
@@ -695,7 +717,7 @@ public class UserAction extends BaseAction {
                     .build()
                     .execute();
             result =response.body().string();
-            Logger.d(TAG, result);
+            Logger.d(TAG+"::::::%s", result);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -703,13 +725,14 @@ public class UserAction extends BaseAction {
             try {
                 commonResponse = JsonMananger.jsonToBean(result, CommonResponse.class);
             } catch (JSONException e) {
-                Logger.e(TAG, "addComment occurs JSONException e=" + e.toString());
+                Logger.e(TAG+"::::::%s", "addComment occurs JSONException e=" + e.toString());
                 return null;
             }
         return commonResponse;
     }
 
     public RelateRecommendResponse getRelateRecommend(String classId) throws HttpException{
+        String result = "";
         String uri = getURL("cli-comm-classrecommend.php");
         Response response=null;
         try {
@@ -721,7 +744,7 @@ public class UserAction extends BaseAction {
                     .build()
                     .execute();
             result =response.body().string();
-            Logger.d(TAG, result);
+            Logger.d(TAG+"::::::%s", result);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -729,13 +752,14 @@ public class UserAction extends BaseAction {
             try {
                 relateRecommend = JsonMananger.jsonToBean(result, RelateRecommendResponse.class);
             } catch (JSONException e) {
-                Logger.e(TAG, "RelateRecommendResponse occurs JSONException e=" + e.toString());
+                Logger.e(TAG+"::::::%s", "RelateRecommendResponse occurs JSONException e=" + e.toString());
                 return null;
             }
         return relateRecommend;
     }
     //获取分类项列表（动画）
     public ClassListResponse getAnimations(String class_id,String last_item_id,String item_count) throws HttpException{
+        String result = "";
         String uri = getURL("cli-comm-classlist.php");
         Response response=null;
         try {
@@ -757,13 +781,14 @@ public class UserAction extends BaseAction {
             try {
                 classListResponse = JsonMananger.jsonToBean(result, ClassListResponse.class);
             } catch (JSONException e) {
-                Logger.e(TAG, "ClassListResponse occurs JSONException e=" + e.toString());
+                Logger.e(TAG+"::::::%s", "ClassListResponse occurs JSONException e=" + e.toString());
                 return null;
             }
         return classListResponse;
     }
 
     public SongDetailResponse getSongAlbumDetail(String itemId) throws HttpException {
+        String result = "";
         String uri = getURL("cli-comm-albumdetail.php");
         Response response=null;
         try {
@@ -774,7 +799,7 @@ public class UserAction extends BaseAction {
                     .build()
                     .execute();
             result =response.body().string();
-            Logger.d(TAG, result);
+            Logger.d(TAG+"::::::%s", result);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -782,13 +807,14 @@ public class UserAction extends BaseAction {
             try {
                 detailResponse = JsonMananger.jsonToBean(result, SongDetailResponse.class);
             } catch (JSONException e) {
-                Logger.e(TAG, "DetailResponse occurs JSONException e=" + e.toString());
+                Logger.e(TAG+"::::::%s", "DetailResponse occurs JSONException e=" + e.toString());
                 return null;
             }
         return detailResponse;
     }
 
     public ShowResponse getShowList(String last_show_id,String list_count) throws HttpException {
+        String result = "";
         String uri = getURL("cli-comm-showitemlist.php");
         Response response=null;
         try {
@@ -808,13 +834,14 @@ public class UserAction extends BaseAction {
             try {
                 showResponse = JsonMananger.jsonToBean(result, ShowResponse.class);
             } catch (JSONException e) {
-                Logger.e(TAG, "ShowResponse occurs JSONException e=" + e.toString());
+                Logger.e(TAG+"::::::%s", "ShowResponse occurs JSONException e=" + e.toString());
                 return null;
             }
         return showResponse;
     }
     //我的视频
     public ShowResponse getMyVideo() throws HttpException {
+        String result = "";
         String uri = getURL("cli-api-myshowlist.php");
         Response response=null;
         try {
@@ -825,7 +852,7 @@ public class UserAction extends BaseAction {
                     .build()
                     .execute();
             result =response.body().string();
-            Logger.d(TAG, result);
+            Logger.d(TAG+"::::::%s", result);
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -834,13 +861,14 @@ public class UserAction extends BaseAction {
             try {
                 showResponse = JsonMananger.jsonToBean(result, ShowResponse.class);
             } catch (JSONException e) {
-                Logger.e(TAG, "ShowResponse occurs JSONException e=" + e.toString());
+                Logger.e(TAG+"::::::%s", "ShowResponse occurs JSONException e=" + e.toString());
                 return null;
             }
         return showResponse;
     }
 
     public String getProtocol() {
+        String result = "";
         String uri = "app_source/dl/protocol.html";
         Response response=null;
         try {
@@ -850,7 +878,7 @@ public class UserAction extends BaseAction {
                     .build()
                     .execute();
             result =response.body().string();
-            Logger.d(TAG, result);
+            Logger.d(TAG+"::::::%s", result);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -861,6 +889,7 @@ public class UserAction extends BaseAction {
     }
 
     public HelpResponse getHelps() throws HttpException {
+        String result = "";
         String uri = getURL("cli-dgc-helplist.php");
         Response response=null;
         try {
@@ -870,7 +899,7 @@ public class UserAction extends BaseAction {
                     .build()
                     .execute();
             result =response.body().string();
-            Logger.d(TAG, result);
+            Logger.d(TAG+"::::::%s", result);
         } catch (IOException e) {
             e.printStackTrace();
 
@@ -879,7 +908,7 @@ public class UserAction extends BaseAction {
             try {
                 helpResponse = JsonMananger.jsonToBean(result, HelpResponse.class);
             } catch (JSONException e) {
-                Logger.e(TAG, "HelpResponse occurs JSONException e=" + e.toString());
+                Logger.e(TAG+"::::::%s", "HelpResponse occurs JSONException e=" + e.toString());
                 return null;
             }
 
@@ -888,6 +917,7 @@ public class UserAction extends BaseAction {
 
 
     public CommonResponse save(String nickName) throws HttpException {
+        String result = "";
         String uri = getURL("cli-api-setuserinfo.php");
         String json = JsonMananger.beanToJson(new UpdateRequest(nickName,token));
         Log.w(TAG, "请求的："+json);
@@ -904,7 +934,7 @@ public class UserAction extends BaseAction {
                     .build()
                     .execute();
             result =response.body().string();
-            Logger.d(TAG, result);
+            Logger.d(TAG+"::::::%s", result);
         } catch (IOException e) {
             e.printStackTrace();
 
@@ -913,7 +943,7 @@ public class UserAction extends BaseAction {
         try {
             commonResponse = JsonMananger.jsonToBean(result, CommonResponse.class);
         } catch (JSONException e) {
-            Logger.e(TAG, "CommonResponse occurs JSONException e=" + e.toString());
+            Logger.e(TAG+"::::::%s", "CommonResponse occurs JSONException e=" + e.toString());
             return null;
         }
         return commonResponse;
@@ -921,6 +951,7 @@ public class UserAction extends BaseAction {
     }
 
     public BindResponse bindDevice(String mac) throws HttpException{
+        String result = "";
         String uri = getURL("cli-dg-binddevicebymac.php");
         Response response=null;
         try {
@@ -932,7 +963,7 @@ public class UserAction extends BaseAction {
                     .build()
                     .execute();
             result =response.body().string();
-            Logger.d(TAG, result);
+            Logger.d(TAG+"::::::%s", result);
         } catch (IOException e) {
             e.printStackTrace();
 
@@ -941,7 +972,7 @@ public class UserAction extends BaseAction {
         try {
             bindResponse = JsonMananger.jsonToBean(result, BindResponse.class);
         } catch (JSONException e) {
-            Logger.e(TAG, "BindResponse occurs JSONException e=" + e.toString());
+            Logger.e(TAG+"::::::%s", "BindResponse occurs JSONException e=" + e.toString());
             return null;
         }
 
@@ -949,6 +980,7 @@ public class UserAction extends BaseAction {
     }
 
     public MyDevicesResponse getDevices() throws HttpException {
+        String result = "";
         String uri = getURL("cli-dg-mydevicelist.php");
         Response response=null;
         try {
@@ -968,7 +1000,7 @@ public class UserAction extends BaseAction {
         try {
             myDevicesResponse = JsonMananger.jsonToBean(result, MyDevicesResponse.class);
         } catch (JSONException e) {
-            Logger.e(TAG, "MyDevicesResponse occurs JSONException e=" + e.toString());
+            Logger.e(TAG+"::::::%s", "MyDevicesResponse occurs JSONException e=" + e.toString());
             return null;
         }
 
@@ -977,6 +1009,7 @@ public class UserAction extends BaseAction {
 
     //获取游戏列表（射击）
     public GameListResponse getShot(String game_type_id, String page_index, String item_count) throws HttpException{
+        String result = "";
         String uri = getURL("cli-dgc-gamelist.php");
         Response response=null;
         try {
@@ -999,9 +1032,8 @@ public class UserAction extends BaseAction {
         GameListResponse  gameListResponse= null;
             try {
                 gameListResponse = JsonMananger.jsonToBean(result, GameListResponse.class);
-
             } catch (JSONException e) {
-                Logger.e(TAG, "ClassListResponse occurs JSONException e=" + e.toString());
+                Logger.e(TAG+"::::::%s", "ClassListResponse occurs JSONException e=" + e.toString());
                 return null;
             }
 
@@ -1014,6 +1046,7 @@ public class UserAction extends BaseAction {
     }
 
     public CommentResponse getComment(String itemId, String comment_tag,String last_item_id, String item_count) throws HttpException {
+        String result = "";
         String uri = getURL("cli-comm-commentlist.php");
         Response response=null;
         try {
@@ -1027,7 +1060,7 @@ public class UserAction extends BaseAction {
                     .build()
                     .execute();
             result =response.body().string();
-            Logger.d(TAG, result);
+            Logger.d(TAG+"::::::%s", result);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -1036,7 +1069,7 @@ public class UserAction extends BaseAction {
             try {
                 commentResponse = JsonMananger.jsonToBean(result, CommentResponse.class);
             } catch (JSONException e) {
-                Logger.e(TAG, "CommentResponse occurs JSONException e=" + e.toString());
+                Logger.e(TAG+"::::::%s", "CommentResponse occurs JSONException e=" + e.toString());
                 return null;
             }
 
@@ -1046,6 +1079,7 @@ public class UserAction extends BaseAction {
 
     //上传头像
     public CommonResponse uploadAvatar(File imgFile) throws HttpException {
+        String result = "";
         String uri = getURL("cli-api-setimg.php");
 //        final MediaType MEDIA_TYPE_PNG = MediaType.parse("image/png");
 //
@@ -1064,7 +1098,7 @@ public class UserAction extends BaseAction {
                     .build()
                     .execute();
             result =response.body().string();
-            Logger.d(TAG, result);
+            Logger.d(TAG+"::::::%s", result);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -1073,7 +1107,7 @@ public class UserAction extends BaseAction {
             try {
                 commonResponse = JsonMananger.jsonToBean(result, CommonResponse.class);
             } catch (JSONException e) {
-                Logger.e(TAG, "uploadAvatar occurs JSONException e=" + e.toString());
+                Logger.e(TAG+"::::::%s", "uploadAvatar occurs JSONException e=" + e.toString());
                 return null;
             }
         }
@@ -1082,6 +1116,7 @@ public class UserAction extends BaseAction {
 
     //发新动态
     public CommonResponse addDynamic(String content, File mp4File)throws HttpException{
+        String result = "";
         String uri = getURL("cli-api-upshow.php");
 //        final MediaType MEDIA_TYPE_PNG = MediaType.parse("image/png");
 //
@@ -1102,7 +1137,7 @@ public class UserAction extends BaseAction {
                     .build()
                     .execute();
             result =response.body().string();
-            Logger.d(TAG, result);
+            Logger.d(TAG+"::::::%s", result);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -1111,7 +1146,7 @@ public class UserAction extends BaseAction {
             try {
                 commonResponse = JsonMananger.jsonToBean(result, CommonResponse.class);
             } catch (JSONException e) {
-                Logger.e(TAG, "addDynamic occurs JSONException e=" + e.toString());
+                Logger.e(TAG+"::::::%s", "addDynamic occurs JSONException e=" + e.toString());
                 return null;
             }
         }
@@ -1119,6 +1154,7 @@ public class UserAction extends BaseAction {
     }
     //获取收藏
     public FavorResponse getFavorList(String list_count,String last_collect_id) throws HttpException {
+        String result = "";
         String uri = getURL("cli-api-collectmp4list.php");
         Response response=null;
         try {
@@ -1131,7 +1167,7 @@ public class UserAction extends BaseAction {
                     .build()
                     .execute();
             result =response.body().string();
-            Logger.d(TAG, result);
+            Logger.d(TAG+"::::::%s", result);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -1139,7 +1175,7 @@ public class UserAction extends BaseAction {
             try {
                 favorResponse = JsonMananger.jsonToBean(result, FavorResponse.class);
             } catch (JSONException e) {
-                Logger.e(TAG, "FavorResponse occurs JSONException e=" + e.toString());
+                Logger.e(TAG+"::::::%s", "FavorResponse occurs JSONException e=" + e.toString());
                 return null;
             }
 
@@ -1147,6 +1183,7 @@ public class UserAction extends BaseAction {
     }
     //删除收藏
     public Object delFavor(String delFavorId) throws HttpException {
+        String result = "";
         String uri = getURL("cli-api-cancelcollect.php");
         Response response=null;
         try {
@@ -1158,7 +1195,7 @@ public class UserAction extends BaseAction {
                     .build()
                     .execute();
             result =response.body().string();
-            Logger.d(TAG, result);
+            Logger.d(TAG+"::::::%s", result);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -1166,7 +1203,7 @@ public class UserAction extends BaseAction {
             try {
                 commonResponse = JsonMananger.jsonToBean(result, CommonResponse.class);
             } catch (JSONException e) {
-                Logger.e(TAG, "delFavor occurs JSONException e=" + e.toString());
+                Logger.e(TAG+"::::::%s", "delFavor occurs JSONException e=" + e.toString());
                 return null;
             }
         return commonResponse;
@@ -1174,6 +1211,7 @@ public class UserAction extends BaseAction {
 
     //删除我的视频
     public Object delMyVideo(String delId) throws HttpException {
+        String result = "";
         String uri = getURL("cli-api-delmyshow.php");
         Response response=null;
         try {
@@ -1185,7 +1223,7 @@ public class UserAction extends BaseAction {
                     .build()
                     .execute();
             result =response.body().string();
-            Logger.d(TAG, result);
+            Logger.d(TAG+"::::::%s", result);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -1193,7 +1231,7 @@ public class UserAction extends BaseAction {
             try {
                 commonResponse = JsonMananger.jsonToBean(result, CommonResponse.class);
             } catch (JSONException e) {
-                Logger.e(TAG, "delMyVideo occurs JSONException e=" + e.toString());
+                Logger.e(TAG+"::::::%s", "delMyVideo occurs JSONException e=" + e.toString());
                 return null;
             }
 
@@ -1201,6 +1239,7 @@ public class UserAction extends BaseAction {
     }
     //获取我的评论
     public MyCommentResponse getCommentList(String list_count, String last_com_id) throws HttpException {
+        String result = "";
         String uri = getURL("cli-api-mycommentlist.php");
         Response response=null;
         try {
@@ -1213,7 +1252,7 @@ public class UserAction extends BaseAction {
                     .build()
                     .execute();
             result =response.body().string();
-            Logger.d(TAG, result);
+            Logger.d(TAG+"::::::%s", result);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -1221,13 +1260,14 @@ public class UserAction extends BaseAction {
             try {
                 myCommentResponse = JsonMananger.jsonToBean(result, MyCommentResponse.class);
             } catch (JSONException e) {
-                Logger.e(TAG, "MyCommentResponse occurs JSONException e=" + e.toString());
+                Logger.e(TAG+"::::::%s", "MyCommentResponse occurs JSONException e=" + e.toString());
                 return null;
             }
         return myCommentResponse;
     }
     //获取更多设备
     public ShopMoreResponse getShopMore(String device_type_id, String item_count, String last_device_id) throws HttpException {
+        String result = "";
         String uri = getURL("cli-dgc-devicelist.php");
         Response response=null;
         try {
@@ -1240,7 +1280,7 @@ public class UserAction extends BaseAction {
                     .build()
                     .execute();
             result =response.body().string();
-            Logger.d(TAG, result);
+            Logger.d(TAG+"::::::%s", result);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -1248,7 +1288,7 @@ public class UserAction extends BaseAction {
             try {
                 shopMoreResponse = JsonMananger.jsonToBean(result, ShopMoreResponse.class);
             } catch (JSONException e) {
-                Logger.e(TAG, "ShopMoreResponse occurs JSONException e=" + e.toString());
+                Logger.e(TAG+"::::::%s", "ShopMoreResponse occurs JSONException e=" + e.toString());
                 return null;
             }
         return shopMoreResponse;
@@ -1256,6 +1296,7 @@ public class UserAction extends BaseAction {
 
     //获取系统消息
     public SysMsgResponse getSysMsgList(String list_count, String last_msg_id) throws HttpException {
+        String result = "";
         String uri = getURL("cli-api-sysmsglist.php");
         Response response=null;
         try {
@@ -1268,7 +1309,7 @@ public class UserAction extends BaseAction {
                     .build()
                     .execute();
             result =response.body().string();
-            Logger.d(TAG, result);
+            Logger.d(TAG+"::::::%s", result);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -1287,13 +1328,14 @@ public class UserAction extends BaseAction {
                     bean.setLinkObj(linkObj);
                 }
             } catch (JSONException e) {
-                Logger.e(TAG, "SysMsgResponse occurs JSONException e=" + e.toString());
+                Logger.e(TAG+"::::::%s", "SysMsgResponse occurs JSONException e=" + e.toString());
                 return null;
             }
         return sysMsgResponse;
     }
     //获取个人消息
     public PersonMsgResponse getPersonMsgList(String list_count, String last_msg_id) throws HttpException {
+        String result = "";
         String uri = getURL("cli-api-mymsglist.php");
         Response response=null;
         try {
@@ -1306,7 +1348,7 @@ public class UserAction extends BaseAction {
                     .build()
                     .execute();
             result =response.body().string();
-            Logger.d(TAG, result);
+            Logger.d(TAG+"::::::%s", result);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -1325,7 +1367,7 @@ public class UserAction extends BaseAction {
                     bean.setLinkObj(linkObj);
                 }
             } catch (JSONException e) {
-                Logger.e(TAG, "PersonMsgResponse occurs JSONException e=" + e.toString());
+                Logger.e(TAG+"::::::%s", "PersonMsgResponse occurs JSONException e=" + e.toString());
                 return null;
             }
 
@@ -1333,6 +1375,7 @@ public class UserAction extends BaseAction {
     }
     //检查游戏是否可玩
     public GameCheckResponse gameCheck(String gameName) throws HttpException{
+        String result = "";
         String uri = getURL("cli-dg-checkdevicegame.php");
 
         Response response=null;
@@ -1345,7 +1388,7 @@ public class UserAction extends BaseAction {
                     .build()
                     .execute();
             result =response.body().string();
-            Logger.d(TAG, result);
+            Logger.d(TAG+"::::::%s", result);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -1353,7 +1396,7 @@ public class UserAction extends BaseAction {
             try {
                 commonResponse = JsonMananger.jsonToBean(result, GameCheckResponse.class);
             } catch (JSONException e) {
-                Logger.e(TAG, "GameCheckResponse occurs JSONException e=" + e.toString());
+                Logger.e(TAG+"::::::%s", "GameCheckResponse occurs JSONException e=" + e.toString());
                 return null;
             }
 
@@ -1362,6 +1405,7 @@ public class UserAction extends BaseAction {
 
     //用户反馈
     public CommonResponse feedback(String reportContent, String cellphone) throws HttpException {
+        String result = "";
         String uri = getURL("cli-api-postfeedback.php");
 
         Response response=null;
@@ -1375,7 +1419,7 @@ public class UserAction extends BaseAction {
                     .build()
                     .execute();
             result =response.body().string();
-            Logger.d(TAG, result);
+            Logger.d(TAG+"::::::%s", result);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -1383,13 +1427,14 @@ public class UserAction extends BaseAction {
             try {
                 commonResponse = JsonMananger.jsonToBean(result, CommonResponse.class);
             } catch (JSONException e) {
-                Logger.e(TAG, "feedback occurs JSONException e=" + e.toString());
+                Logger.e(TAG+"::::::%s", "feedback occurs JSONException e=" + e.toString());
                 return null;
             }
         return commonResponse;
     }
 
     public CommonResponse unBindDevice(String deviceId) throws HttpException {
+        String result = "";
         String uri = getURL("cli-dg-unbinddevice.php");
 
         Response response=null;
@@ -1402,7 +1447,7 @@ public class UserAction extends BaseAction {
                     .build()
                     .execute();
             result =response.body().string();
-            Logger.d(TAG, result);
+            Logger.d(TAG+"::::::%s", result);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -1410,7 +1455,7 @@ public class UserAction extends BaseAction {
             try {
                 commonResponse = JsonMananger.jsonToBean(result, CommonResponse.class);
             } catch (JSONException e) {
-                Logger.e(TAG, "unBindDevice occurs JSONException e=" + e.toString());
+                Logger.e(TAG+"::::::%s", "unBindDevice occurs JSONException e=" + e.toString());
                 return null;
             }
         return commonResponse;
