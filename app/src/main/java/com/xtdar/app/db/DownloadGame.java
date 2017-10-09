@@ -9,6 +9,7 @@ public class DownloadGame {
     private Long id;
     private int GameId;
     private String GameName;
+    private String GameVersion;
 
     public DownloadGame() {
     }
@@ -17,10 +18,11 @@ public class DownloadGame {
         this.id = id;
     }
 
-    public DownloadGame(Long id, int GameId, String GameName) {
+    public DownloadGame(Long id, int GameId, String GameName, String GameVersion) {
         this.id = id;
         this.GameId = GameId;
         this.GameName = GameName;
+        this.GameVersion = GameVersion;
     }
 
     public Long getId() {
@@ -45,6 +47,14 @@ public class DownloadGame {
 
     public void setGameName(String GameName) {
         this.GameName = GameName;
+    }
+
+    public String getGameVersion() {
+        return GameVersion;
+    }
+
+    public void setGameVersion(String GameVersion) {
+        this.GameVersion = GameVersion;
     }
 
 }

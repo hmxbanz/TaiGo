@@ -117,7 +117,7 @@ public class ClassListAnimationAdapter extends RecyclerView.Adapter<RecyclerView
             //Glide.with(context).load(listItem.getAvator()).asBitmap().into(holder.imageView);
             //holder.imageView.setImageResource(listItem.getImgResource());
             if(mListener == null) return;
-            dataDolder.itemView.setOnClickListener(new View.OnClickListener() {
+            dataDolder.btnStartGame.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     mListener.onItemClick(v,position,listItem);

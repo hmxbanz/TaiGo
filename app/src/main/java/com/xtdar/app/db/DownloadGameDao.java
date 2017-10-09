@@ -26,6 +26,7 @@ public class DownloadGameDao extends AbstractDao<DownloadGame, Long> {
         public final static Property Id = new Property(0, Long.class, "id", true, "_id");
         public final static Property GameId = new Property(1, int.class, "GameId", false, "GAME_ID");
         public final static Property GameName = new Property(2, String.class, "GameName", false, "GAME_NAME");
+        public final static Property GameVersion = new Property(3, String.class, "GameVersion", false, "GAME_VERSION");
     };
 
 
@@ -43,7 +44,8 @@ public class DownloadGameDao extends AbstractDao<DownloadGame, Long> {
         db.execSQL("CREATE TABLE " + constraint + "'DOWNLOAD_GAME' (" + //
                 "'_id' INTEGER PRIMARY KEY AUTOINCREMENT ," + // 0: id
                 "'GAME_ID' INTEGER NOT NULL ," + // 1: GameId
-                "'GAME_NAME' TEXT);"); // 2: GameName
+                "'GAME_NAME' TEXT," + // 2: GameName
+                "'GAME_VERSION' TEXT);"); // 3: GameVersion
     }
 
     /** Drops the underlying database table. */
@@ -67,6 +69,11 @@ public class DownloadGameDao extends AbstractDao<DownloadGame, Long> {
         if (GameName != null) {
             stmt.bindString(3, GameName);
         }
+ 
+        String GameVersion = entity.getGameVersion();
+        if (GameVersion != null) {
+            stmt.bindString(4, GameVersion);
+        }
     }
 
     /** @inheritdoc */
@@ -81,7 +88,8 @@ public class DownloadGameDao extends AbstractDao<DownloadGame, Long> {
         DownloadGame entity = new DownloadGame( //
             cursor.isNull(offset + 0) ? null : cursor.getLong(offset + 0), // id
             cursor.getInt(offset + 1), // GameId
-            cursor.isNull(offset + 2) ? null : cursor.getString(offset + 2) // GameName
+            cursor.isNull(offset + 2) ? null : cursor.getString(offset + 2), // GameName
+            cursor.isNull(offset + 3) ? null : cursor.getString(offset + 3) // GameVersion
         );
         return entity;
     }
@@ -92,6 +100,7 @@ public class DownloadGameDao extends AbstractDao<DownloadGame, Long> {
         entity.setId(cursor.isNull(offset + 0) ? null : cursor.getLong(offset + 0));
         entity.setGameId(cursor.getInt(offset + 1));
         entity.setGameName(cursor.isNull(offset + 2) ? null : cursor.getString(offset + 2));
+        entity.setGameVersion(cursor.isNull(offset + 3) ? null : cursor.getString(offset + 3));
      }
     
     /** @inheritdoc */

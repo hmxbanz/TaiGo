@@ -49,6 +49,8 @@ import java.util.List;
 import de.greenrobot.dao.query.Query;
 import de.greenrobot.dao.query.QueryBuilder;
 
+import static com.xtdar.app.common.CommonTools.getVersionInfo;
+
 /**
  * Created by hmxbanz on 2017/4/5.
  */
@@ -85,6 +87,7 @@ public class MallGamePresenter extends BasePresenter implements  SwipeRefreshLay
     private TextView btnStartGame;
     public boolean isDownloading;
     private String gameName;
+    private String gameVersion;
 
     public MallGamePresenter(Context context){
         super(context);
@@ -301,32 +304,44 @@ public class MallGamePresenter extends BasePresenter implements  SwipeRefreshLay
         this.unityGameId =String.valueOf(bean.getGameConfig().getUnity_game_id());
         this.gameId =bean.getGame_id();
         this.gameName =bean.getGame_name();
+        this.gameVersion =bean.getGame_zip_ver();
 
         //查询本地数据库是否有下载
         Query<DownloadGame> query =downloadGameDao.queryBuilder().where(DownloadGameDao.Properties.GameId.eq(bean.getGame_id()))
                                                   .orderDesc(DownloadGameDao.Properties.GameId).build();
 
-        int game=query.list().size();
-        NLog.e("DBdata",game );
+        int gameExit=query.list().size();
 
-        if (game+1== 0) {
+        if (gameExit == 0) {
             List<DownloadGame> listDb = downloadGameDao.loadAll();
-
             for(DownloadGame a:listDb) {
-                NLog.e("DBdata",a.getGameName() );
+                NLog.e("DBdata",a.getGameName()+"  版本："+a.getGameVersion() );
             }
 
             //启动下载服务
             if(downloadService==null)  bindService();
-            else downloadService.startDownload("");
-
-
+            else downloadService.startDownload(bean.getGameConfig().getDownload_url());
         }
         else
         {
-            LoadDialog.show(context);
-            mActivity.mBluetoothService.setScanCallback(callback);
-            mActivity.mBluetoothService.scanDevice();
+            //判断游戏与APP是否匹配
+            String[] versionInfo = getVersionInfo(context);
+            int versionCode = Integer.parseInt(versionInfo[0]);
+            if(bean.getMin_an_ver()>versionCode){
+                DialogWithYesOrNoUtils.getInstance().showDialog(context, "温馨提示：版本过低需升级。", null,null, new AlertDialogCallback() {
+                    @Override
+                    public void executeEvent() {
+                        //context.startActivity(new Intent(context, LoginActivity.class));
+                    }
+
+                });
+            }
+            else {
+
+                LoadDialog.show(context);
+                mActivity.mBluetoothService.setScanCallback(callback);
+                mActivity.mBluetoothService.scanDevice();
+            }
         }
 
 
@@ -365,6 +380,8 @@ public class MallGamePresenter extends BasePresenter implements  SwipeRefreshLay
                     DownloadGame newDownloadGame = new DownloadGame();
                     newDownloadGame.setGameId(Integer.parseInt(MallGamePresenter.this.gameId));
                     newDownloadGame.setGameName(MallGamePresenter.this.gameName);
+                    newDownloadGame.setGameName(MallGamePresenter.this.gameName);
+                    newDownloadGame.setGameVersion(MallGamePresenter.this.gameVersion);
                     downloadGameDao.insert(newDownloadGame);
 
                 }

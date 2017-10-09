@@ -58,8 +58,18 @@ public class GameListResponse {
         private String game_title;
         private String game_img;
         private String game_config;
-        private String min_an_ver;
+        private int min_an_ver;
         private String min_ios_ver;
+
+        public String getGame_zip_ver() {
+            return game_zip_ver;
+        }
+
+        public void setGame_zip_ver(String game_zip_ver) {
+            this.game_zip_ver = game_zip_ver;
+        }
+
+        private String game_zip_ver;
 
         public boolean is_download() {
             return is_download;
@@ -129,11 +139,11 @@ public class GameListResponse {
             this.game_config = game_config;
         }
 
-        public String getMin_an_ver() {
+        public int getMin_an_ver() {
             return min_an_ver;
         }
 
-        public void setMin_an_ver(String min_an_ver) {
+        public void setMin_an_ver(int min_an_ver) {
             this.min_an_ver = min_an_ver;
         }
 
@@ -149,9 +159,21 @@ public class GameListResponse {
 
             /**
              * unity_game_id : 2
+             * download_url : "http://"
              */
 
             private int unity_game_id;
+
+            private String download_url;
+
+            public String getDownload_url() {
+                return download_url;
+            }
+
+            public void setDownload_url(String download_url) {
+                this.download_url = download_url;
+            }
+
 
             public int getUnity_game_id() {
                 return unity_game_id;
