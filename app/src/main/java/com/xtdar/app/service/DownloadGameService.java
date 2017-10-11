@@ -39,6 +39,7 @@ public class DownloadGameService extends Service {
     private BluetoothGattService service;
     private BluetoothGattCharacteristic characteristic;
     private int charaProp;
+    private String unityGameId;
 
     @Override
     public void onCreate() {
@@ -90,46 +91,45 @@ public class DownloadGameService extends Service {
 
     }
 
-    public void startDownload(String resourceUrl) {
-        String url = "http://120.24.231.219/kp_dyz/app_source/dl/aaa.zip";
+    public void startDownload(String resourceUrl,String unityGameId) {
+        this.unityGameId=unityGameId;
+        //FileCallback fileCallback=new FileCallback("/sdcard/download/taigo", "aaaaaaaaa.zip") {/data/data/com.xtdar.app/files/
+        FileCallback fileCallback=new FileCallback("/sdcard/download/taigo", unityGameId+".zip") {
+            @Override
+            public void onSuccess(File file, Call call, Response response) {
+                NLog.d(TAG, file.getAbsolutePath());
+                ZipExtractorTask zip = new ZipExtractorTask(file.getAbsolutePath(), "/sdcard/download/taigo/"+DownloadGameService.this.unityGameId, DownloadGameService.this,true);
+                zip.setUnZipCallback(new ZipExtractorTask.UnZipCallback() {
+                    @Override
+                    public void onDone() {
+                        if (mCallback != null) {
+                            mCallback.onDownloadDone();
+                        }
+                    }
+                });
+                zip.execute();
+
+            }
+
+            @Override
+            public void downloadProgress(long currentSize, long totalSize, float progress, long networkSpeed) {
+                super.downloadProgress(currentSize, totalSize, progress, networkSpeed);
+
+                if (mCallback != null) {
+                    mCallback.onProgessUpdate(progress);
+                }
+                NLog.d(TAG, progress);
+            }
+        };
+
+
+        String url = resourceUrl;//"http://120.24.231.219/kp_dyz/app_source/dl/aaa.zip";
 
             OkHttpUtils.get(url)
                     .url(url)
                     .tag(this)
                     .execute(fileCallback);
-
-
     }
-
-    FileCallback fileCallback=new FileCallback("/sdcard/download/", "aaaaaaaaa.zip") {
-        @Override
-        public void onSuccess(File file, Call call, Response response) {
-            NLog.d(TAG, file.getAbsolutePath());
-            ZipExtractorTask zip = new ZipExtractorTask(file.getAbsolutePath(), "/sdcard/download/aaaaaaaaa", DownloadGameService.this,true);
-            zip.setUnZipCallback(new ZipExtractorTask.UnZipCallback() {
-                @Override
-                public void onDone() {
-                    if (mCallback != null) {
-                        mCallback.onDownloadDone();
-                    }
-                }
-            });
-            zip.execute();
-
-        }
-
-        @Override
-        public void downloadProgress(long currentSize, long totalSize, float progress, long networkSpeed) {
-            super.downloadProgress(currentSize, totalSize, progress, networkSpeed);
-
-            if (mCallback != null) {
-                mCallback.onProgessUpdate(progress);
-            }
-            NLog.d(TAG, progress);
-        }
-
-
-    };
 
 
     private void runOnMainThread(Runnable runnable) {

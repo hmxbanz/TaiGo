@@ -61,6 +61,7 @@ public class MallGameFragment extends Fragment {
     @Override
     public void onDestroy() {
         super.onDestroy();
+        presenter.unbindService();
         //BroadcastManager.getInstance(getActivity()).destroy(SealConst.CHANGEINFO);
     }
     @Override

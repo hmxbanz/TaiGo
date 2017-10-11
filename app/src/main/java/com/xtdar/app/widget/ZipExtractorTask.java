@@ -35,12 +35,13 @@ public class ZipExtractorTask extends AsyncTask<Void, Integer, Long> {
     private final Context mContext;
     private boolean mReplaceAll;
     WebView mWebView;
+    private UnZipCallback unZipCallback;
 
     public void setUnZipCallback(UnZipCallback unZipCallback) {
         this.unZipCallback = unZipCallback;
     }
 
-    private UnZipCallback unZipCallback;
+
 
     public interface UnZipCallback{
         void onDone();
@@ -73,10 +74,11 @@ public class ZipExtractorTask extends AsyncTask<Void, Integer, Long> {
         if(isCancelled())
             return;
         //这里表示解压完成  可以进行显示WebView 发送广播 并更新保存的 时间
-        Intent intent = new Intent();
-        intent.setAction("com.sl.unzip");
-        mContext.sendBroadcast(intent);
+//        Intent intent = new Intent();
+//        intent.setAction("com.sl.unzip");
+//        mContext.sendBroadcast(intent);
         this.unZipCallback.onDone();
+        mInput.delete();
     }
     @Override
     protected void onPreExecute() {

@@ -98,6 +98,7 @@ public class MallGamePresenter extends BasePresenter implements  SwipeRefreshLay
         dataAdapter.setListItems(list);
         dataAdapter.setOnItemClickListener(this);
         downloadGameDao= DBManager.getInstance().getDaoSession().getDownloadGameDao();
+        bindService();
     }
 
     public void init(SwipeRefreshLayout swiper, RecyclerView recyclerView) {
@@ -319,8 +320,8 @@ public class MallGamePresenter extends BasePresenter implements  SwipeRefreshLay
             }
 
             //启动下载服务
-            if(downloadService==null)  bindService();
-            else downloadService.startDownload(bean.getGameConfig().getDownload_url());
+            if(downloadService!=null)
+            downloadService.startDownload(bean.getGameConfig().getDownload_url(),this.unityGameId);
         }
         else
         {
@@ -386,7 +387,7 @@ public class MallGamePresenter extends BasePresenter implements  SwipeRefreshLay
 
                 }
             });
-            downloadService.startDownload("");
+
         }
 
         @Override

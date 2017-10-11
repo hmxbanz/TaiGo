@@ -159,10 +159,7 @@ public class UnityPlayerActivity extends Activity
 
         }
         final BluetoothGattCharacteristic characteristic = mBluetoothService.getCharacteristic();
-        mBluetoothService.notify(
-                characteristic.getService().getUuid().toString(),
-                characteristic.getUuid().toString(),
-                new BleCharacterCallback() {
+        mBluetoothService.notify(  characteristic.getService().getUuid().toString(), characteristic.getUuid().toString(), new BleCharacterCallback() {
 
                     @Override
                     public void onSuccess(final BluetoothGattCharacteristic characteristic) {
