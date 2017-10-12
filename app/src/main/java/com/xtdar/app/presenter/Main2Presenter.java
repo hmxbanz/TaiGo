@@ -3,6 +3,7 @@ package com.xtdar.app.presenter;
 import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
+import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.text.TextUtils;
 import android.widget.Toast;
@@ -11,14 +12,17 @@ import android.widget.Toast;
 import com.orhanobut.logger.Logger;
 import com.xtdar.app.R;
 import com.xtdar.app.XtdConst;
+import com.xtdar.app.common.NLog;
 import com.xtdar.app.common.NToast;
 import com.xtdar.app.listener.AlertDialogCallback;
 import com.xtdar.app.server.HttpException;
 import com.xtdar.app.server.broadcast.BroadcastManager;
 import com.xtdar.app.server.response.LoginResponse;
 import com.xtdar.app.server.response.VersionResponse;
+import com.xtdar.app.server.response.WxLoginResponse;
 import com.xtdar.app.view.activity.LoginActivity;
 import com.xtdar.app.view.activity.Main2Activity;
+import com.xtdar.app.view.activity.RegisterActivity;
 import com.xtdar.app.view.widget.LoadDialog;
 import com.xtdar.app.widget.DialogWithYesOrNoUtils;
 import com.xtdar.app.widget.downloadService.DownloadService;
@@ -28,6 +32,9 @@ import com.xtdar.app.widget.permissionLibrary.PermissionsResultAction;
 import cn.jpush.android.api.JPushInterface;
 
 import static com.xtdar.app.common.CommonTools.getVersionInfo;
+import static com.xtdar.app.presenter.LoginPresenter.UPLOADQQOPENID;
+import static com.xtdar.app.presenter.LoginPresenter.UPLOADWBOPENID;
+import static com.xtdar.app.presenter.LoginPresenter.UPLOADWXOPENID;
 
 /**
  * Created by hmxbanz on 2017/4/5.
@@ -35,6 +42,7 @@ import static com.xtdar.app.common.CommonTools.getVersionInfo;
 public class Main2Presenter extends BasePresenter {
     public static final int AUTOLOGIN = 1;
     private static final int CHECKVERSION = 2;
+    private static final String TAG = Main2Presenter.class.getSimpleName();
     private final BasePresenter basePresenter;
     private Main2Activity activity;
 
@@ -91,6 +99,12 @@ public class Main2Presenter extends BasePresenter {
                 return mUserAction.login( userName, password);
             case CHECKVERSION:
                 return mUserAction.checkVersion();
+            case UPLOADWXOPENID:
+                return mUserAction.wxOpenId(openId);
+            case UPLOADQQOPENID:
+                return mUserAction.qqOpenId(openId);
+            case UPLOADWBOPENID:
+                return mUserAction.wbOpenId(openId);
         }
         return null;
     }
@@ -133,16 +147,46 @@ public class Main2Presenter extends BasePresenter {
                     NToast.shortToast(activity, "版本检测："+versionResponse.getMsg());
                 }
                 break;
+            case UPLOADWXOPENID:
+            case UPLOADQQOPENID:
+            case UPLOADWBOPENID:
+                    WxLoginResponse response = (WxLoginResponse) result;
+                if (response != null && response.getCode() == XtdConst.SUCCESS) {
+                    WxLoginResponse.DataBean entity = response.getData();
+                    loginWork(entity.getAccess_key());
+
+
+                } else if (response.getCode() == XtdConst.FAILURE) {
+
+                }
+                NToast.shortToast(context, response.getMsg());
+                break;
         }
 
     }
 
     public void autoLogin()
     {
+        openId=sp.getString("openId","");
+        loginType=sp.getString("loginType","");
+        NLog.d(TAG, "openId"+openId);
+        NLog.d(TAG, "loginType"+loginType);
+
         if(!TextUtils.isEmpty(userName)){
             LoadDialog.show(activity);
             atm.request(AUTOLOGIN,this);
         }
+        else if(!TextUtils.isEmpty(openId)){
+            switch (loginType){
+                case "wx":
+                    atm.request(UPLOADWXOPENID,this);break;
+                case "qq":
+                    atm.request(UPLOADQQOPENID,this);break;
+                case "wb":
+                    atm.request(UPLOADWBOPENID,this);
+            }
+        }
+
     }
 
     public void onDestroy() {

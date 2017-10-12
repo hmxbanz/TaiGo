@@ -46,19 +46,18 @@ public class LoginPresenter extends BasePresenter  {
     private static final String TAG = LoginPresenter.class.getSimpleName();
     private static final int LOGIN = 1;
     private static final int GET_TOKEN = 2;
-    private static final int UPLOADWXOPENID = 3;
+    public static final int UPLOADWXOPENID = 3;
     private static final int WXLOGIN = 4;
     private static final int WXBIND = 5;
-    private static final int UPLOADQQOPENID = 6;
+    public static final int UPLOADQQOPENID = 6;
     private static final int QQBIND = 7;
     private static final int UPLOADRID = 8;
-    private static final int UPLOADWBOPENID = 9;
+    public static final int UPLOADWBOPENID = 9;
     private static final int WBBIND = 10;
     private final BasePresenter basePresenter;
     private LoginActivity mActivity;
     private EditText mUsername;
     private EditText mPassword;
-    public String openId,loginType;
     private String access_key;
     private String rid;
     private String headimgurl;
@@ -73,7 +72,6 @@ public class LoginPresenter extends BasePresenter  {
     public void init(EditText username, EditText password) {
         this.mUsername=username;
         this.mPassword=password;
-        Logger.d("aaaaaaaaaaaaaaaaaaaaaaaaaaaaa","bbbbbbbbbbbb");
     }
 
     public void login(String type) {
@@ -159,6 +157,9 @@ public class LoginPresenter extends BasePresenter  {
                         WxLoginResponse.DataBean entity = response.getData();
                         access_key=entity.getAccess_key();
                         loginWork(entity.getAccess_key());
+
+
+
                         context.startActivity(new Intent(context,Main2Activity.class));
                     } else if (response.getCode() == XtdConst.FAILURE) {
                         DialogWithYesOrNoUtils.getInstance().showDialog(context,"温馨提示","新用户请注册","老用户请绑定",new AlertDialogCallback(){
@@ -265,6 +266,9 @@ public class LoginPresenter extends BasePresenter  {
         headimgurl = (String) hashMap.get("headimgurl");
         Logger.d("nickname:"+nickname);
         Logger.d("headimgurl:"+headimgurl);
+        editor.putString("openId", openId);
+        editor.putString("loginType", "wx");
+        editor.apply();
 //        Glide.with(ShareLogin.this)
 //                .load(url)
 //                .placeholder(R.mipmap.ic_launcher)
@@ -335,6 +339,10 @@ public class LoginPresenter extends BasePresenter  {
         Logger.d("nickname:"+nickname);
         Logger.d("headimgurl:"+headimgurl);
 
+        editor.putString("openId", openId);
+        editor.putString("loginType", "qq");
+        editor.apply();
+
     }
 
     /**
@@ -389,6 +397,9 @@ public class LoginPresenter extends BasePresenter  {
         headimgurl=weibo.getDb().getUserIcon();
         Logger.d("nickname:"+nickname);
         Logger.d("headimgurl:"+headimgurl);
+        editor.putString("openId", openId);
+        editor.putString("loginType", "wb");
+        editor.apply();
     }
 
     private void loginWork2(String access_key)

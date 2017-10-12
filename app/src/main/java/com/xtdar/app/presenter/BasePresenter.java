@@ -35,6 +35,8 @@ public class BasePresenter implements OnDataListener {
     protected String userName;
     protected String password;
 
+    public String openId,loginType;
+
     public BasePresenter(Context context)
     {
         this.context =context;
@@ -63,6 +65,9 @@ public class BasePresenter implements OnDataListener {
         isLogin = sp.getBoolean(XtdConst.ISLOGIN, false);
         userName=sp.getString(XtdConst.LOGIN_USERNAME,"");
         password=sp.getString(XtdConst.LOGING_PASSWORD,"");
+        openId=sp.getString("openId","");
+        loginType=sp.getString("loginType","");
+
     }
     @Override
     public Object doInBackground(int requestCode, String parameter) throws HttpException {
