@@ -313,7 +313,7 @@ public class MallGamePresenter extends BasePresenter implements  SwipeRefreshLay
 
         int gameExit=query.list().size();
 
-        if (gameExit == 0) {
+        if (gameExit+1 == 0) {
             List<DownloadGame> listDb = downloadGameDao.loadAll();
             for(DownloadGame a:listDb) {
                 NLog.e("DBdata",a.getGameName()+"  版本："+a.getGameVersion() );
