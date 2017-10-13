@@ -952,7 +952,7 @@ public class UserAction extends BaseAction {
 
     public BindResponse bindDevice(String mac) throws HttpException{
         String result = "";
-        String uri = getURL("cli-dg-binddevicebymac.php");
+        String uri = getURL("cli-dg-binddevice.php");
         Response response=null;
         try {
             response=OkHttpUtils
@@ -981,7 +981,7 @@ public class UserAction extends BaseAction {
 
     public MyDevicesResponse getDevices() throws HttpException {
         String result = "";
-        String uri = getURL("cli-dg-mydevicelist.php");
+        String uri = getURL("cli-dg-mydevices.php");
         Response response=null;
         try {
             response=OkHttpUtils
@@ -1435,7 +1435,7 @@ public class UserAction extends BaseAction {
 
     public CommonResponse unBindDevice(String deviceId) throws HttpException {
         String result = "";
-        String uri = getURL("cli-dg-unbinddevice.php");
+        String uri = getURL("cli-dg-hiddendevice.php");
 
         Response response=null;
         try {
@@ -1459,5 +1459,36 @@ public class UserAction extends BaseAction {
                 return null;
             }
         return commonResponse;
+    }
+
+//绑定二维码
+    public BindResponse bindQrcode(String address, String qrCode)  throws HttpException{
+        String result = "";
+        String uri = getURL("cli-dg-bindbyqrsn.php");
+        Response response=null;
+        try {
+            response=OkHttpUtils
+                    .get()
+                    .url(uri)
+                    .addParams("access_key",token)
+                    .addParams("mac_address",address)
+                    .addParams("sn",qrCode)
+                    .build()
+                    .execute();
+            result =response.body().string();
+            Logger.d(TAG+"::::::%s", result);
+        } catch (IOException e) {
+            e.printStackTrace();
+
+        }
+        BindResponse bindResponse = null;
+        try {
+            bindResponse = JsonMananger.jsonToBean(result, BindResponse.class);
+        } catch (JSONException e) {
+            Logger.e(TAG+"::::::%s", "BindResponse occurs JSONException e=" + e.toString());
+            return null;
+        }
+
+        return bindResponse;
     }
 }

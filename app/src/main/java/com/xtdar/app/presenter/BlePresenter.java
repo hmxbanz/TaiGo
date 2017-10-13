@@ -42,6 +42,7 @@ import com.xtdar.app.view.activity.BleActivity;
 import com.xtdar.app.view.activity.ControllerActivity;
 import com.xtdar.app.view.activity.HelpDetailActivity;
 import com.xtdar.app.view.activity.LoginActivity;
+import com.xtdar.app.view.activity.QrCodeActivity;
 import com.xtdar.app.view.activity.UnityPlayerActivity;
 import com.xtdar.app.view.widget.LoadDialog;
 import com.xtdar.app.widget.DialogWithYesOrNoUtils;
@@ -49,6 +50,8 @@ import com.xtdar.app.widget.progressBar.MaterialProgressBar;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static com.xtdar.app.view.activity.BleActivity.REQUEST_CODE;
 
 
 /**
@@ -61,6 +64,8 @@ public class BlePresenter extends BasePresenter implements OnDataListener, BleAd
     private static final long SCAN_PERIOD = 10000;
     private static final int BINDDEVICE = 1;
     private static final int GETHELP = 2;
+    private static final int SCANDEVICE = 3;
+    private static final int BINDQRCODE = 4;
     //private final Handler handler;
     private ListView listView;
     private List<BluetoothDevice> list=new ArrayList<>();
@@ -76,7 +81,7 @@ public class BlePresenter extends BasePresenter implements OnDataListener, BleAd
     private BasePresenter basePresenter;
     private MaterialProgressBar progressWheel;
     private RelativeLayout emptyView;
-    private String driverId;
+    private String driverId,qrCode;
 
     public BlePresenter(Context context) {
         super(context);
@@ -223,6 +228,8 @@ public class BlePresenter extends BasePresenter implements OnDataListener, BleAd
         switch (requestCode) {
             case BINDDEVICE:
                 return mUserAction.bindDevice(selectedDevice.getDevice().getAddress());
+            case BINDQRCODE:
+                return mUserAction.bindQrcode(selectedDevice.getDevice().getAddress(),qrCode);
 
         }
             return null;
@@ -231,14 +238,38 @@ public class BlePresenter extends BasePresenter implements OnDataListener, BleAd
     @Override
     public void onSuccess(int requestCode, Object result) {
         LoadDialog.dismiss(context);
-        BindResponse response = (BindResponse) result;
-        if (response != null && response.getCode() == XtdConst.SUCCESS) {
-            Intent intent = new Intent(context, HelpDetailActivity.class);
-            intent.putExtra("title","设备绑定成功");
-            intent.putExtra("url",XtdConst.SERVERURI+"cli-dgc-devicehelp.php?device_id="+response.getData().getDevice_id());
-            context.startActivity(intent);
+        if (result==null)return;
+
+        switch (requestCode) {
+            case BINDDEVICE:
+                BindResponse response = (BindResponse) result;
+                if (response != null && response.getCode() == XtdConst.SUCCESS) {
+                    Intent intent = new Intent(context, HelpDetailActivity.class);
+                    intent.putExtra("title","设备绑定成功");
+                    intent.putExtra("url",XtdConst.SERVERURI+"cli-dgc-devicehelp.php?device_id="+response.getData().getDevice_id());
+                    context.startActivity(intent);
+                }
+                else if(response != null && response.getCode() == 2)//请扫瞄枪托后面的二维码进行绑定
+                {
+                    Intent intent = new Intent(context, QrCodeActivity.class);
+                    activity.startActivityForResult(intent, REQUEST_CODE);
+                }
+                NToast.shortToast(context,response.getMsg());
+                break;
+            case BINDQRCODE:
+                BindResponse response2 = (BindResponse) result;
+                if (response2 != null && response2.getCode() == XtdConst.SUCCESS) {
+                    Intent intent = new Intent(context, HelpDetailActivity.class);
+                    intent.putExtra("title","设备绑定成功");
+                    intent.putExtra("url",XtdConst.SERVERURI+"cli-dgc-devicehelp.php?device_id="+response2.getData().getDevice_id());
+                    context.startActivity(intent);
+                }
+                NToast.shortToast(context,response2.getMsg());
+                break;
         }
-        NToast.shortToast(context,response.getMsg());
+
+
+
     }
 
 
@@ -299,5 +330,11 @@ public class BlePresenter extends BasePresenter implements OnDataListener, BleAd
                 }
                 break;
         }
+    }
+
+    public void bindQrCode(String qrCode) {
+        this.qrCode=qrCode;
+        LoadDialog.show(context);
+        atm.request(BINDQRCODE,this);
     }
 }
