@@ -61,7 +61,7 @@ public class HomeFragmentPresenter extends BasePresenter implements OnDataListen
     private Main2Activity mActivity;
     private SwipeRefreshLayout swiper;
 
-    private String connectMac;
+    public static String connectMac;
     private String deviceId;
     private int itemIndex;
     private MyDevicesResponse.DataBean itemSelected;
@@ -255,11 +255,12 @@ public class HomeFragmentPresenter extends BasePresenter implements OnDataListen
     private BluetoothService.Callback callback = new BluetoothService.Callback() {
         @Override
         public void onStartScan() {
-            mActivity.scanResultList.clear();
+            //mActivity.scanResultList.clear();
+            String s=connectMac;
             if(list.size()>0) {
                 for (MyDevicesResponse.DataBean bean : list) {
-                    if (bean.getMac_address() !=null && !bean.getMac_address().equals(connectMac))
-                        bean.setStatus(0);
+                    if(bean.getMac_address().toUpperCase().equals(connectMac))
+                    bean.setStatus(2);
                 }
                 dataAdapter.notifyDataSetChanged();
             }
@@ -354,8 +355,7 @@ public class HomeFragmentPresenter extends BasePresenter implements OnDataListen
 
     @Override
     public void onRefresh() {
-        mBluetoothService.setScanCallback(callback);
-        mBluetoothService.scanDevice();
+        atm.request(GETDRIVERS,HomeFragmentPresenter.this);
     }
 
     public void scanBLE() {
@@ -366,6 +366,8 @@ public class HomeFragmentPresenter extends BasePresenter implements OnDataListen
             }
         });
         if(mBluetoothService !=null)
-            onRefresh();
+            {
+                mBluetoothService.setScanCallback(callback);
+            mBluetoothService.scanDevice();}
     }
 }

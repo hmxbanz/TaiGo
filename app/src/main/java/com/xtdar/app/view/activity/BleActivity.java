@@ -87,7 +87,7 @@ public class BleActivity extends BaseActivity implements View.OnClickListener {
                     if (bundle.getInt(CodeUtils.RESULT_TYPE) == CodeUtils.RESULT_SUCCESS) {
                         String result = bundle.getString(CodeUtils.RESULT_STRING);
                         presenter.bindQrCode(result);
-                        Toast.makeText(this, "扫描成功" + result, Toast.LENGTH_LONG).show();
+                        Toast.makeText(this, "扫描成功:" + result, Toast.LENGTH_LONG).show();
                     } else if (bundle.getInt(CodeUtils.RESULT_TYPE) == CodeUtils.RESULT_FAILED) {
                         Toast.makeText(this, "解析二维码失败", Toast.LENGTH_LONG).show();
                     }

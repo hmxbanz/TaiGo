@@ -568,7 +568,7 @@ public class BluetoothService extends Service {
                     @Override
                     public void run() {
                         if (mCallback != null) {
-                            mCallback.onScanComplete();
+                            //mCallback.onScanComplete();
                         }
                     }
                 });

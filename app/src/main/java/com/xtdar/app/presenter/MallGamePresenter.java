@@ -50,6 +50,7 @@ import de.greenrobot.dao.query.Query;
 import de.greenrobot.dao.query.QueryBuilder;
 
 import static com.xtdar.app.common.CommonTools.getVersionInfo;
+import static com.xtdar.app.presenter.HomeFragmentPresenter.connectMac;
 
 /**
  * Created by hmxbanz on 2017/4/5.
@@ -338,7 +339,6 @@ public class MallGamePresenter extends BasePresenter implements  SwipeRefreshLay
                 });
             }
             else {
-
                 LoadDialog.show(context);
                 mActivity.mBluetoothService.setScanCallback(callback);
                 mActivity.mBluetoothService.scanDevice();
@@ -430,6 +430,7 @@ public class MallGamePresenter extends BasePresenter implements  SwipeRefreshLay
 
         @Override
         public void onScanComplete() {
+            NLog.d("aaaaaaaaaaaaaaaaaaaaa","aaaaaaaaaaaaaaaaaaaaaaaaaaa");
             //传游戏名查询
             atm.request(GAMECHECK,MallGamePresenter.this);  }
 
@@ -442,10 +443,13 @@ public class MallGamePresenter extends BasePresenter implements  SwipeRefreshLay
             NToast.shortToast(context, "连接失败,请确保设备已开启。");       }
 
         @Override
-        public void onDisConnected() {       }
+        public void onDisConnected() {
+
+        }
 
         @Override
         public void onServicesDiscovered() {
+            connectMac = mActivity.mBluetoothService.getMac();
             LoadDialog.dismiss(context);
             context.startActivity(toUnityPlayerActivityInent);
 
@@ -474,7 +478,7 @@ public class MallGamePresenter extends BasePresenter implements  SwipeRefreshLay
         toUnityPlayerActivityInent.putExtra("gameId", unityGameId);
         toUnityPlayerActivityInent.putExtra("BleName", bean.getDevice_name());
 
-        String connectMac = mActivity.mBluetoothService.getMac();
+        connectMac = mActivity.mBluetoothService.getMac();
         NLog.w("connectMac:::::::",connectMac);
         if(TextUtils.isEmpty(connectMac)) {
             LoadDialog.show(context);

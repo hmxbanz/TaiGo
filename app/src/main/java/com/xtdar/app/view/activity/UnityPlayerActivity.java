@@ -75,7 +75,7 @@ public class UnityPlayerActivity extends Activity
     @Override
     protected void onStart() {
         super.onStart();
-        bindService();
+        if(mBluetoothService==null)bindService();
     }
 
     private void bindService() {
