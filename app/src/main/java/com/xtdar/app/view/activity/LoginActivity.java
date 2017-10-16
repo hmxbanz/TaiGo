@@ -63,8 +63,8 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
         mLayoutQqLogin.setOnClickListener(this);
         mLayoutWxLogin = (RelativeLayout) findViewById(R.id.layout_wx_login);
         mLayoutWxLogin.setOnClickListener(this);
-        mLayoutWeiboWxLogin = (RelativeLayout) findViewById(R.id.layout_weibo_login);
-        mLayoutWeiboWxLogin.setOnClickListener(this);
+//        mLayoutWeiboWxLogin = (RelativeLayout) findViewById(R.id.layout_weibo_login);
+//        mLayoutWeiboWxLogin.setOnClickListener(this);
         mTextForgetPassword.setOnClickListener(this);
         mUsername = (EditText) findViewById(R.id.username);
         mPassword = (EditText) findViewById(R.id.password);
@@ -106,9 +106,9 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
             case R.id.layout_qq_login:
                 presenter.qqLogin();
                 break;
-            case R.id.layout_weibo_login:
-                presenter.weiboLogin();
-                break;
+//            case R.id.layout_weibo_login:
+//                presenter.weiboLogin();
+//                break;
 
         }
     }

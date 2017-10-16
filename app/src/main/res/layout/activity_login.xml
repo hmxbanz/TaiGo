@@ -162,27 +162,27 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content" />
                 </RelativeLayout>
-                <RelativeLayout
-                    android:id="@+id/layout_weibo_login"
-                    android:gravity="center"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1">
-                    <ImageView
-                        android:padding="5dp"
-                        android:layout_centerHorizontal="true"
-                        android:id="@+id/nav_img_hot3"
-                        android:layout_width="60dp"
-                        android:layout_height="60dp"
-                        android:src="@drawable/icon_wb"
-                        />
-                    <TextView
-                        android:gravity="center"
-                        android:layout_below="@+id/nav_img_hot3"
-                        android:text="微博登录"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content" />
-                </RelativeLayout>
+                <!--<RelativeLayout-->
+                    <!--android:id="@+id/layout_weibo_login"-->
+                    <!--android:gravity="center"-->
+                    <!--android:layout_width="0dp"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:layout_weight="1">-->
+                    <!--<ImageView-->
+                        <!--android:padding="5dp"-->
+                        <!--android:layout_centerHorizontal="true"-->
+                        <!--android:id="@+id/nav_img_hot3"-->
+                        <!--android:layout_width="60dp"-->
+                        <!--android:layout_height="60dp"-->
+                        <!--android:src="@drawable/icon_wb"-->
+                        <!--/>-->
+                    <!--<TextView-->
+                        <!--android:gravity="center"-->
+                        <!--android:layout_below="@+id/nav_img_hot3"-->
+                        <!--android:text="微博登录"-->
+                        <!--android:layout_width="match_parent"-->
+                        <!--android:layout_height="wrap_content" />-->
+                <!--</RelativeLayout>-->
             </LinearLayout>
 </RelativeLayout>
 

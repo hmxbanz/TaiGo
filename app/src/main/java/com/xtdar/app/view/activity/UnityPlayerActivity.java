@@ -205,7 +205,7 @@ public class UnityPlayerActivity extends Activity
 
                                 //NLog.d("xxxxyyyy:",xx+"-"+yy);
 
-                                if((xx>460 && xx<530) && (yy>460 && yy<530))
+                                if((xx>400 && xx<600) && (yy>400 && yy<600))
                                     UnityPlayer.UnitySendMessage("Main Camera","eee","op");
                                 else
                                     UnityPlayer.UnitySendMessage("Main Camera","eee",xx+","+yy);
