@@ -142,11 +142,7 @@ public class Main2Presenter extends BasePresenter {
                         });
                         dialog.setContent(entity.getVersionInfo());
                     }
-<<<<<<< HEAD
-=======
                     NToast.shortToast(activity, "版本检测成功");
->>>>>>> 404e9b860f6c48e855b1a52c3f72fe1eb08af458
-
                 }else {
                     NToast.shortToast(activity, "版本检测："+versionResponse.getMsg());
                 }
@@ -191,14 +187,6 @@ public class Main2Presenter extends BasePresenter {
             }
         }
 
-    }
-
-    public void autoLogin()
-    {
-        if(!TextUtils.isEmpty(userName)){
-            LoadDialog.show(activity);
-            atm.request(AUTOLOGIN,this);
-        }
     }
 
     public void onDestroy() {

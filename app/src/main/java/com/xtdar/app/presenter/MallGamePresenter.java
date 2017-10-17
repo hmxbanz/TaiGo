@@ -169,19 +169,11 @@ public class MallGamePresenter extends BasePresenter implements  SwipeRefreshLay
 
                     onScrollListener.setCanloadMore(true);
 
-<<<<<<< HEAD
-//                    int wwwwww=0;
-//                    for (GameListResponse.DataBean oo : list) {
-//                        Logger.d("游戏索引:"+wwwwww+++"  游戏ID:%s  游戏名:%s", oo.getGame_id(),oo.getGame_name());
-//                    }
-//                    Logger.d("数量:%s=列表:%s", list.size(),list);
-=======
                     int wwwwww=0;
                     for (GameListResponse.DataBean oo : list) {
                         Logger.d("游戏索引:"+wwwwww+++"  游戏ID:%s  游戏名:%s", oo.getGame_id(),oo.getGame_name());
                     }
                     Logger.d("数量:%s=列表:%s", list.size(),list);
->>>>>>> 404e9b860f6c48e855b1a52c3f72fe1eb08af458
 
                     dataAdapter.setListItems(list);
                     dataAdapter.notifyDataSetChanged();
@@ -320,11 +312,7 @@ public class MallGamePresenter extends BasePresenter implements  SwipeRefreshLay
 
         int gameExit=query.list().size();
 
-<<<<<<< HEAD
-        if (gameExit == 0) {
-=======
-        if (game+1== 0) {
->>>>>>> 404e9b860f6c48e855b1a52c3f72fe1eb08af458
+        if (gameExit== 0) {
             List<DownloadGame> listDb = downloadGameDao.loadAll();
             for(DownloadGame a:listDb) {
                 NLog.e("DBdata",a.getGameName()+"  版本："+a.getGameVersion() );

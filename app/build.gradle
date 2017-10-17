@@ -7,13 +7,8 @@ android {
         applicationId 'com.xtdar.app'
         minSdkVersion 18
         targetSdkVersion 25
-<<<<<<< HEAD
         versionCode 20171015
         versionName '1.0.3.1'
-=======
-        versionCode 20170929
-        versionName '1.0.2.0'
->>>>>>> 404e9b860f6c48e855b1a52c3f72fe1eb08af458
         // dex突破65535的限制
         multiDexEnabled true
         // 默认是umeng的渠道
@@ -160,5 +155,5 @@ dependencies {
     //okhttp下载扩展
     compile 'de.greenrobot:greendao:1.3.7'
     //4.4版本兼容5.0之前的系统版本（分包）
-    compile 'com.android.support:multidex:1.0.0'
+    compile 'com.android.support:multidex:1.0.1'
 }
