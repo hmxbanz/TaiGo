@@ -497,7 +497,11 @@ public class UserAction extends BaseAction {
     //版本检查
     public VersionResponse checkVersion() throws HttpException {
         String result = "";
+<<<<<<< HEAD
         String uri ="http://dyz.173csw.com/app_source/dl/version.txt";
+=======
+        String uri =getURL("app_source/dl/version.txt");
+>>>>>>> 404e9b860f6c48e855b1a52c3f72fe1eb08af458
         Response response=null;
         try {
             response=OkHttpUtils
@@ -952,7 +956,11 @@ public class UserAction extends BaseAction {
 
     public BindResponse bindDevice(String mac) throws HttpException{
         String result = "";
+<<<<<<< HEAD
         String uri = getURL("cli-dg-binddevice.php");
+=======
+        String uri = getURL("cli-dg-binddevicebymac.php");
+>>>>>>> 404e9b860f6c48e855b1a52c3f72fe1eb08af458
         Response response=null;
         try {
             response=OkHttpUtils
@@ -981,7 +989,11 @@ public class UserAction extends BaseAction {
 
     public MyDevicesResponse getDevices() throws HttpException {
         String result = "";
+<<<<<<< HEAD
         String uri = getURL("cli-dg-mydevices.php");
+=======
+        String uri = getURL("cli-dg-mydevicelist.php");
+>>>>>>> 404e9b860f6c48e855b1a52c3f72fe1eb08af458
         Response response=null;
         try {
             response=OkHttpUtils
@@ -1435,7 +1447,11 @@ public class UserAction extends BaseAction {
 
     public CommonResponse unBindDevice(String deviceId) throws HttpException {
         String result = "";
+<<<<<<< HEAD
         String uri = getURL("cli-dg-hiddendevice.php");
+=======
+        String uri = getURL("cli-dg-unbinddevice.php");
+>>>>>>> 404e9b860f6c48e855b1a52c3f72fe1eb08af458
 
         Response response=null;
         try {
