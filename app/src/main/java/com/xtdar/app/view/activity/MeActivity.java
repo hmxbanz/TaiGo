@@ -30,7 +30,7 @@ public class MeActivity extends BaseActivity implements View.OnClickListener {
         setContentView(R.layout.activity_me);
         initViews();
         mMePresenter =new MePresenter(this);
-        mMePresenter.init(selectableRoundedImageView, txtNickName);
+        mMePresenter.init(selectableRoundedImageView, txtNickName,txtFindPwd);
     }
 
     public void initViews(){

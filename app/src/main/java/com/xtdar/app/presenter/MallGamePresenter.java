@@ -133,7 +133,6 @@ public class MallGamePresenter extends BasePresenter implements  SwipeRefreshLay
         }
         return null;
     }
-
     @Override
     public void onSuccess(int requestCode, Object result) {
         LoadDialog.dismiss(context);
@@ -144,7 +143,6 @@ public class MallGamePresenter extends BasePresenter implements  SwipeRefreshLay
                 GameListResponse response = (GameListResponse) result;
                 if (response !=null && response.getCode() == XtdConst.SUCCESS ) {
                     final List<GameListResponse.DataBean> datas = response.getData();
-
                     for (GameListResponse.DataBean bean : datas) {
                         List<DownloadGame> listDb = downloadGameDao.loadAll();
                         //查询本地数据库是否有下载
@@ -314,7 +312,7 @@ public class MallGamePresenter extends BasePresenter implements  SwipeRefreshLay
 
         int gameExit=query.list().size();
 
-        if (gameExit+1 == 0) {
+        if (gameExit == 0) {
             List<DownloadGame> listDb = downloadGameDao.loadAll();
             for(DownloadGame a:listDb) {
                 NLog.e("DBdata",a.getGameName()+"  版本："+a.getGameVersion() );

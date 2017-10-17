@@ -154,4 +154,6 @@ dependencies {
     compile 'com.lzy.net:okhttpserver:+'//自动引用最新版本
     //okhttp下载扩展
     compile 'de.greenrobot:greendao:1.3.7'
+    //4.4版本兼容5.0之前的系统版本（分包）
+    compile 'com.android.support:multidex:1.0.0'
 }

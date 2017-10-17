@@ -1,6 +1,8 @@
 package com.xtdar.app;
 
 import android.app.Application;
+import android.content.Context;
+import android.support.multidex.MultiDex;
 
 import com.alibaba.baichuan.android.trade.AlibcTradeSDK;
 import com.alibaba.baichuan.android.trade.callback.AlibcTradeInitCallback;
@@ -23,6 +25,12 @@ import com.xtdar.app.db.DBManager;
 
 public class MainApplication extends Application {
     public static String MacAddr;
+
+    @Override
+    protected void attachBaseContext(Context base) {
+        super.attachBaseContext(base);
+        MultiDex.install(this);//4.4版本兼容5.0之前的系统版本（分包）
+    }
 
     @Override
     public void onCreate() {

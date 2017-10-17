@@ -36,6 +36,16 @@ public class UserInfoResponse {
         private String sex;
         private String age;
 
+        public int getShow_chang_pwd() {
+            return show_chang_pwd;
+        }
+
+        public void setShow_chang_pwd(int show_chang_pwd) {
+            this.show_chang_pwd = show_chang_pwd;
+        }
+
+        private int show_chang_pwd;
+
         public int getUser_id() {
             return user_id;
         }

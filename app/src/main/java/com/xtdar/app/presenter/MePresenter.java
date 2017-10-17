@@ -43,7 +43,7 @@ public class MePresenter extends BasePresenter implements OnDataListener{
     private static final int GETINFO = 3;
     public static final String UPDATENICKNAME = "updateNickName";
     MeActivity mActivity;
-    private TextView nickName;
+    private TextView nickName,txtFindPwd;
     private SelectableRoundedImageView avator;
     private GlideImageLoader glideImageLoader;
     private BottomMenuDialog dialog;
@@ -60,9 +60,10 @@ public class MePresenter extends BasePresenter implements OnDataListener{
 
     }
 
-    public void init(SelectableRoundedImageView selectableRoundedImageView, TextView nickName) {
+    public void init(SelectableRoundedImageView selectableRoundedImageView, TextView nickName, TextView txtFindPwd) {
         this.avator = selectableRoundedImageView;
         this.nickName = nickName;
+        this.txtFindPwd=txtFindPwd;
         //mView.initData();
         LoadDialog.show(context);
         atm.request(GETINFO, this);
@@ -115,6 +116,8 @@ public class MePresenter extends BasePresenter implements OnDataListener{
                     Glide.with(context).load(XtdConst.IMGURI+entity.getImg_path()).skipMemoryCache(true).diskCacheStrategy( DiskCacheStrategy.NONE ).into(this.avator);
 
                     this.nickName.setText(entity.getNick_name());
+                    if(userInfoResponse.getData().getShow_chang_pwd()==0)
+                        this.txtFindPwd.setVisibility(View.INVISIBLE);
                 }
                 NToast.shortToast(context, userInfoResponse.getMsg());
                 break;
