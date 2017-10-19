@@ -64,12 +64,12 @@
         "source": "C:\\Users\\Administrator\\Desktop\\work\\TaiGoNew\\IMKit\\src\\main\\res\\drawable\\rc_cs_submit_comment.xml"
     },
     {
-        "merged": "C:\\Users\\Administrator\\Desktop\\work\\TaiGoNew\\IMKit\\build\\intermediates\\res\\merged\\release\\drawable\\rc_cs_group_ok_text_selector.xml",
-        "source": "C:\\Users\\Administrator\\Desktop\\work\\TaiGoNew\\IMKit\\src\\main\\res\\drawable\\rc_cs_group_ok_text_selector.xml"
-    },
-    {
         "merged": "C:\\Users\\Administrator\\Desktop\\work\\TaiGoNew\\IMKit\\build\\intermediates\\res\\merged\\release\\drawable\\rc_ic_files_selector.xml",
         "source": "C:\\Users\\Administrator\\Desktop\\work\\TaiGoNew\\IMKit\\src\\main\\res\\drawable\\rc_ic_files_selector.xml"
+    },
+    {
+        "merged": "C:\\Users\\Administrator\\Desktop\\work\\TaiGoNew\\IMKit\\build\\intermediates\\res\\merged\\release\\drawable\\rc_cs_group_ok_text_selector.xml",
+        "source": "C:\\Users\\Administrator\\Desktop\\work\\TaiGoNew\\IMKit\\src\\main\\res\\drawable\\rc_cs_group_ok_text_selector.xml"
     },
     {
         "merged": "C:\\Users\\Administrator\\Desktop\\work\\TaiGoNew\\IMKit\\build\\intermediates\\res\\merged\\release\\drawable\\rc_corner_popup_dialog_style.xml",

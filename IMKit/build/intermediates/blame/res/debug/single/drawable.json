@@ -16,16 +16,16 @@
         "source": "C:\\Users\\Administrator\\Desktop\\work\\TaiGoNew\\IMKit\\src\\main\\res\\drawable\\rc_corner_style.xml"
     },
     {
-        "merged": "C:\\Users\\Administrator\\Desktop\\work\\TaiGoNew\\IMKit\\build\\intermediates\\res\\merged\\debug\\drawable\\rc_plugin_toggle_selector.xml",
-        "source": "C:\\Users\\Administrator\\Desktop\\work\\TaiGoNew\\IMKit\\src\\main\\res\\drawable\\rc_plugin_toggle_selector.xml"
+        "merged": "C:\\Users\\Administrator\\Desktop\\work\\TaiGoNew\\IMKit\\build\\intermediates\\res\\merged\\debug\\drawable\\rc_selector_title_back_press.xml",
+        "source": "C:\\Users\\Administrator\\Desktop\\work\\TaiGoNew\\IMKit\\src\\main\\res\\drawable\\rc_selector_title_back_press.xml"
     },
     {
         "merged": "C:\\Users\\Administrator\\Desktop\\work\\TaiGoNew\\IMKit\\build\\intermediates\\res\\merged\\debug\\drawable\\rc_ic_files_selector.xml",
         "source": "C:\\Users\\Administrator\\Desktop\\work\\TaiGoNew\\IMKit\\src\\main\\res\\drawable\\rc_ic_files_selector.xml"
     },
     {
-        "merged": "C:\\Users\\Administrator\\Desktop\\work\\TaiGoNew\\IMKit\\build\\intermediates\\res\\merged\\debug\\drawable\\rc_selector_title_back_press.xml",
-        "source": "C:\\Users\\Administrator\\Desktop\\work\\TaiGoNew\\IMKit\\src\\main\\res\\drawable\\rc_selector_title_back_press.xml"
+        "merged": "C:\\Users\\Administrator\\Desktop\\work\\TaiGoNew\\IMKit\\build\\intermediates\\res\\merged\\debug\\drawable\\rc_plugin_toggle_selector.xml",
+        "source": "C:\\Users\\Administrator\\Desktop\\work\\TaiGoNew\\IMKit\\src\\main\\res\\drawable\\rc_plugin_toggle_selector.xml"
     },
     {
         "merged": "C:\\Users\\Administrator\\Desktop\\work\\TaiGoNew\\IMKit\\build\\intermediates\\res\\merged\\debug\\drawable\\rc_menu_keyboard_selector.xml",

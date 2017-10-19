@@ -16,16 +16,16 @@
         "source": "C:\\Users\\Administrator\\.android\\build-cache\\c1bc389984f99bbbe8f00d4342e03d17c9b492b3\\output\\res\\layout\\design_navigation_item.xml"
     },
     {
-        "merged": "C:\\Users\\Administrator\\Desktop\\work\\TaiGoNew\\coordinatortablayout\\build\\intermediates\\res\\merged\\debug\\layout\\design_navigation_item_subheader.xml",
-        "source": "C:\\Users\\Administrator\\.android\\build-cache\\c1bc389984f99bbbe8f00d4342e03d17c9b492b3\\output\\res\\layout\\design_navigation_item_subheader.xml"
+        "merged": "C:\\Users\\Administrator\\Desktop\\work\\TaiGoNew\\coordinatortablayout\\build\\intermediates\\res\\merged\\debug\\layout\\design_navigation_item_header.xml",
+        "source": "C:\\Users\\Administrator\\.android\\build-cache\\c1bc389984f99bbbe8f00d4342e03d17c9b492b3\\output\\res\\layout\\design_navigation_item_header.xml"
     },
     {
         "merged": "C:\\Users\\Administrator\\Desktop\\work\\TaiGoNew\\coordinatortablayout\\build\\intermediates\\res\\merged\\debug\\layout\\support_simple_spinner_dropdown_item.xml",
         "source": "C:\\Users\\Administrator\\.android\\build-cache\\9f77454a4d83f7b2cafb77e932025170cbdbb7d5\\output\\res\\layout\\support_simple_spinner_dropdown_item.xml"
     },
     {
-        "merged": "C:\\Users\\Administrator\\Desktop\\work\\TaiGoNew\\coordinatortablayout\\build\\intermediates\\res\\merged\\debug\\layout\\design_navigation_item_header.xml",
-        "source": "C:\\Users\\Administrator\\.android\\build-cache\\c1bc389984f99bbbe8f00d4342e03d17c9b492b3\\output\\res\\layout\\design_navigation_item_header.xml"
+        "merged": "C:\\Users\\Administrator\\Desktop\\work\\TaiGoNew\\coordinatortablayout\\build\\intermediates\\res\\merged\\debug\\layout\\design_navigation_item_subheader.xml",
+        "source": "C:\\Users\\Administrator\\.android\\build-cache\\c1bc389984f99bbbe8f00d4342e03d17c9b492b3\\output\\res\\layout\\design_navigation_item_subheader.xml"
     },
     {
         "merged": "C:\\Users\\Administrator\\Desktop\\work\\TaiGoNew\\coordinatortablayout\\build\\intermediates\\res\\merged\\debug\\layout\\abc_dialog_title_material.xml",
@@ -48,12 +48,12 @@
         "source": "C:\\Users\\Administrator\\.android\\build-cache\\9f77454a4d83f7b2cafb77e932025170cbdbb7d5\\output\\res\\layout\\abc_popup_menu_header_item_layout.xml"
     },
     {
-        "merged": "C:\\Users\\Administrator\\Desktop\\work\\TaiGoNew\\coordinatortablayout\\build\\intermediates\\res\\merged\\debug\\layout\\notification_action.xml",
-        "source": "C:\\Users\\Administrator\\.android\\build-cache\\9f77454a4d83f7b2cafb77e932025170cbdbb7d5\\output\\res\\layout\\notification_action.xml"
-    },
-    {
         "merged": "C:\\Users\\Administrator\\Desktop\\work\\TaiGoNew\\coordinatortablayout\\build\\intermediates\\res\\merged\\debug\\layout\\abc_screen_simple.xml",
         "source": "C:\\Users\\Administrator\\.android\\build-cache\\9f77454a4d83f7b2cafb77e932025170cbdbb7d5\\output\\res\\layout\\abc_screen_simple.xml"
+    },
+    {
+        "merged": "C:\\Users\\Administrator\\Desktop\\work\\TaiGoNew\\coordinatortablayout\\build\\intermediates\\res\\merged\\debug\\layout\\notification_action.xml",
+        "source": "C:\\Users\\Administrator\\.android\\build-cache\\9f77454a4d83f7b2cafb77e932025170cbdbb7d5\\output\\res\\layout\\notification_action.xml"
     },
     {
         "merged": "C:\\Users\\Administrator\\Desktop\\work\\TaiGoNew\\coordinatortablayout\\build\\intermediates\\res\\merged\\debug\\layout\\abc_action_bar_up_container.xml",
