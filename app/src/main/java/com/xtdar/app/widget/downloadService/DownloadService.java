@@ -126,7 +126,7 @@ public class DownloadService extends IntentService {
             installAPKIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);//安装完成后打开新的apk
             installAPKIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
             if (Build.VERSION.SDK_INT>= Build.VERSION_CODES.N){
-                Uri fileUri = FileProvider.getUriForFile(DownloadService.this,"com.qqwl.fileprovider",apkFile);
+                Uri fileUri = FileProvider.getUriForFile(DownloadService.this,"com.xtdar.app.provider",apkFile);
 
                 installAPKIntent.setDataAndType(fileUri, "application/vnd.android.package-archive");
             }else{
