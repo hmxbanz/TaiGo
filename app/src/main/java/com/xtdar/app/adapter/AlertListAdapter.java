@@ -54,6 +54,7 @@ public class AlertListAdapter extends BaseAdapter {
         convertView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if(onItemClick !=null)
                 onItemClick.onClick(position, v, entity);
 
             }

@@ -174,7 +174,6 @@ public class SpecialGamePresenter extends BasePresenter implements SwipeRefreshL
                 }
         }
         lastItem ="0";
-        list.clear();
         LoadDialog.show(context);
         atm.request(GETSPECIALlIST,this);
     }

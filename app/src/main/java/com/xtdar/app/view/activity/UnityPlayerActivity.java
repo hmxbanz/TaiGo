@@ -208,10 +208,12 @@ public class UnityPlayerActivity extends Activity
                                 if((xx>400 && xx<600) && (yy>400 && yy<600))
                                     UnityPlayer.UnitySendMessage("Main Camera","eee","op");
                                 else
-                                    UnityPlayer.UnitySendMessage("Main Camera","eee",xx+","+yy);
-                                //if(!"0000".equals(x) && !"0000".equals(y)){
-                                    //UnityPlayer.UnitySendMessage("Main Camera","eee",xx+","+yy);
-                                //}
+                                {
+                                    if(xx !=0 && yy !=0)
+                                        UnityPlayer.UnitySendMessage("Main Camera","eee",xx+","+yy);
+
+                                }
+
 
                                 if((int)command==1) {
                                     UnityPlayer.UnitySendMessage("Main Camera", "eee", "a");//射击

@@ -115,11 +115,11 @@ public class LoginPresenter extends BasePresenter  {
             case LOGIN:
                 return mUserAction.login(mUsername.getText().toString(), mPassword.getText().toString());
             case UPLOADWXOPENID:
-                return mUserAction.wxOpenId(openId);
+                return mUserAction.wxLogin(openId,headimgurl);
             case WXBIND:
                 return mUserAction.wxBind(openId,mUsername.getText().toString(), mPassword.getText().toString());
             case UPLOADQQOPENID:
-                return mUserAction.qqOpenId(openId);
+                return mUserAction.qqLogin(openId,headimgurl);
             case QQBIND:
                 return mUserAction.qqBind(openId,mUsername.getText().toString(), mPassword.getText().toString());
             case UPLOADWBOPENID:
@@ -261,7 +261,6 @@ public class LoginPresenter extends BasePresenter  {
         Logger.d(hashMap.toString());
         nickname = (String) hashMap.get("nickname");
         openId =(String)hashMap.get("openid");
-        atm.request(UPLOADWXOPENID,this);
         NToast.shortToast(context,nickname);
         headimgurl = (String) hashMap.get("headimgurl");
         Logger.d("nickname:"+nickname);
@@ -269,6 +268,7 @@ public class LoginPresenter extends BasePresenter  {
         editor.putString("openId", openId);
         editor.putString("loginType", "wx");
         editor.apply();
+        atm.request(UPLOADWXOPENID,this);
 //        Glide.with(ShareLogin.this)
 //                .load(url)
 //                .placeholder(R.mipmap.ic_launcher)
@@ -331,7 +331,7 @@ public class LoginPresenter extends BasePresenter  {
         openId =platDB.getUserId();
         headimgurl=platDB.getUserIcon();
         headimgurl=headimgurl.substring(0,headimgurl.lastIndexOf('/'))+"/100";
-        atm.request(UPLOADQQOPENID,this);
+
         NToast.shortToast(context,nickname);
 
         String url = (String) hashMap.get("figureurl_qq_1");
@@ -342,6 +342,7 @@ public class LoginPresenter extends BasePresenter  {
         editor.putString("openId", openId);
         editor.putString("loginType", "qq");
         editor.apply();
+        atm.request(UPLOADQQOPENID,this);
 
     }
 

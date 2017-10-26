@@ -36,11 +36,6 @@ public class ShowFirstFragment extends BaseFragment  {
     }
 
     @Override
-    public void onStart() {
-        super.onStart();
-    }
-
-    @Override
     protected int getLayoutId() {
         return R.layout.fragment_show;
     }

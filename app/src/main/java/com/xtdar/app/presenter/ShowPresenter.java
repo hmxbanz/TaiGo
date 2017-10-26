@@ -1,7 +1,6 @@
 package com.xtdar.app.presenter;
 
 import android.content.Context;
-import android.support.annotation.NonNull;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -10,7 +9,7 @@ import android.text.TextUtils;
 import com.xtdar.app.common.NLog;
 import com.xtdar.app.common.NToast;
 import com.xtdar.app.common.json.JsonMananger;
-import com.xtdar.app.listener.GSYVideoPlayerOnScrollListener;
+import com.xtdar.app.listener.EndlessRecyclerOnScrollListener;
 import com.xtdar.app.server.HttpException;
 import com.xtdar.app.server.async.OnDataListener;
 import com.xtdar.app.server.response.ShowResponse;
@@ -34,6 +33,7 @@ public class ShowPresenter extends BasePresenter implements OnDataListener,Recyc
     private String lastItem ="0";
     private SwipeRefreshLayout swiper;
     private boolean isFirstLoad=true;
+    private EndlessRecyclerOnScrollListener onScrollListener;
 
     //private ContactsActivity mActivity;
     public ShowPresenter(Context context){
@@ -50,9 +50,17 @@ public class ShowPresenter extends BasePresenter implements OnDataListener,Recyc
         this.videoList=videoList;
         this.videoList.setAdapter(recyclerNormalAdapter);
         this.videoList.setNestedScrollingEnabled(false);
-
+        onScrollListener=new EndlessRecyclerOnScrollListener(linearLayoutManager) {
+            @Override
+            public void onLoadMore(int currentPage) {
+                lastItem = String.valueOf(currentPage - 1);
+                LoadDialog.show(context);
+                atm.request(GETSHOWLIST,ShowPresenter.this);
+                setCanloadMore(false);
+            }
+        };
         videoList.setLayoutManager(linearLayoutManager);
-        videoList.addOnScrollListener(getGsyVideoPlayerOnScrollListener());
+        videoList.addOnScrollListener(onScrollListener);
 
     }
 
@@ -89,13 +97,12 @@ public class ShowPresenter extends BasePresenter implements OnDataListener,Recyc
                     }
                     else
                         list.addAll(showResponse.getData());
-
+                    onScrollListener.setCanloadMore(true);
                     recyclerNormalAdapter.notifyDataSetChanged();
-
                 }
                 else {
                     if (showResponse != null)
-                    NToast.shortToast(context, "牛人秀："+showResponse.getMsg());
+                        NToast.shortToast(context, "牛人秀："+showResponse.getMsg());
                 }
                 break;
         }
@@ -108,7 +115,8 @@ public class ShowPresenter extends BasePresenter implements OnDataListener,Recyc
 
     @Override
     public void onRefresh() {
-        this.videoList.addOnScrollListener(getGsyVideoPlayerOnScrollListener());
+        onScrollListener.reset();
+        onScrollListener.setCanloadMore(true);
         lastItem ="0";
         list.clear();
         atm.request(GETSHOWLIST,this);
@@ -116,6 +124,8 @@ public class ShowPresenter extends BasePresenter implements OnDataListener,Recyc
 
     //加载数据
     public void loadData() {
+        onScrollListener.reset();
+        onScrollListener.setCanloadMore(true);
         if(isFirstLoad) {
             String Cache = aCache.getAsString("ShowList");
             NLog.d("ShowCacheString",Cache);
@@ -135,23 +145,9 @@ public class ShowPresenter extends BasePresenter implements OnDataListener,Recyc
 
         }
         lastItem ="0";
-        isFirstLoad=true;
         LoadDialog.show(context);
         atm.request(GETSHOWLIST,this);
     }
 
 
-    @NonNull
-    private GSYVideoPlayerOnScrollListener getGsyVideoPlayerOnScrollListener() {
-        return new GSYVideoPlayerOnScrollListener(linearLayoutManager) {
-            @Override
-            public void onLoadMore(int currentPage) {
-                if(currentPage>1) {
-                    LoadDialog.show(context);
-                    atm.request(GETSHOWLIST,ShowPresenter.this);
-                }
-
-            }
-        };
-    }
 }

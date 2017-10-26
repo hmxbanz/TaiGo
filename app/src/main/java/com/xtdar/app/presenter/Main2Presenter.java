@@ -167,7 +167,7 @@ public class Main2Presenter extends BasePresenter {
 
     public void autoLogin()
     {
-        openId=sp.getString("openId","");
+        openId=sp.getString(XtdConst.OPENID,"");
         loginType=sp.getString("loginType","");
         NLog.d(TAG, "openId"+openId);
         NLog.d(TAG, "loginType"+loginType);

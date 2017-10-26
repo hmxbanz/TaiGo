@@ -26,7 +26,7 @@ public abstract class BaseFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        NLog.w("onCreateView" + "   " + this.getClass().getSimpleName());
+        NLog.w("BaseFragment","onCreateView" );
         convertView = inflater.inflate(getLayoutId(), container, false);
         mViews = new SparseArray<>();
         initView();
@@ -35,22 +35,21 @@ public abstract class BaseFragment extends Fragment {
         return convertView;
     }
 
-    @Override
-    public void onViewCreated(View view, Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-        NLog.w("onViewCreated" + "   " + this.getClass().getSimpleName());
-    }
+//    @Override
+//    public void onViewCreated(View view, Bundle savedInstanceState) {
+//        super.onViewCreated(view, savedInstanceState);
+//        NLog.w("BaseFragment","onViewCreated" );
+//    }
 
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        NLog.w("onAttach" + "   " + this.getClass().getSimpleName());
-
+        NLog.w("BaseFragment","onAttach" );
     }
 
     @Override
     public void setUserVisibleHint(boolean isVisibleToUser) {
-        NLog.w("isVisibleToUser " + isVisibleToUser + "   " + this.getClass().getSimpleName());
+        NLog.w("BaseFragment","isVisibleToUser " + isVisibleToUser );
         if (isVisibleToUser) {
             isVisible = true;
             lazyLoadData();
@@ -62,17 +61,17 @@ public abstract class BaseFragment extends Fragment {
 
     private void lazyLoadData() {
         if (isFirstLoad) {
-            NLog.w("第一次加载 " + " isInitView  " + isInitView + "  isVisible  " + isVisible + "   " + this.getClass().getSimpleName());
+            NLog.w("BaseFragment","第一次加载 " + " isInitView  " + isInitView + "  isVisible  " + isVisible );
         } else {
-            NLog.w("不是第一次加载" + " isInitView  " + isInitView + "  isVisible  " + isVisible + "   " + this.getClass().getSimpleName());
+            NLog.w("BaseFragment","不是第一次加载" + " isInitView  " + isInitView + "  isVisible  " + isVisible );
         }
 
         if (!isFirstLoad || !isVisible || !isInitView) {
-            NLog.w("不加载" + "   " + this.getClass().getSimpleName());
+            NLog.w("BaseFragment","不加载" + " isInitView  " + isInitView + "  isVisible  " + isVisible );
             return;
         }
 
-            NLog.w("完成数据第一次加载"+ "   " + this.getClass().getSimpleName());
+            NLog.w("BaseFragment","完成数据第一次加载"+ "   " + this.getClass().getSimpleName());
         initData();
         isFirstLoad = false;
     }
@@ -115,31 +114,31 @@ public abstract class BaseFragment extends Fragment {
     @Override
     public void onStart() {
         super.onStart();
-        NLog.w("onStart" + "   " + this.getClass().getSimpleName());
+        //NLog.w("BaseFragment","onStart" );
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        NLog.w("onResume" + "   " + this.getClass().getSimpleName());
+        //NLog.w("BaseFragment","onResume" );
     }
 
     @Override
     public void onPause() {
         super.onPause();
-        NLog.w("onPause" + "   " + this.getClass().getSimpleName());
+        //NLog.w("BaseFragment","onPause" );
     }
 
     @Override
     public void onStop() {
         super.onStop();
-        NLog.w("onStop" + "   " + this.getClass().getSimpleName());
+        //NLog.w("BaseFragment","onStop" );
     }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
-        NLog.w("onDestroy" + "   " + this.getClass().getSimpleName());
+        //NLog.w("BaseFragment","onDestroy" );
     }
 
     @Override

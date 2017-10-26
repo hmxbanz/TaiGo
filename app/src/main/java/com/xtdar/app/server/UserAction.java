@@ -177,7 +177,35 @@ public class UserAction extends BaseAction {
         return wxLoginResponse;
 
     }
+    //微信登录请求（新）
+    public WxLoginResponse wxLogin(String unionid,String headImg) throws HttpException
+    {
+        String result = "";
+        String uri = getURL("cli-tplogin-wxlog.php");
+        Response response=null;
+        try {
+            response=OkHttpUtils
+                    .get()
+                    .addParams("unionid",unionid)
+                    .addParams("head_img",headImg)
+                    .url(uri)
+                    .build()
+                    .execute();
+            result =response.body().string();
+            Logger.d(TAG+"::::::%s", result);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        WxLoginResponse wxLoginResponse = null;
+        try {
+            wxLoginResponse = JsonMananger.jsonToBean(result, WxLoginResponse.class);
+        } catch (JSONException e) {
+            Logger.e(TAG+"::::::%s", "wxLoginResponse occurs JSONException e=" + e.toString());
+            return null;
+        }
+        return wxLoginResponse;
 
+    }
     //QQ登录请求
     public WxLoginResponse qqOpenId(String unionid) throws HttpException
     {
@@ -203,6 +231,35 @@ public class UserAction extends BaseAction {
                 Logger.e(TAG+"::::::%s", "wxLoginResponse occurs JSONException e=" + e.toString());
                 return null;
             }
+        return wxLoginResponse;
+
+    }
+    //QQ登录请求(新)
+    public WxLoginResponse qqLogin(String unionid,String headImg) throws HttpException
+    {
+        String result = "";
+        String uri = getURL("cli-tplogin-qqlog.php");
+        Response response=null;
+        try {
+            response=OkHttpUtils
+                    .get()
+                    .addParams("open_id",unionid)
+                    .addParams("head_img",headImg)
+                    .url(uri)
+                    .build()
+                    .execute();
+            result =response.body().string();
+            Logger.d(TAG+"::::::%s", result);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        WxLoginResponse wxLoginResponse = null;
+        try {
+            wxLoginResponse = JsonMananger.jsonToBean(result, WxLoginResponse.class);
+        } catch (JSONException e) {
+            Logger.e(TAG+"::::::%s", "wxLoginResponse occurs JSONException e=" + e.toString());
+            return null;
+        }
         return wxLoginResponse;
 
     }

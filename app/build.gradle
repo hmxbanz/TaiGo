@@ -7,8 +7,8 @@ android {
         applicationId 'com.xtdar.app'
         minSdkVersion 18
         targetSdkVersion 25
-        versionCode 20171015
-        versionName '1.0.3.1'
+        versionCode 20171026
+        versionName '1.0.4.1'
         // dex突破65535的限制
         multiDexEnabled true
         // 默认是umeng的渠道
@@ -121,7 +121,7 @@ dependencies {
     //滑动listview 删除
     compile 'com.jaeger.statusbaruitl:library:1.1.1'
     //设置状态栏
-    compile 'cn.yipianfengye.android:zxing-library:2.1'
+    compile 'cn.yipianfengye.android:zxing-library:2.2'
     //二维码扫描
     compile 'com.android.support:gridlayout-v7:25.3.1'
     compile 'com.clj.fastble:FastBleLib:1.2.1'

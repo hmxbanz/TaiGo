@@ -49,6 +49,7 @@ public void logOff()
             editor.putBoolean(XtdConst.ISLOGIN, false);//退出改登录标记
             editor.putString(XtdConst.LOGIN_USERNAME, "");
             editor.putString(XtdConst.LOGING_PASSWORD, "");
+            editor.putString(XtdConst.OPENID, "");
             editor.commit();
             basePresenter.initData();
             NToast.shortToast(context, "退出成功");

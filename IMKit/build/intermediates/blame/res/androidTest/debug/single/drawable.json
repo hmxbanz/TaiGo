@@ -72,12 +72,12 @@
         "source": "C:\\Users\\Administrator\\Desktop\\work\\TaiGoNew\\IMKit\\build\\intermediates\\bundles\\debug\\res\\drawable\\rc_ext_plugin_image_selector.xml"
     },
     {
-        "merged": "C:\\Users\\Administrator\\Desktop\\work\\TaiGoNew\\IMKit\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable\\rc_emoji_grid_item_selector.xml",
-        "source": "C:\\Users\\Administrator\\Desktop\\work\\TaiGoNew\\IMKit\\build\\intermediates\\bundles\\debug\\res\\drawable\\rc_emoji_grid_item_selector.xml"
-    },
-    {
         "merged": "C:\\Users\\Administrator\\Desktop\\work\\TaiGoNew\\IMKit\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable\\rc_sel_picsel_toolbar_send.xml",
         "source": "C:\\Users\\Administrator\\Desktop\\work\\TaiGoNew\\IMKit\\build\\intermediates\\bundles\\debug\\res\\drawable\\rc_sel_picsel_toolbar_send.xml"
+    },
+    {
+        "merged": "C:\\Users\\Administrator\\Desktop\\work\\TaiGoNew\\IMKit\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable\\rc_emoji_grid_item_selector.xml",
+        "source": "C:\\Users\\Administrator\\Desktop\\work\\TaiGoNew\\IMKit\\build\\intermediates\\bundles\\debug\\res\\drawable\\rc_emoji_grid_item_selector.xml"
     },
     {
         "merged": "C:\\Users\\Administrator\\Desktop\\work\\TaiGoNew\\IMKit\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable\\rc_sel_picsel_toolbar_back.xml",

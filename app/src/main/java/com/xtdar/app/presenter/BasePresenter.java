@@ -65,7 +65,7 @@ public class BasePresenter implements OnDataListener {
         isLogin = sp.getBoolean(XtdConst.ISLOGIN, false);
         userName=sp.getString(XtdConst.LOGIN_USERNAME,"");
         password=sp.getString(XtdConst.LOGING_PASSWORD,"");
-        openId=sp.getString("openId","");
+        openId=sp.getString(XtdConst.LOGING_PASSWORD,"");
         loginType=sp.getString("loginType","");
 
     }

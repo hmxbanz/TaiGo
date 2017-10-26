@@ -66,7 +66,7 @@ public class HelpPresenter extends BasePresenter implements OnDataListener,HelpA
     public boolean onClick(int position, View view, String status) {
         Intent intent = new Intent(context, HelpDetailActivity.class);
         intent.putExtra("title","帮助详情");
-        intent.putExtra("url","http://120.24.231.219/kp_dyz/cli-dgc-helpdetail.php?article_id="+status);
+        intent.putExtra("url",XtdConst.SERVERURI+"cli-dgc-helpdetail.php?article_id="+status);
         context.startActivity(intent);
         return false;
     }

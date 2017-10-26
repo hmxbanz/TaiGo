@@ -1,11 +1,9 @@
 package com.xtdar.app.presenter;
 
 import android.content.Context;
-import android.support.annotation.NonNull;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.text.TextUtils;
 
 import com.orhanobut.logger.Logger;
 import com.xtdar.app.XtdConst;
@@ -14,7 +12,6 @@ import com.xtdar.app.common.NLog;
 import com.xtdar.app.common.NToast;
 import com.xtdar.app.common.json.JsonMananger;
 import com.xtdar.app.listener.EndlessRecyclerOnScrollListener;
-import com.xtdar.app.listener.GSYVideoPlayerOnScrollListener;
 import com.xtdar.app.server.HttpException;
 import com.xtdar.app.server.async.OnDataListener;
 import com.xtdar.app.server.response.ClassListResponse;
@@ -145,7 +142,7 @@ public class ShowFirstPresenter extends BasePresenter implements OnDataListener,
                 try {
                     List<ClassListResponse.DataBean> listCache = JsonMananger.jsonToList(Cache, ClassListResponse.DataBean.class);
                     Logger.d("ShowFirstList>>> %s", listCache);
-                    list=listCache;
+                    list.addAll(listCache);
                     dataAdapter.notifyDataSetChanged();
                 } catch (HttpException e) {
                     e.printStackTrace();
@@ -154,7 +151,6 @@ public class ShowFirstPresenter extends BasePresenter implements OnDataListener,
             }
         }
         lastItem = "0";
-        list.clear();
         LoadDialog.show(context);
         atm.request(GETSHOWFIRSTLIST, this);
     }

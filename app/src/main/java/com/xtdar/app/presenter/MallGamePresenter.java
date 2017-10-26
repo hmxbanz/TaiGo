@@ -169,12 +169,6 @@ public class MallGamePresenter extends BasePresenter implements  SwipeRefreshLay
 
                     onScrollListener.setCanloadMore(true);
 
-                    int wwwwww=0;
-                    for (GameListResponse.DataBean oo : list) {
-                        Logger.d("游戏索引:"+wwwwww+++"  游戏ID:%s  游戏名:%s", oo.getGame_id(),oo.getGame_name());
-                    }
-                    Logger.d("数量:%s=列表:%s", list.size(),list);
-
                     dataAdapter.setListItems(list);
                     dataAdapter.notifyDataSetChanged();
                 }
@@ -203,15 +197,31 @@ public class MallGamePresenter extends BasePresenter implements  SwipeRefreshLay
                     }
                     //对比
                     String connectMac = mActivity.mBluetoothService.getMac();
+                    String connectName = mActivity.mBluetoothService.getName();
                     for(GameCheckResponse.DataBean bean: deviceList){
-                        for(ScanResult result1:mActivity.scanResultList)
+                        if(bean.getDevice_name().contains("-TGG-"))
                         {
-                            if (bean.getMac_address().equals(result1.getDevice().getAddress()))
-                                bean.setStatus(1);
-                        }
+                            //String deviceName2=bean.getDevice_name().substring(bean.getDevice_name().indexOf('-'),bean.getDevice_name().lastIndexOf('-')+1);
 
-                        if (bean.getMac_address().equals(connectMac))
-                            bean.setStatus(2);
+                            for(ScanResult result1:mActivity.scanResultList)
+                            {
+                                if(result1.getDevice().getName() !=null && result1.getDevice().getName().contains("-TGG-"))
+                                        bean.setStatus(1);
+                            }
+
+                            if (connectName!=null  && connectName.contains("-TGG-")){
+                                bean.setStatus(2);
+                            }
+                        }
+                        else {
+                            for (ScanResult result1 : mActivity.scanResultList) {
+                                if (bean.getMac_address().equals(result1.getDevice().getAddress()))
+                                    bean.setStatus(1);
+                            }
+
+                            if (bean.getMac_address().equals(connectMac))
+                                bean.setStatus(2);
+                        }
                     }
 
                     Iterator<GameCheckResponse.DataBean> iterator = deviceList.iterator();
@@ -313,10 +323,10 @@ public class MallGamePresenter extends BasePresenter implements  SwipeRefreshLay
         int gameExit=query.list().size();
 
         if (gameExit== 0) {
-            List<DownloadGame> listDb = downloadGameDao.loadAll();
-            for(DownloadGame a:listDb) {
-                NLog.e("DBdata",a.getGameName()+"  版本："+a.getGameVersion() );
-            }
+//            List<DownloadGame> listDb = downloadGameDao.loadAll();
+//            for(DownloadGame a:listDb) {
+//                NLog.e("DBdata",a.getGameName()+"  版本："+a.getGameVersion() );
+//            }
 
             //启动下载服务
             if(downloadService!=null)
@@ -324,6 +334,9 @@ public class MallGamePresenter extends BasePresenter implements  SwipeRefreshLay
         }
         else
         {
+            final DownloadGame listDb = query.unique();
+            //downloadGameDao.queryBuilder().where(DownloadGameDao.Properties.GameId.eq(bean.getGame_id())).unique();
+
             //判断游戏与APP是否匹配
             String[] versionInfo = getVersionInfo(context);
             int versionCode = Integer.parseInt(versionInfo[0]);
@@ -336,14 +349,27 @@ public class MallGamePresenter extends BasePresenter implements  SwipeRefreshLay
 
                 });
             }
+            else if(Integer.parseInt(bean.getGame_zip_ver())>Integer.parseInt(listDb.getGameVersion())){
+                final String url=bean.getGameConfig().getDownload_url();
+                DialogWithYesOrNoUtils.getInstance().showDialog(context, "温馨提示：游戏包需更新。", null,null, new AlertDialogCallback() {
+                    @Override
+                    public void executeEvent() {
+                        //启动下载服务
+                        if(downloadService!=null)
+                            downloadService.startDownload(url,MallGamePresenter.this.unityGameId);
+                        //更新本地数据库
+                        downloadGameDao.update(listDb);
+
+                    }
+
+                });
+            }
             else {
                 LoadDialog.show(context);
                 mActivity.mBluetoothService.setScanCallback(callback);
                 mActivity.mBluetoothService.scanDevice();
             }
         }
-
-
     }
 
     public void bindService() {
@@ -378,7 +404,6 @@ public class MallGamePresenter extends BasePresenter implements  SwipeRefreshLay
                     //插入本地数据库
                     DownloadGame newDownloadGame = new DownloadGame();
                     newDownloadGame.setGameId(Integer.parseInt(MallGamePresenter.this.gameId));
-                    newDownloadGame.setGameName(MallGamePresenter.this.gameName);
                     newDownloadGame.setGameName(MallGamePresenter.this.gameName);
                     newDownloadGame.setGameVersion(MallGamePresenter.this.gameVersion);
                     downloadGameDao.insert(newDownloadGame);
@@ -428,7 +453,6 @@ public class MallGamePresenter extends BasePresenter implements  SwipeRefreshLay
 
         @Override
         public void onScanComplete() {
-            NLog.d("aaaaaaaaaaaaaaaaaaaaa","aaaaaaaaaaaaaaaaaaaaaaaaaaa");
             //传游戏名查询
             atm.request(GAMECHECK,MallGamePresenter.this);  }
 
@@ -504,7 +528,6 @@ public class MallGamePresenter extends BasePresenter implements  SwipeRefreshLay
                 }
         }
         lastItem ="0";
-        list.clear();
         LoadDialog.show(context);
         atm.request(GETMALLLIST,this);
     }
