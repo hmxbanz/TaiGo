@@ -230,7 +230,7 @@ public class BlePresenter extends BasePresenter implements OnDataListener, BleAd
             case BINDDEVICE:
                 return mUserAction.bindDevice(selectedDevice.getDevice().getAddress());
             case BINDQRCODE:
-                return mUserAction.bindQrcode(selectedDevice.getDevice().getAddress(),qrCode);
+                return mUserAction.bindQrcode(selectedDevice.getDevice().getAddress(),qrCode,selectedDevice.getDevice().getName());
 
         }
             return null;

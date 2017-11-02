@@ -124,9 +124,9 @@ public class ClassListAnimationAdapter extends RecyclerView.Adapter<RecyclerView
                 }
             });
             if(listItem.is_download())
-                dataDolder.btnStartGame.setText("玩一玩");
-            else
                 dataDolder.btnStartGame.setText("进 入");
+            else
+                dataDolder.btnStartGame.setText("加 载");
 
         }
     }

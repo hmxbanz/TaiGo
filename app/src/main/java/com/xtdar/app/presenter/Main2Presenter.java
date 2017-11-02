@@ -189,6 +189,7 @@ public class Main2Presenter extends BasePresenter {
 
     }
 
+
     public void onDestroy() {
         activity.editor.putBoolean(XtdConst.ISLOGIN, false);//退出改登录标记
         activity.editor.commit();

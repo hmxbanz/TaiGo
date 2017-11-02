@@ -1009,7 +1009,7 @@ public class UserAction extends BaseAction {
 
     public BindResponse bindDevice(String mac) throws HttpException{
         String result = "";
-        String uri = getURL("cli-dg-binddevice.php");
+        String uri = getURL("cli-dg-binddev.php");
         Response response=null;
         try {
             response=OkHttpUtils
@@ -1518,9 +1518,9 @@ public class UserAction extends BaseAction {
     }
 
 //绑定二维码
-    public BindResponse bindQrcode(String address, String qrCode)  throws HttpException{
+    public BindResponse bindQrcode(String address, String qrCode, String bleName)  throws HttpException{
         String result = "";
-        String uri = getURL("cli-dg-bindbyqrsn.php");
+        String uri = getURL("cli-dg-bindbysn.php");
         Response response=null;
         try {
             response=OkHttpUtils
@@ -1529,6 +1529,7 @@ public class UserAction extends BaseAction {
                     .addParams("access_key",token)
                     .addParams("mac_address",address)
                     .addParams("sn",qrCode)
+                    .addParams("blue_name",bleName)
                     .build()
                     .execute();
             result =response.body().string();

@@ -89,6 +89,7 @@ public class MallGamePresenter extends BasePresenter implements  SwipeRefreshLay
     public boolean isDownloading;
     private String gameName;
     private String gameVersion;
+    private int gameExit;
 
     public MallGamePresenter(Context context){
         super(context);
@@ -320,7 +321,7 @@ public class MallGamePresenter extends BasePresenter implements  SwipeRefreshLay
         Query<DownloadGame> query =downloadGameDao.queryBuilder().where(DownloadGameDao.Properties.GameId.eq(bean.getGame_id()))
                                                   .orderDesc(DownloadGameDao.Properties.GameId).build();
 
-        int gameExit=query.list().size();
+        gameExit=query.list().size();
 
         if (gameExit== 0) {
 //            List<DownloadGame> listDb = downloadGameDao.loadAll();
@@ -340,6 +341,7 @@ public class MallGamePresenter extends BasePresenter implements  SwipeRefreshLay
             //判断游戏与APP是否匹配
             String[] versionInfo = getVersionInfo(context);
             int versionCode = Integer.parseInt(versionInfo[0]);
+            final String localVersion=bean.getGame_zip_ver();
             if(bean.getMin_an_ver()>versionCode){
                 DialogWithYesOrNoUtils.getInstance().showDialog(context, "温馨提示：版本过低需升级。", null,null, new AlertDialogCallback() {
                     @Override
@@ -358,6 +360,7 @@ public class MallGamePresenter extends BasePresenter implements  SwipeRefreshLay
                         if(downloadService!=null)
                             downloadService.startDownload(url,MallGamePresenter.this.unityGameId);
                         //更新本地数据库
+                        listDb.setGameVersion(localVersion);
                         downloadGameDao.update(listDb);
 
                     }
@@ -402,11 +405,13 @@ public class MallGamePresenter extends BasePresenter implements  SwipeRefreshLay
                 public void onDownloadDone() {
                     isDownloading=!isDownloading;
                     //插入本地数据库
-                    DownloadGame newDownloadGame = new DownloadGame();
-                    newDownloadGame.setGameId(Integer.parseInt(MallGamePresenter.this.gameId));
-                    newDownloadGame.setGameName(MallGamePresenter.this.gameName);
-                    newDownloadGame.setGameVersion(MallGamePresenter.this.gameVersion);
-                    downloadGameDao.insert(newDownloadGame);
+                    if (gameExit== 0) {
+                        DownloadGame newDownloadGame = new DownloadGame();
+                        newDownloadGame.setGameId(Integer.parseInt(MallGamePresenter.this.gameId));
+                        newDownloadGame.setGameName(MallGamePresenter.this.gameName);
+                        newDownloadGame.setGameVersion(MallGamePresenter.this.gameVersion);
+                        downloadGameDao.insert(newDownloadGame);
+                    }
 
                 }
             });
@@ -483,7 +488,9 @@ public class MallGamePresenter extends BasePresenter implements  SwipeRefreshLay
         onScrollListener.reset();
         onScrollListener.setCanloadMore(true);
         lastItem ="0";
+        int length=list.size();
         list.clear();
+        dataAdapter.notifyItemRangeRemoved(0,length);
         atm.request(GETMALLLIST,this);
     }
     //弹出框蓝牙列表点击事件

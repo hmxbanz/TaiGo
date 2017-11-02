@@ -265,7 +265,7 @@ public class LoginPresenter extends BasePresenter  {
         headimgurl = (String) hashMap.get("headimgurl");
         Logger.d("nickname:"+nickname);
         Logger.d("headimgurl:"+headimgurl);
-        editor.putString("openId", openId);
+        editor.putString(XtdConst.OPENID, openId);
         editor.putString("loginType", "wx");
         editor.apply();
         atm.request(UPLOADWXOPENID,this);

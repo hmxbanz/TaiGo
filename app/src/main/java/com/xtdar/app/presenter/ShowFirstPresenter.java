@@ -85,7 +85,7 @@ public class ShowFirstPresenter extends BasePresenter implements OnDataListener,
         switch (requestCode) {
             case GETSHOWFIRSTLIST:
                 ClassListResponse response = (ClassListResponse) result;
-                if (response!=null && response.getCode() == XtdConst.SUCCESS) {
+                if (response!=null && response.getCode() == XtdConst.SUCCESS && response.getData().size()>0) {
                     List<ClassListResponse.DataBean> listTemp = response.getData();
                     NLog.d("ShowFirstCacheString>>>>",listTemp);
                     lastItem=listTemp.get(listTemp.size()-1).getItem_id();
@@ -128,7 +128,9 @@ public class ShowFirstPresenter extends BasePresenter implements OnDataListener,
         onScrollListener.reset();
         onScrollListener.setCanloadMore(true);
         lastItem ="0";
+        int length=list.size();
         list.clear();
+        dataAdapter.notifyItemRangeRemoved(0,length);
         atm.request(GETSHOWFIRSTLIST,this);
     }
 

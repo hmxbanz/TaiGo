@@ -43,14 +43,14 @@ public class SpecialGameFragment extends Fragment {
         view = inflater.inflate(R.layout.fragment_home_animation, null);
         initViews();
         presenter = new SpecialGamePresenter(getContext());
+        presenter.init(swiper,recycleView);
         return view;
     }
 
     @Override
     public void onStart() {
         super.onStart();
-        presenter.init(swiper,recycleView);
-        presenter.loadData();
+        presenter.onRefresh();
     }
 
     private void initViews() {

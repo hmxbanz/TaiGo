@@ -148,7 +148,9 @@ public class SpecialGamePresenter extends BasePresenter implements SwipeRefreshL
         onScrollListener.reset();
         onScrollListener.setCanloadMore(true);
         lastItem ="0";
+        int length=list.size();
         list.clear();
+        dataAdapter.notifyItemRangeRemoved(0,length);
         atm.request(GETSPECIALlIST,this);
     }
 

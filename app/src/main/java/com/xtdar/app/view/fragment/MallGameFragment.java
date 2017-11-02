@@ -50,7 +50,7 @@ public class MallGameFragment extends Fragment {
     @Override
     public void onStart() {
         super.onStart();
-        presenter.loadData();
+        presenter.onRefresh();
     }
 
     private void initViews() {

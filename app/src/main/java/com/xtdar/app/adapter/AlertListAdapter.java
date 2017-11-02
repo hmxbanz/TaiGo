@@ -94,6 +94,4 @@ public class AlertListAdapter extends BaseAdapter {
         LinearLayout layout_item;
     }
 
-
-
 }

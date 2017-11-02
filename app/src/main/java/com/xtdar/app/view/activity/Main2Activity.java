@@ -80,7 +80,6 @@ public class Main2Activity extends BaseActivity implements View.OnClickListener{
     @Override
     protected void onStart() {
         super.onStart();
-        main2Presenter.autoLogin();
     }
 
 
@@ -100,9 +99,9 @@ public class Main2Activity extends BaseActivity implements View.OnClickListener{
     @Override
     protected void onResume() {
         super.onResume();
-
-
+        main2Presenter.autoLogin();
     }
+
 
     private void initViews() {
         RelativeLayout homeLayout,shopLayout, discoveryLayout,meLayout;
@@ -292,8 +291,8 @@ public class Main2Activity extends BaseActivity implements View.OnClickListener{
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        main2Presenter.onDestroy();
         AlibcTradeSDK.destory();//释放阿里百川
+        main2Presenter.onDestroy();
     }
 
     @Override

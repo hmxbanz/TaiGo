@@ -81,7 +81,7 @@ public class ShowPresenter extends BasePresenter implements OnDataListener,Recyc
         switch (requestCode) {
             case GETSHOWLIST:
                 ShowResponse showResponse=(ShowResponse)result;
-                if (showResponse.getData() != null) {
+                if (showResponse.getData() != null && showResponse.getData().size()>0) {
                     List<ShowResponse.DataBean> listTemp = showResponse.getData();
                     lastItem=listTemp.get(listTemp.size()-1).getShow_id();
 
@@ -118,7 +118,9 @@ public class ShowPresenter extends BasePresenter implements OnDataListener,Recyc
         onScrollListener.reset();
         onScrollListener.setCanloadMore(true);
         lastItem ="0";
+        int length=list.size();
         list.clear();
+        recyclerNormalAdapter.notifyItemRangeRemoved(0,length);
         atm.request(GETSHOWLIST,this);
     }
 
