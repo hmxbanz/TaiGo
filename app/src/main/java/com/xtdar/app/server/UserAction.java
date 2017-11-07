@@ -554,7 +554,7 @@ public class UserAction extends BaseAction {
     //版本检查
     public VersionResponse checkVersion() throws HttpException {
         String result = "";
-        String uri ="http://dyz.173csw.com/app_source/dl/version.txt";
+        String uri ="http://test.xtaigo.com/app_source/dl/version.txt";
         Response response=null;
         try {
             response=OkHttpUtils

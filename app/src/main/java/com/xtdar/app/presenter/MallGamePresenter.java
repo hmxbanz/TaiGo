@@ -210,9 +210,9 @@ public class MallGamePresenter extends BasePresenter implements  SwipeRefreshLay
                                         bean.setStatus(1);
                             }
 
-                            if (connectName!=null  && connectName.contains("-TGG-")){
+                            if (connectName!=null  && connectName.contains("-TGG-"))
                                 bean.setStatus(2);
-                            }
+
                         }
                         else {
                             for (ScanResult result1 : mActivity.scanResultList) {
@@ -239,24 +239,46 @@ public class MallGamePresenter extends BasePresenter implements  SwipeRefreshLay
                     }
                     else
                     {
-                        dialogWithList=DialogWithList.getInstance(context);
-                        dialogWithList.showDialog(new DialogWithList.DialogCallBack(){
-                            @Override
-                            public void executeEvent() {
+//                                            dialogWithList=DialogWithList.getInstance(context);
+//                                            dialogWithList.showDialog(new DialogWithList.DialogCallBack(){
+//                                                @Override
+//                                                public void executeEvent() {
+//
+//                                                }
+//
+//                                                @Override
+//                                                public void onCancle() {
+//
+//                                                }
+//                                            });
+//
+//                                            dialogWithList.setTitle("请选择设备");
+//                                            dialogWithList.setConfirmText("更多设备");
+//                                            this.alertListAdapter.setmList(deviceList);
+//                                            this.alertListAdapter.setOnItemClick(this);
+//                                            dialogWithList.getListView().setAdapter(this.alertListAdapter);
 
-                            }
 
-                            @Override
-                            public void onCancle() {
+                        GameCheckResponse.DataBean bean = deviceList.get(0);
+                        toUnityPlayerActivityInent = new Intent(context, UnityPlayerActivity.class);
 
-                            }
-                        });
+                        toUnityPlayerActivityInent.putExtra("ServiceId", bean.getService_uuid());
+                        toUnityPlayerActivityInent.putExtra("ReadId", bean.getRead_uuid());
+                        toUnityPlayerActivityInent.putExtra("WriteId", bean.getWrite_uuid());
+                        toUnityPlayerActivityInent.putExtra("isHigh", bean.getDeviceConfig().getIsHigh());
+                        toUnityPlayerActivityInent.putExtra("gameId", unityGameId);
+                        toUnityPlayerActivityInent.putExtra("BleName", bean.getDevice_name());
 
-                        dialogWithList.setTitle("请选择设备");
-                        dialogWithList.setConfirmText("更多设备");
-                        this.alertListAdapter.setmList(deviceList);
-                        this.alertListAdapter.setOnItemClick(this);
-                        dialogWithList.getListView().setAdapter(this.alertListAdapter);
+                        connectMac = mActivity.mBluetoothService.getMac();
+                        NLog.w("connectMac:::::::",connectMac);
+                        if(TextUtils.isEmpty(connectMac)) {
+                            LoadDialog.show(context);
+                            mActivity.mBluetoothService.scanAndConnect5(bean.getMac_address());
+                        }
+                        else {
+                            context.startActivity(toUnityPlayerActivityInent);
+                        }
+
 
                     }
 
@@ -298,7 +320,6 @@ public class MallGamePresenter extends BasePresenter implements  SwipeRefreshLay
         if(isDownloading){
             if(!bean.getGame_id().equals(this.gameId))
             DialogWithYesOrNoUtils.getInstance().showDialog(context, "游戏正在下载，请稍候", null,null, new AlertDialogCallback() {   });
-
             return;
         }
         if(!basePresenter.isLogin){
@@ -396,7 +417,7 @@ public class MallGamePresenter extends BasePresenter implements  SwipeRefreshLay
                 public void onProgessUpdate(float progress) {
                     isDownloading=true;
                     if(progress==1)
-                        btnStartGame.setText("玩一玩");
+                        btnStartGame.setText("进 入");
                     else
                         btnStartGame.setText("下载中"+String.valueOf((int)(progress*100))+"%");
                 }
@@ -477,7 +498,6 @@ public class MallGamePresenter extends BasePresenter implements  SwipeRefreshLay
         @Override
         public void onServicesDiscovered() {
             connectMac = mActivity.mBluetoothService.getMac();
-            LoadDialog.dismiss(context);
             context.startActivity(toUnityPlayerActivityInent);
 
         }
@@ -497,25 +517,8 @@ public class MallGamePresenter extends BasePresenter implements  SwipeRefreshLay
     @Override
     public boolean onClick(int position, View view, GameCheckResponse.DataBean entity) {
         dialogWithList.cancleAlterDialog();
-        GameCheckResponse.DataBean bean = deviceList.get(position);
-        toUnityPlayerActivityInent = new Intent(context, UnityPlayerActivity.class);
 
-        toUnityPlayerActivityInent.putExtra("ServiceId", bean.getService_uuid());
-        toUnityPlayerActivityInent.putExtra("ReadId", bean.getRead_uuid());
-        toUnityPlayerActivityInent.putExtra("WriteId", bean.getWrite_uuid());
-        toUnityPlayerActivityInent.putExtra("isHigh", bean.getDeviceConfig().getIsHigh());
-        toUnityPlayerActivityInent.putExtra("gameId", unityGameId);
-        toUnityPlayerActivityInent.putExtra("BleName", bean.getDevice_name());
 
-        connectMac = mActivity.mBluetoothService.getMac();
-        NLog.w("connectMac:::::::",connectMac);
-        if(TextUtils.isEmpty(connectMac)) {
-            LoadDialog.show(context);
-            mActivity.mBluetoothService.scanAndConnect5(bean.getMac_address());
-        }
-        else {
-            context.startActivity(toUnityPlayerActivityInent);
-        }
         return true;
     }
     //加载数据

@@ -99,7 +99,7 @@
         <TextView
             style="@style/AppTitleStyle2"
             android:gravity="center_vertical"
-            android:text="仅Wifi下载故事"
+            android:text="仅Wifi下载"
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="match_parent" />
