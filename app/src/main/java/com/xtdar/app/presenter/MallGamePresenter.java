@@ -90,6 +90,8 @@ public class MallGamePresenter extends BasePresenter implements  SwipeRefreshLay
     private String gameName;
     private String gameVersion;
     private int gameExit;
+    private ClassListAnimationAdapter.DataHolder dataHolder;
+    private int clickPosition,showPosition;
 
     public MallGamePresenter(Context context){
         super(context);
@@ -172,6 +174,8 @@ public class MallGamePresenter extends BasePresenter implements  SwipeRefreshLay
 
                     dataAdapter.setListItems(list);
                     dataAdapter.notifyDataSetChanged();
+
+
                 }
                 else {
                     NToast.shortToast(context, "大厅游戏："+response.getMsg());
@@ -332,7 +336,9 @@ public class MallGamePresenter extends BasePresenter implements  SwipeRefreshLay
             });
             return;
         }
-        btnStartGame = (TextView)v.findViewById(R.id.btn_start_game);
+        clickPosition=position;
+
+        btnStartGame = (TextView)v;
         this.unityGameId =String.valueOf(bean.getGameConfig().getUnity_game_id());
         this.gameId =bean.getGame_id();
         this.gameName =bean.getGame_name();
@@ -396,6 +402,7 @@ public class MallGamePresenter extends BasePresenter implements  SwipeRefreshLay
         }
     }
 
+
     public void bindService() {
         Intent bindIntent = new Intent(context, DownloadGameService.class);
         context.bindService(bindIntent, serviceConnection, Context.BIND_AUTO_CREATE);
@@ -416,10 +423,19 @@ public class MallGamePresenter extends BasePresenter implements  SwipeRefreshLay
                 @Override
                 public void onProgessUpdate(float progress) {
                     isDownloading=true;
-                    if(progress==1)
-                        btnStartGame.setText("进 入");
-                    else
-                        btnStartGame.setText("下载中"+String.valueOf((int)(progress*100))+"%");
+
+                    for (int i=0;i<dataAdapter.getViewList().size();i++) {
+                        ClassListAnimationAdapter.DataHolder dataHolder= (ClassListAnimationAdapter.DataHolder) dataAdapter.getViewList().get(i);
+                        if(clickPosition==dataHolder.getLayoutPosition())
+                        {
+                            if (progress == 1)
+                                dataHolder.getBtnStartGame().setText("进入");
+                            else
+                                dataHolder.getBtnStartGame().setText("下载中"+String.valueOf((int)(progress*100))+"%");
+                        }
+
+                    }
+
                 }
 
                 @Override
@@ -436,7 +452,6 @@ public class MallGamePresenter extends BasePresenter implements  SwipeRefreshLay
 
                 }
             });
-
         }
 
         @Override

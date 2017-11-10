@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import com.xtdar.app.R;
 import com.xtdar.app.XtdConst;
+import com.xtdar.app.common.NLog;
 import com.xtdar.app.loader.GlideImageLoader;
 import com.xtdar.app.server.response.ClassListResponse;
 import com.xtdar.app.server.response.GameListResponse;
@@ -38,6 +39,12 @@ public class ClassListAnimationAdapter extends RecyclerView.Adapter<RecyclerView
     private GlideImageLoader glideImageLoader;
     private Context context;
     private List<String> adImages;
+
+    public List<RecyclerView.ViewHolder> getViewList() {
+        return viewList;
+    }
+
+    private List<RecyclerView.ViewHolder> viewList=new ArrayList<>();                    //View对象集合
 
     public void setOnItemClickListener(ItemClickListener listener) {
         mListener = listener;
@@ -108,6 +115,7 @@ public class ClassListAnimationAdapter extends RecyclerView.Adapter<RecyclerView
             headerHolder.banner.start();
         }
         if(getItemViewType(position) == TYPE_HEADER) return;
+
         final GameListResponse.DataBean listItem = listItems.get(position);
         if(holder instanceof DataHolder) {
             DataHolder dataDolder=(DataHolder)holder;
@@ -127,6 +135,19 @@ public class ClassListAnimationAdapter extends RecyclerView.Adapter<RecyclerView
                 dataDolder.btnStartGame.setText("进 入");
             else
                 dataDolder.btnStartGame.setText("加 载");
+
+
+            boolean foundPosition=false;
+            for (int i=0;i<viewList.size();i++) {
+                ClassListAnimationAdapter.DataHolder holder2= (ClassListAnimationAdapter.DataHolder) viewList.get(i);
+                if(position==holder2.getLayoutPosition())
+                  foundPosition=true;
+            }
+            if(foundPosition==false) {
+                viewList.add(position, dataDolder);
+            }
+
+
 
         }
     }
@@ -206,13 +227,14 @@ public class ClassListAnimationAdapter extends RecyclerView.Adapter<RecyclerView
 
     }
 
-    class DataHolder extends RecyclerView.ViewHolder implements View.OnClickListener
+    public class DataHolder extends RecyclerView.ViewHolder implements View.OnClickListener
     {
         private TextView title;
         private TextView className;
         private ImageView imageView;
         private View listLayoutView;
-        private TextView btnStartGame;
+
+       private TextView btnStartGame;
 
         public DataHolder(View itemView) {
             super(itemView);
@@ -240,6 +262,9 @@ public class ClassListAnimationAdapter extends RecyclerView.Adapter<RecyclerView
         }
         public void setTitle(TextView title) {
             this.title = title;
+        }
+        public TextView getBtnStartGame() {
+            return btnStartGame;
         }
 
         @Override
