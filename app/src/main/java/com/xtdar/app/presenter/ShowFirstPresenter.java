@@ -42,6 +42,7 @@ public class ShowFirstPresenter extends BasePresenter implements OnDataListener,
         super(context);
         linearLayoutManager = new LinearLayoutManager(context);
         dataAdapter = new ClassListNuAdapter(context, list);
+        dataAdapter.setOnItemClickListener(this);
     }
 
     public void init(SwipeRefreshLayout swiper,RecyclerView videoList) {
@@ -103,10 +104,7 @@ public class ShowFirstPresenter extends BasePresenter implements OnDataListener,
                     else
                         list.addAll(response.getData());
 
-                    dataAdapter.setOnItemClickListener(this);
                     dataAdapter.setListData(list);
-                    dataAdapter.notifyDataSetChanged();
-
                     onScrollListener.setCanloadMore(true);
 
                 }

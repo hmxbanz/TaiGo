@@ -92,7 +92,27 @@
                         android:padding="5dp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content" />
-
+                    <View
+                        android:background="@color/appbg"
+                        android:layout_width="1dp"
+                        android:layout_height="match_parent" />
+                    <LinearLayout
+                        android:id="@+id/layout_share"
+                        android:paddingTop="10dp"
+                        android:orientation="vertical"
+                        android:layout_width="30dp"
+                        android:gravity="center"
+                        android:layout_height="match_parent">
+                        <ImageView
+                            android:src="@drawable/icon_share"
+                            android:layout_width="20dp"
+                            android:layout_height="20dp" />
+                        <TextView
+                            android:textSize="10dp"
+                            android:text="分享"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent" />
+                    </LinearLayout>
                 </LinearLayout>
             </LinearLayout>
 

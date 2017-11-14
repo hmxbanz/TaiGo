@@ -60,7 +60,7 @@ public class DetailActivity extends BaseActivity implements RecyclerViewAdapter.
     private StandardGSYVideoPlayer videoPlayer;
     private EditText comment;
     private TextView title,content;
-    private LinearLayout layoutFavor;
+    private LinearLayout layoutFavor,layoutShare;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -99,12 +99,13 @@ public class DetailActivity extends BaseActivity implements RecyclerViewAdapter.
 
         title = (TextView) findViewById(R.id.txt_title);
         content = (TextView) findViewById(R.id.txt_content);
-        layoutFavor = (LinearLayout) findViewById(R.id.layout_favor);
-        layoutFavor.setOnClickListener(this);
         comment = (EditText) findViewById(R.id.comment);
         findViewById(R.id.btn_send).setOnClickListener(this);
 
-
+        layoutFavor = (LinearLayout) findViewById(R.id.layout_favor);
+        layoutFavor.setOnClickListener(this);
+        layoutShare = (LinearLayout) findViewById(R.id.layout_share);
+        layoutShare.setOnClickListener(this);
         //initFragments();
         //initViewPager();
     }
@@ -149,6 +150,9 @@ public class DetailActivity extends BaseActivity implements RecyclerViewAdapter.
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
+            case R.id.layout_share:
+                presenter.share();
+                break;
             case R.id.layout_favor:
                 presenter.addFavor();
                 break;

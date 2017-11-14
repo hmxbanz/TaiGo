@@ -18,6 +18,7 @@ import com.lzy.okhttputils.callback.FileCallback;
 import com.orhanobut.logger.Logger;
 import com.xtdar.app.common.NLog;
 import com.xtdar.app.widget.ZipExtractorTask;
+import com.zhy.http.okhttp.request.RequestCall;
 
 import java.io.File;
 import java.io.IOException;
@@ -40,6 +41,7 @@ public class DownloadGameService extends Service {
     private BluetoothGattCharacteristic characteristic;
     private int charaProp;
     private String unityGameId;
+    private String url;
 
     @Override
     public void onCreate() {
@@ -122,10 +124,9 @@ public class DownloadGameService extends Service {
             }
         };
 
+        url = resourceUrl;//"http://120.24.231.219/kp_dyz/app_source/dl/aaa.zip";
 
-        String url = resourceUrl;//"http://120.24.231.219/kp_dyz/app_source/dl/aaa.zip";
-
-            OkHttpUtils.get(url)
+        OkHttpUtils.get(url)
                     .url(url)
                     .tag(this)
                     .execute(fileCallback);
@@ -138,6 +139,10 @@ public class DownloadGameService extends Service {
         } else {
             threadHandler.post(runnable);
         }
+    }
+
+    public void cancleDownload(){
+        OkHttpUtils.getInstance().cancelTag(this);//取消以Activity.this作为tag的请求
     }
 
 

@@ -6,6 +6,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 
+import com.xtdar.app.XtdConst;
 import com.xtdar.app.common.NLog;
 import com.xtdar.app.common.NToast;
 import com.xtdar.app.common.json.JsonMananger;
@@ -45,30 +46,29 @@ public class ShowPresenter extends BasePresenter implements OnDataListener,Recyc
     }
 
     public void init(SwipeRefreshLayout swiper, RecyclerView videoList) {
-        this.swiper=swiper;
-        this.swiper.setOnRefreshListener(this);
-        this.videoList=videoList;
-        this.videoList.setAdapter(recyclerNormalAdapter);
-        this.videoList.setNestedScrollingEnabled(false);
         onScrollListener=new EndlessRecyclerOnScrollListener(linearLayoutManager) {
             @Override
             public void onLoadMore(int currentPage) {
-                lastItem = String.valueOf(currentPage - 1);
+                //lastItem = String.valueOf(currentPage - 1);
                 LoadDialog.show(context);
                 atm.request(GETSHOWLIST,ShowPresenter.this);
                 setCanloadMore(false);
             }
         };
-        videoList.setLayoutManager(linearLayoutManager);
-        videoList.addOnScrollListener(onScrollListener);
-
+        this.swiper=swiper;
+        this.swiper.setOnRefreshListener(this);
+        this.videoList=videoList;
+        this.videoList.setAdapter(recyclerNormalAdapter);
+        this.videoList.setLayoutManager(linearLayoutManager);
+        this.videoList.addOnScrollListener(onScrollListener);
+        this.videoList.setNestedScrollingEnabled(false);
     }
 
     @Override
     public Object doInBackground(int requestCode, String parameter) throws HttpException {
         switch (requestCode) {
             case GETSHOWLIST:
-                return mUserAction.getShowList(lastItem,"4");
+                return mUserAction.getShowList(lastItem,"3");
         }
         return null;
     }
@@ -81,7 +81,7 @@ public class ShowPresenter extends BasePresenter implements OnDataListener,Recyc
         switch (requestCode) {
             case GETSHOWLIST:
                 ShowResponse showResponse=(ShowResponse)result;
-                if (showResponse.getData() != null && showResponse.getData().size()>0) {
+                if (showResponse.getCode() == XtdConst.SUCCESS && showResponse.getData() != null && showResponse.getData().size()>0) {
                     List<ShowResponse.DataBean> listTemp = showResponse.getData();
                     lastItem=listTemp.get(listTemp.size()-1).getShow_id();
 
@@ -97,11 +97,11 @@ public class ShowPresenter extends BasePresenter implements OnDataListener,Recyc
                     }
                     else
                         list.addAll(showResponse.getData());
+
+                    recyclerNormalAdapter.setListData(list);
                     onScrollListener.setCanloadMore(true);
-                    recyclerNormalAdapter.notifyDataSetChanged();
                 }
                 else {
-                    if (showResponse != null)
                         NToast.shortToast(context, "牛人秀："+showResponse.getMsg());
                 }
                 break;

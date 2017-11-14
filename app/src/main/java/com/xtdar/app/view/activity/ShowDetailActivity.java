@@ -51,7 +51,7 @@ public class ShowDetailActivity extends BaseActivity implements RecyclerViewAdap
     private StandardGSYVideoPlayer videoPlayer;
 
     private TextView title;
-    private LinearLayout layoutFavor;
+    private LinearLayout layoutShare;
     private EditText comment;
     private TextView btnSend;
 
@@ -91,12 +91,18 @@ public class ShowDetailActivity extends BaseActivity implements RecyclerViewAdap
         btnSend = (TextView) findViewById(R.id.btn_send);
         btnSend.setOnClickListener(this);
 
+        layoutShare = (LinearLayout) findViewById(R.id.layout_share);
+        layoutShare.setOnClickListener(this);
+
     }
 
 
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
+            case R.id.layout_share:
+                presenter.share();
+                break;
             case R.id.btn_send:
                 presenter.addComment(comment);
                 break;

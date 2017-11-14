@@ -143,9 +143,9 @@ public class ClassListAnimationAdapter extends RecyclerView.Adapter<RecyclerView
                 if(position==holder2.getLayoutPosition())
                   foundPosition=true;
             }
-            if(foundPosition==false) {
+           // if(foundPosition==false) {
                 viewList.add(position, dataDolder);
-            }
+           // }
 
 
 
