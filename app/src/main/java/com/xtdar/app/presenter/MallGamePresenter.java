@@ -179,6 +179,13 @@ public class MallGamePresenter extends BasePresenter implements  SwipeRefreshLay
                 GameListResponse response = (GameListResponse) result;
                 if (response !=null && response.getCode() == XtdConst.SUCCESS ) {
                     final List<GameListResponse.DataBean> datas = response.getData();
+                    Iterator<GameListResponse.DataBean> iterator = datas.iterator();
+                    while (iterator.hasNext()) {
+                        GameListResponse.DataBean obj = iterator.next();
+                        if ("0".equals(obj.getAndroid_show()))
+                            iterator.remove();//这里要使用Iterator的remove方法移除当前对象，如果使用List的remove方法，则同样会出现ConcurrentModificationException
+                    }
+
                     for (GameListResponse.DataBean bean : datas) {
                         List<DownloadGame> listDb = downloadGameDao.loadAll();
                         //查询本地数据库是否有下载

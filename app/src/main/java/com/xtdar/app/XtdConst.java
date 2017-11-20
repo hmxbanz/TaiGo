@@ -20,10 +20,10 @@ public class XtdConst {
     public static final String USERID = "userId";
     public static final String USERINFOID = "userInfoId";
     public static final String DYNAMICID = "dynamicId";
-//    public static final String IMGURI="http://test.xtaigo.com/";
-//    public static final String SERVERURI="http://test.xtaigo.com/";
-    public static final String IMGURI="http://data.xtaigo.com/";
-    public static final String SERVERURI="http://data.xtaigo.com/";
+    public static final String IMGURI="http://test.xtaigo.com/";
+    public static final String SERVERURI="http://test.xtaigo.com/";
+//    public static final String IMGURI="http://data.xtaigo.com/";
+//    public static final String SERVERURI="http://data.xtaigo.com/";
     public static final String ISLOGIN = "isLogin";
     public static final String ITEMID = "item_id";
     public static final String CLASSID = "class_id";

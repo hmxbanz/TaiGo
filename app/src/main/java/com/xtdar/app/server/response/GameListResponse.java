@@ -60,6 +60,33 @@ public class GameListResponse {
         private String game_config;
         private int min_an_ver;
         private String min_ios_ver;
+        private String load_size;
+        private String ios_show;
+        private String android_show;
+
+        public String getLoad_size() {
+            return load_size;
+        }
+
+        public void setLoad_size(String load_size) {
+            this.load_size = load_size;
+        }
+
+        public String getIos_show() {
+            return ios_show;
+        }
+
+        public void setIos_show(String ios_show) {
+            this.ios_show = ios_show;
+        }
+
+        public String getAndroid_show() {
+            return android_show;
+        }
+
+        public void setAndroid_show(String android_show) {
+            this.android_show = android_show;
+        }
 
         public String getGame_zip_ver() {
             return game_zip_ver;

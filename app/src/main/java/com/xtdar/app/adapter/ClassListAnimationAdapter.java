@@ -120,7 +120,7 @@ public class ClassListAnimationAdapter extends RecyclerView.Adapter<RecyclerView
         if(holder instanceof DataHolder) {
             DataHolder dataDolder=(DataHolder)holder;
             dataDolder.title.setText(listItem.getGame_name());
-            dataDolder.className.setText(listItem.getGame_title());
+            dataDolder.className.setText(listItem.getGame_title()+"("+listItem.getLoad_size()+")");
             glideImageLoader.displayImage(context, XtdConst.IMGURI+listItem.getGame_img(),dataDolder.imageView);
             //Glide.with(context).load(listItem.getAvator()).asBitmap().into(holder.imageView);
             //holder.imageView.setImageResource(listItem.getImgResource());

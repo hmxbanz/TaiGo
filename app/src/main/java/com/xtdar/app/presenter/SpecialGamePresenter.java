@@ -16,11 +16,13 @@ import com.xtdar.app.common.json.JsonMananger;
 import com.xtdar.app.listener.EndlessRecyclerOnScrollListener;
 import com.xtdar.app.server.HttpException;
 import com.xtdar.app.server.async.OnDataListener;
+import com.xtdar.app.server.response.GameCheckResponse;
 import com.xtdar.app.server.response.GameListResponse;
 import com.xtdar.app.view.widget.LoadDialog;
 import com.youth.banner.Banner;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -91,6 +93,14 @@ public class SpecialGamePresenter extends BasePresenter implements SwipeRefreshL
                 GameListResponse response = (GameListResponse) result;
                 if (response.getCode() == XtdConst.SUCCESS) {
                     final List<GameListResponse.DataBean> datas = response.getData();
+
+                    Iterator<GameListResponse.DataBean> iterator = datas.iterator();
+                    while (iterator.hasNext()) {
+                        GameListResponse.DataBean obj = iterator.next();
+                        if ("0".equals(obj.getAndroid_show()))
+                            iterator.remove();//这里要使用Iterator的remove方法移除当前对象，如果使用List的remove方法，则同样会出现ConcurrentModificationException
+                    }
+
                     if(isFirstLoad) {
                         list = response.getData();
                         isFirstLoad=false;
@@ -102,7 +112,7 @@ public class SpecialGamePresenter extends BasePresenter implements SwipeRefreshL
                         }
                     }
                     else
-                        list.addAll(response.getData());
+                        list.addAll(datas);
 
                     onScrollListener.setCanloadMore(true);
 

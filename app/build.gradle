@@ -7,7 +7,7 @@ android {
         applicationId 'com.xtdar.app'
         minSdkVersion 18
         targetSdkVersion 25
-        versionCode 20171117
+        versionCode 20171118
         versionName '1.0.4.5'
         // dex突破65535的限制
         multiDexEnabled true

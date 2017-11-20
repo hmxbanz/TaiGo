@@ -41,6 +41,7 @@
                 android:textColor="@color/viewfinder_mask"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
+
         </RelativeLayout>
         <RelativeLayout
             android:layout_marginLeft="20dp"
