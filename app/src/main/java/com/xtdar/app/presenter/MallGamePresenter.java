@@ -1,5 +1,6 @@
 package com.xtdar.app.presenter;
 
+import android.Manifest;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
@@ -14,6 +15,7 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.clj.fastble.data.ScanResult;
 import com.orhanobut.logger.Logger;
@@ -33,6 +35,7 @@ import com.xtdar.app.server.HttpException;
 import com.xtdar.app.server.async.OnDataListener;
 import com.xtdar.app.server.response.GameCheckResponse;
 import com.xtdar.app.server.response.GameListResponse;
+import com.xtdar.app.server.response.VersionResponse;
 import com.xtdar.app.service.BluetoothService;
 import com.xtdar.app.service.DownloadGameService;
 import com.xtdar.app.view.activity.LoginActivity;
@@ -41,6 +44,9 @@ import com.xtdar.app.view.activity.UnityPlayerActivity;
 import com.xtdar.app.view.widget.LoadDialog;
 import com.xtdar.app.widget.DialogWithList;
 import com.xtdar.app.widget.DialogWithYesOrNoUtils;
+import com.xtdar.app.widget.downloadService.DownloadService;
+import com.xtdar.app.widget.permissionLibrary.PermissionsManager;
+import com.xtdar.app.widget.permissionLibrary.PermissionsResultAction;
 import com.youth.banner.Banner;
 
 import java.util.ArrayList;
@@ -60,6 +66,7 @@ import static com.xtdar.app.presenter.HomeFragmentPresenter.connectMac;
 public class MallGamePresenter extends BasePresenter implements  SwipeRefreshLayout.OnRefreshListener,OnDataListener,ClassListAnimationAdapter.ItemClickListener, AlertListAdapter.OnItemClick {
     private static final int GETMALLLIST = 2;
     private static final int GAMECHECK = 3;
+    private static final int CHECKVERSION = 4;
     private Banner Banner;
     private RecyclerView recyclerView;
     private GridLayoutManager gridLayoutManager;
@@ -130,6 +137,8 @@ public class MallGamePresenter extends BasePresenter implements  SwipeRefreshLay
     @Override
     public Object doInBackground(int requestCode, String parameter) throws HttpException {
         switch (requestCode) {
+            case CHECKVERSION:
+                return mUserAction.checkVersion();
             case GETMALLLIST:
                 return mUserAction.getShot("0",lastItem,"5");
             case GAMECHECK:
@@ -143,6 +152,29 @@ public class MallGamePresenter extends BasePresenter implements  SwipeRefreshLay
         if(result ==null) return;
         this.swiper.setRefreshing(false);
         switch (requestCode) {
+            case CHECKVERSION:
+                VersionResponse versionResponse = (VersionResponse) result;
+                if (versionResponse.getState() == XtdConst.SUCCESS) {
+                    final VersionResponse.ResultEntity entity=versionResponse.getAndroid();
+                    String[] versionInfo = getVersionInfo(context);
+                    int versionCode = Integer.parseInt(versionInfo[0]);
+                    if(entity.getVersionCode()>versionCode)
+                    {
+                        DialogWithYesOrNoUtils dialog=DialogWithYesOrNoUtils.getInstance();
+                        dialog.showDialog(context, "发现新版本:"+entity.getVersionName(), null,"立即更新",new AlertDialogCallback() {
+                            @Override
+                            public void executeEvent() {
+                                goToDownload(entity.getDownloadUrl());
+                            }
+
+
+                        });
+                        dialog.setContent(entity.getVersionInfo());
+                    }
+                }else {
+                    NToast.shortToast(context, "版本检测："+versionResponse.getMsg());
+                }
+                break;
             case GETMALLLIST:
                 GameListResponse response = (GameListResponse) result;
                 if (response !=null && response.getCode() == XtdConst.SUCCESS ) {
@@ -357,6 +389,14 @@ public class MallGamePresenter extends BasePresenter implements  SwipeRefreshLay
                                                   .orderDesc(DownloadGameDao.Properties.GameId).build();
 
         gameExit=query.list().size();
+        //判断游戏与APP是否匹配
+        String[] versionInfo = getVersionInfo(context);
+        int versionCode = Integer.parseInt(versionInfo[0]);
+        if(bean.getMin_an_ver()>versionCode){
+            NToast.longToast(context,"温馨提示：APP版本过低需升级。");
+            atm.request(CHECKVERSION,MallGamePresenter.this);
+            return;
+        }
 
         if (gameExit== 0) {
 //            List<DownloadGame> listDb = downloadGameDao.loadAll();
@@ -373,20 +413,9 @@ public class MallGamePresenter extends BasePresenter implements  SwipeRefreshLay
             final DownloadGame listDb = query.unique();
             //downloadGameDao.queryBuilder().where(DownloadGameDao.Properties.GameId.eq(bean.getGame_id())).unique();
 
-            //判断游戏与APP是否匹配
-            String[] versionInfo = getVersionInfo(context);
-            int versionCode = Integer.parseInt(versionInfo[0]);
             final String localVersion=bean.getGame_zip_ver();
-            if(bean.getMin_an_ver()>versionCode){
-                DialogWithYesOrNoUtils.getInstance().showDialog(context, "温馨提示：版本过低需升级。", null,null, new AlertDialogCallback() {
-                    @Override
-                    public void executeEvent() {
-                        //context.startActivity(new Intent(context, LoginActivity.class));
-                    }
 
-                });
-            }
-            else if(Integer.parseInt(bean.getGame_zip_ver())>Integer.parseInt(listDb.getGameVersion())){
+            if(Integer.parseInt(bean.getGame_zip_ver())>Integer.parseInt(listDb.getGameVersion())){
                 final String url=bean.getGameConfig().getDownload_url();
                 DialogWithYesOrNoUtils.getInstance().showDialog(context, "温馨提示：游戏包需更新。", null,null, new AlertDialogCallback() {
                     @Override
@@ -397,7 +426,6 @@ public class MallGamePresenter extends BasePresenter implements  SwipeRefreshLay
                         //更新本地数据库
                         listDb.setGameVersion(localVersion);
                         downloadGameDao.update(listDb);
-
                     }
 
                 });
@@ -583,5 +611,21 @@ public class MallGamePresenter extends BasePresenter implements  SwipeRefreshLay
         atm.request(GETMALLLIST,this);
     }
 
+    private void goToDownload(final String apkUrl) {
+        //权限申请
+        PermissionsManager.getInstance().requestPermissionsIfNecessaryForResult(mActivity,
+                new String[]{Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE}, new PermissionsResultAction() {
+                    @Override
+                    public void onGranted() {
+                        Intent intent=new Intent(mActivity,DownloadService.class);
+                        intent.putExtra("url", apkUrl);
+                        mActivity.startService(intent);
+                    }
+                    @Override
+                    public void onDenied(String permission) {
+                        Toast.makeText(context, "获取权限失败，请点击后允许获取", Toast.LENGTH_SHORT).show();
+                    }
+                }, true);
 
+    }
 }

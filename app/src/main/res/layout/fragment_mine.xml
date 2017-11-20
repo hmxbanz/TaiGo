@@ -8,340 +8,346 @@
     tools:context="com.xtdar.app.view.fragment.MineFragment">
 
     <include layout="@layout/layout_title_top2" />
-
-    <LinearLayout
-    android:layout_marginTop="10dp"
-    android:id="@+id/layout_title"
+<ScrollView
+    android:layout_marginBottom="55dp"
     android:layout_width="match_parent"
-    android:layout_height="100dp"
-    android:orientation="horizontal"
-    android:background="@color/white"
-    android:gravity="center|left">
-        <com.xtdar.app.view.widget.SelectableRoundedImageView
-    android:id="@+id/img_avator"
-    android:src="@drawable/logo"
-    android:layout_width="70dp"
-    android:layout_height="70dp"
-
-    android:layout_alignParentRight="true"
-    android:layout_centerVertical="true"
-    android:layout_marginLeft="25dp"
-    android:layout_marginRight="14sp"
-    android:scaleType="centerCrop"
-    app:sriv_left_bottom_corner_radius="50dip"
-    app:sriv_left_top_corner_radius="50dip"
-    app:sriv_right_bottom_corner_radius="50dip"
-    app:sriv_right_top_corner_radius="50dip"
-    app:sriv_border_width="2dip"
-    app:sriv_border_color="@color/white"
-    />
+    android:layout_height="match_parent">
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
         <LinearLayout
-            android:orientation="vertical"
-            android:gravity="center_vertical"
-            android:layout_weight="1"
-            android:layout_width="0dp"
-            android:layout_height="match_parent">
-            <TextView
-                android:id="@+id/nick_name"
-                android:text="小泰斗"
-                android:textSize="18dp"
-                android:textColor="@color/appTextColor"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+            android:layout_marginTop="10dp"
+            android:id="@+id/layout_title"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:orientation="horizontal"
+            android:background="@color/white"
+            android:gravity="center|left">
+            <com.xtdar.app.view.widget.SelectableRoundedImageView
+                android:id="@+id/img_avator"
+                android:src="@drawable/logo"
+                android:layout_width="70dp"
+                android:layout_height="70dp"
 
-        </LinearLayout>
-        <ImageView
-            android:src="@drawable/icon_arrow_right"
-            android:layout_width="50dp"
-            android:layout_height="20dp"
-            android:tint="@color/grayLine"
-            />
-</LinearLayout>
-
-    <!--<View android:layout_marginLeft="10dp" android:layout_marginRight="10dp" android:background="@color/grayLine" android:layout_width="match_parent"  android:layout_height="1dp" />-->
-
-<RelativeLayout
-    android:layout_marginTop="1dp"
-    android:background="@color/white"
-    android:layout_width="match_parent"
-    android:layout_height="75dp">
-    <LinearLayout
-        android:layout_alignParentBottom="true"
-        android:paddingTop="5dp"
-        android:paddingBottom="10dp"
-        android:layout_width="match_parent"
-        android:layout_height="70dp"
-        android:orientation="horizontal"
-        android:background="@color/white"
-        android:gravity="center">
-        <RelativeLayout
-            android:id="@+id/layout_dynamic"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            >
-            <ImageView
-                android:layout_centerHorizontal="true"
-                android:id="@+id/icon_ar"
-                android:src="@drawable/icon_ar"
-                android:layout_width="25dp"
-                android:layout_height="25dp" />
-            <TextView
-                android:layout_below="@+id/icon_ar"
-                android:gravity="center"
-                android:textSize="14dp"
-                android:layout_alignParentBottom="true"
-                android:text="发布视频"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
-        </RelativeLayout>
-        <RelativeLayout
-            android:id="@+id/layout_message"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-                >
-                <ImageView
-                    android:layout_centerHorizontal="true"
-                    android:id="@+id/icon_msg"
-                    android:src="@drawable/icon_msg"
-                    android:layout_width="25dp"
-                    android:layout_height="25dp" />
-
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="25dp"
+                android:layout_marginRight="14sp"
+                android:scaleType="centerCrop"
+                app:sriv_left_bottom_corner_radius="50dip"
+                app:sriv_left_top_corner_radius="50dip"
+                app:sriv_right_bottom_corner_radius="50dip"
+                app:sriv_right_top_corner_radius="50dip"
+                app:sriv_border_width="2dip"
+                app:sriv_border_color="@color/white"
+                />
+            <LinearLayout
+                android:orientation="vertical"
+                android:gravity="center_vertical"
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="match_parent">
                 <TextView
-                    android:gravity="center"
-                    android:layout_alignParentBottom="true"
-                    android:layout_below="@+id/icon_msg"
-                    android:text="消息"
-                    android:textSize="14dp"
-                    android:layout_width="match_parent"
+                    android:id="@+id/nick_name"
+                    android:text="小泰斗"
+                    android:textSize="18dp"
+                    android:textColor="@color/appTextColor"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
-            </RelativeLayout>
+
+            </LinearLayout>
+            <ImageView
+                android:src="@drawable/icon_arrow_right"
+                android:layout_width="50dp"
+                android:layout_height="20dp"
+                android:tint="@color/grayLine"
+                />
+        </LinearLayout>
+
+        <!--<View android:layout_marginLeft="10dp" android:layout_marginRight="10dp" android:background="@color/grayLine" android:layout_width="match_parent"  android:layout_height="1dp" />-->
+
         <RelativeLayout
-            android:id="@+id/layout_my_video"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
+            android:layout_marginTop="1dp"
+            android:background="@color/white"
+            android:layout_width="match_parent"
+            android:layout_height="75dp">
+            <LinearLayout
+                android:layout_alignParentBottom="true"
+                android:paddingTop="5dp"
+                android:paddingBottom="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="70dp"
+                android:orientation="horizontal"
+                android:background="@color/white"
+                android:gravity="center">
+                <RelativeLayout
+                    android:id="@+id/layout_dynamic"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    >
+                    <ImageView
+                        android:layout_centerHorizontal="true"
+                        android:id="@+id/icon_ar"
+                        android:src="@drawable/icon_ar"
+                        android:layout_width="25dp"
+                        android:layout_height="25dp" />
+                    <TextView
+                        android:layout_below="@+id/icon_ar"
+                        android:gravity="center"
+                        android:textSize="14dp"
+                        android:layout_alignParentBottom="true"
+                        android:text="发布视频"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
+                </RelativeLayout>
+                <RelativeLayout
+                    android:id="@+id/layout_message"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    >
+                    <ImageView
+                        android:layout_centerHorizontal="true"
+                        android:id="@+id/icon_msg"
+                        android:src="@drawable/icon_msg"
+                        android:layout_width="25dp"
+                        android:layout_height="25dp" />
+
+                    <TextView
+                        android:gravity="center"
+                        android:layout_alignParentBottom="true"
+                        android:layout_below="@+id/icon_msg"
+                        android:text="消息"
+                        android:textSize="14dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
+                </RelativeLayout>
+                <RelativeLayout
+                    android:id="@+id/layout_my_video"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    >
+                    <ImageView
+                        android:layout_centerHorizontal="true"
+                        android:id="@+id/icon_dynamic"
+                        android:src="@drawable/icon_dynamic"
+                        android:layout_width="25dp"
+                        android:layout_height="25dp" />
+                    <TextView
+                        android:layout_alignParentBottom="true"
+                        android:textSize="14dp"
+                        android:gravity="center"
+                        android:layout_below="@+id/icon_dynamic"
+                        android:text="我的视频"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
+                </RelativeLayout>
+            </LinearLayout>
+            <com.xtdar.app.view.widget.DragPointView
+                android:id="@+id/unread_num"
+                android:layout_width="16dp"
+                android:layout_height="16dp"
+                android:layout_marginLeft="190dp"
+                android:layout_marginTop="8dp"
+                android:textColor="@android:color/white"
+                android:textSize="10sp"
+                android:visibility="invisible" />
+        </RelativeLayout>
+
+        <LinearLayout
+            android:layout_marginTop="20dp"
+            android:id="@+id/layout_favor"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:orientation="horizontal"
+            android:background="@drawable/bg_line2"
+            android:gravity="center_vertical"
             >
             <ImageView
-                android:layout_centerHorizontal="true"
-                android:id="@+id/icon_dynamic"
-                android:src="@drawable/icon_dynamic"
-                android:layout_width="25dp"
-                android:layout_height="25dp" />
+                android:layout_alignParentLeft="true"
+                android:src="@drawable/icon_favor"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:tint="@color/titleBlue"/>
             <TextView
-                android:layout_alignParentBottom="true"
-                android:textSize="14dp"
-                android:gravity="center"
-                android:layout_below="@+id/icon_dynamic"
-                android:text="我的视频"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
-        </RelativeLayout>
-    </LinearLayout>
-    <com.xtdar.app.view.widget.DragPointView
-        android:id="@+id/unread_num"
-        android:layout_width="16dp"
-        android:layout_height="16dp"
-        android:layout_marginLeft="190dp"
-        android:layout_marginTop="8dp"
-        android:textColor="@android:color/white"
-        android:textSize="10sp"
-        android:visibility="invisible" />
-</RelativeLayout>
+                android:id="@+id/textView"
+                style="@style/MenuTitleStyle"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center_vertical"
+                android:paddingLeft="10dp"
+                android:text="我的收藏" />
 
-
-
-    <LinearLayout
-        android:layout_marginTop="20dp"
-        android:id="@+id/layout_favor"
-        android:paddingLeft="10dp"
-        android:paddingRight="10dp"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:orientation="horizontal"
-        android:background="@drawable/bg_line2"
-        android:gravity="center_vertical"
-        >
-        <ImageView
-            android:layout_alignParentLeft="true"
-            android:src="@drawable/icon_favor"
-            android:layout_width="20dp"
-            android:layout_height="20dp"
-            android:tint="@color/titleBlue"/>
-        <TextView
-            android:id="@+id/textView"
-            style="@style/MenuTitleStyle"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:gravity="center_vertical"
+            <ImageView
+                android:src="@drawable/icon_arrow_right"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:tint="@color/grayLine"
+                />
+        </LinearLayout>
+        <LinearLayout
+            android:id="@+id/layout_comment"
             android:paddingLeft="10dp"
-            android:text="我的收藏" />
-
-        <ImageView
-            android:src="@drawable/icon_arrow_right"
-            android:layout_width="20dp"
-            android:layout_height="20dp"
-            android:tint="@color/grayLine"
-            />
-    </LinearLayout>
-    <LinearLayout
-        android:id="@+id/layout_comment"
-        android:paddingLeft="10dp"
-        android:paddingRight="10dp"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:orientation="horizontal"
-        android:background="@drawable/bg_line2"
-        android:gravity="center_vertical"
-        >
-        <ImageView
-            android:layout_alignParentLeft="true"
-            android:src="@drawable/icon_comment"
-            android:layout_width="20dp"
-            android:layout_height="20dp"
-            android:tint="@color/titleBlue"/>
-        <TextView
-            style="@style/MenuTitleStyle"
-            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:orientation="horizontal"
+            android:background="@drawable/bg_line2"
             android:gravity="center_vertical"
-            android:text="我的评论"
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="match_parent" />
-        <ImageView
-            android:src="@drawable/icon_arrow_right"
-            android:layout_width="20dp"
-            android:layout_height="20dp"
-            android:tint="@color/grayLine"
-            />
-    </LinearLayout>
-    <LinearLayout
-        android:id="@+id/layout_update"
-        android:paddingLeft="10dp"
-        android:paddingRight="10dp"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:orientation="horizontal"
-        android:background="@drawable/bg_line2"
-        android:gravity="center_vertical"
-        >
-        <ImageView
-            android:layout_alignParentLeft="true"
-            android:src="@drawable/icon_me"
-            android:layout_width="20dp"
-            android:layout_height="20dp"
-            android:tint="@color/titleBlue"/>
-        <TextView
-            style="@style/MenuTitleStyle"
+            >
+            <ImageView
+                android:layout_alignParentLeft="true"
+                android:src="@drawable/icon_comment"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:tint="@color/titleBlue"/>
+            <TextView
+                style="@style/MenuTitleStyle"
+                android:paddingLeft="10dp"
+                android:gravity="center_vertical"
+                android:text="我的评论"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="match_parent" />
+            <ImageView
+                android:src="@drawable/icon_arrow_right"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:tint="@color/grayLine"
+                />
+        </LinearLayout>
+        <LinearLayout
+            android:id="@+id/layout_update"
             android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:orientation="horizontal"
+            android:background="@drawable/bg_line2"
             android:gravity="center_vertical"
-            android:text="编辑个人信息"
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="match_parent" />
-        <ImageView
-            android:src="@drawable/icon_arrow_right"
-            android:layout_width="20dp"
-            android:layout_height="20dp"
-            android:tint="@color/grayLine"
-            />
-    </LinearLayout>
-    <LinearLayout
-        android:id="@+id/layout_setting"
-        android:paddingLeft="10dp"
-        android:paddingRight="10dp"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:orientation="horizontal"
-        android:background="@drawable/bg_line2"
-        android:gravity="center_vertical"
-        >
-        <ImageView
-            android:layout_alignParentLeft="true"
-            android:src="@drawable/icon_device"
-            android:layout_width="20dp"
-            android:layout_height="20dp"
-            android:tint="@color/titleBlue"/>
-        <TextView
-            style="@style/MenuTitleStyle"
+            >
+            <ImageView
+                android:layout_alignParentLeft="true"
+                android:src="@drawable/icon_me"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:tint="@color/titleBlue"/>
+            <TextView
+                style="@style/MenuTitleStyle"
+                android:paddingLeft="10dp"
+                android:gravity="center_vertical"
+                android:text="编辑个人信息"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="match_parent" />
+            <ImageView
+                android:src="@drawable/icon_arrow_right"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:tint="@color/grayLine"
+                />
+        </LinearLayout>
+        <LinearLayout
+            android:id="@+id/layout_setting"
             android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:orientation="horizontal"
+            android:background="@drawable/bg_line2"
             android:gravity="center_vertical"
-            android:text="设置与帮助"
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="match_parent" />
-        <ImageView
-            android:src="@drawable/icon_arrow_right"
-            android:layout_width="20dp"
-            android:layout_height="20dp"
-            android:tint="@color/grayLine"
-            />
-    </LinearLayout>
-    <LinearLayout
-        android:id="@+id/layout_order"
-        android:paddingLeft="10dp"
-        android:paddingRight="10dp"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:orientation="horizontal"
-        android:background="@drawable/bg_line2"
-        android:gravity="center_vertical"
-        >
-        <ImageView
-            android:layout_alignParentLeft="true"
-            android:src="@drawable/icon_order"
-            android:layout_width="20dp"
-            android:layout_height="20dp"
-            android:tint="@color/titleBlue"/>
-        <TextView
-            style="@style/MenuTitleStyle"
+            >
+            <ImageView
+                android:layout_alignParentLeft="true"
+                android:src="@drawable/icon_device"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:tint="@color/titleBlue"/>
+            <TextView
+                style="@style/MenuTitleStyle"
+                android:paddingLeft="10dp"
+                android:gravity="center_vertical"
+                android:text="设置与帮助"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="match_parent" />
+            <ImageView
+                android:src="@drawable/icon_arrow_right"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:tint="@color/grayLine"
+                />
+        </LinearLayout>
+        <LinearLayout
+            android:id="@+id/layout_order"
             android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:orientation="horizontal"
+            android:background="@drawable/bg_line2"
             android:gravity="center_vertical"
-            android:text="我的订单"
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="match_parent" />
-        <ImageView
-            android:src="@drawable/icon_arrow_right"
-            android:layout_width="20dp"
-            android:layout_height="20dp"
-            android:tint="@color/grayLine"
-            />
-    </LinearLayout>
-    <LinearLayout
-        android:id="@+id/layout_shop_car"
-        android:paddingLeft="10dp"
-        android:paddingRight="10dp"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:orientation="horizontal"
-        android:background="@drawable/bg_line2"
-        android:gravity="center_vertical"
-        >
-        <ImageView
-            android:layout_alignParentLeft="true"
-            android:src="@drawable/icon_shop_car"
-            android:layout_width="20dp"
-            android:layout_height="20dp"
-            android:tint="@color/titleBlue"/>
-        <TextView
-            style="@style/MenuTitleStyle"
+            >
+            <ImageView
+                android:layout_alignParentLeft="true"
+                android:src="@drawable/icon_order"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:tint="@color/titleBlue"/>
+            <TextView
+                style="@style/MenuTitleStyle"
+                android:paddingLeft="10dp"
+                android:gravity="center_vertical"
+                android:text="我的订单"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="match_parent" />
+            <ImageView
+                android:src="@drawable/icon_arrow_right"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:tint="@color/grayLine"
+                />
+        </LinearLayout>
+        <LinearLayout
+            android:id="@+id/layout_shop_car"
             android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:orientation="horizontal"
+            android:background="@drawable/bg_line2"
             android:gravity="center_vertical"
-            android:text="购物车"
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="match_parent" />
-        <ImageView
-            android:src="@drawable/icon_arrow_right"
-            android:layout_width="20dp"
-            android:layout_height="20dp"
-            android:tint="@color/grayLine"
-            />
+            >
+            <ImageView
+                android:layout_alignParentLeft="true"
+                android:src="@drawable/icon_shop_car"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:tint="@color/titleBlue"/>
+            <TextView
+                style="@style/MenuTitleStyle"
+                android:paddingLeft="10dp"
+                android:gravity="center_vertical"
+                android:text="购物车"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="match_parent" />
+            <ImageView
+                android:src="@drawable/icon_arrow_right"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:tint="@color/grayLine"
+                />
+        </LinearLayout>
     </LinearLayout>
-
+</ScrollView>
 
 </LinearLayout>
 

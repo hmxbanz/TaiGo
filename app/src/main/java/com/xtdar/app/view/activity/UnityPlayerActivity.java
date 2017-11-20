@@ -24,6 +24,7 @@ package com.xtdar.app.view.activity;
         import android.content.res.Configuration;
         import android.graphics.PixelFormat;
         import android.os.Bundle;
+        import android.os.Environment;
         import android.os.Handler;
         import android.os.IBinder;
         import android.os.Looper;
@@ -36,6 +37,7 @@ package com.xtdar.app.view.activity;
         import android.view.Window;
         import android.view.WindowManager;
 
+        import java.io.File;
         import java.util.List;
 
 public class UnityPlayerActivity extends Activity
@@ -424,5 +426,18 @@ private static String hexStr = "0123456789ABCDEF"; //全局
         NLog.d("收到进度数：");
     }
 
+    //获取资源路径
+    public String unityGetPath(){
+        String homePath = null;
+
+        try {
+            String extStoragePath = Environment.getExternalStorageDirectory().getCanonicalPath();
+            homePath = new File(extStoragePath, "/download/taigo/").getCanonicalPath();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return homePath+"/"+gameId+"/";
+    }
 
 }

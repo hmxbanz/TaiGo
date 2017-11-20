@@ -10,8 +10,8 @@ ext {
     androidMinSdkVersion = 18
     androidTargetSdkVersion = 25
     androidCompileSdkVersion = 25
-    supportLibraryVersion = '24.2.0'
-    otherLibraryVersion = '22.2.1'
+    supportLibraryVersion = '25.3.1'
+    otherLibraryVersion = '25.3.1'
 
     //ViewLibraries
     butterKnifeVersion = '8.2.1'
