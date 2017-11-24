@@ -29,8 +29,8 @@ public class SettingPresenter extends BasePresenter {
     BasePresenter basePresenter;
 
     public SettingPresenter(Context context) {
-        //this.mActivity =(SettingActivity)context;
         super(context);
+        this.mActivity =(SettingActivity)context;
         basePresenter = BasePresenter.getInstance(context);
     }
     public void init(TextView txtAbout){
@@ -53,7 +53,9 @@ public void logOff()
             editor.commit();
             basePresenter.initData();
             NToast.shortToast(context, "退出成功");
+            mActivity.finish();
             context.startActivity(new Intent(context, LoginActivity.class));
+
         }
 
     });

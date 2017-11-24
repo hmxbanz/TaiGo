@@ -54,7 +54,6 @@ public class ShowFirstPresenter extends BasePresenter implements OnDataListener,
                 //lastItem = String.valueOf(currentPage - 1);
                 LoadDialog.show(context);
                 atm.request(GETSHOWFIRSTLIST, ShowFirstPresenter.this);
-                setCanloadMore(false);
             }
         };
         this.swiper=swiper;
@@ -105,7 +104,6 @@ public class ShowFirstPresenter extends BasePresenter implements OnDataListener,
                         list.addAll(response.getData());
 
                     dataAdapter.setListData(list);
-                    onScrollListener.setCanloadMore(true);
 
                 }
                 else {
@@ -123,13 +121,11 @@ public class ShowFirstPresenter extends BasePresenter implements OnDataListener,
 
     @Override
     public void onRefresh() {
-        onScrollListener.reset();
-        onScrollListener.setCanloadMore(true);
         lastItem ="0";
         int length=list.size();
         list.clear();
         dataAdapter.notifyItemRangeRemoved(0,length);
-        atm.request(GETSHOWFIRSTLIST,this);
+        loadData();
     }
 
     //加载数据

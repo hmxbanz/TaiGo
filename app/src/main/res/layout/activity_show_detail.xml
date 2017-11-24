@@ -11,9 +11,7 @@
     <android.support.design.widget.AppBarLayout
         android:id="@+id/app_bar_layout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:fitsSystemWindows="true"
-        >
+        android:layout_height="wrap_content"        >
 
         <android.support.design.widget.CollapsingToolbarLayout
             android:fitsSystemWindows="true"
@@ -22,7 +20,7 @@
             android:layout_height="250dp"
             android:minHeight="40dp"
             app:collapsedTitleTextAppearance="@style/ToolBarTitleText"
-            app:contentScrim="#46a8ba"
+            app:contentScrim="@color/titleBlue"
             app:expandedTitleMarginEnd="218dp"
             app:expandedTitleMarginStart="48dp"
             app:expandedTitleTextAppearance="@style/transparentText"

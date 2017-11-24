@@ -63,7 +63,6 @@ public class SpecialGamePresenter extends BasePresenter implements SwipeRefreshL
             public void onLoadMore(int currentPage) {
                 Logger.d("getShot currentPage:%s", currentPage);
                 lastItem = String.valueOf(currentPage - 1);
-                setCanloadMore(false);
                 LoadDialog.show(context);
                 atm.request(GETSPECIALlIST, SpecialGamePresenter.this);
             }
@@ -94,12 +93,12 @@ public class SpecialGamePresenter extends BasePresenter implements SwipeRefreshL
                 if (response.getCode() == XtdConst.SUCCESS) {
                     final List<GameListResponse.DataBean> datas = response.getData();
 
-                    Iterator<GameListResponse.DataBean> iterator = datas.iterator();
-                    while (iterator.hasNext()) {
-                        GameListResponse.DataBean obj = iterator.next();
-                        if ("0".equals(obj.getAndroid_show()))
-                            iterator.remove();//这里要使用Iterator的remove方法移除当前对象，如果使用List的remove方法，则同样会出现ConcurrentModificationException
-                    }
+//                    Iterator<GameListResponse.DataBean> iterator = datas.iterator();
+//                    while (iterator.hasNext()) {
+//                        GameListResponse.DataBean obj = iterator.next();
+//                        if ("0".equals(obj.getAndroid_show()))
+//                            iterator.remove();//这里要使用Iterator的remove方法移除当前对象，如果使用List的remove方法，则同样会出现ConcurrentModificationException
+//                    }
 
                     if(isFirstLoad) {
                         list = response.getData();
@@ -113,8 +112,6 @@ public class SpecialGamePresenter extends BasePresenter implements SwipeRefreshL
                     }
                     else
                         list.addAll(datas);
-
-                    onScrollListener.setCanloadMore(true);
 
                     dataAdapter.setListItems(list);
                     dataAdapter.notifyDataSetChanged();
@@ -155,13 +152,11 @@ public class SpecialGamePresenter extends BasePresenter implements SwipeRefreshL
 
     @Override
     public void onRefresh() {
-        onScrollListener.reset();
-        onScrollListener.setCanloadMore(true);
         lastItem ="0";
         int length=list.size();
         list.clear();
         dataAdapter.notifyItemRangeRemoved(0,length);
-        atm.request(GETSPECIALlIST,this);
+        loadData() ;
     }
 
     @Override

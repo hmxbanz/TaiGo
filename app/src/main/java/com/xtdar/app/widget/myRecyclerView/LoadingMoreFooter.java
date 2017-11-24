@@ -40,19 +40,18 @@ public class LoadingMoreFooter extends LinearLayout {
 
     public void initView(Context context) {
         setGravity(Gravity.CENTER);
-        setLayoutParams(new ViewGroup.LayoutParams(
-                ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+        //setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+        //setBackground(getResources().getDrawable(R.drawable.bg_alert_dialog));
         LayoutInflater layoutInflater = LayoutInflater.from(context);
         View view = layoutInflater.inflate(R.layout.footer_layout,null);
         loading_view_layout = (LinearLayout) view.findViewById(R.id.loading_view_layout);
         end_layout = (LinearLayout) view.findViewById(R.id.end_layout);
 
-
         addFootLoadingView(new ProgressBar(context, null, android.R.attr.progressBarStyle));
 
-        TextView textView = new TextView(context);
-        textView.setText("已经到底啦~");
-        addFootEndView(textView);
+//        TextView textView = new TextView(context);
+//        textView.setText("已经到底啦~");
+//        addFootEndView(textView);
 
         addView(view);
     }

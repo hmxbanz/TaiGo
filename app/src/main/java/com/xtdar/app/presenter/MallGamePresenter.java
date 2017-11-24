@@ -125,7 +125,6 @@ public class MallGamePresenter extends BasePresenter implements  SwipeRefreshLay
                 lastItem = String.valueOf(currentPage - 1);
                 LoadDialog.show(context);
                 atm.request(GETMALLLIST, MallGamePresenter.this);
-                setCanloadMore(false);
             }
         };
         recyclerView.addOnScrollListener(onScrollListener);
@@ -179,12 +178,12 @@ public class MallGamePresenter extends BasePresenter implements  SwipeRefreshLay
                 GameListResponse response = (GameListResponse) result;
                 if (response !=null && response.getCode() == XtdConst.SUCCESS ) {
                     final List<GameListResponse.DataBean> datas = response.getData();
-                    Iterator<GameListResponse.DataBean> iterator = datas.iterator();
-                    while (iterator.hasNext()) {
-                        GameListResponse.DataBean obj = iterator.next();
-                        if ("0".equals(obj.getAndroid_show()))
-                            iterator.remove();//这里要使用Iterator的remove方法移除当前对象，如果使用List的remove方法，则同样会出现ConcurrentModificationException
-                    }
+//                    Iterator<GameListResponse.DataBean> iterator = datas.iterator();
+//                    while (iterator.hasNext()) {
+//                        GameListResponse.DataBean obj = iterator.next();
+//                        if ("0".equals(obj.getAndroid_show()))
+//                            iterator.remove();//这里要使用Iterator的remove方法移除当前对象，如果使用List的remove方法，则同样会出现ConcurrentModificationException
+//                    }
 
                     for (GameListResponse.DataBean bean : datas) {
                         List<DownloadGame> listDb = downloadGameDao.loadAll();
@@ -210,7 +209,6 @@ public class MallGamePresenter extends BasePresenter implements  SwipeRefreshLay
                     else
                         list.addAll(datas);
 
-                    onScrollListener.setCanloadMore(true);
 
                     dataAdapter.setListItems(list);
                     dataAdapter.notifyDataSetChanged();
@@ -283,44 +281,44 @@ public class MallGamePresenter extends BasePresenter implements  SwipeRefreshLay
                     }
                     else
                     {
-                                            dialogWithList=DialogWithList.getInstance(context);
-                                            dialogWithList.showDialog(new DialogWithList.DialogCallBack(){
-                                                @Override
-                                                public void executeEvent() {
-
-                                                }
-
-                                                @Override
-                                                public void onCancle() {
-
-                                                }
-                                            });
-
-                                            dialogWithList.setTitle("请选择设备");
-                                            dialogWithList.setConfirmText("更多设备");
-                                            this.alertListAdapter.setmList(deviceList);
-                                            this.alertListAdapter.setOnItemClick(this);
-                                            dialogWithList.getListView().setAdapter(this.alertListAdapter);
-
+//                                            dialogWithList=DialogWithList.getInstance(context);
+//                                            dialogWithList.showDialog(new DialogWithList.DialogCallBack(){
+//                                                @Override
+//                                                public void executeEvent() {
 //
-//                        GameCheckResponse.DataBean bean = deviceList.get(0);
-//                        toUnityPlayerActivityInent = new Intent(context, UnityPlayerActivity.class);
-//                        toUnityPlayerActivityInent.putExtra("ServiceId", bean.getService_uuid());
-//                        toUnityPlayerActivityInent.putExtra("ReadId", bean.getRead_uuid());
-//                        toUnityPlayerActivityInent.putExtra("WriteId", bean.getWrite_uuid());
-//                        toUnityPlayerActivityInent.putExtra("isHigh", bean.getDeviceConfig().getIsHigh());
-//                        toUnityPlayerActivityInent.putExtra("gameId", unityGameId);
-//                        toUnityPlayerActivityInent.putExtra("BleName", bean.getDevice_name());
+//                                                }
 //
-//                        connectMac = mActivity.mBluetoothService.getMac();
-//                        NLog.w("connectMac:::::::",connectMac);
-//                        if(TextUtils.isEmpty(connectMac)) {
-//                            LoadDialog.show(context);
-//                            mActivity.mBluetoothService.scanAndConnect5(bean.getMac_address());
-//                        }
-//                        else {
-//                            context.startActivity(toUnityPlayerActivityInent);
-//                        }
+//                                                @Override
+//                                                public void onCancle() {
+//
+//                                                }
+//                                            });
+//
+//                                            dialogWithList.setTitle("请选择设备");
+//                                            dialogWithList.setConfirmText("更多设备");
+//                                            this.alertListAdapter.setmList(deviceList);
+//                                            this.alertListAdapter.setOnItemClick(this);
+//                                            dialogWithList.getListView().setAdapter(this.alertListAdapter);
+
+
+                        GameCheckResponse.DataBean bean = deviceList.get(0);
+                        toUnityPlayerActivityInent = new Intent(context, UnityPlayerActivity.class);
+                        toUnityPlayerActivityInent.putExtra("ServiceId", bean.getService_uuid());
+                        toUnityPlayerActivityInent.putExtra("ReadId", bean.getRead_uuid());
+                        toUnityPlayerActivityInent.putExtra("WriteId", bean.getWrite_uuid());
+                        toUnityPlayerActivityInent.putExtra("isHigh", bean.getDeviceConfig().getIsHigh());
+                        toUnityPlayerActivityInent.putExtra("gameId", unityGameId);
+                        toUnityPlayerActivityInent.putExtra("BleName", bean.getDevice_name());
+
+                        connectMac = mActivity.mBluetoothService.getMac();
+                        NLog.w("connectMac:::::::",connectMac);
+                        if(TextUtils.isEmpty(connectMac)) {
+                            LoadDialog.show(context);
+                            mActivity.mBluetoothService.scanAndConnect5(bean.getMac_address());
+                        }
+                        else {
+                            context.startActivity(toUnityPlayerActivityInent);
+                        }
 
 
                     }
@@ -563,37 +561,35 @@ public class MallGamePresenter extends BasePresenter implements  SwipeRefreshLay
 
     @Override
     public void onRefresh() {
-        onScrollListener.reset();
-        onScrollListener.setCanloadMore(true);
         lastItem ="0";
         int length=list.size();
         list.clear();
         dataAdapter.notifyItemRangeRemoved(0,length);
-        atm.request(GETMALLLIST,this);
+        loadData();
     }
     //弹出框蓝牙列表点击事件
     @Override
     public boolean onClick(int position, View view, GameCheckResponse.DataBean entity) {
-        dialogWithList.cancleAlterDialog();
-        GameCheckResponse.DataBean bean = deviceList.get(position);
-        toUnityPlayerActivityInent = new Intent(context, UnityPlayerActivity.class);
-
-        toUnityPlayerActivityInent.putExtra("ServiceId", bean.getService_uuid());
-        toUnityPlayerActivityInent.putExtra("ReadId", bean.getRead_uuid());
-        toUnityPlayerActivityInent.putExtra("WriteId", bean.getWrite_uuid());
-        toUnityPlayerActivityInent.putExtra("isHigh", bean.getDeviceConfig().getIsHigh());
-        toUnityPlayerActivityInent.putExtra("gameId", unityGameId);
-        toUnityPlayerActivityInent.putExtra("BleName", bean.getDevice_name());
-
-        connectMac = mActivity.mBluetoothService.getMac();
-        NLog.w("connectMac:::::::",connectMac);
-        if(TextUtils.isEmpty(connectMac)) {
-            LoadDialog.show(context);
-            mActivity.mBluetoothService.scanAndConnect5(bean.getMac_address());
-        }
-        else {
-            context.startActivity(toUnityPlayerActivityInent);
-        }
+//        dialogWithList.cancleAlterDialog();
+//        GameCheckResponse.DataBean bean = deviceList.get(position);
+//        toUnityPlayerActivityInent = new Intent(context, UnityPlayerActivity.class);
+//
+//        toUnityPlayerActivityInent.putExtra("ServiceId", bean.getService_uuid());
+//        toUnityPlayerActivityInent.putExtra("ReadId", bean.getRead_uuid());
+//        toUnityPlayerActivityInent.putExtra("WriteId", bean.getWrite_uuid());
+//        toUnityPlayerActivityInent.putExtra("isHigh", bean.getDeviceConfig().getIsHigh());
+//        toUnityPlayerActivityInent.putExtra("gameId", unityGameId);
+//        toUnityPlayerActivityInent.putExtra("BleName", bean.getDevice_name());
+//
+//        connectMac = mActivity.mBluetoothService.getMac();
+//        NLog.w("connectMac:::::::",connectMac);
+//        if(TextUtils.isEmpty(connectMac)) {
+//            LoadDialog.show(context);
+//            mActivity.mBluetoothService.scanAndConnect5(bean.getMac_address());
+//        }
+//        else {
+//            context.startActivity(toUnityPlayerActivityInent);
+//        }
 
         return true;
     }

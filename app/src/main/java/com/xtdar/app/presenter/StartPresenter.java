@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Handler;
 import android.os.Message;
 
+import com.jaeger.library.StatusBarUtil;
 import com.xtdar.app.common.CommonTools;
 import com.xtdar.app.view.activity.GuideActivity;
 import com.xtdar.app.view.activity.Main2Activity;

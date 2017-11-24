@@ -13,9 +13,8 @@ import com.xtdar.app.video.RecyclerItemNormalHolder;
  */
 
 public abstract class EndlessRecyclerOnScrollListener extends RecyclerView.OnScrollListener {
-    private int previousTotal = 0;
-    private boolean loading = false;
-    int firstVisibleItem,lastVisibleItem, visibleItemCount, totalItemCount;
+    private boolean loading = true;
+    private int firstVisibleItem,lastVisibleItem, visibleItemCount, previousTotal,totalItemCount;
 
     private int currentPage = 1;
     //是否可加载更多
@@ -36,6 +35,13 @@ public abstract class EndlessRecyclerOnScrollListener extends RecyclerView.OnScr
         totalItemCount = mLinearLayoutManager.getItemCount();
         firstVisibleItem = mLinearLayoutManager.findFirstVisibleItemPosition();
         lastVisibleItem = mLinearLayoutManager.findLastVisibleItemPosition();
+
+        if (loading) {
+            if (totalItemCount > previousTotal) {
+                loading = false;
+                previousTotal = totalItemCount;
+            }
+        }
 
 //        NLog.d("滑动可见",visibleItemCount);
 //        NLog.d("滑动总数",totalItemCount);
@@ -70,7 +76,6 @@ public abstract class EndlessRecyclerOnScrollListener extends RecyclerView.OnScr
     public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
         super.onScrolled(recyclerView, dx, dy);
 //
-//
 //            if (totalItemCount > previousTotal) {
 //                loading = true;
 //                previousTotal = totalItemCount;
@@ -85,11 +90,13 @@ public abstract class EndlessRecyclerOnScrollListener extends RecyclerView.OnScr
 
     //设置是否可加载更多
     public void setCanloadMore(boolean flag) {
-        loading=false;
         canloadMore = flag;
     }
     //设置是否可加载更多
     public void reset() {
+        loading=true;
+        canloadMore=true;
+        previousTotal=0;
         visibleItemCount =0;
         totalItemCount = 0;
         lastVisibleItem = 0;
