@@ -45,6 +45,7 @@ public class Main2Presenter extends BasePresenter {
     private static final String TAG = Main2Presenter.class.getSimpleName();
     private final BasePresenter basePresenter;
     private Main2Activity activity;
+    private ViewPager viewPager;
 
     public Main2Presenter(Context context){
         super(context);
@@ -52,7 +53,8 @@ public class Main2Presenter extends BasePresenter {
         basePresenter = BasePresenter.getInstance(context);
     }
 
-    public void init() {
+    public void init(ViewPager viewPager) {
+        this.viewPager=viewPager;
         LoadDialog.show(activity);
         atm.request(CHECKVERSION,this);
         String[] Permissions=new String[]{Manifest.permission.CAMERA,
@@ -76,7 +78,7 @@ public class Main2Presenter extends BasePresenter {
                 }, true);
     }
 
-    public void onMeClick(final ViewPager viewPager) {
+    public void onMeClick() {
         basePresenter.initData();
         if(!basePresenter.isLogin){
             DialogWithYesOrNoUtils.getInstance().showDialog(context, "请先登录", null,"前住登录", new AlertDialogCallback() {
@@ -167,6 +169,7 @@ public class Main2Presenter extends BasePresenter {
 
     public void autoLogin()
     {
+        viewPager.setCurrentItem(0);
         openId=sp.getString(XtdConst.OPENID,"");
         loginType=sp.getString("loginType","");
         NLog.d(TAG, "openId"+openId);

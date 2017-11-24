@@ -52,7 +52,6 @@ public class ShowPresenter extends BasePresenter implements OnDataListener,Recyc
                 //lastItem = String.valueOf(currentPage - 1);
                 LoadDialog.show(context);
                 atm.request(GETSHOWLIST,ShowPresenter.this);
-                setCanloadMore(false);
             }
         };
         this.swiper=swiper;
@@ -99,7 +98,6 @@ public class ShowPresenter extends BasePresenter implements OnDataListener,Recyc
                         list.addAll(showResponse.getData());
 
                     recyclerNormalAdapter.setListData(list);
-                    onScrollListener.setCanloadMore(true);
                 }
                 else {
                         NToast.shortToast(context, "牛人秀："+showResponse.getMsg());
@@ -115,13 +113,11 @@ public class ShowPresenter extends BasePresenter implements OnDataListener,Recyc
 
     @Override
     public void onRefresh() {
-        onScrollListener.reset();
-        onScrollListener.setCanloadMore(true);
         lastItem ="0";
         int length=list.size();
         list.clear();
         recyclerNormalAdapter.notifyItemRangeRemoved(0,length);
-        atm.request(GETSHOWLIST,this);
+        loadData();
     }
 
     //加载数据

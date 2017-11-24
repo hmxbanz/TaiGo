@@ -21,6 +21,7 @@ import android.widget.TextView;
 
 import com.alibaba.baichuan.android.trade.AlibcTradeSDK;
 import com.clj.fastble.data.ScanResult;
+import com.jaeger.library.StatusBarUtil;
 import com.shuyu.gsyvideoplayer.GSYVideoManager;
 import com.shuyu.gsyvideoplayer.video.StandardGSYVideoPlayer;
 import com.xtdar.app.R;
@@ -74,7 +75,8 @@ public class Main2Activity extends BaseActivity implements View.OnClickListener{
         changeTextViewColor();
         changeSelectedTabState(0);
         main2Presenter = new Main2Presenter(this);
-        main2Presenter.init();
+        main2Presenter.init(viewPager);
+        StatusBarUtil.setTranslucent(this);
     }
 
     @Override
@@ -195,7 +197,7 @@ public class Main2Activity extends BaseActivity implements View.OnClickListener{
 
             int index= viewPager.getCurrentItem();
             if(index==3){
-                main2Presenter.onMeClick(viewPager);
+                main2Presenter.onMeClick();
             }
             changeTextViewColor();
             changeSelectedTabState(position);
@@ -221,7 +223,7 @@ public class Main2Activity extends BaseActivity implements View.OnClickListener{
                 //mMineRed.setVisibility(View.GONE);
                 break;
             case R.id.tab_layout_me:
-                main2Presenter.onMeClick(viewPager);
+                main2Presenter.onMeClick();
                 //mMineRed.setVisibility(View.GONE);
                 break;
         }

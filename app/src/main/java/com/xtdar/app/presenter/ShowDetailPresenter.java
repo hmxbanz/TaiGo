@@ -186,7 +186,7 @@ public class ShowDetailPresenter extends BasePresenter implements LoadMoreListen
                     imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
                     glideImageLoader.displayImage(context, XtdConst.IMGURI+entity.getHead_img(),imageView);
                     videoPlayer.setThumbImageView(imageView);
-                    this.title.setText(entity.getTitle());
+                    //this.title.setText(entity.getTitle());
                     SelectableRoundedImageView avatar=(SelectableRoundedImageView)mActivity.findViewById(R.id.avatar);
                     glideImageLoader.displayImage(context, XtdConst.IMGURI+entity.getImg_path(),avatar);
                     ((TextView)mActivity.findViewById(R.id.nickname)).setText(entity.getNick_name());

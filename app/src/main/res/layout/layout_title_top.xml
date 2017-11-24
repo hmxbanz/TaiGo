@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="45dp"
-    android:background="@color/white"
+    android:layout_height="65dp"
+    android:background="@color/titleBlue"
     android:orientation="vertical"
     android:layout_marginBottom="2dp"
     android:id="@+id/layout_title_top">
 
     <LinearLayout
+        android:layout_marginTop="20dp"
         android:paddingLeft="10dp"
         android:paddingRight="10dp"
         android:orientation="horizontal"
@@ -34,6 +35,7 @@
                     android:gravity="center">
                     <ImageView
                         android:src="@drawable/icon_arrow_left"
+                        android:tint="@color/white"
                         android:scaleType="centerInside"
                         android:layout_width="20dp"
                         android:layout_height="20dp"
@@ -60,10 +62,9 @@
 
             <TextView
                 android:id="@+id/text_title"
-                style="@style/AppTitleStyle2"
+                style="@style/AppTitleStyle"
                 android:gravity="center"
                 android:text="标题"
-                android:textSize="20dp"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent" />
 
@@ -82,6 +83,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:text=""
+                android:textColor="@color/white"
                 android:textSize="16dp" />
         </RelativeLayout>
     </LinearLayout>

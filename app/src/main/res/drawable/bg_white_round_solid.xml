@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shape xmlns:android="http://schemas.android.com/apk/res/android" android:shape="oval">
+
+    <stroke
+        android:width="8dp"
+        android:color="#80ffffff" />
+    <solid android:color="@android:color/white" />
+    <!-- 虚线的高度 -->
+    <size android:height="100dp" android:width="100dp" />
+    <padding
+        android:bottom="1dp"
+        android:left="0.5dp"
+        android:right="0.5dp"
+        android:top="0dp" />
+    <corners android:radius="30dp" />
+
+</shape>

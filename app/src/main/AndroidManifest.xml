@@ -34,7 +34,6 @@
     <uses-permission android:name="android.permission.ACCESS_LOCATION_EXTRA_COMMANDS" />
     <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE" />
 
-
     <!-- 为测试添加 android.test.InstrumentationTestRunner -->
     <instrumentation
         android:name="android.test.InstrumentationTestRunner"
@@ -44,10 +43,10 @@
     <application
         android:name=".MainApplication"
         android:allowBackup="true"
-        android:supportsRtl="true"
         android:icon="@drawable/logo"
         android:label="@string/xtdar_app_name"
         android:logo="@drawable/logo"
+        android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:replace="android:label,android:allowBackup"> <!-- 改成现有的可修复输入法遮挡问题android:theme="@android:style/Theme.NoTitleBar.Fullscreen"> -->
         <uses-library android:name="android.test.runner" /> <!-- 为测试添加 android.test.runner -->
@@ -65,12 +64,16 @@
             android:name="RONG_CLOUD_APP_KEY"
             android:value="" />
 
-        <activity  android:name=".view.activity.MainActivity" android:logo="@android:drawable/ic_menu_camera"  android:screenOrientation="portrait" />
+        <activity
+            android:name=".view.activity.MainActivity"
+            android:logo="@android:drawable/ic_menu_camera"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".view.activity.StartActivity"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -82,7 +85,9 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.xtdar.app.view.activity.MainActivity" />
         </activity>
-        <activity            android:name=".widget.toast.CustomToast"            android:label="@string/title_activity_custom_toast" />
+        <activity
+            android:name=".widget.toast.CustomToast"
+            android:label="@string/title_activity_custom_toast" />
 
         <!-- 极光推送Required -->
         <!-- Required SDK核心功能 -->
@@ -93,6 +98,7 @@
             android:theme="@android:style/Theme.NoTitleBar">
             <intent-filter>
                 <action android:name="cn.jpush.android.ui.PushActivity" />
+
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="${applicationId}" />
             </intent-filter>
@@ -152,78 +158,160 @@
         <!-- Required SDK核心功能 -->
         <receiver android:name="cn.jpush.android.service.AlarmReceiver" />
 
-        <!-- User defined.  For test only  用户自定义的广播接收器-->
+        <!-- User defined.  For test only  用户自定义的广播接收器 -->
         <receiver
             android:name=".receiver.MyReceiver"
-            android:exported="false"
-            android:enabled="true">
+            android:enabled="true"
+            android:exported="false">
             <intent-filter>
-                <action android:name="cn.jpush.android.intent.REGISTRATION" /> <!--Required  用户注册SDK的intent-->
-                <action android:name="cn.jpush.android.intent.MESSAGE_RECEIVED" /> <!--Required  用户接收SDK消息的intent-->
-                <action android:name="cn.jpush.android.intent.NOTIFICATION_RECEIVED" /> <!--Required  用户接收SDK通知栏信息的intent-->
-                <action android:name="cn.jpush.android.intent.NOTIFICATION_OPENED" /> <!--Required  用户打开自定义通知栏的intent-->
-                <action android:name="cn.jpush.android.intent.CONNECTION" /><!-- 接收网络变化 连接/断开 since 1.6.3 -->
+                <action android:name="cn.jpush.android.intent.REGISTRATION" /> <!-- Required  用户注册SDK的intent -->
+                <action android:name="cn.jpush.android.intent.MESSAGE_RECEIVED" /> <!-- Required  用户接收SDK消息的intent -->
+                <action android:name="cn.jpush.android.intent.NOTIFICATION_RECEIVED" /> <!-- Required  用户接收SDK通知栏信息的intent -->
+                <action android:name="cn.jpush.android.intent.NOTIFICATION_OPENED" /> <!-- Required  用户打开自定义通知栏的intent -->
+                <action android:name="cn.jpush.android.intent.CONNECTION" /> <!-- 接收网络变化 连接/断开 since 1.6.3 -->
                 <category android:name="com.xtdar.app" />
             </intent-filter>
         </receiver>
         <!-- Required . Enable it you can get statistics data with channel -->
-        <meta-data            android:name="JPUSH_CHANNEL"            android:value="developer-default" />
-        <meta-data            android:name="JPUSH_APPKEY"            android:value="3633cc451b029d14b143c5af" />
+        <meta-data
+            android:name="JPUSH_CHANNEL"
+            android:value="developer-default" />
+        <meta-data
+            android:name="JPUSH_APPKEY"
+            android:value="3633cc451b029d14b143c5af" />
         <!-- 值来自开发者平台取得的AppKey -->
 
         <activity
             android:name=".view.activity.Main2Activity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:launchMode="singleTask"
-            android:screenOrientation="portrait"></activity>
-        <activity android:name=".view.activity.LoginActivity" />
-        <activity android:name=".view.activity.RegisterActivity" />
-        <activity android:name=".view.activity.ForgetPasswordActivity" />
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".view.activity.LoginActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".view.activity.RegisterActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".view.activity.ForgetPasswordActivity"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".view.activity.DetailActivity"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar"
             android:configChanges="orientation|keyboardHidden|screenSize"
-            android:windowSoftInputMode="stateHidden|adjustResize" />
-        <activity android:name=".view.activity.FeedbackActivity" />
-        <activity android:name=".view.activity.FavorActivity" />
-        <activity android:name=".view.activity.SettingActivity" />
-        <activity android:name=".view.activity.ModifyPassActivity" />
-        <activity android:name=".view.activity.AlbumActivity" />
-        <activity android:name=".view.activity.DynamicActivity" />
-        <activity android:name=".view.activity.UpdateActivity" />
-        <activity android:name=".view.activity.MeActivity" />
-        <activity android:name=".view.activity.CategoryActivity" />
-        <activity android:name=".view.activity.ContactsActivity" />
-        <activity android:name=".view.activity.SearchActivity" />
-        <activity android:name=".view.activity.UnityPlayerActivity" android:screenOrientation="landscape" />
-        <activity android:name=".view.activity.DeviceActivity" />
-        <activity android:name=".view.activity.HistoryActivity" />
-        <activity android:name=".view.activity.DownloadActivity" />
-        <activity android:name=".view.activity.SongAlbumActivity" />
-        <activity android:name=".view.activity.SongDetailActivity" />
-        <activity android:name=".view.activity.ProtocolActivity" />
-        <activity android:name=".view.activity.QrCodeActivity" android:screenOrientation="portrait" />
-        <activity android:name=".view.activity.HelpActivity" />
-        <activity android:name=".view.activity.BleActivity" android:screenOrientation="portrait" />
-        <activity android:name=".view.activity.ControllerActivity" />
-        <activity android:name=".view.activity.HelpDetailActivity" />
-        <activity android:name=".view.activity.ShowDetailActivity"
+            android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar"
-            android:configChanges="orientation|keyboardHidden|screenSize"
             android:windowSoftInputMode="stateHidden|adjustResize" />
-        <activity android:name=".view.activity.MyVideoActivity" />
-        <activity android:name=".view.activity.MyCommentActivity" />
-        <activity android:name=".view.activity.AboutActivity" />
-        <activity android:name=".view.activity.ShopMoreActivity" />
-        <activity android:name=".view.activity.CarActivity" android:screenOrientation="landscape" />
-        <activity android:name=".view.activity.MessageActivity" />
+        <activity
+            android:name=".view.activity.FeedbackActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".view.activity.FavorActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".view.activity.SettingActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".view.activity.ModifyPassActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".view.activity.AlbumActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".view.activity.DynamicActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".view.activity.UpdateActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".view.activity.MeActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".view.activity.CategoryActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".view.activity.ContactsActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".view.activity.SearchActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".view.activity.UnityPlayerActivity"
+            android:screenOrientation="landscape" />
+        <activity
+            android:name=".view.activity.DeviceActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".view.activity.HistoryActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".view.activity.DownloadActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".view.activity.SongAlbumActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".view.activity.SongDetailActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".view.activity.ProtocolActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".view.activity.QrCodeActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".view.activity.HelpActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".view.activity.BleActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".view.activity.ControllerActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".view.activity.HelpDetailActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".view.activity.ShowDetailActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar"
+            android:windowSoftInputMode="stateHidden|adjustResize" />
+        <activity
+            android:name=".view.activity.MyVideoActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".view.activity.MyCommentActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".view.activity.AboutActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".view.activity.ShopMoreActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".view.activity.CarActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".view.activity.MessageActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".view.activity.ScoreActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".view.activity.SignInActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".view.activity.ScoreDetailActivity"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".view.activity.ConversationListActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden|adjustResize">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
+
                 <category android:name="android.intent.category.DEFAULT" />
+
                 <data
                     android:host="com.xtdar.app"
                     android:pathPrefix="/conversationlist"
@@ -237,23 +325,25 @@
             android:windowSoftInputMode="stateHidden|adjustResize">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
+
                 <category android:name="android.intent.category.DEFAULT" />
+
                 <data
                     android:host="com.xtdar.app"
                     android:pathPrefix="/conversation/"
                     android:scheme="rong" />
             </intent-filter>
         </activity>
-
         <activity
             android:name="com.mob.tools.MobUIShell"
-            android:theme="@android:style/Theme.Translucent.NoTitleBar"
             android:configChanges="keyboardHidden|orientation|screenSize"
-            android:windowSoftInputMode="stateHidden|adjustResize" >
-
+            android:theme="@android:style/Theme.Translucent.NoTitleBar"
+            android:windowSoftInputMode="stateHidden|adjustResize">
             <intent-filter>
                 <data android:scheme="tencent100371282" />
+
                 <action android:name="android.intent.action.VIEW" />
+
                 <category android:name="android.intent.category.BROWSABLE" />
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
@@ -261,30 +351,33 @@
             <!-- 调用新浪原生SDK，需要注册的回调activity -->
             <intent-filter>
                 <action android:name="com.sina.weibo.sdk.action.ACTION_SDK_REQ_ACTIVITY" />
+
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
 
-            <!--集成line客户端登录授权，需要添如下格式的过滤器-->
+            <!-- 集成line客户端登录授权，需要添如下格式的过滤器 -->
             <intent-filter>
                 <data android:scheme="line.1477692153" />
-                <action android:name="android.intent.action.VIEW"/>
+
+                <action android:name="android.intent.action.VIEW" />
+
                 <category android:name="android.intent.category.BROWSABLE" />
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
-
         </activity>
         <activity
-            android:name="com.xtdar.app.wxapi.WXEntryActivity"
-            android:theme="@android:style/Theme.Translucent.NoTitleBar"
+            android:name=".wxapi.WXEntryActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:exported="true"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
         <!-- 微信分享回调 -->
 
         <service android:name=".widget.downloadService.DownloadService" />
         <service android:name=".service.DeviceConectService" />
         <service android:name=".service.BluetoothService" />
         <service android:name=".service.DownloadGameService" />
+
     </application>
 
 </manifest>

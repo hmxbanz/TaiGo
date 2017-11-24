@@ -51,7 +51,7 @@ private static final int Blue=0x001bb4fb;
         presenter = new HomeFragmentPresenter(getContext());
         presenter.init(swiper,recycleView);
         //StatusBarUtil.setTranslucent(getActivity(), StatusBarUtil.);
-        StatusBarUtil.setColor(getActivity(), Blue,0);
+        StatusBarUtil.setTranslucent(getActivity(),0);
         return view;
     }
 

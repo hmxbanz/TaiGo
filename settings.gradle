@@ -1,2 +1,2 @@
-include ':app', ':sample', ':xutils', ':Common', ':WheelPicker', ':coordinatortablayout', ':ninegridview', ':ucrop', ':picture_library', ':IMLib', ':IMKit', ':gsyVideoPlayer', ':okhttputils', ':greendao'
+include ':app', ':sample', ':xutils', ':Common', ':WheelPicker', ':coordinatortablayout', ':ninegridview', ':ucrop', ':picture_library', ':IMLib', ':IMKit', ':gsyVideoPlayer', ':okhttputils', ':greendao', ':Calendar'
 include ':pulltorefresh'

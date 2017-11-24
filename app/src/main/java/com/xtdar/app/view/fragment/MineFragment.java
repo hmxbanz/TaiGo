@@ -23,6 +23,7 @@ import com.xtdar.app.view.activity.DynamicActivity;
 import com.xtdar.app.view.activity.MeActivity;
 import com.xtdar.app.view.activity.FavorActivity;
 import com.xtdar.app.view.activity.MyVideoActivity;
+import com.xtdar.app.view.activity.ScoreActivity;
 import com.xtdar.app.view.activity.SettingActivity;
 import com.xtdar.app.view.widget.BottomMenuDialog;
 import com.xtdar.app.view.widget.DragPointView;
@@ -41,7 +42,7 @@ public class MineFragment extends Fragment implements View.OnClickListener {
     public static final String SHOWRED = "SHOWRED";
     public static MineFragment mFragment = null;
     private RelativeLayout mLayoutAr, mLayoutMyVideo, mLayoutMsg;
-    private LinearLayout mLayoutTitle, mLayoutFavor, mLayoutSetting, mLayoutComment,mLayoutShopCar,mLayoutOrder;
+    private LinearLayout mLayoutTitle, mLayoutFavor, mLayoutSetting, mLayoutComment,mLayoutShopCar,mLayoutOrder,mLayoutScore;
     private View mView;
 
     private SelectableRoundedImageView mImageView;
@@ -115,8 +116,6 @@ public class MineFragment extends Fragment implements View.OnClickListener {
         mLayoutComment.setOnClickListener(this);
         mLayoutSetting = (LinearLayout) mView.findViewById(R.id.layout_setting);
         mLayoutSetting.setOnClickListener(this);
-        mTxtMe = (LinearLayout) mView.findViewById(R.id.layout_update);
-        mTxtMe.setOnClickListener(this);
         unreadNumView =(DragPointView) mView.findViewById(R.id.unread_num);
 
         mLayoutShopCar = (LinearLayout) mView.findViewById(R.id.layout_shop_car);
@@ -125,6 +124,8 @@ public class MineFragment extends Fragment implements View.OnClickListener {
         mLayoutOrder.setOnClickListener(this);
         mLayoutTitle = (LinearLayout) mView.findViewById(R.id.layout_title);
         mLayoutTitle.setOnClickListener(this);
+        mLayoutScore = (LinearLayout) mView.findViewById(R.id.layout_score);
+        mLayoutScore.setOnClickListener(this);
 
 
     }
@@ -142,7 +143,6 @@ public class MineFragment extends Fragment implements View.OnClickListener {
             case R.id.layout_dynamic:
                 startActivity(new Intent(getActivity(), DynamicActivity.class));
                 break;
-            case R.id.layout_update:
             case R.id.layout_title:
                 startActivity(new Intent(getActivity(), MeActivity.class));
                 break;
@@ -161,6 +161,9 @@ public class MineFragment extends Fragment implements View.OnClickListener {
             case R.id.layout_favor:
             startActivity(new Intent(getActivity(), FavorActivity.class));
             break;
+            case R.id.layout_score:
+                startActivity(new Intent(getActivity(), ScoreActivity.class));
+                break;
             case R.id.layout_shop_car:
                 presenter.openShopCar();
                 break;

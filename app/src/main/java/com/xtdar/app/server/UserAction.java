@@ -29,9 +29,12 @@ import com.xtdar.app.server.response.MyDevicesResponse;
 import com.xtdar.app.server.response.PersonMsgResponse;
 import com.xtdar.app.server.response.RecommendResponse;
 import com.xtdar.app.server.response.RelateRecommendResponse;
+import com.xtdar.app.server.response.ScoreResponse;
 import com.xtdar.app.server.response.ShopMoreResponse;
 import com.xtdar.app.server.response.ShowDetailResponse;
 import com.xtdar.app.server.response.ShowResponse;
+import com.xtdar.app.server.response.SignCountResponse;
+import com.xtdar.app.server.response.SignHistoryResponse;
 import com.xtdar.app.server.response.SongDetailResponse;
 import com.xtdar.app.server.response.SysMsgResponse;
 import com.xtdar.app.server.response.TagResponse;
@@ -1547,5 +1550,110 @@ public class UserAction extends BaseAction {
         }
 
         return bindResponse;
+    }
+
+    public Object getScore() throws HttpException {
+        String result = "";
+        String uri = getURL("cli-api-userscore.php");
+        Response response=null;
+        try {
+            response=OkHttpUtils
+                    .get()
+                    .addParams("access_key",token)
+                    .url(uri)
+                    .build()
+                    .execute();
+            result =response.body().string();
+            Logger.d(TAG+"::::::%s", result);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        ScoreResponse scoreResponse = null;
+        try {
+            scoreResponse = JsonMananger.jsonToBean(result, ScoreResponse.class);
+        } catch (JSONException e) {
+            Logger.e(TAG+"::::::%s", "ScoreResponse occurs JSONException e=" + e.toString());
+            return null;
+        }
+        return scoreResponse;
+    }
+
+    public Object signIn() throws HttpException {
+        String result = "";
+        String uri = getURL("cli-api-signin.php");
+        Response response=null;
+        try {
+            response=OkHttpUtils
+                    .get()
+                    .addParams("access_key",token)
+                    .url(uri)
+                    .build()
+                    .execute();
+            result =response.body().string();
+            Logger.d(TAG+"::::::%s", result);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        CommonResponse commonResponse = null;
+        try {
+            commonResponse = JsonMananger.jsonToBean(result, CommonResponse.class);
+        } catch (JSONException e) {
+            Logger.e(TAG+"::::::%s", "CommonResponse occurs JSONException e=" + e.toString());
+            return null;
+        }
+        return commonResponse;
+    }
+    public Object getSignCount() throws HttpException {
+        String result = "";
+        String uri = getURL("cli-api-signinpage.php");
+        Response response=null;
+        try {
+            response=OkHttpUtils
+                    .get()
+                    .addParams("access_key",token)
+                    .url(uri)
+                    .build()
+                    .execute();
+            result =response.body().string();
+            Logger.d(TAG+"::::::%s", result);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        SignCountResponse signCountResponse = null;
+        try {
+            signCountResponse = JsonMananger.jsonToBean(result, SignCountResponse.class);
+        } catch (JSONException e) {
+            Logger.e(TAG+"::::::%s", "SignCountResponse occurs JSONException e=" + e.toString());
+            return null;
+        }
+        return signCountResponse;
+    }
+
+    public Object getHistory(String startDate,String endDate) throws HttpException {
+        String result = "";
+        String uri = getURL("cli-api-scorehistory.php");
+        Response response=null;
+        try {
+            response=OkHttpUtils
+                    .get()
+                    .addParams("access_key",token)
+                    .addParams("begin_date",startDate)
+                    .addParams("end_date",endDate)
+                    .url(uri)
+                    .build()
+                    .execute();
+            result =response.body().string();
+            Logger.d(TAG+"::::::%s", result);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        SignHistoryResponse signHistoryResponse = null;
+        try {
+            signHistoryResponse = JsonMananger.jsonToBean(result, SignHistoryResponse.class);
+        } catch (JSONException e) {
+            Logger.e(TAG+"::::::%s", "SignHistoryResponse occurs JSONException e=" + e.toString());
+            return null;
+        }
+        return signHistoryResponse;
     }
 }

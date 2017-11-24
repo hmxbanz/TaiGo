@@ -27,9 +27,9 @@ public class GuideFragment2 extends Fragment{
 
         View view;
         view = View.inflate(ctx, R.layout.guidefragment2, null);
-        LinearLayout mLinear = (LinearLayout) view
-                .findViewById(R.id.GuideFragment02_LinearLayout);
-        mLinear.setBackgroundResource(R.drawable.guide_pic_02);
+//        LinearLayout mLinear = (LinearLayout) view
+//                .findViewById(R.id.GuideFragment02_LinearLayout);
+//        mLinear.setBackgroundResource(R.drawable.scroe_title_bg);
         return view;
     }
 

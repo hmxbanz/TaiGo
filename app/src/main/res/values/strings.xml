@@ -38,6 +38,7 @@
     <string name="btn_search_text">搜 索</string>
     <string name="login_text">登录</string>
     <string name="other_text">其它登录方式</string>
+    <string name="score_guide_txt">积分导航</string>
     <string name="captcha_text">获取验证码</string>
     <string name="text_report">提 交</string>
     <string name="ModifyPass">修改密码</string>
@@ -64,4 +65,5 @@
     <string name="download_success">下载完成</string>
     <string name="download_progress">正在下载:%1$d%%</string>
     <string name="no_record">暂无</string>
+    <string name="title_activity_main3">Main3Activity</string>
 </resources>
