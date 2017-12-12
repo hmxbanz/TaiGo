@@ -159,7 +159,7 @@ public class MineFragment extends Fragment implements View.OnClickListener {
                 startActivity(new Intent(getActivity(), SettingActivity.class));
                 break;
             case R.id.layout_favor:
-            startActivity(new Intent(getActivity(), FavorActivity.class));
+                startActivity(new Intent(getActivity(), FavorActivity.class));
             break;
             case R.id.layout_score:
                 startActivity(new Intent(getActivity(), ScoreActivity.class));

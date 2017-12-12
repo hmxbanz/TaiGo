@@ -64,7 +64,7 @@ public class RecyclerItemNormalHolder2 extends RecyclerItemBaseHolder {
         glideImageLoader.displayImage(context, XtdConst.IMGURI+videoModel.getItem_cover(),imageView);
         //glideImageLoader.displayImage(context, XtdConst.IMGURI+videoModel.get.getImg_path(),roundedImageView);
 
-        //title.setText(videoModel.getTitle());
+//        title.setText(videoModel.getChapter_name());
         nickName.setText("TaiGo");
         createDate.setText(videoModel.getPost_date());
         clickCount.setText("观看:"+videoModel.getClick_count());

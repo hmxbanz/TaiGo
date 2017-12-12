@@ -9,6 +9,7 @@ package com.xtdar.app.view.activity;
         import com.xtdar.app.common.NLog;
         import com.xtdar.app.common.NToast;
         import com.xtdar.app.common.NumberUtils;
+        import com.xtdar.app.presenter.UnityPlayerPresenter;
         import com.xtdar.app.service.BluetoothService;
         import com.xtdar.app.view.widget.LoadDialog;
 
@@ -48,8 +49,9 @@ public class UnityPlayerActivity extends Activity
     private BluetoothService mBluetoothService;
     private String isExisted="0";
     private int firstTime=0;
-    private String ServiceId,ReadId,WriteId,isHigh,gameId;
+    private String ServiceId,ReadId,WriteId,isHigh,gameId,serverGameId;
     private BluetoothGattCharacteristic writecharacteristic;
+    private UnityPlayerPresenter unityPlayerPresenter;
 
     // Setup activity layout
     @Override protected void onCreate (Bundle savedInstanceState)
@@ -69,9 +71,12 @@ public class UnityPlayerActivity extends Activity
         WriteId=intent.getStringExtra("WriteId");
         isHigh=intent.getStringExtra("isHigh");
         gameId=intent.getStringExtra("gameId");
+        serverGameId=intent.getStringExtra("serverGameId");
         NLog.d("id:", gameId);
         //firstTime=1;
         //UnityPlayer.UnitySendMessage("Main Camera","ChooseGame","");     //第二次进入调用
+
+        unityPlayerPresenter=new UnityPlayerPresenter(this);
     }
 
     @Override
@@ -119,7 +124,6 @@ public class UnityPlayerActivity extends Activity
             finish();
         }
     };
-
 
     public void showData() {
         BluetoothGatt gatt = mBluetoothService.getGatt();
@@ -439,5 +443,10 @@ private static String hexStr = "0123456789ABCDEF"; //全局
 
         return homePath+"/"+gameId+"/";
     }
+    //上传游戏积分
+    public void unityUploadScore(String gameName,String score){
+        unityPlayerPresenter.uploadScore(serverGameId,score);
+    }
+
 
 }

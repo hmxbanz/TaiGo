@@ -52,12 +52,12 @@ import java.util.List;
 
         @Override
         public void onBindViewHolder(final RecyclerView.ViewHolder holder,  final int position) {
+            final ClassListResponse.DataBean listItem = itemDataList.get(position);
             NLog.d("ClassNuListAdapterdata",itemDataList);
             NLog.d("ClassNuListAdapterdata",itemDataList.get(position).toString());
             RecyclerItemNormalHolder2 recyclerItemViewHolder = (RecyclerItemNormalHolder2) holder;
             recyclerItemViewHolder.setRecyclerBaseAdapter(this);
-            recyclerItemViewHolder.onBind(position, itemDataList.get(position));
-            final ClassListResponse.DataBean listItem = itemDataList.get(position);
+            recyclerItemViewHolder.onBind(position, listItem);
             if(mListener == null) return;
             holder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override

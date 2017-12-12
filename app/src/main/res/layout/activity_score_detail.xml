@@ -62,12 +62,13 @@
 
                     <LinearLayout
                         android:id="@+id/layout_score_rule"
-                        android:layout_width="100dp"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_horizontal"
-                        android:layout_marginTop="10dp"
                         android:background="@drawable/bg_border_white"
                         android:gravity="center"
+                        android:paddingLeft="10dp"
+                        android:paddingRight="10dp"
                         android:orientation="horizontal">
 
                         <ImageView
@@ -79,12 +80,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_gravity="center_horizontal"
-                            android:gravity="center_horizontal"
-                            android:paddingBottom="5dp"
                             android:paddingLeft="10dp"
-                            android:paddingRight="10dp"
-                            android:paddingTop="5dp"
                             android:text="积分规则"
                             android:textColor="@color/white" />
                     </LinearLayout>

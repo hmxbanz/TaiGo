@@ -67,7 +67,6 @@ public class MallGamePresenter extends BasePresenter implements  SwipeRefreshLay
     private static final int GETMALLLIST = 2;
     private static final int GAMECHECK = 3;
     private static final int CHECKVERSION = 4;
-    private Banner Banner;
     private RecyclerView recyclerView;
     private GridLayoutManager gridLayoutManager;
     private ClassListAnimationAdapter dataAdapter;
@@ -308,6 +307,7 @@ public class MallGamePresenter extends BasePresenter implements  SwipeRefreshLay
                         toUnityPlayerActivityInent.putExtra("WriteId", bean.getWrite_uuid());
                         toUnityPlayerActivityInent.putExtra("isHigh", bean.getDeviceConfig().getIsHigh());
                         toUnityPlayerActivityInent.putExtra("gameId", unityGameId);
+                        toUnityPlayerActivityInent.putExtra("serverGameId", gameId);
                         toUnityPlayerActivityInent.putExtra("BleName", bean.getDevice_name());
 
                         connectMac = mActivity.mBluetoothService.getMac();

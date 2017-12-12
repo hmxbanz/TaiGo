@@ -1656,4 +1656,32 @@ public class UserAction extends BaseAction {
         }
         return signHistoryResponse;
     }
+
+    public Object unityUploadScore(String gameName, String score) throws HttpException{
+        String result = "";
+        String uri = getURL("cli-api-addscore.php");
+        Response response=null;
+        try {
+            response=OkHttpUtils
+                    .get()
+                    .addParams("access_key",token)
+                    .addParams("game_id",gameName)
+                    .addParams("score",score)
+                    .url(uri)
+                    .build()
+                    .execute();
+            result =response.body().string();
+            Logger.d(TAG+"::::::%s", result);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        CommonResponse commonResponse = null;
+        try {
+            commonResponse = JsonMananger.jsonToBean(result, CommonResponse.class);
+        } catch (JSONException e) {
+            Logger.e(TAG+"::::::%s", "CommonResponse occurs JSONException e=" + e.toString());
+            return null;
+        }
+        return commonResponse;
+    }
 }
