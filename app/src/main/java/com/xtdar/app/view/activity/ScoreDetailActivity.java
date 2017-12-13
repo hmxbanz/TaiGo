@@ -4,7 +4,10 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v7.widget.Toolbar;
+<<<<<<< HEAD
 import android.view.Gravity;
+=======
+>>>>>>> 4f5d07cdd3d5dabc0c2b6ec3d7659408ba3d1ba2
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -41,7 +44,10 @@ public class ScoreDetailActivity extends BaseActivity {
         });
 
         CollapsingToolbarLayout collapsingToolbarLayout = (CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar_layout);
+<<<<<<< HEAD
 
+=======
+>>>>>>> 4f5d07cdd3d5dabc0c2b6ec3d7659408ba3d1ba2
         collapsingToolbarLayout.setTitle("我的积分");
 
         txtScore = (TextView) findViewById(R.id.txt_score);

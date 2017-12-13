@@ -101,8 +101,11 @@ public class SignHistoryAdapter extends RecyclerView.Adapter<SignHistoryAdapter.
             holder.createdate.setText(listItem.getRecord_date());
             if(Integer.parseInt(listItem.getScore())>0)
             holder.score.setText("+"+listItem.getScore());
+<<<<<<< HEAD
             else if(Integer.parseInt(listItem.getScore())==0)
             holder.score.setText(listItem.getScore());
+=======
+>>>>>>> 4f5d07cdd3d5dabc0c2b6ec3d7659408ba3d1ba2
             else
             holder.score.setText("-"+listItem.getScore());
             switch (listItem.getScore_type()) {

@@ -307,7 +307,10 @@ public class MallGamePresenter extends BasePresenter implements  SwipeRefreshLay
                         toUnityPlayerActivityInent.putExtra("WriteId", bean.getWrite_uuid());
                         toUnityPlayerActivityInent.putExtra("isHigh", bean.getDeviceConfig().getIsHigh());
                         toUnityPlayerActivityInent.putExtra("gameId", unityGameId);
+<<<<<<< HEAD
                         toUnityPlayerActivityInent.putExtra("serverGameId", gameId);
+=======
+>>>>>>> 4f5d07cdd3d5dabc0c2b6ec3d7659408ba3d1ba2
                         toUnityPlayerActivityInent.putExtra("BleName", bean.getDevice_name());
 
                         connectMac = mActivity.mBluetoothService.getMac();

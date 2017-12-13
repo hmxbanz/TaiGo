@@ -1656,6 +1656,7 @@ public class UserAction extends BaseAction {
         }
         return signHistoryResponse;
     }
+<<<<<<< HEAD
 
     public Object unityUploadScore(String gameName, String score) throws HttpException{
         String result = "";
@@ -1684,4 +1685,6 @@ public class UserAction extends BaseAction {
         }
         return commonResponse;
     }
+=======
+>>>>>>> 4f5d07cdd3d5dabc0c2b6ec3d7659408ba3d1ba2
 }

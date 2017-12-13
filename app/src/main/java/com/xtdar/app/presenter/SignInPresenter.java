@@ -104,7 +104,10 @@ public class SignInPresenter extends BasePresenter implements OnDataListener {
             case SIGNIN :
                 CommonResponse commonResponse=(CommonResponse)result;
                 if (commonResponse != null && commonResponse.getCode() == XtdConst.SUCCESS) {
+<<<<<<< HEAD
                     this.txtSignIn.setText("已签到");
+=======
+>>>>>>> 4f5d07cdd3d5dabc0c2b6ec3d7659408ba3d1ba2
                 }
                 NToast.shortToast(mActivity, commonResponse.getMsg());
                 break;
@@ -113,8 +116,13 @@ public class SignInPresenter extends BasePresenter implements OnDataListener {
                 if (signCountResponse != null && signCountResponse.getCode() == XtdConst.SUCCESS) {
                     if("1".equals(signCountResponse.getData().getIs_sign_in()))
                     this.txtSignIn.setText("已签到");
+<<<<<<< HEAD
                     this.txtSignAll.setText(signCountResponse.getData().getCard_count_day());
                     this.txtSignContinue.setText(signCountResponse.getData().getSign_in_days());
+=======
+                    this.txtSignAll.setText(signCountResponse.getData().getSign_in_days());
+                    this.txtSignContinue.setText(signCountResponse.getData().getCard_count_day());
+>>>>>>> 4f5d07cdd3d5dabc0c2b6ec3d7659408ba3d1ba2
                     this.txtSignToday.setText("今日签到人数："+signCountResponse.getData().getAll_sign_in_count());
 
                     signInMonth=signCountResponse.getData().getMonth_sign_in_day();
@@ -131,7 +139,11 @@ public class SignInPresenter extends BasePresenter implements OnDataListener {
                     cal.set(Calendar.DAY_OF_MONTH, 0);
                     json = new JSONObject();
                     try {
+<<<<<<< HEAD
                         for (int i = 0; i <= getCurrentMonthDay(); i++) {
+=======
+                        for (int i = 0; i < getCurrentMonthDay(); i++) {
+>>>>>>> 4f5d07cdd3d5dabc0c2b6ec3d7659408ba3d1ba2
                             JSONObject jsonObject2 = new JSONObject();
                             for (String s:localArray) {
                                 if(Integer.parseInt(s)==i)
