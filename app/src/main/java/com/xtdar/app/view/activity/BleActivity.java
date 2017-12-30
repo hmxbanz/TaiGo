@@ -20,7 +20,7 @@ import com.xtdar.app.presenter.HelpPresenter;
 import com.xtdar.app.widget.progressBar.MaterialProgressBar;
 
 
-public class BleActivity extends BaseActivity implements View.OnClickListener {
+public class BleActivity extends BaseActivity  {
     public static final int REQUEST_CODE = 1;
     private BlePresenter presenter;
     private ListView listView;

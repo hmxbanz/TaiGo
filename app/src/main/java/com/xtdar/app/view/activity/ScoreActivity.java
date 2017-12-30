@@ -57,7 +57,7 @@ public class ScoreActivity extends BaseActivity {
                 startActivity(new Intent(this, ScoreDetailActivity.class));
                 break;
             case R.id.layout_lottery:
-                NToast.longToast(this,"功能即将开放");
+                startActivity(new Intent(this, LotteryActivity.class));
                 break;
             case R.id.layout_singin:
                 startActivity(new Intent(this, SignInActivity.class));

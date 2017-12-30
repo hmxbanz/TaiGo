@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/layout_main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_marginTop="100dp"
+        android:paddingRight="50dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/img_close"
+            android:layout_alignParentRight="true"
+            android:src="@drawable/lottery_close"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_marginTop="370dp"
+        android:id="@+id/layout_modify_pass"
+        android:paddingLeft="80dp"
+        android:paddingRight="80dp"
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:orientation="horizontal" >
+
+        <TextView
+            android:id="@+id/btn_cancle"
+            android:background="@drawable/bg_border_pink2"
+            android:gravity="center"
+            android:text="立即使用"
+            android:textColor="@color/mainColorPinkDark"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="match_parent" />
+
+        <TextView
+            android:id="@+id/btn_confirm"
+            android:background="@drawable/bg_border_pink"
+            android:layout_marginLeft="10dp"
+            android:gravity="center"
+            android:text="立即分享"
+            android:textColor="@color/white"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="match_parent" />
+    </LinearLayout>
+
+</LinearLayout>

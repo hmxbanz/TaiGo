@@ -79,7 +79,6 @@ public class SignInPresenter extends BasePresenter implements OnDataListener {
         //显示或者隐藏农历
         calendarView.showChinaDay(false);
 
-
         LoadDialog.show(mActivity);
         atm.request(GETSIGNCOUNT,this);
     }
@@ -105,6 +104,7 @@ public class SignInPresenter extends BasePresenter implements OnDataListener {
                 CommonResponse commonResponse=(CommonResponse)result;
                 if (commonResponse != null && commonResponse.getCode() == XtdConst.SUCCESS) {
                     this.txtSignIn.setText("已签到");
+                    atm.request(GETSIGNCOUNT,this);
                 }
                 NToast.shortToast(mActivity, commonResponse.getMsg());
                 break;

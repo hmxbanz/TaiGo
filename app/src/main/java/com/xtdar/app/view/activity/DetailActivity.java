@@ -161,6 +161,12 @@ public class DetailActivity extends BaseActivity implements RecyclerViewAdapter.
 
         }
     }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.detail_menu, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
@@ -172,11 +178,6 @@ public class DetailActivity extends BaseActivity implements RecyclerViewAdapter.
                 break;
         }
         return super.onOptionsItemSelected(item);
-    }
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.detail_menu, menu);
-        return super.onCreateOptionsMenu(menu);
     }
 
     /** Glide 加载 */

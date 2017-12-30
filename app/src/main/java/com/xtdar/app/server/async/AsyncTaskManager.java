@@ -31,7 +31,6 @@ public class AsyncTaskManager {
     public static final int HTTP_ERROR_CODE = -200;
     /** 网络不可用 **/
     public static final int HTTP_NULL_CODE = -400;
-
     private Context mContext;
     private static AsyncTaskManager instance;
 
@@ -43,7 +42,6 @@ public class AsyncTaskManager {
         mContext = context;
         EventBus.getDefault().register(this);
     }
-
     /**
      * [获取AsyncTaskManager实例，单例模式实现]
      * @param context
@@ -59,8 +57,6 @@ public class AsyncTaskManager {
         }
         return instance;
     }
-
-
     /**
      * 发送请求（默认检查网络）
      *
@@ -70,7 +66,6 @@ public class AsyncTaskManager {
     public void request(int requestCode, OnDataListener listener) {
         request(requestCode, true, listener);
     }
-
     /**
      * 发送请求（默认检查网络）
      *
@@ -84,9 +79,6 @@ public class AsyncTaskManager {
 
         }
     }
-
-
-
     /**
      * 发送请求
      *

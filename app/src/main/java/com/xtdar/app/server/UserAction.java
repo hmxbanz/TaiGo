@@ -24,6 +24,9 @@ import com.xtdar.app.server.response.GameCheckResponse;
 import com.xtdar.app.server.response.GameListResponse;
 import com.xtdar.app.server.response.HelpResponse;
 import com.xtdar.app.server.response.LoginResponse;
+import com.xtdar.app.server.response.LotteryDataResponse;
+import com.xtdar.app.server.response.LotteryPrizeResponse;
+import com.xtdar.app.server.response.LotteryResponse;
 import com.xtdar.app.server.response.MyCommentResponse;
 import com.xtdar.app.server.response.MyDevicesResponse;
 import com.xtdar.app.server.response.PersonMsgResponse;
@@ -1683,5 +1686,86 @@ public class UserAction extends BaseAction {
             return null;
         }
         return commonResponse;
+    }
+//抽奖
+    public Object startLottery() throws HttpException {
+        String result = "";
+        String uri = getURL("cli-api-drawrolls.php");
+        Response response=null;
+        try {
+            response=OkHttpUtils
+                    .get()
+                    .addParams("access_key",token)
+                    .url(uri)
+                    .build()
+                    .execute();
+            result =response.body().string();
+            Logger.d(TAG+"::::::%s", result);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        LotteryResponse lotteryResponse = null;
+        try {
+            lotteryResponse = JsonMananger.jsonToBean(result, LotteryResponse.class);
+        } catch (JSONException e) {
+            Logger.e(TAG+"::::::%s", "LotteryResponse occurs JSONException e=" + e.toString());
+            return null;
+        }
+        return lotteryResponse;
+    }
+//抽奖页面数据
+    public Object loadLotteryData() throws HttpException {
+        String result = "";
+        String uri = getURL("cli-api-drawrollspage.php");
+        Response response=null;
+        try {
+            response=OkHttpUtils
+                    .get()
+                    .addParams("access_key",token)
+                    .url(uri)
+                    .build()
+                    .execute();
+            result =response.body().string();
+            Logger.d(TAG+"::::::%s", result);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        LotteryDataResponse lotteryResponse = null;
+        try {
+            lotteryResponse = JsonMananger.jsonToBean(result, LotteryDataResponse.class);
+        } catch (JSONException e) {
+            Logger.e(TAG+"::::::%s", "LotteryDataResponse occurs JSONException e=" + e.toString());
+            return null;
+        }
+        return lotteryResponse;
+    }
+//获奖列表
+    public Object getPrizeList(String lastHisId) throws  HttpException{
+
+        String result = "";
+        String uri = getURL("cli-api-drawrollshis.php");
+        Response response=null;
+        try {
+            response=OkHttpUtils
+                    .get()
+                    .addParams("access_key",token)
+                    .addParams("last_his_id",lastHisId)
+                    .addParams("list_count","8")
+                    .url(uri)
+                    .build()
+                    .execute();
+            result =response.body().string();
+            Logger.d(TAG+"::::::%s", result);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        LotteryPrizeResponse lotteryResponse = null;
+        try {
+            lotteryResponse = JsonMananger.jsonToBean(result, LotteryPrizeResponse.class);
+        } catch (JSONException e) {
+            Logger.e(TAG+"::::::%s", "LotteryPrizeResponse occurs JSONException e=" + e.toString());
+            return null;
+        }
+        return lotteryResponse;
     }
 }

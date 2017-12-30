@@ -397,4 +397,7 @@
     <color name="picture_action_bar_item_pressed_color">#1effffff</color>
     <!-- 下拉刷新界面中最后更新时间的文字色 -->
     <color name="picture_pullrefresh_last_update_time_color">#c4c4c4</color>
+    <color name="loterry_1">#ff635c</color>
+    <color name="loterry_2">#ff8776</color>
+
 </resources>

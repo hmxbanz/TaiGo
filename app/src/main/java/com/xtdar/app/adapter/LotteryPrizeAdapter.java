@@ -13,7 +13,8 @@ import com.xtdar.app.R;
 import com.xtdar.app.XtdConst;
 import com.xtdar.app.loader.GlideImageLoader;
 import com.xtdar.app.server.response.CommentResponse;
-import com.xtdar.app.server.response.SignHistoryResponse;
+import com.xtdar.app.server.response.LotteryDataResponse;
+import com.xtdar.app.server.response.LotteryPrizeResponse;
 import com.xtdar.app.view.widget.SelectableRoundedImageView;
 
 import java.util.List;
@@ -22,13 +23,13 @@ import java.util.List;
  * Created by hmxbanz on 2017/3/8.
  */
 
-public class SignHistoryAdapter extends RecyclerView.Adapter<SignHistoryAdapter.DataHolder>  {
+public class LotteryPrizeAdapter extends RecyclerView.Adapter<LotteryPrizeAdapter.DataHolder>  {
 
-    public void setListItems(List<SignHistoryResponse.DataBean> listItems) {
+    public void setListItems(List<LotteryPrizeResponse.DataBean> listItems) {
         this.listItems = listItems;
     }
 
-    private List<SignHistoryResponse.DataBean> listItems;
+    private List<LotteryPrizeResponse.DataBean> listItems;
     private LayoutInflater layoutInflater;
     private  final int TYPE_HEADER = 0;
     private  final int TYPE_NORMAL = 1;
@@ -61,13 +62,13 @@ public class SignHistoryAdapter extends RecyclerView.Adapter<SignHistoryAdapter.
         return mHeaderView;
     }
 
-    public SignHistoryAdapter(Context c){
+    public LotteryPrizeAdapter(Context c){
         this.context=c;
         this.layoutInflater=LayoutInflater.from(c);
         glideImageLoader=new GlideImageLoader();
     }
 
-    public SignHistoryAdapter(List<SignHistoryResponse.DataBean> l, Context c){
+    public LotteryPrizeAdapter(List<LotteryPrizeResponse.DataBean> l, Context c){
         this.listItems=l;
         this.context=c;
         this.layoutInflater=LayoutInflater.from(c);
@@ -77,15 +78,11 @@ public class SignHistoryAdapter extends RecyclerView.Adapter<SignHistoryAdapter.
     @Override
     public DataHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         if(mHeaderView != null && viewType == TYPE_HEADER)
-        {
             return new DataHolder(mHeaderView);
-        }
         else if(mFooterView != null &&viewType == TYPE_FOOTER)
-        {
             return new DataHolder(mFooterView);
-        }
         else {
-            View v = layoutInflater.inflate(R.layout.listitem_sign_history, parent, false);
+            View v = layoutInflater.inflate(R.layout.listitem_lottery_prize, parent, false);
             return new DataHolder(v);
         }
     }
@@ -95,39 +92,17 @@ public class SignHistoryAdapter extends RecyclerView.Adapter<SignHistoryAdapter.
         if(getItemViewType(position) == TYPE_FOOTER) return;
 
         final int pos = getRealPosition(holder);
-        final SignHistoryResponse.DataBean listItem = listItems.get(pos);
+        final LotteryPrizeResponse.DataBean listItem = listItems.get(pos);
         if(holder instanceof DataHolder) {
-            holder.title.setText(listItem.getScore_tips());
-            holder.createdate.setText(listItem.getRecord_date());
-            if(Integer.parseInt(listItem.getScore())>0)
-            holder.score.setText("+"+listItem.getScore());
-            else if(Integer.parseInt(listItem.getScore())==0)
-            holder.score.setText(listItem.getScore());
+            if(listItem.getDraw_rolls_type()=="2")
+                holder.txtBtnPrize.setText("立即领奖");
             else
-            holder.score.setText(listItem.getScore());
-            switch (listItem.getScore_type()) {
-                case "1":
-                    holder.typeImg.setImageDrawable(context.getResources().getDrawable(R.drawable.score1));
-                    break;
-                case "2":
-                    holder.typeImg.setImageDrawable(context.getResources().getDrawable(R.drawable.score2));
-                    break;
-                case "3":
-                    holder.typeImg.setImageDrawable(context.getResources().getDrawable(R.drawable.score3));
-                    break;
-                case "4":
-                    holder.typeImg.setImageDrawable(context.getResources().getDrawable(R.drawable.score4));
-                    break;
-            }
+                holder.txtBtnPrize.setText("已兑换");
+            if(listItem.getIs_handler()=="1")
+                glideImageLoader.displayImage(context, XtdConst.IMGURI+listItem.getHis_img_2(),holder.imgPrize);
+            else
+                glideImageLoader.displayImage(context, XtdConst.IMGURI+listItem.getHis_img(),holder.imgPrize);
 
-            //glideImageLoader.displayImage(context, XtdConst.IMGURI+listItem.getImg_path(),holder.avatar);
-            if(mListener == null) return;
-//            holder.itemView.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View v) {
-//                    mListener.onItemClick(position,listItem.getItem_id(),listItem.getItem_id());
-//                }
-//            });
         }
 
     }
@@ -192,32 +167,16 @@ public class SignHistoryAdapter extends RecyclerView.Adapter<SignHistoryAdapter.
     }
     class DataHolder extends RecyclerView.ViewHolder implements View.OnClickListener
     {
-        private TextView title;
-        private TextView score;
-        private TextView createdate;
-        private SelectableRoundedImageView typeImg;
+        private TextView txtBtnPrize;
+        private ImageView imgPrize;
+        private View listLayoutView;
 
         public DataHolder(View itemView) {
             super(itemView);
-            title = (TextView) itemView.findViewById(R.id.title);
-            score = (TextView) itemView.findViewById(R.id.score);
-            createdate = (TextView) itemView.findViewById(R.id.createdate);
-            typeImg = (SelectableRoundedImageView) itemView.findViewById(R.id.type_img);
+            txtBtnPrize = (TextView) itemView.findViewById(R.id.btn_submit);
+            imgPrize = (ImageView) itemView.findViewById(R.id.img_prize);
+            listLayoutView = itemView.findViewById(R.id.list_item_layout);
         }
-
-        public void setTitle(TextView title) {
-            this.title = title;
-        }
-        public void setScore(TextView score) {
-            this.score = score;
-        }
-        public void setCreatedate(TextView createdate) {
-            this.createdate = createdate;
-        }
-        public void setTypeImg(SelectableRoundedImageView typeImg) {
-            this.typeImg = typeImg;
-        }
-
         @Override
         public void onClick(View v) {
             //mListener.onItemClick(getAdapterPosition(),"a");

@@ -12,7 +12,6 @@
         <attr name="rim_color" format="color"/>
         <attr name="bar_rimshown" format="boolean"/>
     </declare-styleable>
-
     <!--圆形头像-->
     <declare-styleable name="CircleImageView">
         <attr name="civ_border_width" format="dimension" />
@@ -30,5 +29,44 @@
         <attr name="sriv_border_color" format="color" />
         <attr name="sriv_oval" format="boolean" />
         <attr name="android:scaleType" />
+    </declare-styleable>
+    <!--抽奖-->
+    <declare-styleable name="LotteryDisk">
+        <!--偶数圆弧的背景色-->
+        <attr name="eventArcBgColor" format="color"/>
+        <!--奇数圆弧的背景色-->
+        <attr name="oddArcBgColor" format="color"/>
+        <attr name="textColor" format="color"/>
+        <attr name="textSize" format="dimension"/>
+        <!--最少旋转的圈数-->
+        <attr name="minTurnsNum" format="integer"/>
+        <!--最大旋转的圈数-->
+        <attr name="maxTurnsNum" format="integer"/>
+        <!--旋转一圈所需时间-->
+        <attr name="oneCircleDuration" format="integer"/>
+        <!--转盘条目的个数-->
+        <attr name="itemCount" format="enum">
+            <!--6个-->
+            <enum name="six" value="6"/>
+            <!--8个-->
+            <enum name="eight" value="8"/>
+            <!--10个-->
+            <enum name="ten" value="10"/>
+            <!--12个-->
+            <enum name="twelve" value="12"/>
+        </attr>
+    </declare-styleable>
+    <!--垂直滚动文字-->
+    <declare-styleable name="VerticalScrollTextView">
+        <attr name="vst_sleepTime" format="integer" />
+        <attr name="vst_animDuration" format="integer" />
+        <attr name="vst_textSize" format="dimension" />
+        <attr name="vst_textColor" format="color" />
+        <attr name="vst_singleLine" format="boolean" />
+        <attr name="vst_scrollOrientation">
+            <enum name="up" value="0" />
+            <enum name="down" value="1" />
+        </attr>
+
     </declare-styleable>
 </resources>

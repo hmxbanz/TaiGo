@@ -9,6 +9,7 @@ import android.widget.TextView;
 import com.xtdar.app.R;
 import com.xtdar.app.XtdConst;
 import com.xtdar.app.adapter.SignHistoryAdapter;
+import com.xtdar.app.common.CommonTools;
 import com.xtdar.app.loader.GlideImageLoader;
 import com.xtdar.app.server.HttpException;
 import com.xtdar.app.server.async.OnDataListener;
@@ -18,6 +19,11 @@ import com.xtdar.app.view.activity.HelpDetailActivity;
 import com.xtdar.app.view.activity.ScoreDetailActivity;
 import com.xtdar.app.view.widget.LoadDialog;
 import com.xtdar.app.widget.myRecyclerView.RecyclerViewUpRefresh;
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 
 /**
  * Created by hmxbanz on 2017/4/5.
@@ -51,18 +57,24 @@ public class ScoreDetailPresenter extends BasePresenter implements OnDataListene
     }
 
     public void loadData() {
-        LoadDialog.show(context);
         atm.request(GETSCORE, this);
     }
 
 
     @Override
     public Object doInBackground(int requestCode, String parameter) throws HttpException {
+        String startDate="",endDate="";
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        Calendar now = Calendar.getInstance();
+        endDate=sdf.format(now.getTime());
+        now.add(Calendar.MONTH,-1);
+        startDate=sdf.format(now.getTime());
+
         switch (requestCode) {
             case GETSCORE :
                 return mUserAction.getScore();
             case GETHISTORY :
-                return mUserAction.getHistory("2017-1-1","2017-12-12");
+                return mUserAction.getHistory(startDate,endDate);
         }
         return null;
     }
@@ -77,7 +89,6 @@ public class ScoreDetailPresenter extends BasePresenter implements OnDataListene
                 if (scoreResponse != null && scoreResponse.getCode() == XtdConst.SUCCESS) {
                     this.txtScore.setText(scoreResponse.getData().getScore());
 
-                    LoadDialog.show(context);
                     atm.request(GETHISTORY, this);
                 }
                 break;

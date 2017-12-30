@@ -99,6 +99,7 @@ dependencies {
     compile 'com.android.support:appcompat-v7:25.3.1'
     compile 'com.android.support:design:25.3.1'
     compile 'com.android.support:recyclerview-v7:25.3.1'
+    compile 'com.android.support:gridlayout-v7:25.3.1'
     compile 'org.immutables:gson:2.1.8'
     compile 'com.kyleduo.switchbutton:library:1.4.5'
     compile 'com.youth.banner:banner:1.4.9'
@@ -108,15 +109,10 @@ dependencies {
     compile 'com.github.florent37:viewanimator:1.0.3'
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
     compile project(':okhttputils')
-    compile 'com.github.mcxtzhang:SwipeDelMenuLayout:V1.2.5'
-    //滑动listview 删除
-    compile 'com.jaeger.statusbaruitl:library:1.4.0'
-    //设置状态栏
-    compile 'cn.yipianfengye.android:zxing-library:2.2'
-    //二维码扫描
-    compile 'com.android.support:gridlayout-v7:25.3.1'
-    compile 'com.clj.fastble:FastBleLib:1.2.1'
-    //蓝牙
+    compile 'com.github.mcxtzhang:SwipeDelMenuLayout:V1.2.5'    //滑动listview 删除
+    compile 'com.jaeger.statusbaruitl:library:1.4.0'    //设置状态栏
+    compile 'cn.yipianfengye.android:zxing-library:2.2'    //二维码扫描
+    compile 'com.clj.fastble:FastBleLib:1.2.1'    //蓝牙
 
     //阿里百川(开始)
 
