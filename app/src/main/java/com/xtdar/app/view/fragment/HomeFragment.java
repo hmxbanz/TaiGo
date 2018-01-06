@@ -13,11 +13,17 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.jaeger.library.StatusBarUtil;
+import com.lzy.ninegrid.NineGridView;
 import com.uuzuche.lib_zxing.activity.CodeUtils;
 import com.xtdar.app.R;
 import com.xtdar.app.common.NToast;
+import com.xtdar.app.loader.GlideImageLoader;
 import com.xtdar.app.presenter.HomeFragmentPresenter;
 import com.xtdar.app.server.broadcast.BroadcastManager;
+import com.xtdar.app.view.activity.BleActivity;
+import com.xtdar.app.view.activity.MineActivity;
+import com.xtdar.app.view.activity.SignInActivity;
+import com.youth.banner.Banner;
 
 /**
  * Created by AMing on 16/6/21.
@@ -30,9 +36,10 @@ private static final int Blue=0x001bb4fb;
 
     private HomeFragmentPresenter presenter;
     private TextView title;
-    private RelativeLayout layout_back;
+    private RelativeLayout layout_me;
     private RecyclerView recycleView;
     private SwipeRefreshLayout swiper;
+    private Banner banner;
 
     public static HomeFragment getInstance() {
         if (instance == null) {
@@ -49,7 +56,7 @@ private static final int Blue=0x001bb4fb;
 
 //        initData();
         presenter = new HomeFragmentPresenter(getContext());
-        presenter.init(swiper,recycleView);
+        presenter.init(banner,swiper,recycleView);
         //StatusBarUtil.setTranslucent(getActivity(), StatusBarUtil.);
         StatusBarUtil.setTranslucent(getActivity(),0);
         return view;
@@ -67,14 +74,18 @@ private static final int Blue=0x001bb4fb;
     }
 
     private void initViews() {
-        layout_back=(RelativeLayout)view.findViewById(R.id.layout_back);
-        layout_back.setVisibility(View.INVISIBLE);
+        layout_me=(RelativeLayout)view.findViewById(R.id.layout_me);
+        layout_me.setOnClickListener(this);
         title=(TextView)view.findViewById(R.id.text_title);
         title.setText("设备");
         view.findViewById(R.id.txt_add_driver).setOnClickListener(this);
         recycleView= (RecyclerView) view.findViewById(R.id.recyclerView);
         swiper= (SwipeRefreshLayout) view.findViewById(R.id.swiper);
         view.findViewById(R.id.right_icon).setOnClickListener(this);
+        view.findViewById(R.id.icon_add).setOnClickListener(this);
+        //简单使用
+        banner = (Banner) view.findViewById(R.id.banner);
+        banner.setImageLoader(new GlideImageLoader());//设置图片加载器
     }
 
     @Override
@@ -89,17 +100,7 @@ private static final int Blue=0x001bb4fb;
     }
     @Override
     public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.txt_add_driver:
-                presenter.onScanClick();
-                break;
-            case R.id.right_icon:
-                presenter.onScanClick();
-                break;
-//            case R.id.layout_more:
-//                ((Main2Activity)getActivity()).getViewPager().setCurrentItem(2, false);
-
-        }
+      presenter.onMeClick(v);
     }
 
     @Override

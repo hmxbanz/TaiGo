@@ -12,6 +12,7 @@ import com.xtdar.app.common.NLog;
 import com.xtdar.app.common.json.JsonMananger;
 import com.xtdar.app.server.request.LoginRequest;
 import com.xtdar.app.server.request.UpdateRequest;
+import com.xtdar.app.server.response.Ad2Response;
 import com.xtdar.app.server.response.AdResponse;
 import com.xtdar.app.server.response.BindResponse;
 import com.xtdar.app.server.response.CaptchaResponse;
@@ -1767,5 +1768,32 @@ public class UserAction extends BaseAction {
             return null;
         }
         return lotteryResponse;
+    }
+//获取广告
+
+    public Ad2Response getAds2() throws HttpException{
+        String result = "";
+        String uri = getURL("cli-comm-getimglist.php");
+        Response response=null;
+        try {
+            response=OkHttpUtils
+                    .get()
+                    .url(uri)
+                    .build()
+                    .execute();
+            result =response.body().string();
+            Logger.d(TAG+"::::::%s", result);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        Ad2Response adResponse = null;
+        try {
+            adResponse = JsonMananger.jsonToBean(result, Ad2Response.class);
+        } catch (JSONException e) {
+            Logger.e(TAG+"::::::%s", "Ad2Response occurs JSONException e=" + e.toString());
+            return null;
+        }
+        return adResponse;
+
     }
 }

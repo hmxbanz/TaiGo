@@ -36,8 +36,7 @@ public class LotteryDisk extends View {
             R.drawable.loterry_pr_3,R.drawable.loterry_pr_4,R.drawable.loterry_pr_5,
             R.drawable.loterry_pr_6,R.drawable.loterry_pr_7,R.drawable.loterry_pr_8,R.drawable.loterry_pr_9,R.drawable.loterry_pr_10};
 
-    private String[] strs = {"Iphone X", "谢谢参与", "精装AR枪", "100积分", "高级AR枪", "50元话费",
-            "OPPO R11s", "U盘", "300积分", "10元话费"};
+    private String[] strs = {"Iphone X", "谢谢参与", "精装AR枪", "100积分", "高级AR枪", "50元话费", "OPPO R11s", "U盘", "300积分", "10元话费"};
 
 
 

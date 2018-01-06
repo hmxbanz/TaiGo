@@ -16,6 +16,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.xtdar.app.R;
+import com.xtdar.app.XtdConst;
 import com.xtdar.app.common.NToast;
 import com.xtdar.app.presenter.LotteryPresenter;
 import com.xtdar.app.presenter.SettingPresenter;
@@ -27,6 +28,8 @@ import com.xtdar.app.widget.lottery.LotteryDisk;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import cn.sharesdk.onekeyshare.OnekeyShare;
 
 
 public class LotteryActivity extends BaseActivity implements View.OnClickListener {
@@ -85,8 +88,8 @@ public class LotteryActivity extends BaseActivity implements View.OnClickListene
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case android.R.id.home:
-                finish();
+            case R.id.menu_share:
+                presenter.share();
                 break;
             case R.id.menu_lottery_prize:
                 startActivity(new Intent(this,LotteryPrizeActivity.class));
@@ -109,6 +112,7 @@ public class LotteryActivity extends BaseActivity implements View.OnClickListene
             vTextView.stopPlay();
         }
     }
+
 
 }
 

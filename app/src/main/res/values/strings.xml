@@ -3,6 +3,7 @@
     <string name="xtdar_app_name">TaiGo</string>
     <string name="home">设备</string>
     <string name="me">我的</string>
+    <string name="tao">淘设备</string>
 
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>

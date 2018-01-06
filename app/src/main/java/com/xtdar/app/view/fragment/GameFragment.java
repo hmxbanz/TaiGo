@@ -1,5 +1,6 @@
 package com.xtdar.app.view.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
@@ -8,9 +9,12 @@ import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RelativeLayout;
 
 import com.xtdar.app.R;
 import com.xtdar.app.presenter.GamePresenter;
+import com.xtdar.app.view.activity.MineActivity;
+import com.xtdar.app.view.activity.SignInActivity;
 
 /**
  * Created by AMing on 16/6/21.
@@ -44,6 +48,8 @@ public class GameFragment extends Fragment implements View.OnClickListener  {
     }
 
     private void initViews() {
+        view.findViewById(R.id.layout_me).setOnClickListener(this);
+        view.findViewById(R.id.right_icon).setOnClickListener(this);
         tabLayout= (TabLayout) view.findViewById(R.id.tabLayout);
         mViewPager = (ViewPager) view.findViewById(R.id.home_viewpager);
     }
@@ -55,8 +61,6 @@ public class GameFragment extends Fragment implements View.OnClickListener  {
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()) {
-
-        }
+        presenter.onMeClick(v);
     }
 }

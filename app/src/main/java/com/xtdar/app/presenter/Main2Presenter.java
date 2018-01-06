@@ -169,6 +169,7 @@ public class Main2Presenter extends BasePresenter {
 
     public void autoLogin()
     {
+        basePresenter.initData();
         if(!basePresenter.isLogin)
         viewPager.setCurrentItem(0);
         openId=sp.getString(XtdConst.OPENID,"");

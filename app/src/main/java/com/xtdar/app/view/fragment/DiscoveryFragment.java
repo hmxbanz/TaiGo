@@ -33,8 +33,8 @@ public class DiscoveryFragment extends Fragment implements View.OnClickListener 
 
     private TabLayout tabLayout;
 
-    private DiscoveryPresenter discoveryPresenter;
-    private RelativeLayout layout_back;
+    private DiscoveryPresenter presenter;
+    private RelativeLayout layout_me,layout_singin;
     private TextView title;
 
     public static DiscoveryFragment getInstance() {
@@ -51,17 +51,21 @@ public class DiscoveryFragment extends Fragment implements View.OnClickListener 
         initViews();
         initMianViewPager();
 //        initData();
-        discoveryPresenter = new DiscoveryPresenter(getContext());
+        presenter = new DiscoveryPresenter(getContext());
         return view;
     }
 
     @Override
     public void onStart() {
         super.onStart();
-        discoveryPresenter.init(tabLayout);
+        presenter.init(tabLayout);
     }
 
     private void initViews() {
+        layout_me= (RelativeLayout) view.findViewById(R.id.layout_me);
+        layout_me.setOnClickListener(this);
+        layout_singin= (RelativeLayout) view.findViewById(R.id.layout_singin);
+        layout_singin.setOnClickListener(this);
         tabLayout= (TabLayout) view.findViewById(R.id.tabLayout);
 
         //tabLayout.setTabTextColors(R.color.appTextColor, R.color.red);//设置文本在选中和为选中时候的颜色
@@ -72,7 +76,7 @@ public class DiscoveryFragment extends Fragment implements View.OnClickListener 
         mViewPager = (ViewPager) view.findViewById(R.id.discovery_viewpager);
 
         mFragments = new ArrayList<>();
-        mFragments.add(HomeRecommendFragment.getInstance());
+        //mFragments.add(HomeRecommendFragment.getInstance());
         mFragments.add(ShowFragment.getInstance());
         mFragments.add(ShowFirstFragment.getInstance());
 
@@ -101,8 +105,6 @@ public class DiscoveryFragment extends Fragment implements View.OnClickListener 
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()) {
-
-        }
+        presenter.onMeClick(v);
     }
 }

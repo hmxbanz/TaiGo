@@ -1,17 +1,25 @@
 package com.xtdar.app.presenter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
 
+import com.xtdar.app.R;
 import com.xtdar.app.XtdConst;
 import com.xtdar.app.adapter.HomeRecommendAdapter;
 import com.xtdar.app.common.json.JsonMananger;
+import com.xtdar.app.listener.AlertDialogCallback;
 import com.xtdar.app.server.HttpException;
 import com.xtdar.app.server.async.OnDataListener;
 import com.xtdar.app.server.response.AdResponse;
 import com.xtdar.app.server.response.TaobaoResponse;
+import com.xtdar.app.view.activity.LoginActivity;
+import com.xtdar.app.view.activity.MineActivity;
+import com.xtdar.app.view.activity.SignInActivity;
 import com.xtdar.app.view.widget.LoadDialog;
+import com.xtdar.app.widget.DialogWithYesOrNoUtils;
 import com.youth.banner.Banner;
 
 import java.util.ArrayList;
@@ -29,9 +37,10 @@ public class HomeRecommendPresenter extends BasePresenter implements OnDataListe
     private GridLayoutManager gridLayoutManager;
     private HomeRecommendAdapter dataAdapter;
     private List<TaobaoResponse.DataBean.DeviceTypeListBean> list=new ArrayList<>();
-
+    private final BasePresenter basePresenter;
     public HomeRecommendPresenter(Context context){
         super(context);
+        basePresenter = BasePresenter.getInstance(context);
         //mActivity = (ContactsActivity) context;
     }
 
@@ -47,7 +56,6 @@ public class HomeRecommendPresenter extends BasePresenter implements OnDataListe
         //dataAdapter.setFooterView(LayoutInflater.from(context).inflate(R.layout.recyclerview_footer,null));
         recycleView.setAdapter(dataAdapter);
         recycleView.setNestedScrollingEnabled(false);
-
 
         LoadDialog.show(context);
         //atm.request(GETADS,this);
@@ -127,5 +135,28 @@ public class HomeRecommendPresenter extends BasePresenter implements OnDataListe
 
         LoadDialog.show(context);
         atm.request(GETRECOMMEND,this);
+    }
+    public void onMeClick(View v) {
+        basePresenter.initData();
+        if (!basePresenter.isLogin) {
+            DialogWithYesOrNoUtils.getInstance().showDialog(context, "请先登录", null, "前住登录", new AlertDialogCallback() {
+                @Override
+                public void executeEvent() {
+                    context.startActivity(new Intent(context, LoginActivity.class));
+                }
+
+            });
+        } else {
+            switch (v.getId()) {
+                case R.id.layout_me:
+                    context.startActivity(new Intent(context, MineActivity.class));
+                    break;
+                case R.id.right_icon:
+                    context.startActivity(new Intent(context, SignInActivity.class));
+                    break;
+            }
+
+        }
+
     }
 }

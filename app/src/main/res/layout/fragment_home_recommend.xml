@@ -5,7 +5,56 @@
     android:layout_height="match_parent"
     android:background="@color/appbg"
     android:orientation="vertical">
+    <LinearLayout
+        android:background="@color/titleBlue"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"   >
+        <!-- 头部导航 -->
+        <RelativeLayout
+            android:gravity="center_horizontal"
+            android:id="@+id/layout_me"
+            android:layout_width="60dp"
+            android:layout_height="match_parent"     >
 
+            <ImageView
+                android:id="@+id/icon_me2"
+                android:src="@drawable/icon_me2"
+                android:scaleType="centerInside"
+                android:tint="@color/white"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_centerVertical="true"/>
+
+        </RelativeLayout>
+        <RelativeLayout
+            android:id="@+id/tag_layout_logo"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="match_parent"
+            >
+
+            <TextView
+                android:id="@+id/text_title"
+                style="@style/AppTitleStyle"
+                android:gravity="center"
+                android:text="淘设备"
+                android:textSize="20dp"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+
+        </RelativeLayout>
+        <RelativeLayout
+            android:layout_width="60dp"
+            android:layout_height="match_parent" >
+            <ImageView
+                android:layout_centerInParent="true"
+                android:id="@+id/right_icon"
+                android:src="@drawable/icon_signin"
+                android:layout_width="20dp"
+                android:layout_height="20dp" />
+        </RelativeLayout>
+    </LinearLayout>
     <ScrollView
             android:id="@+id/scrollview"
             android:layout_width="match_parent"

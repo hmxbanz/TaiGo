@@ -14,7 +14,7 @@ import com.xtdar.app.common.NLog;
 /**
  * Created by asus on 2016/3/26.
  */
-public abstract class BaseFragment extends Fragment {
+public abstract class BaseFragment extends Fragment implements View.OnClickListener {
 
     private boolean isVisible = false;//当前Fragment是否可见
     private boolean isInitView = false;//是否与View建立起映射关系
@@ -147,6 +147,11 @@ public abstract class BaseFragment extends Fragment {
           isVisible = false;
           isInitView = false;
           isFirstLoad = true;
+
+    }
+
+    @Override
+    public void onClick(View v) {
 
     }
 }

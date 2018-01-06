@@ -15,7 +15,9 @@ import android.text.TextUtils;
 import android.view.View;
 
 import com.clj.fastble.data.ScanResult;
+import com.lzy.ninegrid.NineGridView;
 import com.xtdar.app.MainApplication;
+import com.xtdar.app.R;
 import com.xtdar.app.XtdConst;
 import com.xtdar.app.adapter.MyDevicesAdapter;
 import com.xtdar.app.common.NLog;
@@ -24,15 +26,23 @@ import com.xtdar.app.listener.AlertDialogCallback;
 import com.xtdar.app.server.HttpException;
 import com.xtdar.app.server.async.OnDataListener;
 import com.xtdar.app.server.broadcast.BroadcastManager;
+import com.xtdar.app.server.response.Ad2Response;
 import com.xtdar.app.server.response.CommonResponse;
 import com.xtdar.app.server.response.MyDevicesResponse;
 import com.xtdar.app.service.BluetoothService;
 import com.xtdar.app.view.activity.BleActivity;
 import com.xtdar.app.view.activity.CarActivity;
+import com.xtdar.app.view.activity.HelpDetailActivity;
+import com.xtdar.app.view.activity.LoginActivity;
+import com.xtdar.app.view.activity.LotteryActivity;
 import com.xtdar.app.view.activity.Main2Activity;
+import com.xtdar.app.view.activity.MineActivity;
 import com.xtdar.app.view.activity.QrCodeActivity;
+import com.xtdar.app.view.activity.SignInActivity;
 import com.xtdar.app.view.widget.LoadDialog;
 import com.xtdar.app.widget.DialogWithYesOrNoUtils;
+import com.youth.banner.Banner;
+import com.youth.banner.listener.OnBannerListener;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -48,6 +58,7 @@ public class HomeFragmentPresenter extends BasePresenter implements OnDataListen
     public static final int UNBINDDEVICE = 2;
     public static final String LOADDEVICE = "loadDevice";
     private static final String TAG = HomeFragmentPresenter.class.getSimpleName();
+    private static final int GETADS = 3;
     private final BasePresenter basePresenter;
     private List<MyDevicesResponse.DataBean> list=new ArrayList<>();
     private RecyclerView recyclerView;
@@ -65,6 +76,7 @@ public class HomeFragmentPresenter extends BasePresenter implements OnDataListen
     private String deviceId;
     private int itemIndex;
     private MyDevicesResponse.DataBean itemSelected;
+    private Banner banner;
 
 
     public HomeFragmentPresenter(Context context){
@@ -76,7 +88,8 @@ public class HomeFragmentPresenter extends BasePresenter implements OnDataListen
         dataAdapter.setOnItemClickListener(this);
     }
 
-    public void init(SwipeRefreshLayout swiper, RecyclerView recyclerView) {
+    public void init(Banner banner, SwipeRefreshLayout swiper, RecyclerView recyclerView) {
+        this.banner=banner;
         this.swiper=swiper;
         this.swiper.setOnRefreshListener(this);
         this.recyclerView=recyclerView;
@@ -105,6 +118,8 @@ public class HomeFragmentPresenter extends BasePresenter implements OnDataListen
                 }
             }
         });
+
+        atm.request(GETADS,HomeFragmentPresenter.this);
     }
     public void loadData(){
         if(basePresenter.isLogin){
@@ -121,6 +136,8 @@ public class HomeFragmentPresenter extends BasePresenter implements OnDataListen
                 return mUserAction.getDevices();
             case UNBINDDEVICE:
                 return mUserAction.unBindDevice(deviceId);
+            case GETADS:
+                return mUserAction.getAds2();
         }
         return null;
     }
@@ -149,6 +166,7 @@ public class HomeFragmentPresenter extends BasePresenter implements OnDataListen
                 }else {
                     NToast.shortToast(context, "获取设备列表："+response.getMsg());
                 }
+
                 break;
             case UNBINDDEVICE:
                 CommonResponse commonResponse = (CommonResponse) result;
@@ -169,6 +187,45 @@ public class HomeFragmentPresenter extends BasePresenter implements OnDataListen
                 } else {
                     NToast.shortToast(context, "解绑："+commonResponse.getMsg());
                 }
+                break;
+
+            case GETADS:
+                final Ad2Response ad2Response = (Ad2Response) result;
+                if (ad2Response.getCode() == XtdConst.SUCCESS) {
+                    if (ad2Response.getData().size() == 0) {
+                    }
+                    else {
+
+                        List<String> images = new ArrayList<>();
+                        for (Ad2Response.DataBean bean : ad2Response.getData()) {
+                            String s=XtdConst.IMGURI+bean.getCover();
+                            images.add(s);
+                        }
+
+                        this.banner.setImages(images);//设置图片集合
+                        this.banner.setOnBannerListener(new OnBannerListener() {
+                            @Override
+                            public void OnBannerClick(int position) {
+                                String url=ad2Response.getData().get(position).getAndroid_link();
+                                Intent intent;
+                                if("1".equals(url))
+                                    intent=new Intent(context, LotteryActivity.class);
+                                else
+                                    intent=new Intent(context, HelpDetailActivity.class);
+
+                                intent.putExtra("title","");
+                                intent.putExtra("url",ad2Response.getData().get(position).getAndroid_link());
+
+                                context.startActivity(intent);
+                            }
+                        });
+                        banner.start();
+                    }
+
+                }else {
+                    NToast.shortToast(context, "获取设备列表："+ad2Response.getMsg());
+                }
+
                 break;
         }
     }
@@ -369,5 +426,32 @@ public class HomeFragmentPresenter extends BasePresenter implements OnDataListen
             {
                 mBluetoothService.setScanCallback(callback);
             mBluetoothService.scanDevice();}
+    }
+
+    public void onMeClick(View v) {
+        basePresenter.initData();
+        if(!basePresenter.isLogin){
+            DialogWithYesOrNoUtils.getInstance().showDialog(context, "请先登录", null,"前住登录", new AlertDialogCallback() {
+                @Override
+                public void executeEvent() {
+                    context.startActivity(new Intent(context, LoginActivity.class));
+                }
+
+            });
+        }
+        else {
+            switch (v.getId()) {
+                case R.id.layout_me:
+                    context.startActivity(new Intent(context, MineActivity.class));
+                    break;
+                case R.id.right_icon:
+                    context.startActivity(new Intent(context, SignInActivity.class));
+                    break;
+                case R.id.icon_add:
+                    context.startActivity(new Intent(context, BleActivity.class));
+            }
+
+        }
+
     }
 }

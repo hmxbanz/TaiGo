@@ -1,11 +1,16 @@
 package com.xtdar.app.view.fragment;
 
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
+import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 
 import com.xtdar.app.R;
 import com.xtdar.app.loader.GlideImageLoader;
 import com.xtdar.app.presenter.HomeRecommendPresenter;
+import com.xtdar.app.view.activity.MineActivity;
+import com.xtdar.app.view.activity.SignInActivity;
 import com.youth.banner.Banner;
 
 import java.util.ArrayList;
@@ -23,6 +28,8 @@ public class HomeRecommendFragment extends BaseFragment  {
 
     private HomeRecommendPresenter presenter;
     private Banner banner;
+    private RelativeLayout layout_me;
+    private View right_icon;
 
     public static HomeRecommendFragment getInstance() {
         if (instance == null) {
@@ -43,6 +50,10 @@ public class HomeRecommendFragment extends BaseFragment  {
 
     @Override
     protected void initView() {
+        layout_me=findView(R.id.layout_me);
+        layout_me.setOnClickListener(this);
+        right_icon=findView(R.id.right_icon);
+        right_icon.setOnClickListener(this);
         presenter = new HomeRecommendPresenter(getContext());
         //简单使用
         banner = findView(R.id.banner);
@@ -87,4 +98,8 @@ public class HomeRecommendFragment extends BaseFragment  {
         super.onDestroy();
     }
 
+    @Override
+    public void onClick(View v) {
+        presenter.onMeClick(v);
+    }
 }

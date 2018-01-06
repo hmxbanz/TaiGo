@@ -25,17 +25,13 @@ import com.jaeger.library.StatusBarUtil;
 import com.shuyu.gsyvideoplayer.GSYVideoManager;
 import com.shuyu.gsyvideoplayer.video.StandardGSYVideoPlayer;
 import com.xtdar.app.R;
-import com.xtdar.app.common.NToast;
-import com.xtdar.app.listener.AlertDialogCallback;
 import com.xtdar.app.presenter.Main2Presenter;
 import com.xtdar.app.service.BluetoothService;
 import com.xtdar.app.view.fragment.DiscoveryFragment;
 import com.xtdar.app.view.fragment.GameFragment;
 import com.xtdar.app.view.fragment.HomeFragment;
-import com.xtdar.app.view.fragment.MineFragment;
-import com.xtdar.app.view.fragment.ShowFragment;
+import com.xtdar.app.view.fragment.HomeRecommendFragment;
 import com.xtdar.app.view.widget.DragPointView;
-import com.xtdar.app.widget.DialogWithYesOrNoUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -50,7 +46,7 @@ public class Main2Activity extends BaseActivity implements View.OnClickListener{
 
     private ViewPager viewPager;
     private List<Fragment> mFragments;
-    private ImageView mImageHome,mImageShop, mImageAr,mImageDiscovery, mImageMe, mMineRed;
+    private ImageView mImageHome,mImageShop, mImageAr,mImageDiscovery, mImageTao, mMineRed;
     private TextView mTextHome,mTextShop, mTextDiscovery,mTextMe;
     private DragPointView mUnreadNumView;
 
@@ -114,7 +110,7 @@ public class Main2Activity extends BaseActivity implements View.OnClickListener{
         mImageHome = (ImageView) findViewById(R.id.tab_img_home);
         mImageShop = (ImageView) findViewById(R.id.tab_img_shop);
         mImageDiscovery = (ImageView) findViewById(R.id.tab_img_discovery);
-        mImageMe = (ImageView) findViewById(R.id.tab_img_me);
+        mImageTao = (ImageView) findViewById(R.id.tab_tao);
         mTextHome = (TextView) findViewById(R.id.tab_text_home);
         mTextShop=(TextView)findViewById(R.id.tab_text_shop);
         mTextDiscovery=(TextView)findViewById(R.id.tab_text_discovery);
@@ -141,7 +137,7 @@ public class Main2Activity extends BaseActivity implements View.OnClickListener{
         mFragments.add(HomeFragment.getInstance());
         mFragments.add(GameFragment.getInstance());
         mFragments.add(DiscoveryFragment.getInstance());
-        mFragments.add(MineFragment.getInstance());
+        mFragments.add(HomeRecommendFragment.getInstance());
 
         mFragmentPagerAdapter = new FragmentPagerAdapter(getSupportFragmentManager()) {
             @Override
@@ -162,7 +158,7 @@ public class Main2Activity extends BaseActivity implements View.OnClickListener{
         mImageHome.setImageDrawable(getResources().getDrawable(R.drawable.tab_home));
         mImageShop.setImageDrawable(getResources().getDrawable(R.drawable.tab_shop));
         mImageDiscovery.setImageDrawable(getResources().getDrawable(R.drawable.tab_discovery));
-        mImageMe.setImageDrawable(getResources().getDrawable(R.drawable.tab_me));
+        mImageTao.setImageDrawable(getResources().getDrawable(R.drawable.tab_tao));
         mTextHome.setTextColor(Color.parseColor("#abadbb"));
         mTextShop.setTextColor(Color.parseColor("#abadbb"));
         mTextDiscovery.setTextColor(Color.parseColor("#abadbb"));
@@ -184,7 +180,7 @@ public class Main2Activity extends BaseActivity implements View.OnClickListener{
                 break;
             case 3:
                 mTextMe.setTextColor(Color.parseColor("#07a5ff"));
-                mImageMe.setImageDrawable(getResources().getDrawable(R.drawable.tab_me_on));
+                mImageTao.setImageDrawable(getResources().getDrawable(R.drawable.tab_tao_on));
                 break;
         }
     }
@@ -196,9 +192,9 @@ public class Main2Activity extends BaseActivity implements View.OnClickListener{
         public void onPageSelected(int position) {
 
             int index= viewPager.getCurrentItem();
-            if(index==3){
-                main2Presenter.onMeClick();
-            }
+//            if(index==3){
+//                main2Presenter.onMeClick();
+//            }
             changeTextViewColor();
             changeSelectedTabState(position);
                 //HomeFragment homeFragment= HomeFragment.getInstance();
@@ -223,7 +219,8 @@ public class Main2Activity extends BaseActivity implements View.OnClickListener{
                 //mMineRed.setVisibility(View.GONE);
                 break;
             case R.id.tab_layout_me:
-                main2Presenter.onMeClick();
+                //main2Presenter.onMeClick();
+                viewPager.setCurrentItem(3, false);
                 //mMineRed.setVisibility(View.GONE);
                 break;
         }

@@ -229,6 +229,7 @@
         <activity            android:name=".view.activity.ScoreDetailActivity"            android:screenOrientation="portrait" />
         <activity            android:name=".view.activity.LotteryActivity"            android:screenOrientation="portrait" />
         <activity            android:name=".view.activity.LotteryPrizeActivity"            android:screenOrientation="portrait" />
+        <activity            android:name=".view.activity.MineActivity"            android:screenOrientation="portrait" />
         <activity
             android:name=".view.activity.ConversationListActivity"
             android:screenOrientation="portrait"

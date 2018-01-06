@@ -74,7 +74,7 @@ public class HelpDetailActivity extends BaseActivity implements View.OnClickList
         String title = getIntent().getStringExtra("title");
         txtTitle = (TextView) findViewById(R.id.text_title);
         txtTitle.setText(title);
-               mWebView.loadUrl(url);
+        mWebView.loadUrl(url);
         if(url.indexOf("cli-dgc-devicehelp")>0){
             txtRight = (TextView) findViewById(R.id.text_right);
             txtRight.setText("去游戏");

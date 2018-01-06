@@ -34,6 +34,7 @@ import com.xtdar.app.server.response.LoginResponse;
 import com.xtdar.app.server.response.UnReadMsgResponse;
 import com.xtdar.app.server.response.UserInfoResponse;
 import com.xtdar.app.view.activity.Main2Activity;
+import com.xtdar.app.view.activity.MineActivity;
 import com.xtdar.app.view.widget.DragPointView;
 import com.xtdar.app.view.widget.LoadDialog;
 import com.xtdar.app.view.widget.SelectableRoundedImageView;
@@ -51,7 +52,7 @@ public class MinePresenter extends BasePresenter implements OnDataListener {
     private static final int GETINFO = 2;
     private static final int GETMSGCOUNT = 3;
     public static final String UPDATEUNREAD = "updateUnread";
-    private final Main2Activity activity;
+    private final MineActivity activity;
     private GlideImageLoader glideImageLoader;
     private final BasePresenter basePresenter;
     private SelectableRoundedImageView avator;
@@ -62,14 +63,14 @@ public class MinePresenter extends BasePresenter implements OnDataListener {
         super(context);
         basePresenter = BasePresenter.getInstance(context);
         glideImageLoader = new GlideImageLoader();
-        activity=(Main2Activity)context;
+        activity=(MineActivity)context;
     }
 
     public void init(SelectableRoundedImageView selectableRoundedImageView, TextView nickName, DragPointView unreadNumView) {
         this.unreadNumView=unreadNumView;
         this.avator = selectableRoundedImageView;
         this.nickName = nickName;
-
+        getInfo();
         BroadcastManager.getInstance(context).addAction(MinePresenter.UPDATEUNREAD, new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {
@@ -82,7 +83,7 @@ public class MinePresenter extends BasePresenter implements OnDataListener {
                             reloadMsgCount();
                             break;
                         case "loadAvator":
-                            getInfo();
+
                             break;
                         default:
 

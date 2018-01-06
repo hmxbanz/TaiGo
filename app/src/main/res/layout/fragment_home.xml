@@ -8,44 +8,24 @@
 
     <LinearLayout
         android:background="@color/titleBlue"
-        android:paddingLeft="10dp"
-        android:paddingRight="10dp"
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="45dp"   >
         <!-- 头部导航 -->
-
         <RelativeLayout
-            android:id="@+id/layout_back"
+            android:gravity="center_horizontal"
+            android:id="@+id/layout_me"
             android:layout_width="60dp"
-            android:layout_height="match_parent"
-            >
+            android:layout_height="match_parent"     >
 
-
-                <RelativeLayout
-                    android:id="@+id/ll"
-                    android:layout_marginBottom="2dp"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_centerHorizontal="true"
-                    android:gravity="center">
                     <ImageView
-                        android:src="@drawable/icon_arrow_left"
+                        android:id="@+id/icon_me2"
+                        android:src="@drawable/icon_me2"
                         android:scaleType="centerInside"
+                        android:tint="@color/white"
                         android:layout_width="20dp"
                         android:layout_height="20dp"
                         android:layout_centerVertical="true"/>
-                    <TextView
-                        android:layout_marginLeft="20dp"
-                        android:gravity="center"
-                        android:id="@+id/text_back"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:text="返回"
-                        android:textColor="@color/titleBlue"
-                        android:textSize="18dp" />
-
-                </RelativeLayout>
 
         </RelativeLayout>
         <RelativeLayout
@@ -72,26 +52,27 @@
             <ImageView
                 android:layout_centerInParent="true"
                 android:id="@+id/right_icon"
-                android:src="@drawable/icon_add2"
+                android:src="@drawable/icon_signin"
                 android:layout_width="20dp"
                 android:layout_height="20dp" />
         </RelativeLayout>
     </LinearLayout>
     <!-- 底部导航 -->
     <LinearLayout
-    android:background="@color/titleBlue"
-    android:id="@+id/dervice"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:gravity="center_vertical"
-    android:orientation="horizontal">
-
-<ImageView
-    android:scaleType="centerInside"
-    android:src="@drawable/img_help"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content" />
-</LinearLayout>
+        android:id="@+id/dervice"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:background="@color/titleBlue"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+        <com.youth.banner.Banner
+            android:id="@+id/banner"
+            android:layout_width="match_parent"
+            android:layout_height="180dp"
+            />
+    </LinearLayout>
     <LinearLayout
         android:layout_marginTop="5dp"
         android:background="@color/white"
@@ -111,10 +92,10 @@
                 android:layout_width="20dp"
                 android:layout_height="20dp"
                 android:layout_centerHorizontal="true"
+                android:tint="@color/title_color"
                 android:background="#ffffff"
                 android:focusable="false"
                 android:scaleType="centerInside" />
-
 
         </RelativeLayout>
         <RelativeLayout
@@ -134,7 +115,25 @@
                         android:textSize="14dp" />
 
         </RelativeLayout>
+        <RelativeLayout
+            android:gravity="center"
+            android:layout_marginRight="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            >
 
+            <ImageView
+                android:id="@+id/icon_add"
+                android:src="@drawable/icon_add2"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_centerHorizontal="true"
+                android:tint="@color/title_color"
+                android:background="#ffffff"
+                android:focusable="false"
+                android:scaleType="centerInside" />
+
+        </RelativeLayout>
     </LinearLayout>
     <android.support.v4.widget.SwipeRefreshLayout
         android:visibility="gone"
