@@ -7,13 +7,13 @@ import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.jaeger.library.StatusBarUtil;
 import com.xtdar.app.R;
 import com.xtdar.app.common.NToast;
 import com.xtdar.app.presenter.ScorePresenter;
 
 public class ScoreActivity extends BaseActivity {
 
-    private LinearLayout layoutDetail, layoutLottery, layoutSingIn;
     private ScorePresenter scorePresenter;
     private TextView txtScore;
 
@@ -22,14 +22,12 @@ public class ScoreActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_score);
 
-        layoutDetail = (LinearLayout) findViewById(R.id.layout_detail);
-        layoutLottery = (LinearLayout) findViewById(R.id.layout_lottery);
-        layoutSingIn = (LinearLayout) findViewById(R.id.layout_singin);
-        layoutDetail.setOnClickListener(this);
-        layoutLottery.setOnClickListener(this);
-        layoutSingIn.setOnClickListener(this);
+        findViewById(R.id.layout_detail).setOnClickListener(this);
+        findViewById(R.id.layout_lottery).setOnClickListener(this);
+        findViewById(R.id.layout_singin).setOnClickListener(this);
         txtScore = (TextView) findViewById(R.id.txt_score);
-
+        findViewById(R.id.txt_query).setOnClickListener(this);
+        findViewById(R.id.txt_sign).setOnClickListener(this);
         Toolbar mToolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(mToolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -43,6 +41,11 @@ public class ScoreActivity extends BaseActivity {
 
         scorePresenter=new  ScorePresenter(this);
 }
+
+    @Override
+    protected void setStatusBar() {
+        StatusBarUtil.setColor(this, getResources().getColor(R.color.titleBlue),0);
+    }
 
     @Override
     protected void onStart() {
@@ -60,7 +63,11 @@ public class ScoreActivity extends BaseActivity {
                 startActivity(new Intent(this, LotteryActivity.class));
                 break;
             case R.id.layout_singin:
+            case R.id.txt_sign:
                 startActivity(new Intent(this, SignInActivity.class));
+                break;
+            case R.id.txt_query:
+                startActivity(new Intent(this, LotteryPrizeActivity.class));
                 break;
         }
     }

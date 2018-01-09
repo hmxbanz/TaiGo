@@ -192,4 +192,9 @@
         <!-- Support library compatibility -->
         <item name="windowActionBarOverlay">true</item>
     </style>
+    <!--自定义actionBar返回按钮颜色-->
+    <style name="toolbar_blue_theme" parent="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
+        <item name="colorControlNormal">@color/titleBlue</item>
+        <item name="android:actionBarSize">46dp</item>
+    </style>
 </resources>

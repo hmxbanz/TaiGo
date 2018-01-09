@@ -9,7 +9,7 @@ public class SignTranslator {
 
     public static final int ACK = 0x02430603;
     public static final int NAK = 0x02431503;
-    public static final int OnBlowUp = 0x02423303;//02 42 33 03
+    public static final int OnBlowUp = 0x02423303;//score6 42 33 03
     public static final int GetShutCount = 0x02473F03;
     public static final int GetBlowCount = 0x02423F03;
     public static final int GetSmoke = 0x02533F03;

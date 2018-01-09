@@ -8,7 +8,7 @@ public class AlbumResponse {
     /**
      * state : 1
      * msg:成功
-     * Albums:[{"AlbumID":3,"UserInfoID":2,"AlbumName":"证件照片","Type":2,"AlbumPhotoID":12,"PhotoInfo":"我的身份证","PhotoCreateDate":"\/Date(1457505993777)\/","IsDelete":null,"IsCover":true,"PhotoBig":"/Images/Album/2016/03/09/2016030914463369_b.jpg","PhotoSmall":"/Images/Album/2016/03/09/2016030914463369_s.jpg","NickName":"管理员","AlbumCreateDate":"\/Date(1457452800000)\/","Check":null,"CheckName":"未审核"}]
+     * Albums:[{"AlbumID":3,"UserInfoID":2,"AlbumName":"证件照片","Type":2,"AlbumPhotoID":12,"PhotoInfo":"我的身份证","PhotoCreateDate":"\/Date(1457505993777)\/","IsDelete":null,"IsCover":true,"PhotoBig":"/Images/Album/2016/score7/09/2016030914463369_b.jpg","PhotoSmall":"/Images/Album/2016/score7/09/2016030914463369_s.jpg","NickName":"管理员","AlbumCreateDate":"\/Date(1457452800000)\/","Check":null,"CheckName":"未审核"}]
      */
 
     private int state;

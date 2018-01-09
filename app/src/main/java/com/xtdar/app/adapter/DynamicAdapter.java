@@ -83,8 +83,8 @@ public class DynamicAdapter extends android.widget.BaseAdapter {
         img.setImageViewHeight(5);
         img.setImageViewX(200);
         img.setImageViewY(200);
-        img.setBigImageUrl("http://www.xtdar.com//Images/User/2017/02/02/2017020223391971_b.jpg");
-        img.setThumbnailUrl("http://www.xtdar.com/Images/User/2017/02/02/2017020223391971_s.jpg");
+        img.setBigImageUrl("http://www.xtdar.com//Images/User/2017/score6/score6/2017020223391971_b.jpg");
+        img.setThumbnailUrl("http://www.xtdar.com/Images/User/2017/score6/score6/2017020223391971_s.jpg");
 
         imageInfo.add(img);
 
