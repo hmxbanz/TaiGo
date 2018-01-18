@@ -27,7 +27,7 @@
             app:expandedTitleMarginEnd="218dp"
             app:expandedTitleMarginStart="48dp"
             app:expandedTitleTextAppearance="@style/transparentText"
-            app:layout_scrollFlags="scroll|exitUntilCollapsed">
+            app:layout_scrollFlags="snap">
 
             <RelativeLayout
                 android:id="@+id/head_layout"
