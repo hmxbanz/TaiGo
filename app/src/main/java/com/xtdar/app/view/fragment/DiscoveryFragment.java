@@ -78,7 +78,7 @@ public class DiscoveryFragment extends Fragment implements View.OnClickListener 
         mFragments = new ArrayList<>();
         //mFragments.add(HomeRecommendFragment.getInstance());
         mFragments.add(ShowFragment.getInstance());
-        mFragments.add(ShowFirstFragment.getInstance());
+        mFragments.add(NewsFragment.getInstance());
 
         mFragmentPagerAdapter = new FragmentPagerAdapter(getActivity().getSupportFragmentManager()) {
             @Override

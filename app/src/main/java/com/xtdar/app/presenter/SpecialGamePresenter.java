@@ -1,11 +1,14 @@
 package com.xtdar.app.presenter;
 
 import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.View;
 
 import com.orhanobut.logger.Logger;
@@ -48,7 +51,6 @@ public class SpecialGamePresenter extends BasePresenter implements SwipeRefreshL
         super(context);
         dataAdapter = new ClassListAnimationAdapter(this.context);
         dataAdapter.setOnItemClickListener(this);
-
         dataAdapter.setListItems(list);
 
     }
@@ -161,6 +163,13 @@ public class SpecialGamePresenter extends BasePresenter implements SwipeRefreshL
 
     @Override
     public void onItemClick(View v, int position, GameListResponse.DataBean bean) {
+        if(!TextUtils.isEmpty(bean.getGameConfig().getDownload_url()))
+        {
+            Intent intent = new Intent(Intent.ACTION_VIEW);
+            //为Intent设置Action属性
+            intent.setData(Uri.parse(bean.getGameConfig().getDownload_url())); //为Intent设置DATA属性
+            context.startActivity(intent);
+        }
 
     }
 

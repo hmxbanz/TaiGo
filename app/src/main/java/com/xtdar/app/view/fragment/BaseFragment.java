@@ -11,6 +11,9 @@ import android.view.ViewGroup;
 
 import com.xtdar.app.common.NLog;
 
+import butterknife.ButterKnife;
+import butterknife.Unbinder;
+
 /**
  * Created by asus on 2016/3/26.
  */
@@ -20,19 +23,22 @@ public abstract class BaseFragment extends Fragment implements View.OnClickListe
     private boolean isInitView = false;//是否与View建立起映射关系
     private boolean isFirstLoad = true;//是否是第一次加载数据
 
-    private View convertView;
+    private View view;
     private SparseArray<View> mViews;
+
+    private Unbinder unbinder;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         NLog.w("BaseFragment","onCreateView" );
-        convertView = inflater.inflate(getLayoutId(), container, false);
+        view = inflater.inflate(getLayoutId(), container, false);
         mViews = new SparseArray<>();
+        unbinder = ButterKnife.bind(this, view);//返回一个Unbinder值（进行解绑），注意这里的this不能使用getActivity()
         initView();
         isInitView = true;
         lazyLoadData();
-        return convertView;
+        return view;
     }
 
 //    @Override
@@ -99,10 +105,10 @@ public abstract class BaseFragment extends Fragment implements View.OnClickListe
      * @return
      */
     protected <E extends View> E findView(int viewId) {
-        if (convertView != null) {
+        if (view != null) {
             E view = (E) mViews.get(viewId);
             if (view == null) {
-                view = (E) convertView.findViewById(viewId);
+                view = (E) this.view.findViewById(viewId);
                 mViews.put(viewId, view);
             }
             return view;
@@ -147,7 +153,7 @@ public abstract class BaseFragment extends Fragment implements View.OnClickListe
           isVisible = false;
           isInitView = false;
           isFirstLoad = true;
-
+          unbinder.unbind();
     }
 
     @Override

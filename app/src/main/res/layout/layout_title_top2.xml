@@ -33,6 +33,7 @@
                     android:layout_centerHorizontal="true"
                     android:gravity="center">
                     <ImageView
+                        android:tint="@color/white"
                         android:src="@drawable/icon_arrow_left"
                         android:scaleType="centerInside"
                         android:layout_width="20dp"

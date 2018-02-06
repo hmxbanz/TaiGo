@@ -18,7 +18,6 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
@@ -28,7 +27,6 @@ import com.shuyu.gsyvideoplayer.GSYVideoManager;
 import com.shuyu.gsyvideoplayer.video.StandardGSYVideoPlayer;
 import com.xtdar.app.R;
 import com.xtdar.app.XtdConst;
-import com.xtdar.app.adapter.RecyclerViewAdapter;
 import com.xtdar.app.presenter.ShowDetailPresenter;
 import com.xtdar.app.widget.myRecyclerView.RecyclerViewUpRefresh;
 
@@ -38,7 +36,7 @@ import java.util.List;
 import cn.hugeterry.coordinatortablayout.CoordinatorTabLayout;
 
 
-public class ShowDetailActivity extends BaseActivity implements RecyclerViewAdapter.ItemClickListener,View.OnClickListener {
+public class ShowDetailActivity extends BaseActivity implements View.OnClickListener {
     public static List<?> images=new ArrayList<>();
     private RecyclerViewUpRefresh recycleView;
     public ScrollView scrollView;
@@ -48,7 +46,7 @@ public class ShowDetailActivity extends BaseActivity implements RecyclerViewAdap
     private CoordinatorTabLayout mCoordinatorTabLayout;
     private int[] mImageArray, mColorArray;
     private ArrayList<Fragment> mFragments;
-    private final String[] mTabTitles = {"个人资料", "条件", "动态", "相册"};
+    private final String[] mTabTitles = {"资料", "条件", "动态", "相册"};
     private ViewPager mViewPager;
     private ShowDetailPresenter presenter;
     private StandardGSYVideoPlayer videoPlayer;
@@ -63,8 +61,8 @@ public class ShowDetailActivity extends BaseActivity implements RecyclerViewAdap
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_show_detail);
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
-
+        //getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        StatusBarUtil.setColor(this, getResources().getColor(R.color.titleBlue),0);
         initViews();
         //initDatas();
         presenter = new ShowDetailPresenter(this);
@@ -151,11 +149,6 @@ public class ShowDetailActivity extends BaseActivity implements RecyclerViewAdap
         videoPlayer.getTitleTextView().setVisibility(View.GONE);
         videoPlayer.getTitleTextView().setText("测试视频");
         videoPlayer.getBackButton().setVisibility(View.GONE);
-    }
-    @Override
-    public void onItemClick(int position, String data) {
-        startActivity(new Intent(this, Main2Activity.class));
-        Toast.makeText(this,"你点击了位置："+String.valueOf(position)+"-标题："+data,Toast.LENGTH_SHORT).show();
     }
 
     public static void StartActivity(Context context,String itemId,String classId) {

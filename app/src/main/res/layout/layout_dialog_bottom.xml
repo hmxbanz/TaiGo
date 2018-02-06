@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
-    android:background="@android:color/white"
+    android:background="@color/white"
     android:gravity="center_horizontal"
     android:orientation="vertical" >
 
@@ -13,7 +13,7 @@
         android:background="@drawable/selector_item_bg"
         android:gravity="center"
         android:padding="10dip"
-        android:text="@string/dialog_bottom_picture"
+        android:text="回复"
         android:textColor="@color/appTextColor"
         android:textSize="18sp" />
 
@@ -29,7 +29,7 @@
         android:background="@drawable/selector_item_bg"
         android:gravity="center"
         android:padding="10dip"
-        android:text="@string/dialog_bottom_import_from_local"
+        android:text="举报"
         android:textColor="@color/appTextColor"
         android:textSize="18sp" />
 

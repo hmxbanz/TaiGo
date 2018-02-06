@@ -8,7 +8,6 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.jaeger.library.StatusBarUtil;
-import com.xtdar.app.R;
 
 /**
  * Created by hmx on 2016/5/21.
@@ -29,6 +28,10 @@ public class BaseActivity extends AppCompatActivity implements View.OnClickListe
         if(this instanceof DetailActivity)
             return;
         else if(this instanceof ShowDetailActivity)
+            return;
+        else if(this instanceof NewsDetailActivity)
+            return;
+        else if(this instanceof ReplyDetailActivity)
             return;
         else
             setStatusBar();

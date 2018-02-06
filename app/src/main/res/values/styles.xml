@@ -64,6 +64,10 @@
         <item name="android:textSize">14dp</item>
     </style>
 
+    <style name="IconStyle">
+        <item name="android:textColor">@color/gray</item>
+        <item name="android:textSize">10dp</item>
+    </style>
 
     <style name="MenuTitleStyle">
         <item name="android:textSize">14dp</item>

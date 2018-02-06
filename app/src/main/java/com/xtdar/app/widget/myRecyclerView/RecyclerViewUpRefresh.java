@@ -107,7 +107,6 @@ public class RecyclerViewUpRefresh extends RecyclerView {
         isLoadingData = false;
     }
 
-
     //到底了
     public void loadMoreEnd() {
         if (loadingMoreFooter != null) {
@@ -159,7 +158,6 @@ public class RecyclerViewUpRefresh extends RecyclerView {
             }
         }
     }
-
 
     //取到最后的一个节点
     private int last(int[] lastPositions) {

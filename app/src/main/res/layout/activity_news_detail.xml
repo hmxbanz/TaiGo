@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/root_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".view.activity.NewsDetailActivity">
+
+    <android.support.design.widget.AppBarLayout
+        android:id="@+id/app_bar_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"     >
+
+        <android.support.design.widget.CollapsingToolbarLayout
+            android:fitsSystemWindows="true"
+            android:id="@+id/collapsing_toolbar_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:minHeight="1dp"
+            app:collapsedTitleTextAppearance="@style/ToolBarTitleText"
+            app:expandedTitleMarginEnd="218dp"
+            app:expandedTitleMarginStart="48dp"
+            app:expandedTitleTextAppearance="@style/transparentText"
+            app:layout_scrollFlags="scroll|exitUntilCollapsed"
+            >
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <include layout="@layout/layout_title_top2"/>
+            <LinearLayout
+                android:background="@color/white"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_collapseMode="pin"
+                app:layout_collapseParallaxMultiplier="0.8">
+                <TextView
+                    android:id="@+id/txt_head"
+                    style="@style/AppTitleStyle2"
+                    android:textColor="@color/black"
+                    android:text="标题"
+                    android:padding="5dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+                <TextView
+                    android:paddingLeft="5dp"
+                    android:id="@+id/txt_create_date"
+                    android:text="时间"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+                <TextView
+                    android:id="@+id/txt_content"
+                    android:paddingLeft="5dp"
+                    android:text="内容"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+            </LinearLayout>
+
+            </LinearLayout>
+
+        </android.support.design.widget.CollapsingToolbarLayout>
+
+    </android.support.design.widget.AppBarLayout>
+
+    <!--<android.support.v4.widget.NestedScrollView-->
+        <!--android:id="@+id/nsv"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="match_parent"-->
+        <!--android:fillViewport="true"-->
+        <!--android:scrollbars="none"-->
+        <!--app:layout_behavior="@string/appbar_scrolling_view_behavior"-->
+        <!--&gt;-->
+
+        <!--<android.support.v4.view.ViewPager-->
+        <!--android:id="@+id/main_vp_container"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="match_parent"-->
+        <!--app:layout_behavior="@string/appbar_scrolling_view_behavior"/>-->
+
+
+        <com.xtdar.app.widget.myRecyclerView.RecyclerViewUpRefresh
+            app:layout_behavior="@string/appbar_scrolling_view_behavior"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="50dp"
+            android:id="@+id/recyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+
+    <!--</android.support.v4.widget.NestedScrollView>-->
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:orientation="horizontal"
+            android:background="@color/white"
+            android:layout_gravity="bottom"
+            android:gravity="center_vertical"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            >
+            <TextView
+                android:id="@+id/txt_comment"
+                android:drawableTop="@drawable/icon_comment2"
+                android:gravity="center_horizontal"
+                android:padding="5dp"
+                android:text="0"
+                style="@style/IconStyle"
+                android:textSize="10dp"
+                android:layout_width="30dp"
+                android:layout_height="wrap_content" />
+            <TextView
+                android:id="@+id/txt_comment2"
+                android:background="@drawable/bg_button_gray"
+                android:padding="5dp"
+                android:layout_marginLeft="5dp"
+                style="@style/AppTitleStyle2"
+                android:text="评论"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="30dp" />
+            <TextView
+                android:drawableTop="@drawable/icon_thumb_up"
+                android:id="@+id/txt_thumb_up"
+                android:gravity="center_horizontal"
+                android:padding="5dp"
+                android:text="0"
+                style="@style/IconStyle"
+                android:textSize="10dp"
+                android:layout_width="50dp"
+                android:layout_height="wrap_content" />
+            <TextView
+                android:id="@+id/txt_share"
+                android:drawableTop="@drawable/icon_share2"
+                android:gravity="center_horizontal"
+                android:padding="5dp"
+                android:text="0"
+                style="@style/IconStyle"
+                android:textSize="10dp"
+                android:layout_width="50dp"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:visibility="gone"
+            android:id="@+id/layout_comment"
+            android:orientation="horizontal"
+            android:background="@color/white"
+            android:layout_gravity="bottom"
+            android:gravity="center_vertical"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            >
+            <EditText
+                android:gravity="top"
+                android:id="@+id/comment"
+                android:lines="6"
+                android:background="@drawable/bg_button_gray"
+                android:padding="5dp"
+                android:layout_marginLeft="20dp"
+                style="@style/AppTitleStyle2"
+                android:text="我要评论"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="80dp" />
+            <TextView
+                android:gravity="center_vertical"
+                android:padding="5dp"
+                android:layout_marginRight="20dp"
+                style="@style/AppTitleStyle2"
+                android:id="@+id/btn_send"
+                android:text="发送"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent" />
+        </LinearLayout>
+    </FrameLayout>
+
+</android.support.design.widget.CoordinatorLayout>

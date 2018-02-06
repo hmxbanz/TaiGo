@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/root_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".view.activity.ReplyDetailActivity">
+
+    <android.support.design.widget.AppBarLayout
+        android:id="@+id/app_bar_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"     >
+
+        <android.support.design.widget.CollapsingToolbarLayout
+            android:fitsSystemWindows="true"
+            android:id="@+id/collapsing_toolbar_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:minHeight="1dp"
+            app:collapsedTitleTextAppearance="@style/ToolBarTitleText"
+            app:expandedTitleMarginEnd="218dp"
+            app:expandedTitleMarginStart="48dp"
+            app:expandedTitleTextAppearance="@style/transparentText"
+            app:layout_scrollFlags="snap" >
+<LinearLayout
+    android:orientation="vertical"
+    android:layout_width="wrap_content"
+    android:layout_height="match_parent">
+    <include layout="@layout/layout_title_top2"/>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="1dp"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:background="@color/white"
+        android:id="@+id/list_item_layout">
+
+        <com.xtdar.app.view.widget.SelectableRoundedImageView
+            android:scaleType="centerCrop"
+            app:sriv_left_bottom_corner_radius="50dip"
+            app:sriv_left_top_corner_radius="50dip"
+            app:sriv_right_bottom_corner_radius="50dip"
+            app:sriv_right_top_corner_radius="50dip"
+            app:sriv_border_width="2dip"
+            app:sriv_border_color="@color/white"
+            android:id="@+id/avatar"
+            android:layout_width="40dp"
+            android:layout_height="40dp" />
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content">
+            <TextView
+                android:id="@+id/nickname"
+                android:text="用户名"
+                android:padding="5dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+            <TextView
+                android:paddingLeft="5dp"
+                android:id="@+id/content"
+                android:text="评论内容"
+                android:textColor="@color/black"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:id="@+id/layout_reply"
+                android:visibility="gone"
+                android:background="@color/appbg"
+                android:padding="5dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" >
+            </LinearLayout>
+            <TextView
+                android:id="@+id/txt_reply_count"
+                android:textSize="10dp"
+                android:text=""
+                android:visibility="gone"
+                android:textColor="@color/deepskyblue"
+                android:padding="5dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:id="@+id/createdate"
+
+                    android:textSize="10dp"
+                    android:text="日期："
+                    android:padding="5dp"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content" />
+                <TextView
+                    android:drawableLeft="@drawable/icon_thumbsup"
+                    android:id="@+id/txt_thumb_up"
+                    android:gravity="center_horizontal"
+                    android:padding="5dp"
+                    android:text="0"
+                    android:drawableTint="@color/gray"
+                    android:textSize="10dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
+</LinearLayout>
+
+        </android.support.design.widget.CollapsingToolbarLayout>
+
+    </android.support.design.widget.AppBarLayout>
+
+    <!--<android.support.v4.widget.NestedScrollView-->
+        <!--android:id="@+id/nsv"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="match_parent"-->
+        <!--android:fillViewport="true"-->
+        <!--android:scrollbars="none"-->
+        <!--app:layout_behavior="@string/appbar_scrolling_view_behavior"-->
+        <!--&gt;-->
+
+        <!--<android.support.v4.view.ViewPager-->
+        <!--android:id="@+id/main_vp_container"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="match_parent"-->
+        <!--app:layout_behavior="@string/appbar_scrolling_view_behavior"/>-->
+
+        <com.xtdar.app.widget.myRecyclerView.RecyclerViewUpRefresh
+            app:layout_behavior="@string/appbar_scrolling_view_behavior"
+            android:layout_marginTop="3dp"
+            android:layout_marginBottom="50dp"
+            android:id="@+id/recyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+
+    <!--</android.support.v4.widget.NestedScrollView>-->
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:orientation="horizontal"
+            android:background="@color/white"
+            android:layout_gravity="bottom"
+            android:gravity="center_vertical"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            >
+            <TextView
+                android:id="@+id/txt_comment"
+                android:drawableLeft="@drawable/icon_comment2"
+                android:gravity="center_horizontal"
+                android:padding="5dp"
+                style="@style/IconStyle"
+                android:textSize="10dp"
+                android:layout_width="30dp"
+                android:layout_height="wrap_content" />
+            <EditText
+                android:id="@+id/comment"
+                android:background="@drawable/bg_button_gray"
+                android:padding="5dp"
+                android:layout_marginLeft="5dp"
+                style="@style/AppTitleStyle2"
+                android:hint="回复"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="30dp" />
+
+            <TextView
+                android:gravity="center_vertical"
+                android:padding="5dp"
+                android:layout_marginRight="20dp"
+                style="@style/AppTitleStyle2"
+                android:id="@+id/btn_send"
+                android:text="发送"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent" />
+        </LinearLayout>
+    </FrameLayout>
+
+</android.support.design.widget.CoordinatorLayout>

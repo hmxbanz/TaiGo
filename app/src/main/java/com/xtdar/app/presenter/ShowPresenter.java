@@ -14,6 +14,7 @@ import com.xtdar.app.listener.EndlessRecyclerOnScrollListener;
 import com.xtdar.app.server.HttpException;
 import com.xtdar.app.server.async.OnDataListener;
 import com.xtdar.app.server.response.ShowResponse;
+import com.xtdar.app.video.NewsAdapter;
 import com.xtdar.app.video.RecyclerNormalAdapter;
 import com.xtdar.app.view.activity.ShowDetailActivity;
 import com.xtdar.app.view.widget.LoadDialog;

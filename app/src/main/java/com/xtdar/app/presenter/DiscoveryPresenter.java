@@ -39,8 +39,8 @@ public class DiscoveryPresenter extends BasePresenter implements OnDataListener 
     public void init(TabLayout tabLayout) {
         this.tabLayout=tabLayout;
         //tabLayout.getTabAt(0).setText("设备");//淘设备
-        tabLayout.getTabAt(0).setText("发布");//牛人秀
-        tabLayout.getTabAt(1).setText("前沿");//抢先看
+        tabLayout.getTabAt(0).setText("视频");//牛人秀//发布
+        tabLayout.getTabAt(1).setText("资讯");
     }
 
     @Override

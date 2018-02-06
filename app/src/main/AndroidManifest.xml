@@ -231,6 +231,15 @@
         <activity            android:name=".view.activity.LotteryPrizeActivity"            android:screenOrientation="portrait" />
         <activity            android:name=".view.activity.MineActivity"            android:screenOrientation="portrait" />
         <activity
+            android:name=".view.activity.NewsDetailActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:screenOrientation="portrait"            android:theme="@style/Theme.AppCompat.Light.NoActionBar"            android:windowSoftInputMode="stateHidden|adjustResize" />
+        <activity
+            android:name=".view.activity.ReplyDetailActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:screenOrientation="portrait"            android:theme="@style/Theme.AppCompat.Light.NoActionBar"            android:windowSoftInputMode="stateHidden|adjustResize" />
+
+        <activity
             android:name=".view.activity.ConversationListActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden|adjustResize">

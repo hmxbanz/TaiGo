@@ -17,6 +17,7 @@ import com.xtdar.app.server.response.AdResponse;
 import com.xtdar.app.server.response.BindResponse;
 import com.xtdar.app.server.response.CaptchaResponse;
 import com.xtdar.app.server.response.ClassListResponse;
+import com.xtdar.app.server.response.CommentReplyResponse;
 import com.xtdar.app.server.response.CommentResponse;
 import com.xtdar.app.server.response.CommonResponse;
 import com.xtdar.app.server.response.DetailResponse;
@@ -30,6 +31,8 @@ import com.xtdar.app.server.response.LotteryPrizeResponse;
 import com.xtdar.app.server.response.LotteryResponse;
 import com.xtdar.app.server.response.MyCommentResponse;
 import com.xtdar.app.server.response.MyDevicesResponse;
+import com.xtdar.app.server.response.NewsDetailResponse;
+import com.xtdar.app.server.response.NewsResponse;
 import com.xtdar.app.server.response.PersonMsgResponse;
 import com.xtdar.app.server.response.RecommendResponse;
 import com.xtdar.app.server.response.RelateRecommendResponse;
@@ -1108,7 +1111,7 @@ public class UserAction extends BaseAction {
         }
         return gameListResponse;
     }
-
+//秀场取评论
     public CommentResponse getComment(String itemId, String comment_tag,String last_item_id, String item_count) throws HttpException {
         String result = "";
         String uri = getURL("cli-comm-commentlist.php");
@@ -1795,5 +1798,292 @@ public class UserAction extends BaseAction {
         }
         return adResponse;
 
+    }
+    //资讯列表
+    public NewsResponse getNewsList(String itemCount, String pageIndex) throws HttpException {
+        String result = "";
+        String uri = getURL("cli-com-getrecommendlist.php");
+        Response response=null;
+        try {
+            response=OkHttpUtils
+                    .get()
+                    .addParams("item_count",itemCount)
+                    .addParams("page_index",pageIndex)
+                    .url(uri)
+                    .build()
+                    .execute();
+            result =response.body().string();
+            Logger.d("getNewsList %s", result);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        NewsResponse newsResponse = null;
+        try {
+            newsResponse = JsonMananger.jsonToBean(result, NewsResponse.class);
+        } catch (JSONException e) {
+            Logger.e(TAG+"::::::%s", "NewsResponse occurs JSONException e=" + e.toString());
+            return null;
+        }
+        return newsResponse;
+    }
+
+    //资讯项详情
+    public NewsDetailResponse getNewsDetail(String itemId) throws HttpException{
+        String result = "";
+        String uri = getURL("cli-com-getrecommendinfo.php");
+        Response response=null;
+        try {
+            response=OkHttpUtils
+                    .get()
+                    .addParams("recommend_id",itemId)
+                    .addParams(XtdConst.ACCESS_TOKEN,token)
+                    .url(uri)
+                    .build()
+                    .execute();
+            result =response.body().string();
+            Logger.d(TAG+"::::::%s", result);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        NewsDetailResponse newsDetailResponse = null;
+        try {
+            newsDetailResponse = JsonMananger.jsonToBean(result, NewsDetailResponse.class);
+        } catch (JSONException e) {
+            Logger.e(TAG+"::::::%s", "NewsDetailResponse occurs JSONException e=" + e.toString());
+            return null;
+        }
+        return newsDetailResponse;
+    }
+    //资讯评论
+
+    //资讯点赞
+    public CommonResponse thumbUp(String itemId) throws HttpException{
+        String result = "";
+        String uri = getURL("cli-api-likerecommend.php");
+        Response response=null;
+        try {
+            response=OkHttpUtils
+                    .get()
+                    .addParams("recommend_id",itemId)
+                    .addParams(XtdConst.ACCESS_TOKEN,token)
+                    .url(uri)
+                    .build()
+                    .execute();
+            result =response.body().string();
+            Logger.d(TAG+"::::::%s", result);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        CommonResponse commonResponse = null;
+        try {
+            commonResponse = JsonMananger.jsonToBean(result, CommonResponse.class);
+        } catch (JSONException e) {
+            Logger.e(TAG+"::::::%s", "thumbUp occurs JSONException e=" + e.toString());
+            return null;
+        }
+        return commonResponse;
+    }
+    //资讯评论点赞
+    public CommonResponse commentThumbUp(String itemId) throws HttpException{
+        String result = "";
+        String uri = getURL("cli-api-likecomment.php");
+        Response response=null;
+        try {
+            response=OkHttpUtils
+                    .get()
+                    .addParams("comment_id",itemId)
+                    .addParams(XtdConst.ACCESS_TOKEN,token)
+                    .url(uri)
+                    .build()
+                    .execute();
+            result =response.body().string();
+            Logger.d(TAG+"::::::%s", result);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        CommonResponse commonResponse = null;
+        try {
+            commonResponse = JsonMananger.jsonToBean(result, CommonResponse.class);
+        } catch (JSONException e) {
+            Logger.e(TAG+"::::::%s", "commentThumbUp occurs JSONException e=" + e.toString());
+            return null;
+        }
+        return commonResponse;
+    }
+    //取消资讯评论点赞
+    public CommonResponse commentThumbUpOff(String itemId) throws HttpException{
+        String result = "";
+        String uri = getURL("cli-api-cancellikecomment.php");
+        Response response=null;
+        try {
+            response=OkHttpUtils
+                    .get()
+                    .addParams("comment_id",itemId)
+                    .addParams(XtdConst.ACCESS_TOKEN,token)
+                    .url(uri)
+                    .build()
+                    .execute();
+            result =response.body().string();
+            Logger.d(TAG+"::::::%s", result);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        CommonResponse commonResponse = null;
+        try {
+            commonResponse = JsonMananger.jsonToBean(result, CommonResponse.class);
+        } catch (JSONException e) {
+            Logger.e(TAG+"::::::%s", "commentThumbUpOff occurs JSONException e=" + e.toString());
+            return null;
+        }
+        return commonResponse;
+    }
+    //回复点赞
+    public CommonResponse replyThumbUp(String itemId) throws HttpException{
+        String result = "";
+        String uri = getURL("cli-api-likereply.php");
+        Response response=null;
+        try {
+            response=OkHttpUtils
+                    .get()
+                    .addParams("reply_id",itemId)
+                    .addParams(XtdConst.ACCESS_TOKEN,token)
+                    .url(uri)
+                    .build()
+                    .execute();
+            result =response.body().string();
+            Logger.d(TAG+"::::::%s", result);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        CommonResponse commonResponse = null;
+        try {
+            commonResponse = JsonMananger.jsonToBean(result, CommonResponse.class);
+        } catch (JSONException e) {
+            Logger.e(TAG+"::::::%s", "replyThumbUp occurs JSONException e=" + e.toString());
+            return null;
+        }
+        return commonResponse;
+    }
+    //取消回复点赞
+    public CommonResponse replyThumbUpOff(String itemId) throws HttpException{
+        String result = "";
+        String uri = getURL("cli-api-cancellikereply.php");
+        Response response=null;
+        try {
+            response=OkHttpUtils
+                    .get()
+                    .addParams("reply_id",itemId)
+                    .addParams(XtdConst.ACCESS_TOKEN,token)
+                    .url(uri)
+                    .build()
+                    .execute();
+            result =response.body().string();
+            Logger.d(TAG+"::::::%s", result);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        CommonResponse commonResponse = null;
+        try {
+            commonResponse = JsonMananger.jsonToBean(result, CommonResponse.class);
+        } catch (JSONException e) {
+            Logger.e(TAG+"::::::%s", "replyThumbUp occurs JSONException e=" + e.toString());
+            return null;
+        }
+        return commonResponse;
+    }
+    //资讯取评论
+    public CommentResponse getNewsComment(String itemId, String comment_tag,String page_index, String order) throws HttpException {
+        String result = "";
+        String uri = getURL("cli-comm-comlist.php");
+        Response response=null;
+        try {
+            response=OkHttpUtils
+                    .get()
+                    .addParams("comment_tag",comment_tag)
+                    .addParams("item_id",itemId)
+                    .addParams("page_index",page_index)
+                    .addParams("order","0")
+                    .addParams(XtdConst.ACCESS_TOKEN,token)
+                    .url(uri)
+                    .build()
+                    .execute();
+            result =response.body().string();
+            Logger.d(TAG+"::::::%s", result);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        CommentResponse  commentResponse= null;
+
+        try {
+            commentResponse = JsonMananger.jsonToBean(result, CommentResponse.class);
+        } catch (JSONException e) {
+            Logger.e(TAG+"::::::%s", "CommentResponse occurs JSONException e=" + e.toString());
+            return null;
+        }
+
+        return commentResponse;
+
+    }
+    //获取资讯评论回复
+    public CommentReplyResponse getNewsReply(String itemId, String list_count, String last_reply_id) throws HttpException {
+        String result = "";
+        String uri = getURL("cli-comm-replylist.php");
+        Response response=null;
+        try {
+            response=OkHttpUtils
+                    .get()
+                    .addParams("com_id",itemId)
+                    .addParams("list_count",list_count)
+                    .addParams("last_reply_id",last_reply_id)
+                    .addParams(XtdConst.ACCESS_TOKEN,token)
+                    .url(uri)
+                    .build()
+                    .execute();
+            result =response.body().string();
+            Logger.d(TAG+"::::::%s", result);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        CommentReplyResponse  commentResponse= null;
+
+        try {
+            commentResponse = JsonMananger.jsonToBean(result, CommentReplyResponse.class);
+        } catch (JSONException e) {
+            Logger.e(TAG+"::::::%s", "CommentReplyResponse occurs JSONException e=" + e.toString());
+            return null;
+        }
+
+        return commentResponse;
+
+    }
+
+    //回复评论
+    public CommonResponse addReply(String reply,String com_id,String at_user_id) throws HttpException{
+        String result = "";
+        String uri = getURL("cli-api-postreply.php");
+        Response response=null;
+        try {
+            response=OkHttpUtils
+                    .get()
+                    .addParams("reply",reply)
+                    .addParams("com_id",com_id)
+                    .addParams("at_user_id",at_user_id)
+                    .addParams(XtdConst.ACCESS_TOKEN,token)
+                    .url(uri)
+                    .build()
+                    .execute();
+            result =response.body().string();
+            Logger.d(TAG+"::::::%s", result);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        CommonResponse commonResponse = null;
+        try {
+            commonResponse = JsonMananger.jsonToBean(result, CommonResponse.class);
+        } catch (JSONException e) {
+            Logger.e(TAG+"::::::%s", "addComment occurs JSONException e=" + e.toString());
+            return null;
+        }
+        return commonResponse;
     }
 }

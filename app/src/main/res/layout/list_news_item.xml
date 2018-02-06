@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="70dp"
+    android:background="@color/white"
+    android:orientation="horizontal"
+    android:layout_marginTop="5dp"
+    android:layout_marginLeft="5dp"
+    android:layout_marginRight="5dp"
+    android:padding="5dp">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_weight="1"
+        android:layout_width="0dp"
+        android:layout_height="match_parent">
+      <TextView
+          android:id="@+id/txt_title"
+          android:text="标题"
+          android:layout_width="match_parent"
+          android:layout_weight="1"
+          android:layout_height="0dp" />
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:id="@+id/txt_time"
+                android:text="刚刚"
+                android:layout_width="0dp"
+                android:layout_weight="3"
+                android:layout_height="wrap_content" />
+            <ImageView
+                android:src="@drawable/icon_eye2"
+                android:tint="@color/gray"
+                android:layout_marginTop="3dp"
+                android:layout_width="10dp"
+                android:layout_height="10dp" />
+            <TextView
+                android:id="@+id/txt_count"
+                android:text="0"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content" />
+            <ImageView
+                android:src="@drawable/icon_thumbsup"
+                android:tint="@color/gray"
+                android:layout_marginTop="3dp"
+                android:layout_width="10dp"
+                android:layout_height="10dp" />
+            <TextView
+                android:id="@+id/txt_thumb_up"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:text="0"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+    </LinearLayout>
+
+<ImageView
+    android:id="@+id/image_view"
+    android:scaleType="centerCrop"
+    android:layout_width="100dp"
+    android:layout_height="match_parent" />
+
+
+  </LinearLayout>

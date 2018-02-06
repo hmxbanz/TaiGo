@@ -12,7 +12,10 @@ import android.os.Environment;
 import android.text.TextUtils;
 import android.view.ViewConfiguration;
 
+import org.joda.time.DateTime;
+
 import java.lang.reflect.Field;
+import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -184,5 +187,35 @@ public class CommonTools {
         Date today = sdf.parse(str);
         System.out.println("字符串转成日期：" + today);
         return dateNowStr;
+    }
+
+    /**
+     * 格式化时间的方法
+     * @param millisecond
+     * @return 根据传入毫秒数,返回String类型的："_天前、_小时前、_分钟前、_刚刚";
+     * @author Wangnan
+     */
+    public static String FormatTime(String dateString){
+
+        DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        Date date= null;
+        long now=DateTime.now().getMillis();
+        try {
+            date = df.parse(dateString);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        long millisecond=now-date.getTime();
+        if((int)((millisecond / (24 * 3600 * 1000))/30) > 0){
+            return (int)((millisecond / (24 * 3600 * 1000))/30)+"月前";}
+        else if((int)(millisecond / (24 * 3600 * 1000)) > 0){
+            return (int)(millisecond / (24 * 3600 * 1000))+"天前";
+        }else if((int)(millisecond / (3600 * 1000)) > 0){
+            return (int)(millisecond / (3600 * 1000)) + "小时前";
+        }else if((int)(millisecond / (60 * 1000)) > 0){
+            return (int)(millisecond / (60 * 1000)) + "分钟前";
+        }else{
+            return "刚刚";
+        }
     }
 }

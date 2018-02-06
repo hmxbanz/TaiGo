@@ -3,6 +3,7 @@ package com.xtdar.app.adapter;
 import android.content.Context;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -120,6 +121,9 @@ public class ClassListAnimationAdapter extends RecyclerView.Adapter<RecyclerView
         if(holder instanceof DataHolder) {
             DataHolder dataDolder=(DataHolder)holder;
             dataDolder.title.setText(listItem.getGame_name());
+            if(TextUtils.isEmpty(listItem.getLoad_size()))
+            dataDolder.className.setText(listItem.getGame_title());
+            else
             dataDolder.className.setText(listItem.getGame_title()+"("+listItem.getLoad_size()+")");
             glideImageLoader.displayImage(context, XtdConst.IMGURI+listItem.getGame_img(),dataDolder.imageView);
             //Glide.with(context).load(listItem.getAvator()).asBitmap().into(holder.imageView);
