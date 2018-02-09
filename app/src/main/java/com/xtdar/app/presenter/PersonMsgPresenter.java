@@ -70,7 +70,6 @@ public class PersonMsgPresenter extends BasePresenter implements OnDataListener,
                 }
                 BroadcastManager.getInstance(context).sendBroadcast(UPDATEUNREAD,"updateUnread");
                 break;
-
         }
     }
 

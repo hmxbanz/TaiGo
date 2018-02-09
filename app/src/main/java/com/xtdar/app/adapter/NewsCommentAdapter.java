@@ -17,6 +17,7 @@ import android.widget.TextView;
 
 import com.xtdar.app.R;
 import com.xtdar.app.XtdConst;
+import com.xtdar.app.common.NLog;
 import com.xtdar.app.loader.GlideImageLoader;
 import com.xtdar.app.server.response.CommentResponse;
 import com.xtdar.app.view.widget.SelectableRoundedImageView;
@@ -98,16 +99,26 @@ public class NewsCommentAdapter extends RecyclerView.Adapter<NewsCommentAdapter.
     public void onBindViewHolder(final DataHolder holder, final int position) {
         if(getItemViewType(position) == TYPE_HEADER) return;
         if(getItemViewType(position) == TYPE_FOOTER) return;
-
         final int pos = getRealPosition(holder);
         final CommentResponse.DataBean listItem = listItems.get(pos);
         if(holder instanceof DataHolder) {
             holder.nickName.setText(listItem.getNick_name());
             holder.content.setText(listItem.getComment());
+            holder.content.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    mListener.onContentClick(position,listItem,holder.layout_reply);
+                }
+            });
             List<CommentResponse.DataBean.ReplyListBean> listReply = listItem.getReplyList();
+
+
             holder.layout_reply.removeAllViews();
+            holder.layout_reply.setVisibility(View.GONE);
+            holder.txt_reply_count.setVisibility(View.GONE);
             if(listReply.size()>0)
             {
+
                 for (CommentResponse.DataBean.ReplyListBean bean:listReply ) {
                     //实例化一个LinearLayout
                     LinearLayout linearLayout=new LinearLayout(context);
@@ -278,6 +289,7 @@ public class NewsCommentAdapter extends RecyclerView.Adapter<NewsCommentAdapter.
     public interface ItemClickListener {
         void onItemClick(int position, CommentResponse.DataBean bean);
         void onTxtThumbUpClick(int position, CommentResponse.DataBean bean,TextView t);
+        void onContentClick(int position, CommentResponse.DataBean bean, LinearLayout layout_reply);
     }
     class DataHolder extends RecyclerView.ViewHolder implements View.OnClickListener
     {

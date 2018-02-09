@@ -9,6 +9,8 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.widget.EditText;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.orhanobut.logger.Logger;
 import com.xtdar.app.R;
 import com.xtdar.app.XtdConst;
@@ -18,6 +20,7 @@ import com.xtdar.app.server.HttpException;
 import com.xtdar.app.server.broadcast.BroadcastManager;
 import com.xtdar.app.server.response.CommonResponse;
 import com.xtdar.app.server.response.LoginResponse;
+import com.xtdar.app.server.response.UserInfoResponse;
 import com.xtdar.app.server.response.WxLoginResponse;
 import com.xtdar.app.service.BluetoothService;
 import com.xtdar.app.view.activity.LoginActivity;
@@ -54,6 +57,7 @@ public class LoginPresenter extends BasePresenter  {
     private static final int UPLOADRID = 8;
     public static final int UPLOADWBOPENID = 9;
     private static final int WBBIND = 10;
+    private static final int GETINFO = 11;
     private final BasePresenter basePresenter;
     private LoginActivity mActivity;
     private EditText mUsername;
@@ -128,6 +132,8 @@ public class LoginPresenter extends BasePresenter  {
                 return mUserAction.wbBind(openId,mUsername.getText().toString(), mPassword.getText().toString());
             case UPLOADRID:
                 return mUserAction.upLoadRid(rid);
+            case GETINFO:
+                return mUserAction.getInfo();
 
         }
         return null;
@@ -208,6 +214,16 @@ public class LoginPresenter extends BasePresenter  {
                         context.startActivity(new Intent(context,Main2Activity.class));
                     }
                     break;
+                case GETINFO:
+                    UserInfoResponse userInfoResponse = (UserInfoResponse) result;
+                    if (userInfoResponse.getCode() == XtdConst.SUCCESS) {
+                        UserInfoResponse.ResultEntity entity = userInfoResponse.getData();
+                        editor.putString(XtdConst.NICKNAME, entity.getNick_name());
+                        editor.apply();
+                        basePresenter.initData();
+                    }
+                    break;
+
 
             }
     }
@@ -411,11 +427,19 @@ public class LoginPresenter extends BasePresenter  {
         editor.putBoolean(XtdConst.ISLOGIN, true);
         editor.apply();
         basePresenter.initData();
+        getInfo();
         rid = JPushInterface.getRegistrationID(context.getApplicationContext());
         BroadcastManager.getInstance(context).sendBroadcast(MinePresenter.UPDATEUNREAD, "loadAvator");
         BroadcastManager.getInstance(context).sendBroadcast(HomeFragmentPresenter.LOADDEVICE, "loadDevice");
 
     }
 
+    public void getInfo(){
+        basePresenter.initData();
+        if(basePresenter.isLogin){
+            LoadDialog.show(context);
+            atm.request(GETINFO,this);
+        }
+    }
 
 }

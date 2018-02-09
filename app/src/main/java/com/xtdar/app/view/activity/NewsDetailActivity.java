@@ -31,8 +31,6 @@ public class NewsDetailActivity extends BaseActivity implements View.OnClickList
 
     private NewsDetailPresenter presenter;
 
-    private EditText comment;
-    private TextView btnSend;
     private TextView txtHead;
     private View layoutComment;
 

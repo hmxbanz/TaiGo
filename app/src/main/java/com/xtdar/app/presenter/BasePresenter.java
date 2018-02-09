@@ -34,6 +34,7 @@ public class BasePresenter implements OnDataListener {
     public ACache aCache;
     protected String userName;
     protected String password;
+    protected String nickName;
 
     public String openId,loginType;
 
@@ -67,6 +68,7 @@ public class BasePresenter implements OnDataListener {
         password=sp.getString(XtdConst.LOGING_PASSWORD,"");
         openId=sp.getString(XtdConst.LOGING_PASSWORD,"");
         loginType=sp.getString("loginType","");
+        nickName=sp.getString(XtdConst.NICKNAME,"");
 
     }
     @Override
@@ -85,7 +87,6 @@ public class BasePresenter implements OnDataListener {
             NToast.shortToast(context, context.getString(R.string.network_not_available));
             return;
         }
-
     }
 
     public void loginWork(String access_key)

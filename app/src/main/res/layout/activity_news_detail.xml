@@ -164,7 +164,7 @@
                 android:padding="5dp"
                 android:layout_marginLeft="20dp"
                 style="@style/AppTitleStyle2"
-                android:text="我要评论"
+                android:hint="我要评论"
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:layout_height="80dp" />

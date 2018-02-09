@@ -270,7 +270,6 @@ public class ReplyDetailPresenter extends BasePresenter implements View.OnClickL
 
         this.atId=userId;
         this.replyId=commentId;
-        //showPhotoDialog();
     }
 
     @Override
@@ -290,7 +289,7 @@ public class ReplyDetailPresenter extends BasePresenter implements View.OnClickL
         LoadDialog.show(context);
         atm.request(COMMENTTHUMBUP,this);
     }
-//回复评论
+    //回复评论
     public void addComment() {
         if(!basePresenter.isLogin)
         {

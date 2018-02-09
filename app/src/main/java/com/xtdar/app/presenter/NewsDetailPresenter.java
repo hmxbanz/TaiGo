@@ -8,9 +8,13 @@ import android.os.Build;
 import android.os.Handler;
 import android.support.v7.widget.GridLayoutManager;
 import android.text.Html;
+import android.util.LayoutDirection;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.shuyu.gsyvideoplayer.utils.OrientationUtils;
@@ -26,6 +30,7 @@ import com.xtdar.app.server.response.CommonResponse;
 import com.xtdar.app.server.response.NewsDetailResponse;
 import com.xtdar.app.view.activity.NewsDetailActivity;
 import com.xtdar.app.view.activity.ReplyDetailActivity;
+import com.xtdar.app.view.activity.ReportActivity;
 import com.xtdar.app.view.widget.BottomMenuDialog;
 import com.xtdar.app.view.widget.LoadDialog;
 import com.xtdar.app.widget.DialogWithYesOrNoUtils;
@@ -50,6 +55,8 @@ public class NewsDetailPresenter extends BasePresenter implements View.OnClickLi
     private static final int THUMBUP = 5;
     private static final int COMMENTTHUMBUP = 6;
     private static final int COMMENTTHUMBUPOFF = 7;
+    private static final int THUMBUPOFF = 8;
+    private static final int ADDREPLY = 9;
     private final GlideImageLoader glideImageLoader;
     private NewsDetailActivity mActivity;
     private String itemId,commentId;
@@ -74,6 +81,8 @@ public class NewsDetailPresenter extends BasePresenter implements View.OnClickLi
     private String commentValue;
     private boolean flag;
     private CommentResponse.DataBean bean;
+    private String atId="0",replyId;
+    private LinearLayout layout_reply;
 
     public NewsDetailPresenter(Context context){
         super(context);
@@ -100,16 +109,16 @@ public class NewsDetailPresenter extends BasePresenter implements View.OnClickLi
 
         this.txtComment = (TextView) mActivity.findViewById(R.id.txt_comment);
         Drawable[] compoundComment = this.txtComment.getCompoundDrawables();
-        compoundComment[1].setBounds(0,0,30,30);
+        compoundComment[1].setBounds(0,0,40,40);
         this.txtComment.setCompoundDrawables(null,compoundComment[1],null,null);
         this.txtThumbUp = (TextView) mActivity.findViewById(R.id.txt_thumb_up);
         this.txtThumbUp.setOnClickListener(this);
         Drawable[] compoundThumbUp = this.txtThumbUp.getCompoundDrawables();
-        compoundThumbUp[1].setBounds(0,0,40,40);
+        compoundThumbUp[1].setBounds(0,0,50,50);
         this.txtThumbUp.setCompoundDrawables(null,compoundThumbUp[1],null,null);
         this.txtShare = (TextView) mActivity.findViewById(R.id.txt_share);
         Drawable[] compoundShare = this.txtShare.getCompoundDrawables();
-        compoundShare[1].setBounds(0,0,40,40);
+        compoundShare[1].setBounds(0,0,50,50);
         this.txtShare.setCompoundDrawables(null,compoundShare[1],null,null);
         this.txtShare.setOnClickListener(this);
 
@@ -134,7 +143,10 @@ public class NewsDetailPresenter extends BasePresenter implements View.OnClickLi
                 share();
                 break;
             case R.id.btn_send:
-                addComment();
+                if("0".equals(atId))
+                    addComment();
+                else
+                    addReply();
                 break;
             case R.id.txt_comment2:
                 this.layout_comment.setVisibility(View.VISIBLE);
@@ -156,12 +168,16 @@ public class NewsDetailPresenter extends BasePresenter implements View.OnClickLi
                 return mUserAction.getNewsComment(itemId,"t_recommend",pageIndex+"","0");
             case THUMBUP:
                 return mUserAction.thumbUp(itemId);
+            case THUMBUPOFF:
+                return mUserAction.thumbUpOff(itemId);
             case COMMENTTHUMBUP:
                 return mUserAction.commentThumbUp(commentId);
             case COMMENTTHUMBUPOFF:
                 return mUserAction.commentThumbUpOff(commentId);
             case ADDCOMMENT:
                 return mUserAction.addComment(itemId,"t_recommend",comment.getText().toString());
+            case ADDREPLY:
+                return mUserAction.addReply(comment.getText().toString(),replyId,atId);
         }
         return null;
     }
@@ -183,7 +199,7 @@ public class NewsDetailPresenter extends BasePresenter implements View.OnClickLi
                     this.txtComment.setText(entity.getComment_count());
                     this.txtThumbUp.setText(entity.getLike_count());
 
-                    ChangeThumbUp(entity,false);
+                    InitThumbUp(entity);
 
                     this.txtShare.setText(entity.getShare_count());
 
@@ -206,7 +222,7 @@ public class NewsDetailPresenter extends BasePresenter implements View.OnClickLi
                 break;
             case GETCOMMENT:
                 CommentResponse commentResponse = (CommentResponse) result;
-                if (commentResponse.getCode() == XtdConst.SUCCESS) {
+                if (commentResponse.getCode() == XtdConst.SUCCESS && commentResponse.getData().size()>0) {
                     entities.addAll(commentResponse.getData());
                     dataAdapter.setListItems(entities);
                     dataAdapter.notifyDataSetChanged();
@@ -227,9 +243,17 @@ public class NewsDetailPresenter extends BasePresenter implements View.OnClickLi
             case THUMBUP:
                 CommonResponse CommonResponse2 = (CommonResponse) result;
                 if (CommonResponse2.getCode() == XtdConst.SUCCESS) {
-                    ChangeThumbUp(null,true);
+                    if(CommonResponse2.getMsg().equals("你已点赞过了"))
+                    {
+                        ChangeThumbUp(false);
+                        thumbUpOff();
+                    }
+                    else
+                    {
+                        ChangeThumbUp(true);
+                    }
+
                 }
-                NToast.shortToast(context,CommonResponse2.getMsg());
                 break;
             case COMMENTTHUMBUP:
                 CommonResponse CommonResponse3 = (CommonResponse) result;
@@ -259,15 +283,77 @@ public class NewsDetailPresenter extends BasePresenter implements View.OnClickLi
                 }
 
                 break;
+            case ADDREPLY:
+                CommonResponse CommonResponse4 = (CommonResponse) result;
+                if (CommonResponse4.getCode() == XtdConst.SUCCESS) {
+                    //实例化一个LinearLayout
+                    LinearLayout tempLinearLayout=new LinearLayout(context);
+                    //设置LinearLayout属性(宽和高)
+                    LinearLayout.LayoutParams layoutParams=new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+                    //设置边距
+                    layoutParams.setLayoutDirection(LayoutDirection.LTR);
+                    //设置边距
+                    layoutParams.setMargins(0, 0, 0, 0);
+                    //将以上的属性赋给LinearLayout
+                    tempLinearLayout.setLayoutParams(layoutParams);
+
+                    //实例化一个TextView(回复人)
+                    TextView tvNickName = new TextView(context);
+                    LinearLayout.LayoutParams tvParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+                    tvParams.gravity = Gravity.LEFT;
+                    tvNickName.setLayoutParams(tvParams);
+                    tvNickName.setTextSize(10);
+                    tvNickName.setTextColor(context.getResources().getColor(R.color.deepskyblue));
+                    tvNickName.setText(basePresenter.nickName);
+
+                    //实例化一个TextView(回复内容)
+                    TextView tvComment = new TextView(context);
+                    //设置宽高以及权重
+                    LinearLayout.LayoutParams tvCommentParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+                    //设置textview垂直居中
+                    tvParams.gravity = Gravity.LEFT;
+                    tvComment.setLayoutParams(tvParams);
+                    tvComment.setTextSize(10);
+                    tvComment.setText(":"+this.comment.getText());
+
+                    tempLinearLayout.addView(tvNickName);
+                    tempLinearLayout.addView(tvComment);
+                    this.layout_reply.setVisibility(View.VISIBLE);
+                    this.layout_reply.addView(tempLinearLayout);
+                }
+                NToast.shortToast(context,CommonResponse4.getMsg());
+                this.atId="0";
+                break;
         }
     }
 
-    private void ChangeThumbUp(NewsDetailResponse.DataBean entity,Boolean flag) {
-        if(flag || (entity.getIs_like() != null && (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP))) {
+    private void InitThumbUp(NewsDetailResponse.DataBean entity) {
+        if(entity.getIs_like() != null && (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)) {
             Drawable compoundThumbUpOn = mActivity.getDrawable(R.drawable.icon_thumb_up_on);
             compoundThumbUpOn.setBounds(0, 0, 40, 40);
             this.txtThumbUp.setCompoundDrawables(null, compoundThumbUpOn, null, null);
-            this.txtThumbUp.setText(Integer.valueOf(bean.getLike_count())+1);
+        }
+        else
+        {
+            Drawable compoundThumbUpOn = mActivity.getDrawable(R.drawable.icon_thumb_up);
+            compoundThumbUpOn.setBounds(0, 0, 40, 40);
+            this.txtThumbUp.setCompoundDrawables(null, compoundThumbUpOn, null, null);
+        }
+    }
+
+    private void ChangeThumbUp(Boolean flag) {
+        if(flag) {
+            Drawable compoundThumbUpOn = mActivity.getDrawable(R.drawable.icon_thumb_up_on);
+            compoundThumbUpOn.setBounds(0, 0, 40, 40);
+            this.txtThumbUp.setCompoundDrawables(null, compoundThumbUpOn, null, null);
+            this.txtThumbUp.setText((Integer.valueOf(txtThumbUp.getText().toString())+1)+"");
+        }
+        else
+        {
+            Drawable compoundThumbUpOn = mActivity.getDrawable(R.drawable.icon_thumb_up);
+            compoundThumbUpOn.setBounds(0, 0, 40, 40);
+            this.txtThumbUp.setCompoundDrawables(null, compoundThumbUpOn, null, null);
+            this.txtThumbUp.setText((Integer.valueOf(txtThumbUp.getText().toString())-1)+"");
         }
     }
 
@@ -287,6 +373,11 @@ public class NewsDetailPresenter extends BasePresenter implements View.OnClickLi
         atm.request(THUMBUP,this);
     }
 
+    //取消点赞
+    public void thumbUpOff() {
+        atm.request(THUMBUPOFF,this);
+    }
+
     //评论点赞
     public void CommentThumbUp(String itemId) {
         if(!basePresenter.isLogin)
@@ -300,9 +391,6 @@ public class NewsDetailPresenter extends BasePresenter implements View.OnClickLi
     }
 
     public void addComment() {
-//        layout_comment=(LinearLayout)mActivity.findViewById(R.id.layout_comment);
-//        layout_comment.setVisibility(View.VISIBLE);
-        //showPhotoDialog();
         if(!basePresenter.isLogin)
         {
             NToast.shortToast(context,"请先登录。");
@@ -351,12 +439,22 @@ public class NewsDetailPresenter extends BasePresenter implements View.OnClickLi
                 @Override
                 public void onClick(View arg0) {
                         layout_comment.setVisibility(View.VISIBLE);
+                    NewsDetailPresenter.this.comment.setHint("回复："+NewsDetailPresenter.this.bean.getNick_name());
+                    NewsDetailPresenter.this.comment.requestFocus();        //自动弹出键盘
+                    InputMethodManager inputManager = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
+                    inputManager.toggleSoftInput(0, InputMethodManager.HIDE_NOT_ALWAYS);
+                    //强制隐藏Android输入法窗口
+                    // inputManager.hideSoftInputFromWindow(edit.getWindowToken(),0);
+
+                    NewsDetailPresenter.this.atId=NewsDetailPresenter.this.bean.getUser_id();
+                    NewsDetailPresenter.this.replyId=NewsDetailPresenter.this.bean.getCom_id();
                         dialog.dismiss();
                 }
             });
             dialog.setMiddleListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View arg0) {
+                        ReportActivity.StartActivity(context,NewsDetailPresenter.this.bean);
                         dialog.dismiss();
                 }
             });
@@ -407,5 +505,29 @@ public class NewsDetailPresenter extends BasePresenter implements View.OnClickLi
         this.bean=bean;
         this.commentTextView=t;
         CommentThumbUp(bean.getCom_id());
+    }
+
+    @Override
+    public void onContentClick(int position, CommentResponse.DataBean bean, LinearLayout layout_reply) {
+        this.bean=bean;
+        this.layout_reply=layout_reply;
+        showPhotoDialog();
+    }
+
+    //回复评论
+    public void addReply() {
+        if(!basePresenter.isLogin)
+        {
+            NToast.shortToast(context,"请先登录。");
+            return;
+        }
+        if ("".equals(this.comment.getText().toString().trim()))
+        {
+            NToast.shortToast(context,"请输入回复内容");
+            return;
+        }
+        this.comment.setHint("回复：");
+        LoadDialog.show(context);
+        atm.request(ADDREPLY,this);
     }
 }

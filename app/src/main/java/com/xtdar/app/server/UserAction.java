@@ -1883,6 +1883,33 @@ public class UserAction extends BaseAction {
         }
         return commonResponse;
     }
+    //资讯点赞取消
+    public CommonResponse thumbUpOff(String itemId) throws HttpException{
+        String result = "";
+        String uri = getURL("cli-api-cancellikerecommend.php");
+        Response response=null;
+        try {
+            response=OkHttpUtils
+                    .get()
+                    .addParams("recommend_id",itemId)
+                    .addParams(XtdConst.ACCESS_TOKEN,token)
+                    .url(uri)
+                    .build()
+                    .execute();
+            result =response.body().string();
+            Logger.d(TAG+"::::::%s", result);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        CommonResponse commonResponse = null;
+        try {
+            commonResponse = JsonMananger.jsonToBean(result, CommonResponse.class);
+        } catch (JSONException e) {
+            Logger.e(TAG+"::::::%s", "thumbUp occurs JSONException e=" + e.toString());
+            return null;
+        }
+        return commonResponse;
+    }
     //资讯评论点赞
     public CommonResponse commentThumbUp(String itemId) throws HttpException{
         String result = "";
@@ -2068,6 +2095,36 @@ public class UserAction extends BaseAction {
                     .addParams("reply",reply)
                     .addParams("com_id",com_id)
                     .addParams("at_user_id",at_user_id)
+                    .addParams(XtdConst.ACCESS_TOKEN,token)
+                    .url(uri)
+                    .build()
+                    .execute();
+            result =response.body().string();
+            Logger.d(TAG+"::::::%s", result);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        CommonResponse commonResponse = null;
+        try {
+            commonResponse = JsonMananger.jsonToBean(result, CommonResponse.class);
+        } catch (JSONException e) {
+            Logger.e(TAG+"::::::%s", "addComment occurs JSONException e=" + e.toString());
+            return null;
+        }
+        return commonResponse;
+    }
+    //举报
+    public CommonResponse addReport(String com_id,String report_type,String tips) throws HttpException{
+        String result = "";
+        String uri = getURL("cli-api-report.php");
+        Response response=null;
+        try {
+            response=OkHttpUtils
+                    .get()
+                    .addParams("report_tag","t_comment")
+                    .addParams("key_val",com_id)
+                    .addParams("report_type",report_type)
+                    .addParams("tips",tips)
                     .addParams(XtdConst.ACCESS_TOKEN,token)
                     .url(uri)
                     .build()

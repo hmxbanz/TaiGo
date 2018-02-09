@@ -15,6 +15,7 @@ public class XtdConst {
     public static final String LOGIN_ID = "loginid";
     public static final String LOGIN_USERNAME = "userName";
     public static final String LOGING_PASSWORD = "password";
+    public static final String NICKNAME = "nickName";
     public static final String OPENID = "openId";
     public static final String ACCESS_TOKEN = "access_key";
     public static final String USERID = "userId";

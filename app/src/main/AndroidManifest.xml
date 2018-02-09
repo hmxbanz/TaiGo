@@ -230,6 +230,7 @@
         <activity            android:name=".view.activity.LotteryActivity"            android:screenOrientation="portrait" />
         <activity            android:name=".view.activity.LotteryPrizeActivity"            android:screenOrientation="portrait" />
         <activity            android:name=".view.activity.MineActivity"            android:screenOrientation="portrait" />
+        <activity            android:name=".view.activity.ReportActivity"            android:screenOrientation="portrait" />
         <activity
             android:name=".view.activity.NewsDetailActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
