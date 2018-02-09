@@ -74,7 +74,7 @@ public class SysMsgPresenter extends BasePresenter implements OnDataListener,Sys
 
     @Override
     public boolean onItemClick(int position, View view, String status) {
-        DetailActivity.StartActivity(context,status,status);
+        //DetailActivity.StartActivity(context,status,status);
         return false;
     }
 

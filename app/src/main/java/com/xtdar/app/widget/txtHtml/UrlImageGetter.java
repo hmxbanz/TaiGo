@@ -8,6 +8,9 @@ import android.text.Html;
 import android.view.View;
 import android.widget.TextView;
 
+import com.xtdar.app.XtdConst;
+import com.xtdar.app.common.NLog;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.lang.ref.WeakReference;
@@ -50,7 +53,8 @@ public class UrlImageGetter implements Html.ImageGetter{
     public Drawable getDrawable(String source) {
         UrlDrawable urlDrawable = new UrlDrawable();
         urlNum++;//限制详情页最多显示20张图片
-        if (urlNum < 20) {
+        NLog.e("Num",urlNum+"");
+        if (urlNum < 2000) {
             // get the actual source
             ImageGetterAsyncTask asyncTask = new ImageGetterAsyncTask(urlDrawable, this, container, matchParentWidth);
             asyncTask.execute(source);
@@ -165,5 +169,6 @@ public class UrlImageGetter implements Html.ImageGetter{
             }
         }
     }
+
 }
 

@@ -21,6 +21,7 @@ import com.shuyu.gsyvideoplayer.utils.OrientationUtils;
 import com.xtdar.app.R;
 import com.xtdar.app.XtdConst;
 import com.xtdar.app.adapter.NewsCommentAdapter;
+import com.xtdar.app.common.NLog;
 import com.xtdar.app.common.NToast;
 import com.xtdar.app.listener.AlertDialogCallback;
 import com.xtdar.app.loader.GlideImageLoader;
@@ -83,6 +84,7 @@ public class NewsDetailPresenter extends BasePresenter implements View.OnClickLi
     private CommentResponse.DataBean bean;
     private String atId="0",replyId;
     private LinearLayout layout_reply;
+    private UrlImageGetter reviewImgGetter;
 
     public NewsDetailPresenter(Context context){
         super(context);
@@ -93,7 +95,6 @@ public class NewsDetailPresenter extends BasePresenter implements View.OnClickLi
         dataAdapter.setHeaderView(LayoutInflater.from(context).inflate(R.layout.recyclerview_top2,null));
         dataAdapter.setOnItemClickListener(this);
         gridLayoutManager=new GridLayoutManager(context,1);
-
     }
 
     public void init() {
@@ -118,13 +119,15 @@ public class NewsDetailPresenter extends BasePresenter implements View.OnClickLi
         this.txtThumbUp.setCompoundDrawables(null,compoundThumbUp[1],null,null);
         this.txtShare = (TextView) mActivity.findViewById(R.id.txt_share);
         Drawable[] compoundShare = this.txtShare.getCompoundDrawables();
-        compoundShare[1].setBounds(0,0,50,50);
+        compoundShare[1].setBounds(0,0,40,40);
         this.txtShare.setCompoundDrawables(null,compoundShare[1],null,null);
         this.txtShare.setOnClickListener(this);
 
         mActivity.findViewById(R.id.txt_comment2).setOnClickListener(this);
         mActivity.findViewById(R.id.layout_back).setOnClickListener(this);
         this.layout_comment=mActivity.findViewById(R.id.layout_comment);
+
+        reviewImgGetter = new UrlImageGetter(txtContent,XtdConst.SERVERURI);//实例化URLImageGetter
 
         Intent intent = mActivity.getIntent();
         itemId = intent.getStringExtra("recommend_id");
@@ -203,7 +206,6 @@ public class NewsDetailPresenter extends BasePresenter implements View.OnClickLi
 
                     this.txtShare.setText(entity.getShare_count());
 
-                    UrlImageGetter reviewImgGetter = new UrlImageGetter(txtContent,XtdConst.SERVERURI);//实例化URLImageGetter
                     if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N) {
                         txtContent.setText(Html.fromHtml(entity.getContent(),Html.FROM_HTML_MODE_COMPACT,reviewImgGetter,null));
                     } else {
@@ -530,4 +532,23 @@ public class NewsDetailPresenter extends BasePresenter implements View.OnClickLi
         LoadDialog.show(context);
         atm.request(ADDREPLY,this);
     }
+
+    public void onDestroy() {
+        if(reviewImgGetter !=null)
+            reviewImgGetter=null;
+    }
+
+//    /**
+//     *  解绑ImageGetterSubscription
+//     */
+//    public void cancelImageGetterSubscription(){
+//        if(reviewImgGetter != null){
+//            try {
+//                reviewImgGetter.unSubscribe();
+//            }catch (Exception e){
+//                NLog.e("解绑 UrlImageGetter Subscription 异常");
+//            }
+//        }
+//    }
+
 }

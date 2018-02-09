@@ -30,7 +30,7 @@ public class MyCommentAdapter extends BaseAdapter {
 
 
     public interface ItemClickHandler {
-        boolean onItemClick(int position, View view, String status);
+        boolean onItemClick(int position, View view, MyCommentResponse.DataBean status);
 
     }
 
@@ -62,7 +62,7 @@ public class MyCommentAdapter extends BaseAdapter {
         convertView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                onItemClick.onItemClick(position, v, entity.getItem_id());
+                onItemClick.onItemClick(position, v, entity);
 
             }
         });

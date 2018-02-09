@@ -11,6 +11,7 @@ import com.xtdar.app.server.HttpException;
 import com.xtdar.app.server.async.OnDataListener;
 import com.xtdar.app.server.response.MyCommentResponse;
 import com.xtdar.app.view.activity.DetailActivity;
+import com.xtdar.app.view.activity.NewsDetailActivity;
 import com.xtdar.app.view.activity.ShowDetailActivity;
 import com.xtdar.app.view.widget.LoadDialog;
 
@@ -47,7 +48,7 @@ public class CommentPresenter extends BasePresenter implements OnDataListener ,M
     public Object doInBackground(int requestCode, String parameter) throws HttpException {
         switch (requestCode) {
             case GETCOMMENTLIST:
-                return mUserAction.getCommentList("10","0");
+                return mUserAction.getCommentList("30","0");
         }
         return null;
     }
@@ -71,8 +72,17 @@ public class CommentPresenter extends BasePresenter implements OnDataListener ,M
     }
 
     @Override
-    public boolean onItemClick(int position, View view, String status) {
-        ShowDetailActivity.StartActivity(context,status,status);
+    public boolean onItemClick(int position, View view, MyCommentResponse.DataBean bean) {
+        switch (bean.getComment_tag())
+        {
+            case "t_show":
+                ShowDetailActivity.StartActivity(context,bean.getItem_id(),bean.getItem_id());
+                break;
+            case "t_recommend":
+                NewsDetailActivity.StartActivity(context,bean.getItem_id());
+                break;
+
+        }
         return false;
     }
 }

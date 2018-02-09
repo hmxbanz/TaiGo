@@ -10,7 +10,7 @@ import com.xtdar.app.server.HttpException;
 import com.xtdar.app.server.async.OnDataListener;
 import com.xtdar.app.server.broadcast.BroadcastManager;
 import com.xtdar.app.server.response.PersonMsgResponse;
-import com.xtdar.app.view.activity.DetailActivity;
+import com.xtdar.app.view.activity.NewsDetailActivity;
 import com.xtdar.app.view.activity.ShowDetailActivity;
 import com.xtdar.app.view.widget.LoadDialog;
 
@@ -48,7 +48,7 @@ public class PersonMsgPresenter extends BasePresenter implements OnDataListener,
     public Object doInBackground(int requestCode, String parameter) throws HttpException {
         switch (requestCode) {
             case GETLIST:
-                return mUserAction.getPersonMsgList("10","0");
+                return mUserAction.getPersonMsgList("30","0");
 
         }
         return null;
@@ -74,8 +74,18 @@ public class PersonMsgPresenter extends BasePresenter implements OnDataListener,
     }
 
     @Override
-    public boolean onItemClick(int position, View view, String status) {
-        ShowDetailActivity.StartActivity(context,status,status);
+    public boolean onItemClick(int position, View view, PersonMsgResponse.DataBean status) {
+        switch (status.getLinkObj().getTo())
+        {
+            case "show_detail":
+                ShowDetailActivity.StartActivity(context,status.getLinkObj().getKey_val(),status.getLinkObj().getKey_val());
+                break;
+            case "recommend_detail":
+            NewsDetailActivity.StartActivity(context,status.getLinkObj().getKey_val());
+                break;
+
+        }
+
         return false;
     }
 

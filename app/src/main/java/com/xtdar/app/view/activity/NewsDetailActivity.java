@@ -3,6 +3,7 @@ package com.xtdar.app.view.activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -20,8 +21,11 @@ import com.xtdar.app.R;
 import com.xtdar.app.presenter.NewsDetailPresenter;
 import com.xtdar.app.widget.myRecyclerView.RecyclerViewUpRefresh;
 
+import java.lang.ref.SoftReference;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 
 public class NewsDetailActivity extends BaseActivity implements View.OnClickListener {
@@ -119,6 +123,7 @@ public class NewsDetailActivity extends BaseActivity implements View.OnClickList
 //        if(newsContentTextTv != null){
 //            newsContentTextTv.cancelImageGetterSubscription();
 //        }
+presenter.onDestroy();
         super.onDestroy();
     }
 }

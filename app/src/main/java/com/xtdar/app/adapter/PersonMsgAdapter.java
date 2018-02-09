@@ -30,7 +30,7 @@ public class PersonMsgAdapter extends BaseAdapter {
 
 
     public interface ItemClickHandler {
-        boolean onItemClick(int position, View view, String status);
+        boolean onItemClick(int position, View view, PersonMsgResponse.DataBean status);
 
     }
 
@@ -64,7 +64,7 @@ public class PersonMsgAdapter extends BaseAdapter {
         convertView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                onItemClick.onItemClick(position, v, entity.getMsg_id());
+                onItemClick.onItemClick(position, v, entity);
 
             }
         });

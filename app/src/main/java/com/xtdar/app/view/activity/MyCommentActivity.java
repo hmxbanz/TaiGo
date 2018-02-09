@@ -42,4 +42,9 @@ public class MyCommentActivity extends BaseActivity implements View.OnClickListe
                 break;
         }
     }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+    }
 }
