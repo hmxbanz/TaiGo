@@ -23,43 +23,43 @@ public class SignInActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_in);
-
-        txtSignIn=(TextView) findViewById(R.id.txt_sign_in);
-        layoutSignIn=(LinearLayout) findViewById(R.id.layout_sign_in);
-        layoutSignIn.setOnClickListener(this);
-        txtSignAll=(TextView) findViewById(R.id.txt_sign_all);
-        txtSignContinue=(TextView) findViewById(R.id.txt_sign_continue);
-        txtSignToday=(TextView) findViewById(R.id.txt_sign_today);
-
-        Toolbar mToolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(mToolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        mToolbar.setTitle("我的积分");
-        mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onBackPressed();
-            }
-        });
-
-        calendarView = (CollapseCalendarView) findViewById(R.id.calendar);
-
-        txtSignIn = (TextView) findViewById(R.id.txt_sign_in);
-
-        signInPresenter=new SignInPresenter(this);
-        signInPresenter.init(txtSignIn,txtSignAll,txtSignContinue,txtSignToday,calendarView);
+//
+//        txtSignIn=(TextView) findViewById(R.id.txt_sign_in);
+//        layoutSignIn=(LinearLayout) findViewById(R.id.layout_sign_in);
+//        layoutSignIn.setOnClickListener(this);
+//        txtSignAll=(TextView) findViewById(R.id.txt_sign_all);
+//        txtSignContinue=(TextView) findViewById(R.id.txt_sign_continue);
+//        txtSignToday=(TextView) findViewById(R.id.txt_sign_today);
+//
+//        Toolbar mToolbar = (Toolbar) findViewById(R.id.toolbar);
+//        setSupportActionBar(mToolbar);
+//        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+//        mToolbar.setTitle("我的积分");
+//        mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                onBackPressed();
+//            }
+//        });
+//
+//        calendarView = (CollapseCalendarView) findViewById(R.id.calendar);
+//
+//        txtSignIn = (TextView) findViewById(R.id.txt_sign_in);
+//
+//        signInPresenter=new SignInPresenter(this);
+//        signInPresenter.init(txtSignIn,txtSignAll,txtSignContinue,txtSignToday,calendarView);
     }
 
-    @Override
-    public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.layout_sign_in:
-                    signInPresenter.signIn();
-                break;
-            case R.id.layout_lottery:
-                break;
-            case R.id.layout_singin:
-                break;
-        }
-    }
+//    @Override
+//    public void onClick(View v) {
+//        switch (v.getId()) {
+//            case R.id.layout_sign_in:
+//                    signInPresenter.signIn();
+//                break;
+//            case R.id.layout_lottery:
+//                break;
+//            case R.id.layout_singin:
+//                break;
+//        }
+//    }
 }

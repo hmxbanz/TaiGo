@@ -1,1 +1,1 @@
-[{"outputType":{"type":"MERGED_MANIFESTS"},"apkInfo":{"type":"MAIN","splits":[],"versionCode":20170110},"path":"AndroidManifest.xml","properties":{"packageId":"io.rong.imkit","split":""}}]
+[{"outputType":{"type":"MERGED_MANIFESTS"},"apkInfo":{"type":"MAIN","splits":[],"versionCode":20170110,"versionName":"2.8.5","enabled":true,"outputFile":"IMKit-release.aar","fullName":"release","baseName":"release"},"path":"AndroidManifest.xml","properties":{"packageId":"io.rong.imkit","split":""}}]

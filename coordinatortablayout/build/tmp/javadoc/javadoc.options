@@ -1,0 +1,8 @@
+-classpath 'C:\\Users\\Administrator\\AppData\\Local\\Android\\Sdk\\platforms\\android-27\\android.jar'
+-d 'G:\\TaiGo-master\\TaiGo-master\\coordinatortablayout\\build\\docs\\javadoc'
+-doctitle 'coordinatortablayout 1.0.6 API'
+-quiet 
+-windowtitle 'coordinatortablayout 1.0.6 API'
+'G:\\TaiGo-master\\TaiGo-master\\coordinatortablayout\\src\\main\\java\\cn\\hugeterry\\coordinatortablayout\\CoordinatorTabLayout.java'
+'G:\\TaiGo-master\\TaiGo-master\\coordinatortablayout\\src\\main\\java\\cn\\hugeterry\\coordinatortablayout\\listener\\LoadHeaderImagesListener.java'
+'G:\\TaiGo-master\\TaiGo-master\\coordinatortablayout\\src\\main\\java\\cn\\hugeterry\\coordinatortablayout\\SelectableRoundedImageView.java'

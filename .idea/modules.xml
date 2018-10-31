@@ -6,7 +6,7 @@
       <module fileurl="file://$PROJECT_DIR$/Common/Common.iml" filepath="$PROJECT_DIR$/Common/Common.iml" />
       <module fileurl="file://$PROJECT_DIR$/IMKit/IMKit.iml" filepath="$PROJECT_DIR$/IMKit/IMKit.iml" />
       <module fileurl="file://$PROJECT_DIR$/IMLib/IMLib.iml" filepath="$PROJECT_DIR$/IMLib/IMLib.iml" />
-      <module fileurl="file://$PROJECT_DIR$/TaiGoNew.iml" filepath="$PROJECT_DIR$/TaiGoNew.iml" />
+      <module fileurl="file://$PROJECT_DIR$/TaiGo-master.iml" filepath="$PROJECT_DIR$/TaiGo-master.iml" />
       <module fileurl="file://$PROJECT_DIR$/WheelPicker/WheelPicker.iml" filepath="$PROJECT_DIR$/WheelPicker/WheelPicker.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
       <module fileurl="file://$PROJECT_DIR$/coordinatortablayout/coordinatortablayout.iml" filepath="$PROJECT_DIR$/coordinatortablayout/coordinatortablayout.iml" />

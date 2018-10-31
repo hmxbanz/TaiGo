@@ -9,7 +9,7 @@
     android:background="@drawable/loterry_bg"
     tools:context=".view.activity.LotteryActivity">
 
-            <android.support.v7.widget.Toolbar
+    <android.support.v7.widget.Toolbar
                 android:paddingTop="10dp"
                 app:titleMarginTop="10dp"
                 android:id="@+id/toolbar"

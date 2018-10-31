@@ -1,1 +1,1 @@
-[{"outputType":{"type":"MERGED_MANIFESTS"},"apkInfo":{"type":"MAIN","splits":[],"versionCode":4},"path":"AndroidManifest.xml","properties":{"packageId":"cn.hugeterry.coordinatortablayout","split":""}}]
+[{"outputType":{"type":"MERGED_MANIFESTS"},"apkInfo":{"type":"MAIN","splits":[],"versionCode":4,"versionName":"1.0.6","enabled":true,"outputFile":"coordinatortablayout-release.aar","fullName":"release","baseName":"release"},"path":"AndroidManifest.xml","properties":{"packageId":"cn.hugeterry.coordinatortablayout","split":""}}]

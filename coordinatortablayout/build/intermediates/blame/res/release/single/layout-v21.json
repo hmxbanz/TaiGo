@@ -1,0 +1,18 @@
+[
+    {
+        "merged": "G:\\TaiGo-master\\TaiGo-master\\coordinatortablayout\\build\\intermediates\\res\\merged\\release\\layout-v21\\notification_action.xml",
+        "source": "C:\\Users\\Administrator\\.gradle\\caches\\transforms-1\\files-1.1\\support-compat-27.1.1.aar\\894a41a94a61792bcd8a3c0d8e7d027e\\res\\layout-v21\\notification_action.xml"
+    },
+    {
+        "merged": "G:\\TaiGo-master\\TaiGo-master\\coordinatortablayout\\build\\intermediates\\res\\merged\\release\\layout-v21\\notification_template_custom_big.xml",
+        "source": "C:\\Users\\Administrator\\.gradle\\caches\\transforms-1\\files-1.1\\support-compat-27.1.1.aar\\894a41a94a61792bcd8a3c0d8e7d027e\\res\\layout-v21\\notification_template_custom_big.xml"
+    },
+    {
+        "merged": "G:\\TaiGo-master\\TaiGo-master\\coordinatortablayout\\build\\intermediates\\res\\merged\\release\\layout-v21\\notification_template_icon_group.xml",
+        "source": "C:\\Users\\Administrator\\.gradle\\caches\\transforms-1\\files-1.1\\support-compat-27.1.1.aar\\894a41a94a61792bcd8a3c0d8e7d027e\\res\\layout-v21\\notification_template_icon_group.xml"
+    },
+    {
+        "merged": "G:\\TaiGo-master\\TaiGo-master\\coordinatortablayout\\build\\intermediates\\res\\merged\\release\\layout-v21\\notification_action_tombstone.xml",
+        "source": "C:\\Users\\Administrator\\.gradle\\caches\\transforms-1\\files-1.1\\support-compat-27.1.1.aar\\894a41a94a61792bcd8a3c0d8e7d027e\\res\\layout-v21\\notification_action_tombstone.xml"
+    }
+]

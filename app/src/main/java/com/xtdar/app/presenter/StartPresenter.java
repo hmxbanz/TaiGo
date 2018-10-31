@@ -15,7 +15,7 @@ import com.xtdar.app.view.activity.StartActivity;
  * Created by hmxbanz on 2017/4/5.
  */
 
-public class StartPresenter {
+public class StartPresenter extends BasePresenter  {
     private Context mContext;
     private StartActivity mActivity;
     private Handler hand = new Handler() {
@@ -27,6 +27,7 @@ public class StartPresenter {
         }
     };
     public StartPresenter(Context context){
+        super(context);
         this.mContext=context;
         mActivity = (StartActivity) context;
     }

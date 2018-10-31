@@ -40,12 +40,12 @@ public class ScoreActivity extends BaseActivity {
         });
 
         scorePresenter=new  ScorePresenter(this);
-}
-
-    @Override
-    protected void setStatusBar() {
-        StatusBarUtil.setColor(this, getResources().getColor(R.color.titleBlue),0);
     }
+
+//    @Override
+//    protected void setStatusBar() {
+//        StatusBarUtil.setColor(this, getResources().getColor(R.color.titleBlue),0);
+//    }
 
     @Override
     protected void onStart() {

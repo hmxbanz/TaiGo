@@ -1,0 +1,48 @@
+{
+    "logs": [
+        {
+            "outputFile": "G:\\TaiGo-master\\TaiGo-master\\IMLib\\build\\intermediates\\incremental\\mergeReleaseResources\\merged.dir\\values-sw\\values-sw.xml",
+            "map": [
+                {
+                    "source": "G:\\TaiGo-master\\TaiGo-master\\IMLib\\res\\values-sw\\rc_notification_string.xml",
+                    "from": {
+                        "startLines": "4,5,3",
+                        "startColumns": "4,4,4",
+                        "startOffsets": "133,226,56",
+                        "endColumns": "92,108,76",
+                        "endOffsets": "221,330,128"
+                    },
+                    "to": {
+                        "startLines": "2,3,4",
+                        "startColumns": "4,4,4",
+                        "startOffsets": "55,133,227",
+                        "endColumns": "77,93,76",
+                        "endOffsets": "128,222,299"
+                    }
+                }
+            ]
+        },
+        {
+            "outputFile": "G:\\TaiGo-master\\TaiGo-master\\IMLib\\build\\intermediates\\res\\merged\\release\\values-sw\\values-sw.xml",
+            "map": [
+                {
+                    "source": "G:\\TaiGo-master\\TaiGo-master\\IMLib\\res\\values-sw\\rc_notification_string.xml",
+                    "from": {
+                        "startLines": "4,5,3",
+                        "startColumns": "4,4,4",
+                        "startOffsets": "133,226,56",
+                        "endColumns": "92,108,76",
+                        "endOffsets": "221,330,128"
+                    },
+                    "to": {
+                        "startLines": "2,3,4",
+                        "startColumns": "4,4,4",
+                        "startOffsets": "55,133,227",
+                        "endColumns": "77,93,76",
+                        "endOffsets": "128,222,299"
+                    }
+                }
+            ]
+        }
+    ]
+}

@@ -88,7 +88,7 @@ public class PictureAlbumDirectoryActivity extends PictureBaseActivity implement
         LinearLayoutManager manager = new LinearLayoutManager(this);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.addItemDecoration(new RecycleViewDivider(
-                mContext, LinearLayoutManager.HORIZONTAL, Utils.dip2px(this, 0.5f), ContextCompat.getColor(this, R.color.line_color)));
+                mContext, LinearLayoutManager.HORIZONTAL, Utils.dip2px(this, 0.5f), getResources().getColor(R.color.line_color)));
         recyclerView.setLayoutManager(manager);
         recyclerView.setAdapter(adapter);
         adapter.setOnItemClickListener(this);
